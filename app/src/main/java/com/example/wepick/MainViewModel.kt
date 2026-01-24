@@ -25,6 +25,7 @@ class MainViewModel : ViewModel() {
 
     init {
         loadContent(ContentType.MOVIE, "f0d0bc12560c00cff720536f062f5463")
+        loadContent(ContentType.TV, "f0d0bc12560c00cff720536f062f5463")
         loadContent(ContentType.ANIME, "")
     }
 
