@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wepick.ui.theme.WepickTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,15 +20,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WepickTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val viewModel: MainViewModel = viewModel()
+                MainScreen(viewModel)
             }
         }
     }
+}
+
+@Composable
+fun MainScreen(viewModel: MainViewModel) {
+
 }
 
 @Composable
