@@ -25,21 +25,13 @@ android {
             localProperties.load(propertiesFile.inputStream())
         }
 
-        buildConfigField(
-            "String",
-            "TMDB_API_KEY",
-            "\"${localProperties.getProperty("TMDB_API_KEY")}\""
-        )
-        buildConfigField(
-            "String",
-            "TMDB_BASE_URL",
-            "\"${localProperties.getProperty("TMDB_BASE_URL")}\""
-        )
-        buildConfigField(
-            "String",
-            "JIKAN_BASE_URL",
-            "\"${localProperties.getProperty("JIKAN_BASE_URL")}\""
-        )
+        val jikanUrl = localProperties.getProperty("JIKAN_BASE_URL") ?: ""
+        val tmdbUrl = localProperties.getProperty("TMDB_BASE_URL") ?: ""
+        val tmdbKey = localProperties.getProperty("TMDB_API_KEY") ?: ""
+
+        buildConfigField("String", "JIKAN_BASE_URL", "\"$jikanUrl\"")
+        buildConfigField("String", "TMDB_API_KEY", "\"$tmdbKey\"")
+        buildConfigField("String", "TMDB_BASE_URL", "\"$tmdbUrl\"")
     }
 
     buildTypes {
@@ -70,20 +62,25 @@ android {
 }
 
 dependencies {
-    // Retrofit для запросов
     implementation(libs.retrofit)
-    // Конвертер, чтобы превращать JSON от API в наш ContentItem
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // This now works because we renamed the conflicting 'ui' library in libs.versions.toml
+    implementation(libs.androidx.compose.ui.text.google.fonts)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
+
+    // Use the renamed core library
+    implementation(libs.androidx.compose.ui.core)
+
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -93,5 +90,3 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
-
-

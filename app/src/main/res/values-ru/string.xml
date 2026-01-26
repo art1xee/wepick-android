@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_main">Перестаньте спорить про то, что смотреть! Вернём ваше киношное счастье - в вашу жизнь.</string>
+    <string name="enter_name_main">Введите ваше имя</string>
+    <string name="next_button">Далее!</string>
+    <string name="selection_label">Привет %1$s! Выбери контент, который ты хочешь посмотреть.</string>
+    <string name="movie_content">Фильмы</string>
+    <string name="series_content">Сериалы</string>
+    <string name="asian_content">Аниме/Азиатское</string>
+    <string name="partner_label">Сейчас выбери партнёра для просмотра: %1$s</string>
+    <string name="friend_partner">Друг</string>
+    <string name="popular_character_partner">Популярний персонаж</string>
+    <string name="popular_character_label">С кем ты хочешь сыграть в WePick?</string>
+    <string name="friend_name_label">Передай устройство другу — пусть введёт своё имя</string>
+    <string name="enter_name_friend_text_field">Имя друга</string>
+    <string name="genres_likes_choose">%1$s Выбери 3 жанра, которые тебе НЕ по душе.</string>
+    <string name="genres_dislikes_choose">%1$s Выбери 3 жанра, которые тебе НРАВЯТСЯ.</string>
+    <string name="decade_choose">%1$s Выбери декаду: </string>
+    <string name="genres_save">Сохранить!</string>
+    <string name="summary_selection">Итоги выбора: </string>
+    <string name="content_type">Тип контента:</string>
+    <string name="user_name_summary">Вы: %1$s</string>
+    <string name="second_user_name_summary">Имя друга: %1$s</string>
+    <string name="dislikes_watch">Не хочет смотреть:</string>
+    <string name="likes_watch">Хочет смотреть: </string>
+    <string name="decade">Декада: </string>
+    <string name="find_content">Найти ${content}!</string>
+    <string name="loading">Загрузка…</string>
+    <string name="movie_match_label">Встретьте свою кино-пару!</string>
+    <string name="content_name">_</string>
+    <string name="rating">0</string>
+    <string name="pages">0/0</string>
+    <string name="seen_content">Видели - показать другое</string>
+    <string name="reload_content">Обновить подборку</string>
+    <string name="start_again">Начать сначала</string>
+    <string name="wepick_about">Про WePick!</string>
+    <string name="wepick_info">WePick! — это удобный инструмент для выбора фильмов, сериалов или другого контента, который понравится всем участникам. Вы устанавливаете общие фильтры, а мы предлагаем идеальный вариант.</string>
+    <string name="wepick_github">Код этого приложения доступен на GitHub: %1$s</string>
+
+</resources>

@@ -32,6 +32,13 @@ class MainViewModel : ViewModel() {
     private val _items = mutableStateOf<List<ContentItem>>(emptyList())
     val items: State<List<ContentItem>> = _items
 
+    private val _userName = mutableStateOf("")
+    val userName: State<String> = _userName
+
+    fun setUserName(name: String) {
+        _userName.value = name
+    }
+
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {
             try {

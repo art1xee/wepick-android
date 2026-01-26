@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name" translatable="false">WePick!</string>
+    <string name="welcome_main">Припиніть сперечатися про те, що дивитися! Давайте повернемо кіношне подружжя - у ваше життя.</string>
+    <string name="enter_name_main">Введіть ваше ім\'я</string>
+    <string name="next_button">Далі!</string>
+    <string name="selection_label">Привіт %1$s! Обери, контент який ти хочеш подивитися.</string>
+    <string name="movie_content">Фільми</string>
+    <string name="series_content">Серіали</string>
+    <string name="asian_content">Аніме/Азіатське</string>
+    <string name="partner_label">Зараз обери свого партнера для перегляду: %1$s</string>
+    <string name="friend_partner">Друг</string>
+    <string name="popular_character_partner">Популярний персонаж</string>
+    <string name="popular_character_label">З ким ти хочеш зіграти в WePick?</string>
+    <string name="friend_name_label">Передай пристрій другу - нехай введе своє ім\'я</string>
+    <string name="enter_name_friend_text_field">Ім\'я друга</string>
+    <string name="genres_likes_choose">%1$s Обери 3 жанри, які тобі НЕ до вподоби.</string>
+    <string name="genres_dislikes_choose">%1$s Обери 3 жанри, які тобі до ВПОДОБИ.</string>
+    <string name="decade_choose">%1$s Обери декаду: </string>
+    <string name="genres_save">Зберегти!</string>
+    <string name="summary_selection">Підсумок вибору: </string>
+    <string name="content_type">Тип контенту:</string>
+    <string name="user_name_summary">Ви: %1$s</string>
+    <string name="second_user_name_summary">Ім\'я друга: %1$s</string>
+    <string name="dislikes_watch">Не хоче дивитися: </string>
+    <string name="likes_watch">Хоче дивитися: </string>
+    <string name="decade">Декада: </string>
+    <string name="find_content">Знайти %1$s!</string>
+    <string name="loading">Загрузка…</string>
+    <string name="movie_match_label">Зустрінь свою кінопару!</string>
+    <string name="content_name">_</string>
+    <string name="rating">0</string>
+    <string name="pages">0/0</string>
+    <string name="seen_content">Бачили - показити інше</string>
+    <string name="reload_content">Оновити підбір</string>
+    <string name="start_again">Почати спочатку</string>
+    <string name="wepick_about">Про WePick!</string>
+    <string name="wepick_info">WePick! — це зручний інструмент для вибору фільмів, серіалів або іншого контенту, який сподобається всім учасникам. Ви встановлюєте спільні фільтри, а ми пропонуємо ідеальний варіант.</string>
+    <string name="wepick_github">Код цього додатку доступний на GitHub: %1$s</string>
+</resources>
