@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
-    private const val JIKAN_BASE_URL = "https://api.jikan.moe/v4/"
+    private const val TMDB_BASE_URL = BuildConfig.TMDB_BASE_URL
+    private const val JIKAN_BASE_URL = BuildConfig.JIKAN_BASE_URL
 
 
     val instanceTmdb: TmdbApiService by lazy {

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,6 +18,28 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProperties = Properties()
+        val propertiesFile = project.rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            localProperties.load(propertiesFile.inputStream())
+        }
+
+        buildConfigField(
+            "String",
+            "TMDB_API_KEY",
+            "\"${localProperties.getProperty("TMDB_API_KEY")}\""
+        )
+        buildConfigField(
+            "String",
+            "TMDB_BASE_URL",
+            "\"${localProperties.getProperty("TMDB_BASE_URL")}\""
+        )
+        buildConfigField(
+            "String",
+            "JIKAN_BASE_URL",
+            "\"${localProperties.getProperty("JIKAN_BASE_URL")}\""
+        )
     }
 
     buildTypes {
@@ -40,6 +64,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -59,7 +84,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
