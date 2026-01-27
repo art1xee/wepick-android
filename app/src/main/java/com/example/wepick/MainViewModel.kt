@@ -39,6 +39,19 @@ class MainViewModel : ViewModel() {
         _userName.value = name
     }
 
+    /// who is a partner: Friend or Character?
+    private val _partnerType = mutableStateOf("")
+    val partnerType: State<String> = _partnerType
+
+    // friend name or ID character
+    private val _partnerName = mutableStateOf("")
+    val partnerName: State<String> = _partnerName
+
+    fun setPartner(type: String, name: String) {
+        _partnerType.value = type
+        _partnerName.value = name
+    }
+
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {
             try {

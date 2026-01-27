@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.wepick.screens.CharacterPickerScreen
+import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
@@ -30,6 +32,14 @@ fun NavGraph(
         composable(ScreenNav.Partner.route) {
             PartnerScreen(navController, viewModel)
         }
+        composable(ScreenNav.FriendName.route) {
+            FriendNameScreen(navController, viewModel)
+        }
+
+        composable(ScreenNav.CharacterPicker.route) {
+            CharacterPickerScreen(navController, viewModel)
+        }
+
         composable(ScreenNav.Genres.route) {
             GenresScreen(navController, viewModel)
         }

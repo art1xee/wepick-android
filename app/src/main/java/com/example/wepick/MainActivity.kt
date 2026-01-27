@@ -35,13 +35,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun StartProgram(navController: NavHostController, viewModel: MainViewModel) {
-    NavHost(navController = navController, startDestination = ScreenNav.Main.route) {
-        composable(ScreenNav.Main.route) {
-            MainScreen(
-                navController = navController,
-                viewModel = viewModel,
-                modifier = Modifier
-            )
-        }
-    }
+    NavGraph(
+        navController = navController,
+        viewModel = viewModel
+    )
 }

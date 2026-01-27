@@ -1,9 +1,17 @@
 package com.example.wepick
 
-enum class ScreenNav(val route: String) {
-    Main("main"),             // Экран ввода имени
-    Selection("selection"),   // Выбор: Фильмы/ТВ/Аниме
-    Partner("partner"),       // Друг или Персонаж
-    Genres("genres"),         // Выбор жанров
-    Match("match")            // Финальная карточка
+sealed class ScreenNav(val route: String) {
+    object Main : ScreenNav("main")             // Экран ввода имени
+
+    object Selection : ScreenNav("selection")  // Выбор: Фильмы/ТВ/Аниме
+
+    object Partner : ScreenNav("partner")      // Друг или Персонаж
+
+    object FriendName : ScreenNav("friend_name")
+
+    object CharacterPicker : ScreenNav("popular_character")
+
+    object Genres : ScreenNav("genres")         // Выбор жанров
+
+    object Match : ScreenNav("match")            // Финальная карточка
 }

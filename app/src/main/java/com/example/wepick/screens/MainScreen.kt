@@ -94,6 +94,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
 //                    )
                 )
                 Button(
+                // TODO добавить проверку try...catch, если строка с именем пользователя пустая - выводить ошибку.
                     onClick = {
                         viewModel.setUserName(name)
                         navController.navigate(ScreenNav.Selection.route)
