@@ -13,8 +13,8 @@
     <string name="popular_character_label">З ким ти хочеш зіграти в WePick?</string>
     <string name="friend_name_label">Передай пристрій другу - нехай введе своє ім\'я</string>
     <string name="enter_name_friend_text_field">Ім\'я друга</string>
-    <string name="genres_likes_choose">%1$s Обери 3 жанри, які тобі НЕ до вподоби.</string>
-    <string name="genres_dislikes_choose">%1$s Обери 3 жанри, які тобі до ВПОДОБИ.</string>
+    <string name="genres_dislikes_choose">%1$s Обери 3 жанри, які тобі НЕ до вподоби.</string>
+    <string name="genres_likes_choose">%1$s Обери 3 жанри, які тобі до ВПОДОБИ.</string>
     <string name="decade_choose">%1$s Обери декаду: </string>
     <string name="genres_save">Зберегти!</string>
     <string name="summary_selection">Підсумок вибору: </string>

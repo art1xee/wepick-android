@@ -12,6 +12,7 @@ import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
 import com.example.wepick.screens.SelectionScreen
+import com.example.wepick.screens.SummaryScreen
 
 
 @Composable
@@ -42,6 +43,9 @@ fun NavGraph(
 
         composable(ScreenNav.Genres.route) {
             GenresScreen(navController, viewModel)
+        }
+        composable(ScreenNav.Summary.route) {
+            SummaryScreen(navController, viewModel)
         }
         composable(ScreenNav.Match.route) {
             MatchScreen(navController, viewModel)

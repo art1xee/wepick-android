@@ -1,7 +1,12 @@
 package com.example.wepick
 
+import androidx.collection.mutableIntSetOf
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -50,6 +55,28 @@ class MainViewModel : ViewModel() {
     fun setPartner(type: String, name: String) {
         _partnerType.value = type
         _partnerName.value = name
+    }
+
+    // for choose genres in GenresScreen.kt
+    var currentStep by mutableStateOf("dislikes")
+
+    private val _selectedDislikes = mutableStateListOf<String>()
+    val selectedDislikes: List<String> = _selectedDislikes
+
+    private val _selectedLikes = mutableStateListOf<String>()
+    val selectedLikes: List<String> = _selectedLikes
+
+    var selectedDecade by mutableIntStateOf(2000)
+
+    fun toggleDislike(genre: String) {
+        if (_selectedDislikes.contains(genre)) _selectedDislikes.remove(genre)
+        else if (_selectedDislikes.size < 3) _selectedDislikes.add(genre)
+    }
+
+    fun toggleLikes(genre: String) {
+        if (_selectedDislikes.contains(genre)) return
+        if(_selectedLikes.contains(genre)) _selectedLikes.remove(genre)
+        else if(_selectedLikes.size < 3) _selectedLikes.add(genre)
     }
 
     fun loadContent(type: ContentType, apiKey: String) {

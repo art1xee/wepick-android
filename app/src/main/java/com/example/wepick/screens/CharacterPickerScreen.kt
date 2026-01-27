@@ -112,7 +112,7 @@ fun CharacterCard(name: String, imageRes: Int, isSelected: Boolean, onClick: () 
     Card(
         modifier = Modifier
             .padding(4.dp)
-            .clickable { (onClick()) }
+            .clickable { onClick() }
             .border(1.dp, borderColor, MaterialTheme.shapes.medium),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {

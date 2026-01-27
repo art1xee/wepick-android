@@ -13,8 +13,8 @@
     <string name="popular_character_label">Who do you want to play WePick with?</string>
     <string name="friend_name_label">Pass the device to a friend — let them enter their name</string>
     <string name="enter_name_friend_text_field">Friend`s name</string>
-    <string name="genres_likes_choose">%1$s Select 3 genres that you do NOT like.</string>
-    <string name="genres_dislikes_choose">%1$sSelect 3 genres that you LIKE.</string>
+    <string name="genres_dislikes_choose">%1$s Select 3 genres that you do NOT like.</string>
+    <string name="genres_likes_choose">%1$sSelect 3 genres that you LIKE.</string>
     <string name="decade_choose">%1$s Choose decade: </string>
     <string name="genres_save">Save!</string>
     <string name="summary_selection">Selection summary: </string>

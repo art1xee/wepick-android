@@ -13,5 +13,7 @@ sealed class ScreenNav(val route: String) {
 
     object Genres : ScreenNav("genres")         // Выбор жанров
 
+    object Summary: ScreenNav("summary")
+
     object Match : ScreenNav("match")            // Финальная карточка
 }
