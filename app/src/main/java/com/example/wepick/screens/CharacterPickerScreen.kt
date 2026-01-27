@@ -47,7 +47,11 @@ import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
 
 @Composable
-fun CharacterPickerScreen(navController: NavController, viewModel: MainViewModel) {
+fun CharacterPickerScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    modifier: Modifier
+) {
     // save id chosen character (null if no one is chosen by user)
     var selectedCharId by remember { mutableStateOf<String?>(null) }
     val selectedChar = characterList.find { it.id == selectedCharId }

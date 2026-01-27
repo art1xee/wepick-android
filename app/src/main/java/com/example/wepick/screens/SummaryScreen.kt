@@ -3,6 +3,7 @@ package com.example.wepick.screens
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.wepick.MainViewModel
@@ -10,7 +11,7 @@ import com.example.wepick.R
 import com.example.wepick.ScreenNav
 
 @Composable
-fun SummaryScreen(navController: NavController, viewModel: MainViewModel){
+fun SummaryScreen(navController: NavController, viewModel: MainViewModel,modifier:Modifier){
     Text("the summary screen")
     Button(
         onClick = {

@@ -1,24 +1,147 @@
 package com.example.wepick.screens
 
-import com.example.wepick.R
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.wepick.ContentType
 import com.example.wepick.MainViewModel
+import com.example.wepick.NextButton
+import com.example.wepick.R
 import com.example.wepick.ScreenNav
+import com.example.wepick.ui.theme.Anime
+import com.example.wepick.ui.theme.Black
+import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.Movie
+import com.example.wepick.ui.theme.Muted
+import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.PrimaryPurple
+import com.example.wepick.ui.theme.Series
+import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.ui.theme.White
 
 
 @Composable
-fun SelectionScreen(navController: NavController, viewModel: MainViewModel) {
-    Column {
-        Text(text = stringResource(R.string.selection_label, viewModel.userName.value))
-        Text(text = "тут будет выбор контента")
-        Button(onClick = { navController.navigate(ScreenNav.Partner.route) }) {
-            Text(stringResource(R.string.next_button))
+fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+    val selectedType by viewModel.selectedContentType
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(PrimaryPurple)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Card(
+            modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = CardYellow)
+        ) {
+            Column(
+                modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = stringResource(R.string.selection_label, viewModel.userName.value),
+                    fontFamily = PressStart2P,
+                    color = TextTeal,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier.height(24.dp))
+
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+
+                    ContentTypeButton( // content button for movies
+                        type = ContentType.Movie,
+                        isSelected = (selectedType == ContentType.Movie),
+                        onClick = { viewModel.setContentType(ContentType.Movie) },
+                        modifier = modifier,
+                        containerColor = Movie,
+                        text = stringResource(R.string.movie_content)
+                    )
+                    ContentTypeButton( // content button for tv shows/series
+                        type = ContentType.Tv,
+                        isSelected = (selectedType == ContentType.Tv),
+                        onClick = { viewModel.setContentType(ContentType.Tv) },
+                        modifier = modifier,
+                        containerColor = Series,
+                        text = stringResource(R.string.series_content)
+                    )
+                    ContentTypeButton( // content button for anime/asian content
+                        type = ContentType.Anime,
+                        isSelected = (selectedType == ContentType.Anime),
+                        onClick = { viewModel.setContentType(ContentType.Anime) },
+                        modifier = modifier,
+                        containerColor = Anime,
+                        text = stringResource(R.string.asian_content)
+                    )
+                }
+                NextButton(
+                    navController = navController,
+                    modifier = modifier,
+                    route = ScreenNav.Partner.route,
+                    enabled = selectedType != null,
+                    onNextClick = {
+                        selectedType?.let {
+                            viewModel.setContentType(it)
+                        }
+                    }
+                )
+            }
+
         }
+
+    }
+}
+
+@Composable
+fun ContentTypeButton(
+    type: ContentType,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    containerColor: Color,
+    modifier: Modifier,
+    text: String
+) {
+    Button(
+        onClick = {
+            onClick()
+        },
+        modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        border = if (isSelected) BorderStroke(0.5.dp, Black) else null,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (isSelected) containerColor else Muted,
+            contentColor = Black,
+        )
+    ) {
+        Text(
+            text = text,
+            fontFamily = PressStart2P
+        )
     }
 }

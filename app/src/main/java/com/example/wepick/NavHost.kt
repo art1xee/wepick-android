@@ -28,27 +28,27 @@ fun NavGraph(
             MainScreen(navController, viewModel, modifier = Modifier)
         }
         composable(ScreenNav.Selection.route) {
-            SelectionScreen(navController, viewModel)
+            SelectionScreen(navController, viewModel, modifier = Modifier)
         }
         composable(ScreenNav.Partner.route) {
-            PartnerScreen(navController, viewModel)
+            PartnerScreen(navController, viewModel,modifier = Modifier)
         }
         composable(ScreenNav.FriendName.route) {
-            FriendNameScreen(navController, viewModel)
+            FriendNameScreen(navController, viewModel,modifier = Modifier)
         }
 
         composable(ScreenNav.CharacterPicker.route) {
-            CharacterPickerScreen(navController, viewModel)
+            CharacterPickerScreen(navController, viewModel,modifier = Modifier)
         }
 
         composable(ScreenNav.Genres.route) {
-            GenresScreen(navController, viewModel)
+            GenresScreen(navController, viewModel,modifier = Modifier)
         }
         composable(ScreenNav.Summary.route) {
-            SummaryScreen(navController, viewModel)
+            SummaryScreen(navController, viewModel,modifier = Modifier)
         }
         composable(ScreenNav.Match.route) {
-            MatchScreen(navController, viewModel)
+            MatchScreen(navController, viewModel,modifier = Modifier)
         }
     }
 

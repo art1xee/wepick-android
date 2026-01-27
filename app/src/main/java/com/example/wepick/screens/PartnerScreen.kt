@@ -19,7 +19,7 @@ import com.example.wepick.ui.theme.PrimaryPurple
 
 
 @Composable
-fun PartnerScreen(navController: NavController, viewModel: MainViewModel) {
+fun PartnerScreen(navController: NavController, viewModel: MainViewModel,modifier:Modifier) {
 //    val type = viewModel.partnerType.value
 
     Column(

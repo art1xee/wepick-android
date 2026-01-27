@@ -1,6 +1,5 @@
 package com.example.wepick
 
-import androidx.collection.mutableIntSetOf
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -12,7 +11,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-enum class ContentType { MOVIE, TV, ANIME }
+sealed class ContentType(val name: String) {
+    object Movie : ContentType("movie")
+    object Tv : ContentType("series")
+    object Anime : ContentType("anime")
+}
 
 
 class MainViewModel : ViewModel() {
@@ -29,9 +32,9 @@ class MainViewModel : ViewModel() {
     }
 
     init {
-        loadContent(ContentType.MOVIE, apiKey = BuildConfig.TMDB_API_KEY)
-        loadContent(ContentType.TV, BuildConfig.TMDB_API_KEY)
-        loadContent(ContentType.ANIME, "")
+        loadContent(ContentType.Movie, apiKey = BuildConfig.TMDB_API_KEY)
+        loadContent(ContentType.Tv, BuildConfig.TMDB_API_KEY)
+        loadContent(ContentType.Anime, "")
     }
 
     private val _items = mutableStateOf<List<ContentItem>>(emptyList())
@@ -42,6 +45,13 @@ class MainViewModel : ViewModel() {
 
     fun setUserName(name: String) {
         _userName.value = name
+    }
+
+    private val _selectedContentType = mutableStateOf<ContentType?>(null)
+    val selectedContentType: State<ContentType?> = _selectedContentType
+
+    fun setContentType(type: ContentType) {
+        _selectedContentType.value = type
     }
 
     /// who is a partner: Friend or Character?
@@ -75,17 +85,17 @@ class MainViewModel : ViewModel() {
 
     fun toggleLikes(genre: String) {
         if (_selectedDislikes.contains(genre)) return
-        if(_selectedLikes.contains(genre)) _selectedLikes.remove(genre)
-        else if(_selectedLikes.size < 3) _selectedLikes.add(genre)
+        if (_selectedLikes.contains(genre)) _selectedLikes.remove(genre)
+        else if (_selectedLikes.size < 3) _selectedLikes.add(genre)
     }
 
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {
             try {
                 val contentList: List<ContentItem> = when (type) {
-                    ContentType.MOVIE -> RetrofitClient.instanceTmdb.getPopularMovies(apiKey).results
-                    ContentType.TV -> RetrofitClient.instanceTmdb.getPopularTV(apiKey).results
-                    ContentType.ANIME -> RetrofitClient.instanceJikan.getTopAnime().data.map { it.toContentItem() }
+                    ContentType.Movie -> RetrofitClient.instanceTmdb.getPopularMovies(apiKey).results
+                    ContentType.Tv -> RetrofitClient.instanceTmdb.getPopularTV(apiKey).results
+                    ContentType.Anime -> RetrofitClient.instanceJikan.getTopAnime().data.map { it.toContentItem() }
                 }
                 _items.value = contentList
 

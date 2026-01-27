@@ -20,12 +20,12 @@ import com.example.wepick.R
 import com.example.wepick.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
-import com.example.wepick.ui.theme.Gray
+import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 
 @Composable
-fun FriendNameScreen(navController: NavController, viewModel: MainViewModel) {
+fun FriendNameScreen(navController: NavController, viewModel: MainViewModel,modifier:Modifier) {
     var friendName by remember { mutableStateOf("") }
     val isFriendNameValid = friendName.trim().isNotEmpty()
 
@@ -51,7 +51,7 @@ fun FriendNameScreen(navController: NavController, viewModel: MainViewModel) {
                 contentColor = White,
                 containerColor = AccentRed,
                 disabledContentColor = Black,
-                disabledContainerColor = Gray,
+                disabledContainerColor = Muted,
             )
         ) {
             Text(stringResource(R.string.next_button))

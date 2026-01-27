@@ -39,7 +39,7 @@ import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 
 @Composable
-fun GenresScreen(navController: NavController, viewModel: MainViewModel) {
+fun GenresScreen(navController: NavController, viewModel: MainViewModel,modifier:Modifier) {
     val lang = "ru"
     val option = if (viewModel.currentStep == "dislikes") {
         GenresData.GENRES[lang]?.take(16) ?: emptyList()
@@ -48,20 +48,20 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel) {
     }
     val dislikesStep = viewModel.currentStep == "dislikes"
     Box(
-        modifier = Modifier
+        modifier
             .fillMaxSize()
             .background(PrimaryPurple),
         contentAlignment = Alignment.Center
     ) {
         Card(
-            modifier = Modifier
+            modifier
                 .fillMaxWidth(0.95f)
                 .fillMaxHeight(0.85f),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
             shape = MaterialTheme.shapes.large
         ) {
             Column(
-                modifier = Modifier
+                modifier
                     .fillMaxSize()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +75,7 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel) {
                     fontFamily = PressStart2P,
 //                    color =
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(bottom = 20.dp)
+                    modifier = modifier.padding(bottom = 20.dp)
                 )
 
                 LazyVerticalGrid(
@@ -103,7 +103,7 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel) {
                         viewModel.selectedDislikes.size == 3
                     else
                         viewModel.selectedLikes.size == 3,
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(16.dp)
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = AccentRed)
@@ -123,7 +123,7 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel) {
 fun GenreChip(
     genre: String,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val contentColor = if (isSelected) AccentRed else TextTeal
     val borderColor = if (isSelected) AccentRed else Color.Transparent
