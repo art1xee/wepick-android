@@ -1,20 +1,28 @@
 package com.example.wepick.screens
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,18 +36,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.MainViewModel
+import com.example.wepick.NextButton
 import com.example.wepick.R
 import com.example.wepick.ScreenNav
 import com.example.wepick.characterList
 import com.example.wepick.ui.theme.AccentRed
+import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
@@ -61,48 +75,60 @@ fun CharacterPickerScreen(
             .fillMaxSize()
             .background(PrimaryPurple)
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
+        Spacer(modifier.height(40.dp))
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = CardYellow)
         ) {
-            Text(
-                text = stringResource(R.string.popular_character_label),
-                fontFamily = PressStart2P,
-                color = White,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                contentPadding = PaddingValues(8.dp),
+            Column(
+                modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                items(characterList) { char ->
-                    val isSelected = char.id == selectedCharId
-                    CharacterCard(
-                        char.name,
-                        char.imageRes,
-                        isSelected = isSelected,
-                        onClick = {
-                            selectedCharId = char.id
-                        },
-                    )
-                }
-            }
-            Button(
-                onClick = {
-                    selectedCharId?.let {
-                        viewModel.setPartner("character", it)
-                        navController.navigate(ScreenNav.Genres.route)
+                Text(
+                    text = stringResource(R.string.popular_character_label),
+                    fontFamily = PressStart2P,
+                    color = TextTeal,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    textAlign = TextAlign.Center,
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    contentPadding = PaddingValues(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(420.dp)
+                ) {
+                    items(characterList) { char ->
+                        val isSelected = char.id == selectedCharId
+                        CharacterCard(
+                            char.name,
+                            char.imageRes,
+                            isSelected = isSelected,
+                            onClick = {
+                                selectedCharId = char.id
+                            },
+                        )
                     }
-                },
-                enabled = selectedChar != null,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.next_button))
+
+                }
+                Spacer(modifier.height(8.dp))
+                NextButton(
+                    navController = navController,
+                    modifier = Modifier,
+                    route = ScreenNav.Genres.route,
+                    enabled = selectedChar != null,
+                    onNextClick = {
+                        selectedCharId?.let {
+                            viewModel.setPartnerType("character")
+                        }
+                    }
+                )
             }
         }
 
@@ -110,38 +136,64 @@ fun CharacterPickerScreen(
 }
 
 @Composable
-fun CharacterCard(name: String, imageRes: Int, isSelected: Boolean, onClick: () -> Unit) {
+fun CharacterCard(
+    name: String,
+    imageRes: Int,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
     val contentColor = if (isSelected) AccentRed else Color.Black
-    val borderColor = if (isSelected) AccentRed else Color.Transparent
+
     Card(
         modifier = Modifier
-            .padding(4.dp)
+            .padding(2.dp)
+            .fillMaxWidth()
+            .height(120.dp)
             .clickable { onClick() }
-            .border(1.dp, borderColor, MaterialTheme.shapes.medium),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+            .border(
+                width = 1.dp,
+                color = contentColor,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(8.dp)
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(4.dp)
         ) {
             Image(
                 painter = painterResource(id = imageRes),
                 contentDescription = name,
                 modifier = Modifier
                     .size(60.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .border(1.dp, Color.Black, CircleShape),
                 contentScale = ContentScale.Crop,
             )
-            Text(
-                text = name,
-                style = MaterialTheme.typography.labelSmall,
-                color = contentColor,
-                fontFamily = PressStart2P,
-                modifier = Modifier.padding(top = 8.dp),
-                maxLines = 1,
-                textAlign = TextAlign.Center
-            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = 9.sp,
+                        lineHeight = 11.sp
+                    ),
+                    color = contentColor,
+                    textAlign = TextAlign.Center,
+                    fontFamily = PressStart2P,
+                    softWrap = true,
+                    maxLines = 3
+                )
+            }
         }
     }
 }

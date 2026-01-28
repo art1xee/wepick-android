@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,6 @@ import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
-import okhttp3.Route
 
 
 // the parent button
@@ -65,7 +65,7 @@ private fun BaseRetroButton(
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
-                enabled = true, // Всегда true для кликабельности (как ты хотел)
+                enabled = true,
                 onClick = { if (enabled) onClick() }
             )
             .background(containerColor, RoundedCornerShape(11.dp))
@@ -90,7 +90,10 @@ fun NextButton(
         onClick = {
             if (enabled) {
                 onNextClick()
-                navController.navigate(route)
+                // Исправление: переходим только если путь не пустой
+                if (route.isNotEmpty()) {
+                    navController.navigate(route)
+                }
             }
         },
         modifier = modifier,
@@ -100,6 +103,38 @@ fun NextButton(
         content = {
             Text(
                 text = stringResource(R.string.next_button),
+                fontFamily = PressStart2P,
+                color = if (enabled) White else Black.copy(alpha = 0.5f),
+                fontSize = 16.sp
+            )
+        }
+    )
+}
+
+@Composable
+fun FindContent(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    route: String,
+    enabled: Boolean,
+    onNextClick: () -> Unit
+) {
+    BaseRetroButton(
+        onClick = {
+            if (enabled) {
+                onNextClick()
+                if (route.isNotEmpty()) {
+                    navController.navigate(route)
+                }
+            }
+        },
+        modifier = modifier,
+        enabled = enabled,
+        containerColor = if (enabled) AccentRed else Muted.copy(alpha = 0.5f),
+        showShadow = enabled,
+        content = {
+            Text(
+                text = stringResource(R.string.find_content),
                 fontFamily = PressStart2P,
                 color = if (enabled) White else Black.copy(alpha = 0.5f),
                 fontSize = 16.sp
@@ -130,6 +165,31 @@ fun ContentTypeButton(
                 color = Black,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center
+            )
+        }
+    )
+}
+
+@Composable
+fun PartnerChooseButton(
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    text: String,
+    activeColor: Color,
+) {
+    BaseRetroButton(
+        onClick = onClick,
+        containerColor = if (isSelected) activeColor else Muted,
+        showShadow = true,
+        modifier = modifier.fillMaxWidth(),
+        content = {
+            Text(
+                text = text,
+                fontFamily = PressStart2P,
+                color = Black,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
             )
         }
     )

@@ -3,9 +3,11 @@ package com.example.wepick.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,9 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.GenresData
 import com.example.wepick.MainViewModel
+import com.example.wepick.NextButton
 import com.example.wepick.R
 import com.example.wepick.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
@@ -39,31 +43,28 @@ import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 
 @Composable
-fun GenresScreen(navController: NavController, viewModel: MainViewModel,modifier:Modifier) {
+fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
     val lang = "ru"
-    val option = if (viewModel.currentStep == "dislikes") {
-        GenresData.GENRES[lang]?.take(16) ?: emptyList()
-    } else {
-        GenresData.GENRES[lang] ?: emptyList()
-    }
     val dislikesStep = viewModel.currentStep == "dislikes"
-    Box(
-        modifier
+
+    val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
+
+    Column(
+        modifier = Modifier
             .fillMaxSize()
-            .background(PrimaryPurple),
-        contentAlignment = Alignment.Center
+            .background(PrimaryPurple)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(40.dp))
+
         Card(
-            modifier
-                .fillMaxWidth(0.95f)
-                .fillMaxHeight(0.85f),
-            colors = CardDefaults.cardColors(containerColor = CardYellow),
-            shape = MaterialTheme.shapes.large
+            modifier = Modifier.fillMaxWidth(0.98f),
+            colors = CardDefaults.cardColors(containerColor = CardYellow)
         ) {
             Column(
-                modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -73,16 +74,19 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel,modifier
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = PressStart2P,
-//                    color =
+                    color = TextTeal,
                     textAlign = TextAlign.Center,
-                    modifier = modifier.padding(bottom = 20.dp)
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(4.dp)
+                    contentPadding = PaddingValues(4.dp),
+                    modifier = Modifier.height(280.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    items(option) { genre ->
+                    items(genreList) { genre ->
                         val isSelected = if (dislikesStep)
                             viewModel.selectedDislikes.contains(genre)
                         else
@@ -94,26 +98,23 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel,modifier
                         }
                     }
                 }
-                Button(
-                    onClick = {
-                        if (dislikesStep) viewModel.currentStep = "likes"
-                        else navController.navigate(ScreenNav.Summary.route)
-                    },
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                NextButton(
+                    navController = navController,
+                    modifier = Modifier,
+                    route = if (!dislikesStep) ScreenNav.Summary.route else "",
                     enabled = if (dislikesStep)
                         viewModel.selectedDislikes.size == 3
                     else
                         viewModel.selectedLikes.size == 3,
-                    modifier = modifier
-                        .padding(16.dp)
-                        .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = AccentRed)
-                ) {
-                    Text(
-                        text = stringResource(R.string.find_content),
-                        fontFamily = PressStart2P,
-                        color = Color.White
-                    )
-                }
+                    onNextClick = {
+                        if (dislikesStep) {
+                            viewModel.currentStep = "likes"
+                        }
+                    }
+                )
             }
         }
     }
@@ -130,7 +131,7 @@ fun GenreChip(
     Card(
         modifier = Modifier
             .padding(4.dp)
-            .height(50.dp)
+            .height(60.dp)
             .clickable { onClick() }
             .border(
                 1.dp, borderColor, MaterialTheme.shapes.medium
@@ -146,6 +147,7 @@ fun GenreChip(
         ) {
             Text(
                 text = genre,
+                fontSize = 7.sp,
                 style = MaterialTheme.typography.labelSmall,
                 fontFamily = PressStart2P,
                 color = contentColor,
@@ -156,3 +158,5 @@ fun GenreChip(
         }
     }
 }
+
+

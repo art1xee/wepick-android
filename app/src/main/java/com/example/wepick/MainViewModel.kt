@@ -47,6 +47,7 @@ class MainViewModel : ViewModel() {
         _userName.value = name
     }
 
+
     private val _selectedContentType = mutableStateOf<ContentType?>(null)
     val selectedContentType: State<ContentType?> = _selectedContentType
 
@@ -62,9 +63,9 @@ class MainViewModel : ViewModel() {
     private val _partnerName = mutableStateOf("")
     val partnerName: State<String> = _partnerName
 
-    fun setPartner(type: String, name: String) {
+    fun setPartnerType(type: String) {
         _partnerType.value = type
-        _partnerName.value = name
+        _partnerName.value = ""
     }
 
     // for choose genres in GenresScreen.kt
@@ -79,14 +80,19 @@ class MainViewModel : ViewModel() {
     var selectedDecade by mutableIntStateOf(2000)
 
     fun toggleDislike(genre: String) {
-        if (_selectedDislikes.contains(genre)) _selectedDislikes.remove(genre)
-        else if (_selectedDislikes.size < 3) _selectedDislikes.add(genre)
+        if (_selectedDislikes.contains(genre)) {
+            _selectedDislikes.remove(genre)
+        } else if (_selectedDislikes.size < 3) {
+            _selectedDislikes.add(genre)
+        }
     }
 
     fun toggleLikes(genre: String) {
-        if (_selectedDislikes.contains(genre)) return
-        if (_selectedLikes.contains(genre)) _selectedLikes.remove(genre)
-        else if (_selectedLikes.size < 3) _selectedLikes.add(genre)
+        if (_selectedLikes.contains(genre)) {
+            _selectedLikes.remove(genre)
+        } else if (_selectedLikes.size < 3) {
+            _selectedLikes.add(genre)
+        }
     }
 
     fun loadContent(type: ContentType, apiKey: String) {
