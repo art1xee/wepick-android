@@ -1,6 +1,5 @@
 package com.example.wepick.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,26 +16,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.wepick.ContentType
+import com.example.wepick.ContentTypeButton
 import com.example.wepick.MainViewModel
 import com.example.wepick.NextButton
 import com.example.wepick.R
 import com.example.wepick.ScreenNav
 import com.example.wepick.ui.theme.Anime
-import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.Movie
-import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.Series
 import com.example.wepick.ui.theme.TextTeal
-import com.example.wepick.ui.theme.White
 
 
 @Composable
@@ -67,8 +61,7 @@ fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modi
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                 )
-                Spacer(modifier.height(24.dp))
-
+                Spacer(modifier.height(12.dp))
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,26 +72,30 @@ fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modi
                         isSelected = (selectedType == ContentType.Movie),
                         onClick = { viewModel.setContentType(ContentType.Movie) },
                         modifier = modifier,
-                        containerColor = Movie,
+                        activeColor = Movie,
                         text = stringResource(R.string.movie_content)
                     )
+                    Spacer(modifier.height(12.dp))
+
                     ContentTypeButton( // content button for tv shows/series
                         type = ContentType.Tv,
                         isSelected = (selectedType == ContentType.Tv),
                         onClick = { viewModel.setContentType(ContentType.Tv) },
                         modifier = modifier,
-                        containerColor = Series,
+                        activeColor = Series,
                         text = stringResource(R.string.series_content)
                     )
+                    Spacer(modifier.height(12.dp))
                     ContentTypeButton( // content button for anime/asian content
                         type = ContentType.Anime,
                         isSelected = (selectedType == ContentType.Anime),
                         onClick = { viewModel.setContentType(ContentType.Anime) },
                         modifier = modifier,
-                        containerColor = Anime,
+                        activeColor = Anime,
                         text = stringResource(R.string.asian_content)
                     )
                 }
+                Spacer(modifier.height(24.dp))
                 NextButton(
                     navController = navController,
                     modifier = modifier,
@@ -113,35 +110,7 @@ fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modi
             }
 
         }
-
     }
 }
 
-@Composable
-fun ContentTypeButton(
-    type: ContentType,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    containerColor: Color,
-    modifier: Modifier,
-    text: String
-) {
-    Button(
-        onClick = {
-            onClick()
-        },
-        modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        border = if (isSelected) BorderStroke(0.5.dp, Black) else null,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) containerColor else Muted,
-            contentColor = Black,
-        )
-    ) {
-        Text(
-            text = text,
-            fontFamily = PressStart2P
-        )
-    }
-}
+

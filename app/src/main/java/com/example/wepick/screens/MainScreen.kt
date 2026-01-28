@@ -86,6 +86,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
 //
 //                    )
                 )
+                Spacer(modifier.height(24.dp))
                 NextButton(
                     navController = navController,
                     modifier = modifier,
