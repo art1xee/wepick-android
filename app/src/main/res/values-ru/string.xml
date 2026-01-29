@@ -19,12 +19,13 @@
     <string name="genres_save">Сохранить!</string>
     <string name="summary_selection">Итоги выбора: </string>
     <string name="content_type">Тип контента:</string>
-    <string name="user_name_summary">Вы: %1$s</string>
-    <string name="second_user_name_summary">Имя друга: %1$s</string>
+    <string name="user_name_summary">Вы: </string>
+    <string name="second_user_name_summary">Имя друга: </string>
+    <string name="character_name">Имя персонажа: </string>
     <string name="dislikes_watch">Не хочет смотреть:</string>
     <string name="likes_watch">Хочет смотреть: </string>
     <string name="decade">Декада: </string>
-    <string name="find_content">Найти ${content}!</string>
+    <string name="find_content">Найти %1$s!</string>
     <string name="loading">Загрузка…</string>
     <string name="movie_match_label">Встретьте свою кино-пару!</string>
     <string name="content_name">_</string>

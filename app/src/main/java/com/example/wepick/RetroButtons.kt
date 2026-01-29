@@ -143,12 +143,13 @@ fun SaveGenres(
 }
 
 @Composable
-fun FindContent(
+fun FindContentButton(
     navController: NavController,
     modifier: Modifier = Modifier,
     route: String,
     enabled: Boolean,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    text:String,
 ) {
     BaseRetroButton(
         onClick = {
@@ -165,7 +166,7 @@ fun FindContent(
         showShadow = enabled,
         content = {
             Text(
-                text = stringResource(R.string.find_content),
+                text = text,
                 fontFamily = PressStart2P,
                 color = if (enabled) White else Black.copy(alpha = 0.5f),
                 fontSize = 16.sp

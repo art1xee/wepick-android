@@ -19,8 +19,9 @@
     <string name="genres_save">Зберегти!</string>
     <string name="summary_selection">Підсумок вибору: </string>
     <string name="content_type">Тип контенту:</string>
-    <string name="user_name_summary">Ви: %1$s</string>
-    <string name="second_user_name_summary">Ім\'я друга: %1$s</string>
+    <string name="user_name_summary">Ви: </string>
+    <string name="second_user_name_summary">Ім\'я друга: </string>
+    <string name="character_name">Ім\'я персонажа: </string>
     <string name="dislikes_watch">Не хоче дивитися: </string>
     <string name="likes_watch">Хоче дивитися: </string>
     <string name="decade">Декада: </string>

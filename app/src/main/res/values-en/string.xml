@@ -19,12 +19,13 @@
     <string name="genres_save">Save!</string>
     <string name="summary_selection">Selection summary: </string>
     <string name="content_type">Content type:</string>
-    <string name="user_name_summary">You: %1$s</string>
-    <string name="second_user_name_summary">Friend`s name: %1$s</string>
+    <string name="user_name_summary">You: </string>
+    <string name="second_user_name_summary">Friend`s name: </string>
+    <string name="character_name">Character`s name: </string>
     <string name="dislikes_watch">Don`t want to watch:</string>
     <string name="likes_watch">Want to watch: </string>
     <string name="decade">Decade: </string>
-    <string name="find_content">Find ${content}!</string>
+    <string name="find_content">Find %1$s!</string>
     <string name="loading">Loading…</string>
     <string name="movie_match_label">Find your movie match!</string>
     <string name="content_name">_</string>
