@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -47,6 +48,14 @@ class MainViewModel : ViewModel() {
         _userName.value = name
     }
 
+    private val _friendName = mutableStateOf("")
+
+    val friendName: State<String> = _friendName
+
+    fun setFriendName(friendName: String) {
+        _friendName.value = friendName
+    }
+
 
     private val _selectedContentType = mutableStateOf<ContentType?>(null)
     val selectedContentType: State<ContentType?> = _selectedContentType
@@ -77,22 +86,88 @@ class MainViewModel : ViewModel() {
     private val _selectedLikes = mutableStateListOf<String>()
     val selectedLikes: List<String> = _selectedLikes
 
-    var selectedDecade by mutableIntStateOf(2000)
+    private val _selectedDislikesFriend = mutableStateListOf<String>()
+    val selectedDislikesFriend: List<String> = _selectedDislikesFriend
 
-    fun toggleDislike(genre: String) {
-        if (_selectedDislikes.contains(genre)) {
-            _selectedDislikes.remove(genre)
-        } else if (_selectedDislikes.size < 3) {
-            _selectedDislikes.add(genre)
+    private val _selectedLikesFriend = mutableStateListOf<String>()
+    val selectedLikesFriend: List<String> = _selectedLikesFriend
+
+
+    val decades = listOf(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
+    fun nextDecade() {
+        val currentDecadeValue = if (activePlayer == 1) selectedDecade else selectedDecadeFriend
+
+        val currentIndex = decades.indexOf(currentDecadeValue)
+
+        val nextIndex = (currentIndex + 1) % decades.size
+        val newValue = decades[nextIndex]
+
+        if (activePlayer == 1) {
+            selectedDecade = newValue
+        } else {
+            selectedDecadeFriend = newValue
         }
     }
 
-    fun toggleLikes(genre: String) {
-        if (_selectedLikes.contains(genre)) {
-            _selectedLikes.remove(genre)
-        } else if (_selectedLikes.size < 3) {
-            _selectedLikes.add(genre)
+    fun prevDecade() {
+        val currentDecadeValue = if (activePlayer == 1) selectedDecade else selectedDecadeFriend
+
+        val currentIndex = decades.indexOf(currentDecadeValue)
+
+        val prevIndex = if (currentIndex <= 0) decades.size - 1 else currentIndex - 1
+        val newValue = decades[prevIndex]
+
+        if (activePlayer == 1) {
+            selectedDecade = newValue
+        } else {
+            selectedDecadeFriend = newValue
         }
+    }
+
+    fun toggleGenre(genre: String, isDislike: Boolean) {
+        val list = if (activePlayer == 1) {
+            if (isDislike) _selectedDislikes else _selectedLikes
+        } else {
+            if (isDislike) _selectedDislikesFriend else _selectedLikesFriend
+        }
+
+        if (list.contains(genre)) {
+            list.remove(genre)
+        } else if (list.size < 3) {
+            list.add(genre)
+        }
+    }
+
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
+
+    fun showLockedError(message: String) {
+        errorMessage = message
+        viewModelScope.launch {
+            delay(2000)
+            errorMessage = null
+        }
+    }
+
+    var isPartnerFriend by mutableStateOf(false)
+
+    var activePlayer by mutableIntStateOf(1)
+
+    fun prepareForGenres(){
+        activePlayer = 1
+        currentStep = "dislikes"
+
+        _selectedLikes.clear()
+        _selectedDislikes.clear()
+        _selectedLikesFriend.clear()
+        _selectedDislikesFriend.clear()
+    }
+
+    var selectedDecade by mutableIntStateOf(2000)
+    var selectedDecadeFriend by mutableIntStateOf(2000)
+
+    fun setPartnerIsFriend(isFriend: Boolean) {
+        isPartnerFriend = isFriend
     }
 
     fun loadContent(type: ContentType, apiKey: String) {
@@ -113,6 +188,3 @@ class MainViewModel : ViewModel() {
     }
 
 }
-
-
-

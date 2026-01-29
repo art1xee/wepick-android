@@ -91,7 +91,9 @@ fun FriendNameScreen(navController: NavController, viewModel: MainViewModel, mod
                     route = ScreenNav.Genres.route,
                     enabled = isFriendNameValid,
                     onNextClick = {
-                        viewModel.setUserName(friendName)
+                        viewModel.setFriendName(friendName)
+                        viewModel.prepareForGenres()
+                        navController.navigate(ScreenNav.Genres.route)
                     })
             }
         }

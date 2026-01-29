@@ -90,7 +90,6 @@ fun NextButton(
         onClick = {
             if (enabled) {
                 onNextClick()
-                // Исправление: переходим только если путь не пустой
                 if (route.isNotEmpty()) {
                     navController.navigate(route)
                 }
@@ -103,6 +102,38 @@ fun NextButton(
         content = {
             Text(
                 text = stringResource(R.string.next_button),
+                fontFamily = PressStart2P,
+                color = if (enabled) White else Black.copy(alpha = 0.5f),
+                fontSize = 16.sp
+            )
+        }
+    )
+}
+// button which saves all genres and decades from users
+@Composable
+fun SaveGenres(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    route: String,
+    enabled: Boolean,
+    onNextClick: () -> Unit
+) {
+    BaseRetroButton(
+        onClick = {
+            if (enabled) {
+                onNextClick()
+                if (route.isNotEmpty()) {
+                    navController.navigate(route)
+                }
+            }
+        },
+        modifier = modifier,
+        enabled = enabled,
+        containerColor = if (enabled) AccentRed else Muted.copy(alpha = 0.5f),
+        showShadow = enabled,
+        content = {
+            Text(
+                text = stringResource(R.string.genres_save),
                 fontFamily = PressStart2P,
                 color = if (enabled) White else Black.copy(alpha = 0.5f),
                 fontSize = 16.sp

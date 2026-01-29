@@ -184,7 +184,7 @@ fun CharacterCard(
                 Text(
                     text = name,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         lineHeight = 11.sp
                     ),
                     color = contentColor,
@@ -197,3 +197,5 @@ fun CharacterCard(
         }
     }
 }
+
+

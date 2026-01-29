@@ -14,7 +14,7 @@
     <string name="friend_name_label">Pass the device to a friend — let them enter their name</string>
     <string name="enter_name_friend_text_field">Friend`s name</string>
     <string name="genres_dislikes_choose">%1$s Select 3 genres that you do NOT like.</string>
-    <string name="genres_likes_choose">%1$sSelect 3 genres that you LIKE.</string>
+    <string name="genres_likes_choose">%1$s Select 3 genres that you LIKE.</string>
     <string name="decade_choose">%1$s Choose decade: </string>
     <string name="genres_save">Save!</string>
     <string name="summary_selection">Selection summary: </string>
@@ -36,5 +36,6 @@
     <string name="wepick_about">About WePick!</string>
     <string name="wepick_info">WePick! is a convenient tool for choosing movies, series, or other content that everyone will enjoy. You set common filters, and we suggest the perfect option.</string>
     <string name="wepick_github">The code for this application is available on GitHub: %1$s</string>
-
+    <string name="error_genre">This genre is already chosen!</string>
+<string name="player">Player: </string>
 </resources>

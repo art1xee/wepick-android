@@ -107,6 +107,8 @@ fun PartnerScreen(navController: NavController, viewModel: MainViewModel, modifi
                         enabled = selectedPartnerType.isNotEmpty(),
                         onNextClick = {
                             viewModel.setPartnerType(selectedPartnerType)
+
+                            viewModel.isPartnerFriend = (selectedPartnerType == "friend")
                         }
                     )
 

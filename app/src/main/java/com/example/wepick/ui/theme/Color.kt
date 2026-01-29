@@ -12,6 +12,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 
+// the main colors for every screens
 val PrimaryPurple = Color(0xFF800E9C)
 val AccentRed = Color(0xFFFF0037)
 val Muted = Color(0xFF8B8B8B)
@@ -35,6 +36,14 @@ val Anime = Color(0xffdb62c4)
 val FriendColor = Color(0xFFE1FA71)
 val PopularCharacterColor = Color(0xFF62AA2A)
 val DisabledContentButton = Color(0xFFDDDDDD)
+
+// choose genres colors
+val borderDislikes = Color(0xffff4d4d)
+val contentDislikes = Color(0xffff4d4d)
+val borderDislikesShadow = Color(0xffff4d4d)
+val borderLikes = Color(0xff4d79ff)
+val contentLikes = Color(0xff4d79ff)
+val borderLikesShadow = Color(0xff4d79ff)
 
 // summary colors
 val DislikeContentColor = Color(0xffff6b6b)
