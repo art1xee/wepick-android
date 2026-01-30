@@ -92,7 +92,12 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
 
         if (viewModel.isPartnerFriend) {
             Text(
-                text = "ИГРОК ${viewModel.activePlayer}: $currentPlayerName",
+                text = "${
+                    stringResource(
+                        R.string.player,
+                        viewModel.activePlayer
+                    )
+                }$currentPlayerName",
                 fontFamily = PressStart2P,
                 fontSize = 10.sp,
                 color = AccentRed,

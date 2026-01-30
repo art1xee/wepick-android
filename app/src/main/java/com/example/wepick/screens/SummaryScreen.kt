@@ -110,7 +110,6 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                             fontSize = 12.sp,
                             color = TextTeal
                         )
-                        // 3D эффект: Белый текст под красным
                         Box {
                             Text(
                                 text = contentDisplayName,
