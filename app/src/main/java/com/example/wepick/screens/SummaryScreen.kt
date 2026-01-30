@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,7 +74,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Center
     ) {
         Spacer(Modifier.height(30.dp))
 
@@ -102,7 +103,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                         .padding(bottom = 24.dp)
                         .background(White.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
                         .border(2.dp, AccentRed, RoundedCornerShape(12.dp))
-                        .padding(16.dp),
+                        .padding(12.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -118,13 +119,16 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                                 fontFamily = PressStart2P,
                                 fontSize = 12.sp,
                                 color = White,
-                                modifier = Modifier.offset(x = 1.dp, y = 1.dp)
+                                modifier = Modifier.offset(x = 1.dp, y = 1.dp),
+                                softWrap = true
                             )
                             Text(
                                 text = contentDisplayName,
                                 fontFamily = PressStart2P,
                                 fontSize = 12.sp,
-                                color = AccentRed
+                                color = AccentRed,
+                                softWrap = true
+
                             )
                         }
                     }
@@ -190,7 +194,8 @@ fun ParticipantColumn(
                 fontFamily = PressStart2P,
                 fontSize = 10.sp,
                 color = White,
-                modifier = Modifier.offset(x = 1.dp, y = 1.dp)
+                modifier = Modifier.offset(x = 1.dp, y = 1.dp),
+                lineHeight = 10.sp,
             )
             // Имя игрока (Красный текст)
             Text(
@@ -198,7 +203,8 @@ fun ParticipantColumn(
                 fontFamily = PressStart2P,
                 fontSize = 10.sp,
                 color = AccentRed,
-                modifier = Modifier.padding(bottom = 12.dp)
+                lineHeight = 10.sp,
+                modifier = Modifier.padding(bottom = 12.dp),
             )
         }
 
@@ -206,7 +212,7 @@ fun ParticipantColumn(
         SummaryInfoBlock(
             label = stringResource(R.string.dislikes_watch),
             items = dislikes,
-            color = DislikeContentColor.copy(0.5f)
+            color = DislikeContentColor.copy(0.5f),
         )
 
         Spacer(Modifier.height(12.dp))
@@ -215,8 +221,9 @@ fun ParticipantColumn(
         SummaryInfoBlock(
             label = stringResource(R.string.likes_watch),
             items = likes,
-            color = LikeContentColor.copy(0.5f)
-        )
+            color = LikeContentColor.copy(0.5f),
+
+            )
 
         Spacer(Modifier.height(12.dp))
 
@@ -225,19 +232,23 @@ fun ParticipantColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(DecadeColor, RoundedCornerShape(8.dp))
-                .padding(8.dp)
+                .padding(8.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 stringResource(R.string.decade),
                 fontFamily = PressStart2P,
                 fontSize = 7.sp,
-                color = TextTeal
+                color = TextTeal,
+                textAlign = TextAlign.Center
             )
             Text(
                 text = decade.toString(),
                 fontFamily = PressStart2P,
                 fontSize = 10.sp,
-                color = Black
+                color = Black,
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -255,14 +266,18 @@ fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
             fontFamily = PressStart2P,
             fontSize = 8.sp,
             color = TextTeal,
-            modifier = Modifier
+            modifier = Modifier.padding(bottom = 6.dp),
+            textAlign = TextAlign.Center,
+            lineHeight = 10.sp,
+            softWrap = true
         )
 
-        Column(
+        FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color.copy(alpha = 0.8f), RoundedCornerShape(8.dp))
                 .padding(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             if (items.isEmpty()) {
@@ -273,7 +288,10 @@ fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
                         text = "• $genre",
                         fontFamily = PressStart2P,
                         fontSize = 8.sp,
-                        color = Black
+                        color = Black,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 12.sp,
+//                        softWrap = true,
                     )
                 }
             }
