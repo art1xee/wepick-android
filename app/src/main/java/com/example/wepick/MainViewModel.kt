@@ -153,14 +153,12 @@ class MainViewModel : ViewModel() {
 
     var activePlayer by mutableIntStateOf(1)
 
-    fun prepareForGenres(){
+    fun prepareForGenres() {
         activePlayer = 1
         currentStep = "dislikes"
 
         _selectedLikes.clear()
         _selectedDislikes.clear()
-        _selectedLikesFriend.clear()
-        _selectedDislikesFriend.clear()
     }
 
     var selectedDecade by mutableIntStateOf(2000)
@@ -168,6 +166,26 @@ class MainViewModel : ViewModel() {
 
     fun setPartnerIsFriend(isFriend: Boolean) {
         isPartnerFriend = isFriend
+    }
+
+    var selectedCharacterName by mutableStateOf("")
+
+    fun selectCharacter(name: String) {
+        selectedCharacterName = name
+    }
+
+
+    fun generateCharacterFullProfile() {
+        val allGenres = GenresData.GENRES["ru"] ?: emptyList()
+        val shuffled = allGenres.shuffled()
+
+        _selectedLikesFriend.clear()
+        _selectedLikesFriend.addAll(shuffled.take(3))
+
+        _selectedDislikesFriend.clear()
+        _selectedDislikesFriend.addAll(shuffled.drop(3).take(3))
+
+        selectedDecadeFriend = decades.random()
     }
 
     fun loadContent(type: ContentType, apiKey: String) {

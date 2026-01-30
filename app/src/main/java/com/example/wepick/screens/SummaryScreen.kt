@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,6 +57,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
     val userName by viewModel.userName
     val friendName by viewModel.friendName
     val isFriend = viewModel.isPartnerFriend
+
 
     val contentDisplayName = when (selectedType) {
         ContentType.Movie -> stringResource(R.string.movie_content)
@@ -146,10 +148,10 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                         label = if (isFriend) stringResource(R.string.second_user_name_summary) else stringResource(
                             R.string.character_name
                         ),
-                        name = if (isFriend) friendName else "Saul Good Man",
+                        name = if (isFriend) friendName else viewModel.selectedCharacterName,
                         dislikes = viewModel.selectedDislikesFriend,
                         likes = viewModel.selectedLikesFriend,
-                        decade = if (isFriend) viewModel.selectedDecadeFriend else 1940
+                        decade = viewModel.selectedDecadeFriend
                     )
                 }
 

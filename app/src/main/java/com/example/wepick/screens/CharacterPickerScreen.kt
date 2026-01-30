@@ -124,8 +124,12 @@ fun CharacterPickerScreen(
                     route = ScreenNav.Genres.route,
                     enabled = selectedChar != null,
                     onNextClick = {
-                        selectedCharId?.let {
-                            viewModel.setPartnerType("character")
+                        selectedChar?.let { char ->
+                            viewModel.setPartnerIsFriend(false)
+                            viewModel.selectCharacter(char.name)
+                            viewModel.generateCharacterFullProfile()
+                            viewModel.prepareForGenres()
+                            navController.navigate(ScreenNav.Genres.route)
                         }
                     }
                 )
