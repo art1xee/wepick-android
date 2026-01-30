@@ -1,5 +1,8 @@
 package com.example.wepick
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -8,12 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import java.util.Locale
 
 sealed class ContentType(val name: String) {
     object Movie : ContentType("movie")
@@ -313,6 +314,27 @@ class MainViewModel : ViewModel() {
 
     fun closeMenu() {
         _isMenuOpen.value = false
+    }
+
+
+    private val _currentLanguage = mutableStateOf("en")
+    val currentLanguage: State<String> = _currentLanguage
+
+    fun setLanguage(lang: String, context: Context) {
+        LocaleSettings.saveLanguage(context, lang)
+
+        _currentLanguage.value = lang
+
+        LocalHelper.updateResources(context, lang)
+
+        if (context is Activity) {
+            context.recreate()
+        } else {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            context.startActivity(intent)
+        }
+
     }
 
     fun loadContent(type: ContentType, apiKey: String) {

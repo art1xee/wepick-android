@@ -103,7 +103,8 @@ fun MainScaffold(
         OverlayMenu(
             isOpen = isMenuOpen,
             onClose = { viewModel.closeMenu() },
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
         )
     }
 }

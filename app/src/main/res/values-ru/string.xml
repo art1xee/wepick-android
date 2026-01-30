@@ -41,6 +41,7 @@
     <string name="error_genre">Этот жанр уже выбран!</string>
     <string name="player">Игрок: </string>
     <string name="no_found_content">К сожалению контент не был найден. Попробуйте ещё раз!</string>
+    <string name="select_lang">Выбери язык: </string>
 
 
 </resources>

@@ -41,5 +41,6 @@
     <string name="error_genre">This genre is already chosen!</string>
     <string name="player">Player: </string>
     <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
+    <string name="select_lang">Select language: </string>
 
 </resources>
