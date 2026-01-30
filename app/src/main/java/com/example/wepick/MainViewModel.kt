@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -302,6 +303,17 @@ class MainViewModel : ViewModel() {
 
     private var randomPage = (1..20).random()
 
+
+    private val _isMenuOpen = mutableStateOf(false)
+    val isMenuOpen: State<Boolean> = _isMenuOpen
+
+    fun toggleMenu() {
+        _isMenuOpen.value = !_isMenuOpen.value
+    }
+
+    fun closeMenu() {
+        _isMenuOpen.value = false
+    }
 
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {

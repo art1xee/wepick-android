@@ -29,7 +29,7 @@
     <string name="loading">Загрузка…</string>
     <string name="movie_match_label">Встретьте свою кино-пару!</string>
     <string name="content_name">_</string>
-    <string name="rating" />
+    <string name="rating">Rating: </string>
     <string name="pages">%1$s!</string>
     <string name="seen_content">Видели - показать другое</string>
     <string name="back_content">Назад</string>
@@ -37,7 +37,7 @@
     <string name="start_again">Начать сначала</string>
     <string name="wepick_about">Про WePick!</string>
     <string name="wepick_info">WePick! — это удобный инструмент для выбора фильмов, сериалов или другого контента, который понравится всем участникам. Вы устанавливаете общие фильтры, а мы предлагаем идеальный вариант.</string>
-    <string name="wepick_github">Код этого приложения доступен на GitHub: %1$s</string>
+    <string name="wepick_github">Код этого приложения доступен на GitHub:</string>
     <string name="error_genre">Этот жанр уже выбран!</string>
     <string name="player">Игрок: </string>
     <string name="no_found_content">К сожалению контент не был найден. Попробуйте ещё раз!</string>

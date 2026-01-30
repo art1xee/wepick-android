@@ -67,7 +67,7 @@ fun MatchScreen(
     ) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(CardYellow),
+            colors = CardDefaults.cardColors(CardYellow.copy()),
             shape = MaterialTheme.shapes.medium
         ) {
             Column(
@@ -125,22 +125,26 @@ fun MatchScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         Text(
                             text = stringResource(R.string.rating) + " ",
                             fontFamily = PressStart2P,
                             fontSize = 10.sp,
                             color = Black,
                         )
+                        val formattedRating = "%.1f".format(currentItem.rating)
                         Text(
-                            text = "⭐ ${currentItem.rating}/10",
+                            text = "⭐ ${formattedRating}/10",
                             fontFamily = PressStart2P,
                             fontSize = 10.sp,
                             textAlign = TextAlign.Center,
                             color = Black
                         )
                     }
-
                     Text(
                         text = "${currentIndex + 1} / ${matchedItems.size}",
                         fontFamily = PressStart2P,
@@ -161,7 +165,7 @@ fun MatchScreen(
                             text = stringResource(R.string.back_content),
                             color = AccentRed,
                             onClick = {
-                                if (currentIndex > 0 ){
+                                if (currentIndex > 0) {
                                     currentIndex--
                                 }
                             }
@@ -184,7 +188,7 @@ fun MatchScreen(
                             }
                         )
                     }
-                } else { // Теперь ELSE на своем месте (вне блока if с предметами)
+                } else {
                     Text(
                         text = stringResource(R.string.no_found_content),
                         fontFamily = PressStart2P,

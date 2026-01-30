@@ -1,7 +1,5 @@
 package com.example.wepick.screens
 
-import android.widget.Space
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,11 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,17 +35,14 @@ import androidx.navigation.NavController
 import com.example.wepick.ContentType
 import com.example.wepick.FindContentButton
 import com.example.wepick.MainViewModel
-import com.example.wepick.NextButton
 import com.example.wepick.R
 import com.example.wepick.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
-import com.example.wepick.ui.theme.ButtonResetBg
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DecadeColor
 import com.example.wepick.ui.theme.DislikeContentColor
 import com.example.wepick.ui.theme.LikeContentColor
-import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal

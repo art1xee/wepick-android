@@ -35,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.wepick.screens.MainScaffold
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.Muted
@@ -51,9 +52,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             WePickTheme {
                 val navController = rememberNavController()
-
                 val viewModel: MainViewModel = viewModel()
-                StartProgram(navController, viewModel)
+                MainScaffold(viewModel, navController) {
+                    StartProgram(navController, viewModel)
+                }
             }
         }
     }
