@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_main">Stop arguing over what to watch! Let’s put some movie matrimony - back in your life.</string>
+    <string name="enter_name_main">Enter your name</string>
+    <string name="next_button">Next!</string>
+    <string name="selection_label">Hello %1$s! Choose content which you want to watch.</string>
+    <string name="movie_content">Movie`s</string>
+    <string name="series_content">Series</string>
+    <string name="asian_content">Anime/Asian</string>
+    <string name="partner_label">Now choose your fellow for watching: %1$s content</string>
+    <string name="friend_partner">Friend</string>
+    <string name="popular_character_partner">Popular character</string>
+    <string name="popular_character_label">Who do you want to play WePick with?</string>
+    <string name="friend_name_label">Pass the device to a friend — let them enter their name</string>
+    <string name="enter_name_friend_text_field">Friend`s name</string>
+    <string name="genres_dislikes_choose">%1$s Select 3 genres that you do NOT like.</string>
+    <string name="genres_likes_choose">%1$s Select 3 genres that you LIKE.</string>
+    <string name="decade_choose">%1$s Choose decade: </string>
+    <string name="genres_save">Save!</string>
+    <string name="summary_selection">Selection summary: </string>
+    <string name="content_type">Content type:</string>
+    <string name="user_name_summary">You: </string>
+    <string name="second_user_name_summary">Friend`s name: </string>
+    <string name="character_name">Character`s name: </string>
+    <string name="dislikes_watch">Don`t want to watch:</string>
+    <string name="likes_watch">Want to watch: </string>
+    <string name="decade">Decade: </string>
+    <string name="find_content">Find %1$s!</string>
+    <string name="loading">Loading…</string>
+    <string name="movie_match_label">Find your movie match!</string>
+    <string name="content_name">_</string>
+    <string name="rating">Rating :</string>
+    <string name="pages">%1$s!</string>
+    <string name="seen_content">Seen it - show another</string>
+    <string name="back_content">Prev</string>
+    <string name="reload_content">Reload search</string>
+    <string name="start_again">Start over</string>
+    <string name="wepick_about">About WePick!</string>
+    <string name="wepick_info">WePick! is a convenient tool for choosing movies, series, or other content that everyone will enjoy. You set common filters, and we suggest the perfect option.</string>
+    <string name="wepick_github">The code for this application is available on GitHub:</string>
+    <string name="error_genre">This genre is already chosen!</string>
+    <string name="player">Player: </string>
+    <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
+    <string name="select_lang">Select language: </string>
+
+</resources>

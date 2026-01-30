@@ -1,1 +1,10 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
 /build
+.DS_Store
+Thumbs.db
+local.properties
+secrets.properties

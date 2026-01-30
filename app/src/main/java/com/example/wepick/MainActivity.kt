@@ -1,47 +1,50 @@
 package com.example.wepick
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.wepick.ui.theme.WepickTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.wepick.screens.MainScaffold
+import com.example.wepick.ui.theme.WePickTheme
 
 class MainActivity : ComponentActivity() {
+    override fun attachBaseContext(newBase: Context?) {
+        val lang = LocaleSettings.getLanguage(newBase)
+        LocalHelper.updateResources(newBase, lang)
+        super.attachBaseContext(newBase)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel: MainViewModel by viewModels()
+
         enableEdgeToEdge()
         setContent {
-            WepickTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            WePickTheme {
+                val navController = rememberNavController()
+                MainScaffold(viewModel, navController) {
+                    StartProgram(navController, viewModel)
                 }
             }
         }
     }
+
+
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun StartProgram(navController: NavHostController, viewModel: MainViewModel) {
+    NavGraph(
+        navController = navController,
+        viewModel = viewModel
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WepickTheme {
-        Greeting("Android")
-    }
-}
+
+
