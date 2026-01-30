@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -77,8 +80,6 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(Modifier.height(30.dp))
-
-        // Основная подложка (Желтая область)
         Card(
             modifier = Modifier.fillMaxWidth(0.98f),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
@@ -96,7 +97,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                     modifier = Modifier.padding(bottom = 20.dp)
                 )
 
-                // Тип контенту с 3D текстом
+                // type content (red color with white shadow)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -117,24 +118,28 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                             Text(
                                 text = contentDisplayName,
                                 fontFamily = PressStart2P,
-                                fontSize = 12.sp,
+                                fontSize = 11.sp,
                                 color = White,
                                 modifier = Modifier.offset(x = 1.dp, y = 1.dp),
-                                softWrap = true
+                                textAlign = TextAlign.Center,
+                                softWrap = true,
+                                lineHeight = 14.sp
+
                             )
                             Text(
                                 text = contentDisplayName,
                                 fontFamily = PressStart2P,
-                                fontSize = 12.sp,
+                                fontSize = 11.sp,
                                 color = AccentRed,
-                                softWrap = true
-
+                                softWrap = true,
+                                textAlign = TextAlign.Center,
+                                lineHeight = 14.sp
                             )
                         }
                     }
                 }
 
-                // Секция участников
+                // sections with users
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -182,7 +187,6 @@ fun ParticipantColumn(
     likes: List<String>,
     decade: Int
 ) {
-    // Весь столбец игрока теперь имеет легкую подложку, как на сайте
     Column(
         modifier = modifier
             .background(White.copy(alpha = 0.1f), RoundedCornerShape(12.dp))
@@ -195,20 +199,20 @@ fun ParticipantColumn(
                 fontSize = 10.sp,
                 color = White,
                 modifier = Modifier.offset(x = 1.dp, y = 1.dp),
-                lineHeight = 10.sp,
+                lineHeight = 12.sp,
             )
-            // Имя игрока (Красный текст)
+            // user name (red color with white shadow)
             Text(
                 text = "$label $name",
                 fontFamily = PressStart2P,
                 fontSize = 10.sp,
                 color = AccentRed,
-                lineHeight = 10.sp,
+                lineHeight = 12.sp,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
         }
 
-        // Жанры (Дизлайки)
+        // genres dislikes
         SummaryInfoBlock(
             label = stringResource(R.string.dislikes_watch),
             items = dislikes,
@@ -217,17 +221,16 @@ fun ParticipantColumn(
 
         Spacer(Modifier.height(12.dp))
 
-        // Жанры (Лайки)
+        // genres likes
         SummaryInfoBlock(
             label = stringResource(R.string.likes_watch),
             items = likes,
             color = LikeContentColor.copy(0.5f),
-
-            )
+        )
 
         Spacer(Modifier.height(12.dp))
 
-        // Блок Декады (Коричневатый фон)
+        // decade block
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -254,12 +257,15 @@ fun ParticipantColumn(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
     Column(
         modifier = Modifier
             .background(White.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
-            .padding(4.dp)
+            .padding(4.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = label,
@@ -267,7 +273,7 @@ fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
             fontSize = 8.sp,
             color = TextTeal,
             modifier = Modifier.padding(bottom = 6.dp),
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             lineHeight = 10.sp,
             softWrap = true
         )
@@ -277,21 +283,29 @@ fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
                 .fillMaxWidth()
                 .background(color.copy(alpha = 0.8f), RoundedCornerShape(8.dp))
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            maxItemsInEachRow = Int.MAX_VALUE
         ) {
             if (items.isEmpty()) {
                 Text("—", fontFamily = PressStart2P, fontSize = 8.sp, color = Black.copy(0.4f))
             } else {
                 items.forEach { genre ->
+                    val dynamicFontSize = when {
+                        genre.length > 18 -> 6.sp
+                        genre.length > 12 -> 7.sp
+                        else -> 8.sp
+                    }
+
                     Text(
                         text = "• $genre",
                         fontFamily = PressStart2P,
-                        fontSize = 8.sp,
+                        fontSize = dynamicFontSize,
                         color = Black,
-                        textAlign = TextAlign.Center,
-                        lineHeight = 12.sp,
-//                        softWrap = true,
+                        softWrap = false,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.wrapContentWidth()
                     )
                 }
             }
