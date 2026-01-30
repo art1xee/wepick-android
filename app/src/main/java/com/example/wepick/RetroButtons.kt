@@ -109,6 +109,33 @@ fun NextButton(
         }
     )
 }
+
+@Composable
+fun CustomMatchButton(
+    text: String,
+    color: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    BaseRetroButton(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+        containerColor = color,
+        showShadow = true,
+        enabled = true,
+        content = {
+            Text(
+                text = text,
+                fontFamily = PressStart2P,
+                color = Black,
+                fontSize = 10.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+    )
+}
+
 // button which saves all genres and decades from users
 @Composable
 fun SaveGenres(
@@ -149,7 +176,7 @@ fun FindContentButton(
     route: String,
     enabled: Boolean,
     onNextClick: () -> Unit,
-    text:String,
+    text: String,
 ) {
     BaseRetroButton(
         onClick = {

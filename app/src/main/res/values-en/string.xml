@@ -29,8 +29,8 @@
     <string name="loading">Loading…</string>
     <string name="movie_match_label">Find your movie match!</string>
     <string name="content_name">_</string>
-    <string name="rating">0</string>
-    <string name="pages">0/0</string>
+    <string name="rating" />
+    <string name="pages">%1$s!</string>
     <string name="seen_content">Seen it - show another</string>
     <string name="reload_content">Reload search</string>
     <string name="start_again">Start over</string>
@@ -38,5 +38,7 @@
     <string name="wepick_info">WePick! is a convenient tool for choosing movies, series, or other content that everyone will enjoy. You set common filters, and we suggest the perfect option.</string>
     <string name="wepick_github">The code for this application is available on GitHub: %1$s</string>
     <string name="error_genre">This genre is already chosen!</string>
-<string name="player">Player: </string>
+    <string name="player">Player: </string>
+    <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
+
 </resources>

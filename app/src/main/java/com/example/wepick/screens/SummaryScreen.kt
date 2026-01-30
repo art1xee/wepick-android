@@ -171,7 +171,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                     route = ScreenNav.Match.route,
                     text = stringResource(R.string.find_content, contentDisplayName),
                     enabled = true,
-                    onNextClick = { /* Запуск поиска */ }
+                    onNextClick = { viewModel.processMatches(navController) }
                 )
             }
         }

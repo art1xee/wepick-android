@@ -29,8 +29,8 @@
     <string name="loading">Загрузка…</string>
     <string name="movie_match_label">Зустрінь свою кінопару!</string>
     <string name="content_name">_</string>
-    <string name="rating">0</string>
-    <string name="pages">0/0</string>
+    <string name="rating" />
+    <string name="pages">%1$s!</string>
     <string name="seen_content">Бачили - показити інше</string>
     <string name="reload_content">Оновити підбір</string>
     <string name="start_again">Почати спочатку</string>
@@ -39,5 +39,6 @@
     <string name="wepick_github">Код цього додатку доступний на GitHub: %1$s</string>
     <string name="error_genre">Цей жанр вже вибранний!</string>
     <string name="player">Гравець :</string>
+    <string name="no_found_content">Нажаль контент не був знайден. Спробуйте ще раз!</string>
 
 </resources>

@@ -77,6 +77,7 @@ dependencies {
     // Use the renamed core library
     implementation(libs.androidx.compose.ui.core)
 
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
