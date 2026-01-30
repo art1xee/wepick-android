@@ -16,4 +16,5 @@ data class ContentItem(
     @SerializedName("vote_average")
     val rating: Double = 0.0,
     val mediaType: String,
+    val releaseDate: String,
 )

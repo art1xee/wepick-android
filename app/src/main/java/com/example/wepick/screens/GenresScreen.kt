@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.Hyphens
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -71,7 +72,7 @@ import org.w3c.dom.Text
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
-    val lang = "ru"
+    val lang = java.util.Locale.getDefault().language
     val dislikesStep = viewModel.currentStep == "dislikes"
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
     val lockedMessage = stringResource(R.string.error_genre)

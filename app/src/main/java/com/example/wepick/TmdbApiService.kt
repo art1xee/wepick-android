@@ -38,4 +38,13 @@ interface TmdbApiService {
         @Query("query") query: String,
         @Query("language") language: String = "ru_RU",
     ): TmdbResponse
+
+    @GET("discover/tv")
+    suspend fun getDiscoveryTV(
+        @Query("api_key") apiKey: String,
+        @Query("with_genres") genres: String,
+        @Query("first_air_date.gte") dateStart: String,
+        @Query("first_air_date.lte") dateEnd: String,
+        @Query("language") language: String = "ru_RU",
+    ): TmdbResponse
 }

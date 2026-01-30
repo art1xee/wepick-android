@@ -12,16 +12,26 @@ data class AnimeItem(
     val synopsis: String?,
     val images: JikanImages,
     @SerializedName("score") val score: Double?,
+    val year: Int?,
+    val aired: Aired
 )
 
+data class Aired(
+    @SerializedName("from") val from: String?
+)
 fun AnimeItem.toContentItem(): ContentItem {
+    val yearString = this.year?.toString()
+        ?: this.aired.from?.take(4)
+        ?: "0000"
+
     return ContentItem(
         id = this.malId,
         title = this.title,
         posterPath = this.images.jpg.imageUrl,
         rating = this.score ?: 0.0,
         overview = this.synopsis ?: "",
-        mediaType = "anime"
+        mediaType = "anime",
+        releaseDate = yearString
     )
 }
 

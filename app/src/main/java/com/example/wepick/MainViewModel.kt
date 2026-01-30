@@ -8,9 +8,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.util.Locale
 
 sealed class ContentType(val name: String) {
     object Movie : ContentType("movie")
@@ -188,13 +190,125 @@ class MainViewModel : ViewModel() {
         selectedDecadeFriend = decades.random()
     }
 
+    fun getGenresId(selectedGenre: String): Int? {
+        val currentLang = "ru"
+        val index = GenresData.GENRES[currentLang]?.indexOf(selectedGenre) ?: -1
+
+        if (index != -1) {
+            val englishGenreName = GenresData.GENRES["en"]?.get(index)
+            return GenresData.tmdbGenreIds[englishGenreName]
+        }
+        println("DEBUG: Genre ID is not found for: $selectedGenre")
+        return null
+    }
+
+    fun getGenreIdForApi(selectedGenres: String, type: ContentType): Int? {
+        val currentLang = "ru"
+        val index = GenresData.GENRES[currentLang]?.indexOf(selectedGenres.trim()) ?: -1
+
+        if (index == -1) return null
+
+        val englishName = GenresData.GENRES["en"]?.get(index)
+
+        return if (type == ContentType.Anime) {
+            GenresData.jikanGenreIds[englishName]
+        } else {
+            GenresData.tmdbGenreIds[englishName]
+        }
+    }
+
+    fun processMatches(navController: NavController) {
+        viewModelScope.launch {
+            try {
+                val type = selectedContentType.value ?: ContentType.Movie
+
+                val allLikes = (selectedLikes + selectedLikesFriend).distinct()
+                val allDislikes = (selectedDislikes + selectedDislikesFriend).distinct()
+                val matchingGenres = allLikes.filter { it !in allDislikes }
+
+                val genreIdsString = matchingGenres.mapNotNull { getGenreIdForApi(it,type) }.joinToString(",")
+
+                val minYear = minOf(selectedDecade, selectedDecadeFriend)
+                val maxYear = maxOf(selectedDecade, selectedDecadeFriend) + 9
+
+                when (type) {
+                    ContentType.Anime -> {
+                        performJikanSeacrh(genreIdsString, minYear, maxYear)
+                    }
+
+                    else -> {
+                        performTmdbDiscover(type, genreIdsString, minYear, maxYear)
+                    }
+                }
+                navController.navigate(ScreenNav.Match.route)
+            } catch (e: kotlin.Exception) {
+                println("Search Error: ${e.message}")
+            }
+        }
+    }
+
+    private suspend fun performJikanSeacrh(genreIds: String, startYear: Int, endYear: Int) {
+        try {
+            val response = RetrofitClient.instanceJikan.searchAnime(
+                genres = genreIds.ifEmpty { null }
+            )
+
+            val filtered = response.data.map {
+                it.toContentItem()
+            }.filter { anime ->
+                val year = anime.releaseDate.toIntOrNull() ?: 0
+                year in startYear..endYear
+            }
+            _items.value = filtered
+        } catch (e: kotlin.Exception) {
+            println("Jikan Error: ${e.message}")
+            _items.value = emptyList()
+        }
+    }
+
+    private suspend fun performTmdbDiscover(
+        type: ContentType,
+        genres: String,
+        start: Int,
+        end: Int
+    ) {
+        try {
+            val response = if (type == ContentType.Movie) {
+                RetrofitClient.instanceTmdb.getDiscoveryMovie(
+                    apiKey = BuildConfig.TMDB_API_KEY,
+                    genres = genres,
+                    dateStart = "$start-01-01",
+                    dateEnd = "$end-12-31",
+                )
+            } else {
+                RetrofitClient.instanceTmdb.getDiscoveryTV(
+                    apiKey = BuildConfig.TMDB_API_KEY,
+                    genres = genres,
+                    dateStart = "$start-01-01",
+                    dateEnd = "$end-12-31",
+                )
+            }
+            _items.value = response.results.map { it.toContentItem() }
+        } catch (e: kotlin.Exception) {
+            println("TMDB Discover Error: ${e.message}")
+            _items.value = emptyList()
+        }
+    }
+
+
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {
             try {
                 val contentList: List<ContentItem> = when (type) {
-                    ContentType.Movie -> RetrofitClient.instanceTmdb.getPopularMovies(apiKey).results
-                    ContentType.Tv -> RetrofitClient.instanceTmdb.getPopularTV(apiKey).results
-                    ContentType.Anime -> RetrofitClient.instanceJikan.getTopAnime().data.map { it.toContentItem() }
+                    ContentType.Movie -> RetrofitClient.instanceTmdb.getPopularMovies(apiKey).results.map {
+                        it.toContentItem()
+                    }
+                    ContentType.Tv -> RetrofitClient.instanceTmdb.getPopularTV(apiKey).results.map {
+                        it.toContentItem()
+                    }
+                    ContentType.Anime -> RetrofitClient.instanceJikan.getTopAnime().data.map {
+                        it.toContentItem()
+                    }
                 }
                 _items.value = contentList
 
