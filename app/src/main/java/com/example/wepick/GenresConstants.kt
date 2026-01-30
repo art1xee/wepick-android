@@ -7,5 +7,4 @@ object GenresData  {
         "ru" to listOf("Боевик", "Приключения", "Комедия", "Драма", "Романтика", "Фэнтези", "Научная фантастика", "Мистика / Детектив", "Ужасы", "Триллер","Повседневность", "Спорт", "Сверхъестественное", "Исторический", "Военный","Криминал"),
         "en" to listOf("Action", "Adventure", "Comedy", "Drama", "Romance", "Fantasy", "Sci-Fi", "Mystery", "Horror", "Thriller", "Slice of Life", "Sports","Supernatural","Historical","War","Crime")
     )
-    val DECADES = listOf(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
 }
