@@ -150,17 +150,27 @@ fun MatchScreen(
                     )
 
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        CustomMatchButton(
+                        CustomMatchButton( // already see this content next button
                             text = stringResource(R.string.seen_content),
                             color = AccentRed,
                             onClick = {
                                 if (currentIndex < matchedItems.size - 1) currentIndex++
                             }
                         )
-                        CustomMatchButton( // reload search button //TODO
+                        CustomMatchButton( // prev button
+                            text = stringResource(R.string.back_content),
+                            color = AccentRed,
+                            onClick = {
+                                if (currentIndex > 0 ){
+                                    currentIndex--
+                                }
+                            }
+                        )
+                        CustomMatchButton( // reload search button
                             text = stringResource(R.string.reload_content),
                             color = AccentRed,
                             onClick = {
+                                currentIndex = 0
                                 viewModel.processMatches(navController)
                             }
                         )

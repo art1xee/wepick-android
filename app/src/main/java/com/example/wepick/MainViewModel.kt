@@ -218,6 +218,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun processMatches(navController: NavController) {
+        randomPage = (1..20).random()
         viewModelScope.launch {
             try {
                 val type = selectedContentType.value ?: ContentType.Movie
@@ -226,7 +227,8 @@ class MainViewModel : ViewModel() {
                 val allDislikes = (selectedDislikes + selectedDislikesFriend).distinct()
                 val matchingGenres = allLikes.filter { it !in allDislikes }
 
-                val genreIdsString = matchingGenres.mapNotNull { getGenreIdForApi(it,type) }.joinToString(",")
+                val genreIdsString =
+                    matchingGenres.mapNotNull { getGenreIdForApi(it, type) }.joinToString(",")
 
                 val minYear = minOf(selectedDecade, selectedDecadeFriend)
                 val maxYear = maxOf(selectedDecade, selectedDecadeFriend) + 9
@@ -250,7 +252,8 @@ class MainViewModel : ViewModel() {
     private suspend fun performJikanSeacrh(genreIds: String, startYear: Int, endYear: Int) {
         try {
             val response = RetrofitClient.instanceJikan.searchAnime(
-                genres = genreIds.ifEmpty { null }
+                genres = genreIds.ifEmpty { null },
+                page = randomPage,
             )
 
             val filtered = response.data.map {
@@ -270,8 +273,9 @@ class MainViewModel : ViewModel() {
         type: ContentType,
         genres: String,
         start: Int,
-        end: Int
-    ) {
+        end: Int,
+
+        ) {
         try {
             val response = if (type == ContentType.Movie) {
                 RetrofitClient.instanceTmdb.getDiscoveryMovie(
@@ -279,6 +283,7 @@ class MainViewModel : ViewModel() {
                     genres = genres,
                     dateStart = "$start-01-01",
                     dateEnd = "$end-12-31",
+                    page = randomPage,
                 )
             } else {
                 RetrofitClient.instanceTmdb.getDiscoveryTV(
@@ -295,6 +300,8 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    private var randomPage = (1..20).random()
+
 
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {
@@ -303,9 +310,11 @@ class MainViewModel : ViewModel() {
                     ContentType.Movie -> RetrofitClient.instanceTmdb.getPopularMovies(apiKey).results.map {
                         it.toContentItem()
                     }
+
                     ContentType.Tv -> RetrofitClient.instanceTmdb.getPopularTV(apiKey).results.map {
                         it.toContentItem()
                     }
+
                     ContentType.Anime -> RetrofitClient.instanceJikan.getTopAnime().data.map {
                         it.toContentItem()
                     }
