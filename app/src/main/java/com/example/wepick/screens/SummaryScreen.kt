@@ -184,20 +184,29 @@ fun ParticipantColumn(
             .background(White.copy(alpha = 0.1f), RoundedCornerShape(12.dp))
             .padding(8.dp)
     ) {
-        // Имя игрока (Красный текст)
-        Text(
-            text = "$label $name",
-            fontFamily = PressStart2P,
-            fontSize = 10.sp,
-            color = AccentRed,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
+        Box {
+            Text(
+                text = "$label $name",
+                fontFamily = PressStart2P,
+                fontSize = 10.sp,
+                color = White,
+                modifier = Modifier.offset(x = 1.dp, y = 1.dp)
+            )
+            // Имя игрока (Красный текст)
+            Text(
+                text = "$label $name",
+                fontFamily = PressStart2P,
+                fontSize = 10.sp,
+                color = AccentRed,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+        }
 
         // Жанры (Дизлайки)
         SummaryInfoBlock(
             label = stringResource(R.string.dislikes_watch),
             items = dislikes,
-            color = DislikeContentColor
+            color = DislikeContentColor.copy(0.5f)
         )
 
         Spacer(Modifier.height(12.dp))
@@ -206,7 +215,7 @@ fun ParticipantColumn(
         SummaryInfoBlock(
             label = stringResource(R.string.likes_watch),
             items = likes,
-            color = LikeContentColor
+            color = LikeContentColor.copy(0.5f)
         )
 
         Spacer(Modifier.height(12.dp))
@@ -215,7 +224,7 @@ fun ParticipantColumn(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(ButtonResetBg, RoundedCornerShape(8.dp))
+                .background(DecadeColor, RoundedCornerShape(8.dp))
                 .padding(8.dp)
         ) {
             Text(
@@ -236,7 +245,11 @@ fun ParticipantColumn(
 
 @Composable
 fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .background(White.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+            .padding(4.dp)
+    ) {
         Text(
             text = label,
             fontFamily = PressStart2P,
