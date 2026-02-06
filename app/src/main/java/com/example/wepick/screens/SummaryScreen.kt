@@ -71,10 +71,10 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Center
     ) {
 
-        Spacer(Modifier.height(60.dp))
+
 
         Card(
             modifier = Modifier.fillMaxWidth(0.98f),

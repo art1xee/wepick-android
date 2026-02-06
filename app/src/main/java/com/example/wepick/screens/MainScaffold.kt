@@ -17,14 +17,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.wepick.MainViewModel
 import com.example.wepick.ui.theme.Black
@@ -40,22 +41,21 @@ fun MainScaffold(
 ) {
     val isMenuOpen by viewModel.isMenuOpen
 
-    Box(modifier = Modifier.fillMaxSize().background(PrimaryPurple)) {
-        // Передаем в контент модификатор, который уже учитывает высоту шапки (85dp) и системную панель
-        content(
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .padding(top = 85.dp) 
-        )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(PrimaryPurple)
+    ) {
 
-        // Шапка WePick!
+        content(Modifier.fillMaxSize())
+
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
-                .padding(horizontal = 20.dp, vertical = 20.dp)
-                .zIndex(10f),
+                .padding(horizontal = 20.dp, vertical = 25.dp)
+                .align(Alignment.TopCenter),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -65,13 +65,16 @@ fun MainScaffold(
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
                     color = Black,
-                    modifier = Modifier.offset(x = 2.dp, y = 2.dp),
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .offset(x = 2.dp, y = 2.dp),
                 )
                 Text(
                     text = "WePick!",
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
-                    color = CardYellow
+                    color = CardYellow,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
             Box(
@@ -91,11 +94,19 @@ fun MainScaffold(
             }
         }
 
-        OverlayMenu(
-            isOpen = isMenuOpen,
-            onClose = { viewModel.closeMenu() },
-            navController = navController,
-            viewModel = viewModel
-        )
+
+        if (isMenuOpen) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = Color.Transparent
+            ) {
+                OverlayMenu(
+                    onClose = { viewModel.closeMenu() },
+                    navController = navController,
+                    viewModel = viewModel
+                )
+            }
+
+        }
     }
 }

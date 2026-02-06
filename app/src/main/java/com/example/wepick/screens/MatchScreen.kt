@@ -1,7 +1,8 @@
 package com.example.wepick.screens
 
-import android.widget.Space
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +47,6 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
-
 
 @Composable
 fun MatchScreen(
@@ -93,7 +93,7 @@ fun MatchScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 if (matchedItems.isNotEmpty()) {
                     val currentItem = matchedItems[currentIndex]
@@ -107,7 +107,7 @@ fun MatchScreen(
                         modifier = Modifier.heightIn(min = 40.dp)
                     )
 
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(8.dp))
 
                     Card(
                         shape = RoundedCornerShape(16.dp),
@@ -145,31 +145,56 @@ fun MatchScreen(
                             color = Black
                         )
                     }
-                    Text(
-                        text = "${currentIndex + 1} / ${matchedItems.size}",
-                        fontFamily = PressStart2P,
-                        color = Black,
-                        fontSize = 10.sp,
-                        modifier = Modifier.padding(vertical = 10.dp)
-                    )
 
-                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        CustomMatchButton( // already see this content next button
-                            text = stringResource(R.string.seen_content),
-                            color = AccentRed,
-                            onClick = {
-                                if (currentIndex < matchedItems.size - 1) currentIndex++
-                            }
-                        )
-                        CustomMatchButton( // prev button
-                            text = stringResource(R.string.back_content),
-                            color = AccentRed,
-                            onClick = {
-                                if (currentIndex > 0) {
+                    // Панель переключения < 1 / 10 >
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp)
+                    ) {
+                        Text(
+                            text = "<",
+                            fontFamily = PressStart2P,
+                            fontSize = 20.sp,
+                            color = if (currentIndex > 0) AccentRed else Black.copy(alpha = 0.3f),
+                            modifier = Modifier
+                                .clickable(enabled = currentIndex > 0) {
                                     currentIndex--
                                 }
-                            }
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
                         )
+
+                        Box(
+                            modifier = Modifier
+                                .background(White, RoundedCornerShape(4.dp))
+                                .border(2.dp, Black, RoundedCornerShape(4.dp))
+                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                        ) {
+                            Text(
+                                text = "${currentIndex + 1} / ${matchedItems.size}",
+                                fontFamily = PressStart2P,
+                                color = Black,
+                                fontSize = 10.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+
+                        Text(
+                            text = ">",
+                            fontFamily = PressStart2P,
+                            fontSize = 20.sp,
+                            color = if (currentIndex < matchedItems.size - 1) AccentRed else Black.copy(alpha = 0.3f),
+                            modifier = Modifier
+                                .clickable(enabled = currentIndex < matchedItems.size - 1) {
+                                    currentIndex++
+                                }
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                    }
+
+                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         CustomMatchButton( // reload search button
                             text = stringResource(R.string.reload_content),
                             color = AccentRed,
