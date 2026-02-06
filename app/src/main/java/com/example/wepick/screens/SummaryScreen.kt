@@ -68,14 +68,13 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
         modifier = Modifier
             .fillMaxSize()
             .background(PrimaryPurple)
-            .statusBarsPadding() // Сдвигаем контент из-под системной панели
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top // Начинаем сверху, чтобы Spacer работал корректно
+        verticalArrangement = Arrangement.Top
     ) {
-        // Увеличиваем отступ, чтобы карточка не залезала под "WePick!" (высота заголовка + запас)
-        Spacer(Modifier.height(80.dp)) 
+
+        Spacer(Modifier.height(60.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth(0.98f),
@@ -172,8 +171,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                 )
             }
         }
-        // Добавляем отступ снизу, чтобы нижняя часть карточки не прилипала к краю
-        Spacer(Modifier.height(20.dp)) 
+        Spacer(Modifier.height(30.dp))
     }
 }
 

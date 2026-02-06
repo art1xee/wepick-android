@@ -182,6 +182,7 @@ fun MatchScreen(
                             text = stringResource(R.string.start_again),
                             color = ButtonResetBg,
                             onClick = {
+                                viewModel.resetAllData()
                                 navController.navigate(ScreenNav.Main.route) {
                                     popUpTo(0)
                                 }

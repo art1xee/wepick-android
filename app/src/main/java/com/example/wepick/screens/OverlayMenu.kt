@@ -138,7 +138,8 @@ fun OverlayMenu(
                                     )
                                     .border(2.dp, Black, RoundedCornerShape(8.dp))
                                     .clickable {
-                                        if (!isSelected) viewModel.initLanguage(
+                                        if (!isSelected) viewModel.setLanguage(
+                                            code,
                                             context
                                         )
                                     },
@@ -161,6 +162,7 @@ fun OverlayMenu(
                         color = ButtonResetBg,
                         onClick = {
                             onClose()
+                            viewModel.resetAllData()
                             navController.navigate(ScreenNav.Main.route) {
                                 popUpTo(0)
                             }
