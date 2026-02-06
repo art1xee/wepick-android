@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,12 +68,15 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
         modifier = Modifier
             .fillMaxSize()
             .background(PrimaryPurple)
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+            .statusBarsPadding() // Сдвигаем контент из-под системной панели
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top // Начинаем сверху, чтобы Spacer работал корректно
     ) {
-        Spacer(Modifier.height(30.dp))
+        // Увеличиваем отступ, чтобы карточка не залезала под "WePick!" (высота заголовка + запас)
+        Spacer(Modifier.height(80.dp)) 
+
         Card(
             modifier = Modifier.fillMaxWidth(0.98f),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
@@ -168,6 +172,8 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                 )
             }
         }
+        // Добавляем отступ снизу, чтобы нижняя часть карточки не прилипала к краю
+        Spacer(Modifier.height(20.dp)) 
     }
 }
 
