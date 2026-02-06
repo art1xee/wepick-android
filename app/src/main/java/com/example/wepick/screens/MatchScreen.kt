@@ -1,5 +1,10 @@
 package com.example.wepick.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -56,6 +60,7 @@ fun MatchScreen(
 ) {
     val matchedItems by viewModel.items
     var currentIndex by remember { mutableIntStateOf(0) }
+    val endMessage = stringResource(R.string.content_end)
 
     Column(
         modifier = Modifier
@@ -146,8 +151,25 @@ fun MatchScreen(
                         )
                     }
 
-                    // Панель переключения < 1 / 10 >
-                    Row(
+                    AnimatedVisibility( // for showing error when user trying press next button but i`ts already 6/6
+                        visible = viewModel.errorMessage != null,
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkOut()
+                    ) {
+                        Text(
+                            text = viewModel.errorMessage ?: "",
+                            color = AccentRed,
+                            fontFamily = PressStart2P,
+                            fontSize = 8.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+//                                .padding(bottom = 8.dp)
+                                .fillMaxWidth()
+                        )
+                    }
+
+
+                    Row( // next and prev buttons
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
@@ -160,8 +182,10 @@ fun MatchScreen(
                             fontSize = 20.sp,
                             color = if (currentIndex > 0) AccentRed else Black.copy(alpha = 0.3f),
                             modifier = Modifier
-                                .clickable(enabled = currentIndex > 0) {
-                                    currentIndex--
+                                .clickable {
+                                    if (currentIndex > 0) {
+                                        currentIndex--
+                                    }
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         )
@@ -187,12 +211,17 @@ fun MatchScreen(
                             fontSize = 20.sp,
                             color = if (currentIndex < matchedItems.size - 1) AccentRed else Black.copy(alpha = 0.3f),
                             modifier = Modifier
-                                .clickable(enabled = currentIndex < matchedItems.size - 1) {
-                                    currentIndex++
+                                .clickable {
+                                    if (currentIndex < matchedItems.size - 1) {
+                                        currentIndex++
+                                    } else {
+                                        viewModel.showLockedError(endMessage)
+                                    }
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         )
                     }
+
 
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         CustomMatchButton( // reload search button
