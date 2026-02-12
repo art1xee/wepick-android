@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -72,7 +73,9 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(Modifier.height(30.dp))
+
+
+
         Card(
             modifier = Modifier.fillMaxWidth(0.98f),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
@@ -168,6 +171,7 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                 )
             }
         }
+        Spacer(Modifier.height(30.dp))
     }
 }
 

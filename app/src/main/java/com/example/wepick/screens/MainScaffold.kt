@@ -1,6 +1,5 @@
 package com.example.wepick.screens
 
-import androidx.benchmark.traceprocessor.Row
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,31 +13,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.wepick.MainViewModel
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.stringResource
-import com.example.wepick.R
-import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.PrimaryPurple
 
 @Composable
 fun MainScaffold(
@@ -49,16 +42,20 @@ fun MainScaffold(
     val isMenuOpen by viewModel.isMenuOpen
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(PrimaryPurple)
     ) {
+
         content(Modifier.fillMaxSize())
+
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
                 .padding(horizontal = 20.dp, vertical = 25.dp)
-                .zIndex(10f),
+                .align(Alignment.TopCenter),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -72,15 +69,12 @@ fun MainScaffold(
                         .padding(start = 8.dp)
                         .offset(x = 2.dp, y = 2.dp),
                 )
-
                 Text(
                     text = "WePick!",
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
                     color = CardYellow,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
             Box(
@@ -100,11 +94,19 @@ fun MainScaffold(
             }
         }
 
-        OverlayMenu(
-            isOpen = isMenuOpen,
-            onClose = { viewModel.closeMenu() },
-            navController = navController,
-            viewModel = viewModel
-        )
+
+        if (isMenuOpen) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = Color.Transparent
+            ) {
+                OverlayMenu(
+                    onClose = { viewModel.closeMenu() },
+                    navController = navController,
+                    viewModel = viewModel
+                )
+            }
+
+        }
     }
 }

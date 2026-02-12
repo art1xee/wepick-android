@@ -317,7 +317,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-    private val _currentLanguage = mutableStateOf("en")
+    private val _currentLanguage = mutableStateOf("uk")
     val currentLanguage: State<String> = _currentLanguage
 
     fun setLanguage(lang: String, context: Context) {
@@ -336,6 +336,48 @@ class MainViewModel : ViewModel() {
         }
 
     }
+    fun initLanguage(context: Context){
+        val savedLang = LocaleSettings.getLanguage(context)
+        _currentLanguage.value = savedLang
+    }
+
+    fun resetAllData(){
+        // names reset
+        _userName.value = ""
+        _friendName.value = ""
+
+        // chosen content reset
+        _selectedContentType.value = null
+
+        // partner reset
+        _partnerType.value = ""
+        _partnerName.value = ""
+        isPartnerFriend = false
+        selectedCharacterName = ""
+
+        // genres reset
+        _selectedDislikes.clear()
+        _selectedLikes.clear()
+        _selectedDislikesFriend.clear()
+        _selectedLikesFriend.clear()
+
+        // decades reset
+        selectedDecade = 2000
+        selectedDecadeFriend = 2000
+
+        // active player reset
+        activePlayer = 1
+        currentStep = "dislikes"
+
+        // search result reset
+        _items.value = emptyList()
+
+        // start content reset
+        loadContent(ContentType.Movie, apiKey = BuildConfig.TMDB_API_KEY)
+        loadContent(ContentType.Tv, apiKey = BuildConfig.TMDB_API_KEY)
+        loadContent(ContentType.Anime, "")
+    }
+
 
     fun loadContent(type: ContentType, apiKey: String) {
         viewModelScope.launch {

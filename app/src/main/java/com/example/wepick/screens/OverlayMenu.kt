@@ -1,11 +1,6 @@
 package com.example.wepick.screens
 
 import android.content.Intent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -19,7 +14,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,7 +43,6 @@ import com.example.wepick.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.ButtonResetBg
-import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import androidx.core.net.toUri
@@ -60,7 +53,6 @@ const val GIT_HUB = "https://github.com/art1xee/wepick-android"
 
 @Composable
 fun OverlayMenu(
-    isOpen: Boolean,
     onClose: () -> Unit,
     navController: NavController,
     viewModel: MainViewModel
@@ -73,133 +65,127 @@ fun OverlayMenu(
     val context = LocalContext.current
     val currentLang by viewModel.currentLanguage
 
-    AnimatedVisibility(
-        visible = isOpen,
-        enter = slideInVertically(initialOffsetY = { -it / 2 }) + fadeIn(),
-        exit = slideOutVertically(targetOffsetY = { -it / 2 }) + fadeOut()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Black.copy(0.6f))
+            .clickable { onClose() },
+        contentAlignment = Alignment.Center,
     ) {
-        Box(
+        Card(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Black.copy(0.4f))
-                .clickable { onClose() },
-            contentAlignment = Alignment.Center,
+                .fillMaxWidth(0.85f)
+                .padding(16.dp)
+                .clickable(enabled = false) { },
+            colors = CardDefaults.cardColors(White),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(2.dp, AccentRed)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth(0.85f)
-                    .padding(16.dp)
-                    .clickable(enabled = false) { },
-                colors = CardDefaults.cardColors(White),
-                shape = RoundedCornerShape(16.dp),
-                border = BorderStroke(2.dp, AccentRed)
+            Column(
+                modifier = Modifier.padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = stringResource(R.string.wepick_about),
-                        fontFamily = PressStart2P,
-                        fontSize = 16.sp,
-                        color = AccentRed,
-                    )
-                    Spacer(Modifier.height(16.dp))
-                    DashedDivider()
-                    Text(
-                        text = stringResource(R.string.wepick_info),
-                        fontFamily = PressStart2P,
-                        fontSize = 10.sp,
-                        textAlign = TextAlign.Center,
-                        color = Black
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    DashedDivider()
-                    Spacer(Modifier.height(10.dp))
-                    Text(
+                Text(
+                    text = stringResource(R.string.wepick_about),
+                    fontFamily = PressStart2P,
+                    fontSize = 16.sp,
+                    color = AccentRed,
+                )
+                Spacer(Modifier.height(16.dp))
+                DashedDivider()
+                Text(
+                    text = stringResource(R.string.wepick_info),
+                    fontFamily = PressStart2P,
+                    fontSize = 10.sp,
+                    textAlign = TextAlign.Center,
+                    color = Black
+                )
+                Spacer(Modifier.height(10.dp))
 
-                        text = stringResource(R.string.select_lang),
-                        fontFamily = PressStart2P,
-                        fontSize = 9.sp,
-                        color = Muted
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        val langs = listOf("EN" to "en", "UA" to "uk", "RU" to "ru")
-                        langs.forEach { (label, code) ->
-                            val isSelected = currentLang == code
-                            Box(
-                                modifier = Modifier
-                                    .size(width = 50.dp, height = 30.dp)
-                                    .background(
-                                        if (isSelected) AccentRed else White,
-                                        RoundedCornerShape(8.dp)
-                                    )
-                                    .border(2.dp, Black, RoundedCornerShape(8.dp))
-                                    .clickable {
-                                        if (!isSelected) viewModel.setLanguage(
-                                            code,
-                                            context
-                                        )
-                                    },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = label,
-                                    fontFamily = PressStart2P,
-                                    fontSize = 10.sp,
-                                    color = if (isSelected) White else Black
+                DashedDivider()
+
+                Spacer(Modifier.height(10.dp))
+                Text(
+                    text = stringResource(R.string.select_lang),
+                    fontFamily = PressStart2P,
+                    fontSize = 9.sp,
+                    color = Muted
+                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val langs = listOf("EN" to "en", "UA" to "uk", "RU" to "ru")
+                    langs.forEach { (label, code) ->
+                        val isSelected = currentLang == code
+                        Box(
+                            modifier = Modifier
+                                .size(width = 50.dp, height = 30.dp)
+                                .background(
+                                    if (isSelected) AccentRed else White,
+                                    RoundedCornerShape(8.dp)
                                 )
-                            }
+                                .border(2.dp, Black, RoundedCornerShape(8.dp))
+                                .clickable {
+                                    if (!isSelected) viewModel.setLanguage(
+                                        code,
+                                        context
+                                    )
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                fontFamily = PressStart2P,
+                                fontSize = 10.sp,
+                                color = if (isSelected) White else Black
+                            )
                         }
                     }
-
-                    Spacer(Modifier.height(16.dp))
-
-                    CustomMatchButton( // start over button
-                        text = stringResource(R.string.start_again),
-                        color = ButtonResetBg,
-                        onClick = {
-                            onClose()
-                            navController.navigate(ScreenNav.Main.route) {
-                                popUpTo(0)
-                            }
-                        }
-                    )
-                    Spacer(Modifier.height(16.dp))
-                    Text(
-                        text = stringResource(R.string.wepick_github),
-                        fontFamily = PressStart2P,
-                        color = Muted,
-                        textAlign = TextAlign.Center,
-                        fontSize = 10.sp
-                    )
-                    Spacer(Modifier.height(6.dp))
-                    DashedDivider()
-                    ClickableText(
-                        text = annotatedText,
-                        modifier = Modifier.padding(top = 8.dp),
-                        style = TextStyle(
-                            fontFamily = PressStart2P,
-                            fontSize = 10.sp,
-                            color = AccentRed,
-                            textAlign = TextAlign.Center,
-                        ),
-                        onClick = { offset ->
-                            annotatedText.getStringAnnotations("URL", offset, offset).firstOrNull()
-                                ?.let {
-                                    val intent = Intent(Intent.ACTION_VIEW, it.item.toUri())
-                                    context.startActivity(intent)
-                                }
-
-                        },
-                    )
                 }
+
+                Spacer(Modifier.height(16.dp))
+
+                CustomMatchButton( // start over (reset) button
+                    text = stringResource(R.string.start_again),
+                    color = ButtonResetBg,
+                    onClick = {
+                        onClose()
+                        viewModel.resetAllData()
+                        navController.navigate(ScreenNav.Main.route) {
+                            popUpTo(0)
+                        }
+                    }
+                )
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text = stringResource(R.string.wepick_github),
+                    fontFamily = PressStart2P,
+                    color = Muted,
+                    textAlign = TextAlign.Center,
+                    fontSize = 10.sp
+                )
+                Spacer(Modifier.height(6.dp))
+                DashedDivider()
+                ClickableText(
+                    text = annotatedText,
+                    modifier = Modifier.padding(top = 8.dp),
+                    style = TextStyle(
+                        fontFamily = PressStart2P,
+                        fontSize = 10.sp,
+                        color = AccentRed,
+                        textAlign = TextAlign.Center,
+                    ),
+                    onClick = { offset ->
+                        annotatedText.getStringAnnotations("URL", offset, offset).firstOrNull()
+                            ?.let {
+                                val intent = Intent(Intent.ACTION_VIEW, it.item.toUri())
+                                context.startActivity(intent)
+                            }
+                    },
+                )
             }
         }
     }
-
 }
 
 @Composable

@@ -11,7 +11,7 @@ object GenresData  {
     val tmdbGenreIds = mapOf(
         "Action" to 28, "Adventure" to 12, "Comedy" to 35, "Drama" to 18,
         "Romance" to 10749, "Fantasy" to 14, "Sci-Fi" to 878, "Mystery" to 9648,
-        "Horror" to 27, "Thriller" to 53, "Slice of Life" to 10751, // Для TMDB это Family/Daily
+        "Horror" to 27, "Thriller" to 53, "Slice of Life" to 10751, 
         "Sports" to 10770, "Supernatural" to 14, "Historical" to 36, "War" to 10752, "Crime" to 80
     )
 

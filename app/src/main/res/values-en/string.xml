@@ -6,7 +6,7 @@
     <string name="selection_label">Hello %1$s! Choose content which you want to watch.</string>
     <string name="movie_content">Movie`s</string>
     <string name="series_content">Series</string>
-    <string name="asian_content">Anime/Asian</string>
+    <string name="asian_content">Anime</string>
     <string name="partner_label">Now choose your fellow for watching: %1$s content</string>
     <string name="friend_partner">Friend</string>
     <string name="popular_character_partner">Popular character</string>
@@ -42,5 +42,6 @@
     <string name="player">Player: </string>
     <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
     <string name="select_lang">Select language: </string>
+    <string name="content_end">You have reached the end!</string>
 
 </resources>

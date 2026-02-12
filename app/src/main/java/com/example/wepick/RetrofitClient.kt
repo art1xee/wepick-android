@@ -18,7 +18,7 @@ object RetrofitClient {
     }
 
     val instanceJikan: JikanApiService by lazy {
-        var retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(JIKAN_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

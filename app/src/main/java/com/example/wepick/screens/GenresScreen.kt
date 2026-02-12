@@ -72,7 +72,11 @@ import org.w3c.dom.Text
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
-    val lang = java.util.Locale.getDefault().language
+    val lang = when(java.util.Locale.getDefault().language){
+        "uk" -> "ua"
+        "ru" -> "ru"
+        else -> "en"
+    }
     val dislikesStep = viewModel.currentStep == "dislikes"
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
     val lockedMessage = stringResource(R.string.error_genre)
