@@ -1,5 +1,7 @@
-package com.example.wepick
+package com.example.wepick.data.local
 
+import com.example.wepick.R
+// class which stores all info about character`s
 data class Character(
     val id: String,
     val name: String,

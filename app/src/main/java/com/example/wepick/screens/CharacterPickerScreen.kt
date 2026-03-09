@@ -40,10 +40,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.MainViewModel
-import com.example.wepick.NextButton
+import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
-import com.example.wepick.characterList
+import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.data.local.characterList
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P

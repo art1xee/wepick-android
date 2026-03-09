@@ -1,5 +1,6 @@
-package com.example.wepick
+package com.example.wepick.data.network
 
+import com.example.wepick.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

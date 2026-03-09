@@ -7,11 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.wepick.navigation.NavGraph
+import com.example.wepick.util.LocaleSettings
 import com.example.wepick.screens.MainScaffold
 import com.example.wepick.ui.theme.WePickTheme
+import com.example.wepick.util.LocalHelper
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context?) {

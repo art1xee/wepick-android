@@ -1,4 +1,4 @@
-package com.example.wepick
+package com.example.wepick.navigation
 
 sealed class ScreenNav(val route: String) {
     object Main : ScreenNav("main")             // Экран ввода имени

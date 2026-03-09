@@ -12,15 +12,18 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.wepick.util.LocaleSettings
+import com.example.wepick.data.model.ContentItem
+import com.example.wepick.data.model.jikan.toContentItem
+import com.example.wepick.data.model.tmdb.toContentItem
+import com.example.wepick.data.network.RetrofitClient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
-
-sealed class ContentType(val name: String) {
-    object Movie : ContentType("movie")
-    object Tv : ContentType("series")
-    object Anime : ContentType("anime")
-}
+import com.example.wepick.data.model.ContentType
+import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.data.local.GenresData
+import com.example.wepick.util.LocalHelper
 
 
 class MainViewModel : ViewModel() {
@@ -98,34 +101,18 @@ class MainViewModel : ViewModel() {
 
 
     val decades = listOf(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
-    fun nextDecade() {
-        val currentDecadeValue = if (activePlayer == 1) selectedDecade else selectedDecadeFriend
 
+    fun nextDecade() = changeDecade(1)
+    fun prevDecade() = changeDecade(-1)
+
+    private fun changeDecade(step: Int) {
+        val currentDecadeValue = if (activePlayer == 1) selectedDecade else selectedDecadeFriend
         val currentIndex = decades.indexOf(currentDecadeValue)
 
-        val nextIndex = (currentIndex + 1) % decades.size
+        val nextIndex = (currentIndex + step + decades.size) % decades.size
         val newValue = decades[nextIndex]
 
-        if (activePlayer == 1) {
-            selectedDecade = newValue
-        } else {
-            selectedDecadeFriend = newValue
-        }
-    }
-
-    fun prevDecade() {
-        val currentDecadeValue = if (activePlayer == 1) selectedDecade else selectedDecadeFriend
-
-        val currentIndex = decades.indexOf(currentDecadeValue)
-
-        val prevIndex = if (currentIndex <= 0) decades.size - 1 else currentIndex - 1
-        val newValue = decades[prevIndex]
-
-        if (activePlayer == 1) {
-            selectedDecade = newValue
-        } else {
-            selectedDecadeFriend = newValue
-        }
+        if (activePlayer == 1) selectedDecade = newValue else selectedDecadeFriend = newValue
     }
 
     fun toggleGenre(genre: String, isDislike: Boolean) {
@@ -205,8 +192,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun getGenreIdForApi(selectedGenres: String, type: ContentType): Int? {
-        val currentLang = "ru"
-        val index = GenresData.GENRES[currentLang]?.indexOf(selectedGenres.trim()) ?: -1
+
+        val lang = currentLanguage.value
+
+        val index = GenresData.GENRES[lang]?.indexOf(selectedGenres.trim()) ?: -1
 
         if (index == -1) return null
 
@@ -336,12 +325,13 @@ class MainViewModel : ViewModel() {
         }
 
     }
-    fun initLanguage(context: Context){
+
+    fun initLanguage(context: Context) {
         val savedLang = LocaleSettings.getLanguage(context)
         _currentLanguage.value = savedLang
     }
 
-    fun resetAllData(){
+    fun resetAllData() {
         // names reset
         _userName.value = ""
         _friendName.value = ""

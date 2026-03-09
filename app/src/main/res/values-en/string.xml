@@ -7,7 +7,10 @@
     <string name="movie_content">Movie`s</string>
     <string name="series_content">Series</string>
     <string name="asian_content">Anime</string>
-    <string name="partner_label">Now choose your fellow for watching: %1$s content</string>
+    <string name="movie_content_partner">Movie`s</string>
+    <string name="series_content_partner">Series</string>
+    <string name="asian_content_partner">Anime</string>
+    <string name="partner_label">Now choose your fellow for watching: %1$s.</string>
     <string name="friend_partner">Friend</string>
     <string name="popular_character_partner">Popular character</string>
     <string name="popular_character_label">Who do you want to play WePick with?</string>

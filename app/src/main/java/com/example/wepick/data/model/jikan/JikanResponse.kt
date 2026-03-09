@@ -1,5 +1,6 @@
-package com.example.wepick
+package com.example.wepick.data.model.jikan
 
+import com.example.wepick.data.model.ContentItem
 import com.google.gson.annotations.SerializedName
 
 data class JikanResponse(

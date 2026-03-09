@@ -1,4 +1,4 @@
-package com.example.wepick
+package com.example.wepick.util
 
 import android.content.Context
 import androidx.core.content.edit

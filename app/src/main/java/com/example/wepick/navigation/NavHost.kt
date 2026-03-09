@@ -1,10 +1,11 @@
-package com.example.wepick
+package com.example.wepick.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.wepick.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen

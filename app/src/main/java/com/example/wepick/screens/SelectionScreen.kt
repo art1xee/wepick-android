@@ -20,12 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.wepick.ContentType
-import com.example.wepick.ContentTypeButton
+import com.example.wepick.data.model.ContentType
+import com.example.wepick.ui.components.ContentTypeButton
 import com.example.wepick.MainViewModel
-import com.example.wepick.NextButton
+import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.Anime
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.Movie

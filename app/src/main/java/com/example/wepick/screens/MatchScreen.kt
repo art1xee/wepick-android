@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.wepick.CustomMatchButton
+import com.example.wepick.ui.components.CustomMatchButton
 import com.example.wepick.MainViewModel
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.ButtonResetBg
@@ -163,7 +163,6 @@ fun MatchScreen(
                             fontSize = 8.sp,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-//                                .padding(bottom = 8.dp)
                                 .fillMaxWidth()
                         )
                     }

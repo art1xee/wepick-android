@@ -1,4 +1,4 @@
-package com.example.wepick
+package com.example.wepick.data.local
 
 
 object GenresData  {
