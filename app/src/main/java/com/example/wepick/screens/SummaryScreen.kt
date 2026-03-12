@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.data.model.ContentType
 import com.example.wepick.ui.components.FindContentButton
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
@@ -47,13 +47,15 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
-fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier, playerVM: PlayerViewModel, contentVM: ContentViewModel) {
     val selectedType by viewModel.selectedContentType
-    val userName by viewModel.userName
-    val friendName by viewModel.friendName
-    val isFriend = viewModel.isPartnerFriend
+    val userName =  playerVM.userName
+    val friendName = playerVM.friendName
+    val isFriend = playerVM.isPartnerFriend
 
 
     val contentDisplayName = when (selectedType) {
@@ -143,19 +145,19 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                         modifier = Modifier.weight(1f),
                         label = stringResource(R.string.user_name_summary),
                         name = userName,
-                        dislikes = viewModel.selectedDislikes,
-                        likes = viewModel.selectedLikes,
-                        decade = viewModel.selectedDecade
+                        dislikes = playerVM.selectedDislikes,
+                        likes = playerVM.selectedLikes,
+                        decade = playerVM.selectedDecade
                     )
                     ParticipantColumn(
                         modifier = Modifier.weight(1f),
                         label = if (isFriend) stringResource(R.string.second_user_name_summary) else stringResource(
                             R.string.character_name
                         ),
-                        name = if (isFriend) friendName else viewModel.selectedCharacterName,
-                        dislikes = viewModel.selectedDislikesFriend,
-                        likes = viewModel.selectedLikesFriend,
-                        decade = viewModel.selectedDecadeFriend
+                        name = if (isFriend) friendName else playerVM.selectedCharacterName,
+                        dislikes = playerVM.selectedDislikesFriend,
+                        likes = playerVM.selectedLikesFriend,
+                        decade = playerVM.selectedDecadeFriend
                     )
                 }
 
@@ -166,7 +168,15 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                     route = ScreenNav.Match.route,
                     text = stringResource(R.string.find_content, contentDisplayName),
                     enabled = true,
-                    onNextClick = { viewModel.processMatches(navController) }
+                    onNextClick = { contentVM.processMatches(type = viewModel.selectedContentType.value ?: ContentType.Movie,
+                        selectedLikes = playerVM.selectedLikes,
+                        selectedLikesFriend = playerVM.selectedLikesFriend,
+                        selectedDislikes = playerVM.selectedDislikes,
+                        selectedDislikesFriend = playerVM.selectedDislikesFriend,
+                        selectedDecade = playerVM.selectedDecade,
+                        selectedDecadeFriend = playerVM.selectedDecadeFriend,
+                        currentLanguage = viewModel.currentLanguage.value,
+                        onDone = { viewModel.navigateToMatch(navController) }) }
                 )
             }
         }

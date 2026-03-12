@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.wepick.data.model.ContentType
 import com.example.wepick.ui.components.ContentTypeButton
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
@@ -33,10 +33,16 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.Series
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.viewmodel.PlayerViewModel
 
 
 @Composable
-fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+fun SelectionScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    modifier: Modifier,
+    playerVM: PlayerViewModel
+) {
     val selectedType by viewModel.selectedContentType
     Column(
         modifier
@@ -55,7 +61,7 @@ fun SelectionScreen(navController: NavController, viewModel: MainViewModel, modi
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.selection_label, viewModel.userName.value),
+                    text = stringResource(R.string.selection_label, playerVM.userName),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     style = MaterialTheme.typography.titleMedium,

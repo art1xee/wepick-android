@@ -27,15 +27,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
 fun MainScaffold(
     viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel,
     navController: NavController,
     content: @Composable (Modifier) -> Unit
 ) {
@@ -103,7 +107,9 @@ fun MainScaffold(
                 OverlayMenu(
                     onClose = { viewModel.closeMenu() },
                     navController = navController,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    playerVM = playerVM,
+                    contentVM = contentVM,
                 )
             }
 

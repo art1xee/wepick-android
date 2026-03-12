@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
@@ -46,9 +46,10 @@ import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
-fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier, playerVM: PlayerViewModel) {
     var name by remember { mutableStateOf("") }
     val isNameValid = name.trim().isNotEmpty()
 
@@ -122,7 +123,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
                     route = ScreenNav.Selection.route,
                     enabled = isNameValid,
                     onNextClick = {
-                        viewModel.setUserName(name)
+                        playerVM.updateUserName(name)
                     })
             }
         }

@@ -13,7 +13,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.wepick.data.model.ContentType
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.components.NextButton
 import com.example.wepick.ui.components.PartnerChooseButton
 import com.example.wepick.R
@@ -32,13 +31,18 @@ import com.example.wepick.ui.theme.PopularCharacterColor
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.viewmodel.PlayerViewModel
 
 
 @Composable
-fun PartnerScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
-    val selectedPartnerType by viewModel.partnerType
-
-    val selectedType by viewModel.selectedContentType
+fun PartnerScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    modifier: Modifier
+) {
+    val selectedPartnerType = viewModel.partnerType
+    val selectedType = viewModel.selectedContentType.value
 
     val contentDisplayName = when (selectedType) {
         ContentType.Movie -> stringResource(R.string.movie_content_partner)
@@ -77,7 +81,7 @@ fun PartnerScreen(navController: NavController, viewModel: MainViewModel, modifi
                 ) {
                     PartnerChooseButton(
                         isSelected = (selectedPartnerType == "friend"),
-                        onClick = { viewModel.setPartnerType("friend") },
+                        onClick = { viewModel.updatePartnerType("friend") },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = FriendColor,
                         text = stringResource(R.string.friend_partner)
@@ -85,7 +89,7 @@ fun PartnerScreen(navController: NavController, viewModel: MainViewModel, modifi
                     Spacer(modifier.height(12.dp))
                     PartnerChooseButton(
                         isSelected = (selectedPartnerType == "character"),
-                        onClick = { viewModel.setPartnerType("character") },
+                        onClick = { viewModel.updatePartnerType("character") },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = PopularCharacterColor,
                         text = stringResource(R.string.popular_character_partner)
@@ -101,9 +105,9 @@ fun PartnerScreen(navController: NavController, viewModel: MainViewModel, modifi
                         },
                         enabled = selectedPartnerType.isNotEmpty(),
                         onNextClick = {
-                            viewModel.setPartnerType(selectedPartnerType)
+                            viewModel.updatePartnerType(selectedPartnerType)
 
-                            viewModel.isPartnerFriend = (selectedPartnerType == "friend")
+                            playerVM.isPartnerFriend = (selectedPartnerType == "friend")
                         }
                     )
 

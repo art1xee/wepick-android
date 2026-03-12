@@ -46,8 +46,10 @@ import com.example.wepick.ui.theme.ButtonResetBg
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import androidx.core.net.toUri
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 const val GIT_HUB = "https://github.com/art1xee/wepick-android"
 
@@ -55,7 +57,9 @@ const val GIT_HUB = "https://github.com/art1xee/wepick-android"
 fun OverlayMenu(
     onClose: () -> Unit,
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel
 ) {
     val annotatedText = buildAnnotatedString {
         pushStringAnnotation(tag = "URL", annotation = GIT_HUB)
@@ -150,7 +154,10 @@ fun OverlayMenu(
                     color = ButtonResetBg,
                     onClick = {
                         onClose()
-                        viewModel.resetAllData()
+                        viewModel.resetAll(
+                            playerViewModel = playerVM,
+                            contentViewModel = contentVM,
+                        )
                         navController.navigate(ScreenNav.Main.route) {
                             popUpTo(0)
                         }

@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
@@ -32,9 +32,15 @@ import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
-fun FriendNameScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+fun FriendNameScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    modifier: Modifier
+) {
     var friendName by remember { mutableStateOf("") }
     val isFriendNameValid = friendName.trim().isNotEmpty()
 
@@ -84,8 +90,8 @@ fun FriendNameScreen(navController: NavController, viewModel: MainViewModel, mod
                     route = ScreenNav.Genres.route,
                     enabled = isFriendNameValid,
                     onNextClick = {
-                        viewModel.setFriendName(friendName)
-                        viewModel.prepareForGenres()
+                        playerVM.updateFriendName(friendName)
+                        playerVM.prepareForGenres()
                         navController.navigate(ScreenNav.Genres.route)
                     })
             }

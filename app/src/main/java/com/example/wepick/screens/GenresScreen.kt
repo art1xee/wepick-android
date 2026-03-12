@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.data.local.GenresData
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
 import com.example.wepick.ui.components.SaveGenres
 import com.example.wepick.navigation.ScreenNav
@@ -56,23 +56,29 @@ import com.example.wepick.ui.theme.borderDislikes
 import com.example.wepick.ui.theme.borderLikes
 import com.example.wepick.ui.theme.contentDislikes
 import com.example.wepick.ui.theme.contentLikes
+import com.example.wepick.viewmodel.PlayerViewModel
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
-    val lang = when(java.util.Locale.getDefault().language){
+fun GenresScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    modifier: Modifier
+) {
+    val lang = when (java.util.Locale.getDefault().language) {
         "uk" -> "ua"
         "ru" -> "ru"
         else -> "en"
     }
-    val dislikesStep = viewModel.currentStep == "dislikes"
+    val dislikesStep = playerVM.currentStep == "dislikes"
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
     val lockedMessage = stringResource(R.string.error_genre)
 
 
     val currentPlayerName =
-        if (viewModel.activePlayer == 1) viewModel.userName.value.ifEmpty { "Player 1" } else viewModel.friendName.value.ifEmpty { "Player 2" }
+        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { "Player 1" } else playerVM.friendName.ifEmpty { "Player 2" }
 
     Column(
         modifier = Modifier
@@ -84,12 +90,12 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
-        if (viewModel.isPartnerFriend) {
+        if (playerVM.isPartnerFriend) {
             Text(
                 text = "${
                     stringResource(
                         R.string.player,
-                        viewModel.activePlayer
+                        playerVM.activePlayer
                     )
                 }$currentPlayerName",
                 fontFamily = PressStart2P,
@@ -120,12 +126,12 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
                 )
 
                 AnimatedVisibility( // error message for users when they trying choose already chosen genres
-                    visible = viewModel.errorMessage != null,
+                    visible = playerVM.errorMessage != null,
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkOut()
                 ) {
                     Text(
-                        text = viewModel.errorMessage ?: "",
+                        text = playerVM.errorMessage ?: "",
                         color = AccentRed,
                         fontFamily = PressStart2P,
                         fontSize = 8.sp,
@@ -150,17 +156,17 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
                     ) {
                         genreList.forEach { genre ->
                             val listToCompare =
-                                if (viewModel.activePlayer == 1) viewModel.selectedDislikes else viewModel.selectedDislikesFriend
+                                if (playerVM.activePlayer == 1) playerVM.selectedDislikes else playerVM.selectedDislikesFriend
                             val isAlreadyInDislikes = !dislikesStep && listToCompare.contains(genre)
 
                             val isSelected = if (dislikesStep) {
-                                if (viewModel.activePlayer == 1) viewModel.selectedDislikes.contains(
+                                if (playerVM.activePlayer == 1) playerVM.selectedDislikes.contains(
                                     genre
-                                ) else viewModel.selectedDislikesFriend.contains(genre)
+                                ) else playerVM.selectedDislikesFriend.contains(genre)
                             } else {
-                                if (viewModel.activePlayer == 1) viewModel.selectedLikes.contains(
+                                if (playerVM.activePlayer == 1) playerVM.selectedLikes.contains(
                                     genre
-                                ) else viewModel.selectedLikesFriend.contains(genre)
+                                ) else playerVM.selectedLikesFriend.contains(genre)
                             }
 
                             GenreChip(
@@ -170,9 +176,9 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
                                 isDislikeStep = dislikesStep,
                                 onClick = {
                                     if (isAlreadyInDislikes) {
-                                        viewModel.showLockedError(lockedMessage)
+                                        playerVM.showLockedError(lockedMessage)
                                     } else {
-                                        viewModel.toggleGenre(genre, isDislike = dislikesStep)
+                                        playerVM.toggleGenre(genre, isDislike = dislikesStep)
                                     }
                                 }
                             )
@@ -195,7 +201,7 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
                                 .border(1.dp, Black, MaterialTheme.shapes.medium),
                             colors = CardDefaults.cardColors(ButtonResetBg)
                         ) {
-                            DecadePicker(viewModel)
+                            DecadePicker(playerVM = playerVM)
                         }
                     }
                 } else {
@@ -205,24 +211,24 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
                 SaveGenres(
                     navController = navController,
                     modifier = Modifier,
-                    route = if (!dislikesStep && (viewModel.activePlayer == 2 || !viewModel.isPartnerFriend)) {
+                    route = if (!dislikesStep && (playerVM.activePlayer == 2 || !playerVM.isPartnerFriend)) {
                         ScreenNav.Summary.route
                     } else {
                         ""
                     },
                     enabled = (if (dislikesStep) {
-                        if (viewModel.activePlayer == 1) viewModel.selectedDislikes.size else viewModel.selectedDislikesFriend.size
+                        if (playerVM.activePlayer == 1) playerVM.selectedDislikes.size else playerVM.selectedDislikesFriend.size
                     } else {
-                        if (viewModel.activePlayer == 1) viewModel.selectedLikes.size else viewModel.selectedLikesFriend.size
+                        if (playerVM.activePlayer == 1) playerVM.selectedLikes.size else playerVM.selectedLikesFriend.size
                     }) == 3,
                     onNextClick = {
 
                         if (dislikesStep) {
-                            viewModel.currentStep = "likes"
+                            playerVM.currentStep = "likes"
                         } else {
-                            if (viewModel.isPartnerFriend && viewModel.activePlayer == 1) {
-                                viewModel.activePlayer = 2
-                                viewModel.currentStep = "dislikes"
+                            if (playerVM.isPartnerFriend && playerVM.activePlayer == 1) {
+                                playerVM.activePlayer = 2
+                                playerVM.currentStep = "dislikes"
                             } else {
                                 navController.navigate(ScreenNav.Summary.route)
                             }
@@ -236,14 +242,17 @@ fun GenresScreen(navController: NavController, viewModel: MainViewModel, modifie
 
 @Composable
 fun DecadePicker(
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerVM: PlayerViewModel,
 ) {
     val currentDecade =
-        if (viewModel.activePlayer == 1) viewModel.selectedDecade else viewModel.selectedDecadeFriend
+        if (playerVM.activePlayer == 1) playerVM.selectedDecade else playerVM.selectedDecadeFriend
 
     val currentPlayerName =
-        if (viewModel.activePlayer == 1) viewModel.userName.value.ifEmpty { "Player 1" } else viewModel.friendName.value.ifEmpty { "Player 2" }
+        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { "Player 1" }
+        else playerVM.friendName.ifEmpty { "Player 2" }
+
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -268,7 +277,7 @@ fun DecadePicker(
                 fontFamily = PressStart2P,
                 fontSize = 18.sp,
                 modifier = Modifier
-                    .clickable { viewModel.prevDecade() }
+                    .clickable { playerVM.prevDecade() }
                     .padding(12.dp),
                 color = AccentRed,
             )
@@ -292,7 +301,7 @@ fun DecadePicker(
                 fontFamily = PressStart2P,
                 fontSize = 18.sp,
                 modifier = Modifier
-                    .clickable { viewModel.nextDecade() }
+                    .clickable { playerVM.nextDecade() }
                     .padding(12.dp),
                 color = AccentRed,
             )
