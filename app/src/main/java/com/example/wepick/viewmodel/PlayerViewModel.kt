@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wepick.data.local.GenresData
+import com.example.wepick.util.GenreStep
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,7 @@ class PlayerViewModel : ViewModel() {
 
     // Active player and step
     var activePlayer by mutableIntStateOf(1)
-    var currentStep by mutableStateOf("dislikes")
+    var currentStep by mutableStateOf(GenreStep.DISLIKES)
 
     // Decades
     val decades = listOf(1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
@@ -78,7 +79,7 @@ class PlayerViewModel : ViewModel() {
 
     fun prepareForGenres() {
         activePlayer = 1
-        currentStep = "dislikes"
+        currentStep = GenreStep.DISLIKES
         _selectedDislikes.clear()
         _selectedLikes.clear()
     }
@@ -113,7 +114,7 @@ class PlayerViewModel : ViewModel() {
         isPartnerFriend = false
         selectedCharacterName = ""
         activePlayer = 1
-        currentStep = "dislikes"
+        currentStep = GenreStep.DISLIKES
         selectedDecade = 2000
         selectedDecadeFriend = 2000
         _selectedDislikes.clear()

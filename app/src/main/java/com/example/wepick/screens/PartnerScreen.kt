@@ -31,6 +31,7 @@ import com.example.wepick.ui.theme.PopularCharacterColor
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.util.PartnerType
 import com.example.wepick.viewmodel.PlayerViewModel
 
 
@@ -80,16 +81,16 @@ fun PartnerScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     PartnerChooseButton(
-                        isSelected = (selectedPartnerType == "friend"),
-                        onClick = { viewModel.updatePartnerType("friend") },
+                        isSelected = (selectedPartnerType == PartnerType.FRIEND),
+                        onClick = { viewModel.updatePartnerType(PartnerType.FRIEND) },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = FriendColor,
                         text = stringResource(R.string.friend_partner)
                     )
                     Spacer(modifier.height(12.dp))
                     PartnerChooseButton(
-                        isSelected = (selectedPartnerType == "character"),
-                        onClick = { viewModel.updatePartnerType("character") },
+                        isSelected = (selectedPartnerType == PartnerType.CHARACTER),
+                        onClick = { viewModel.updatePartnerType(PartnerType.CHARACTER) },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = PopularCharacterColor,
                         text = stringResource(R.string.popular_character_partner)
@@ -98,7 +99,7 @@ fun PartnerScreen(
                     NextButton(
                         navController = navController,
                         modifier = modifier,
-                        route = if (selectedPartnerType == "friend") {
+                        route = if (selectedPartnerType == PartnerType.FRIEND) {
                             ScreenNav.FriendName.route
                         } else {
                             ScreenNav.CharacterPicker.route
@@ -107,7 +108,7 @@ fun PartnerScreen(
                         onNextClick = {
                             viewModel.updatePartnerType(selectedPartnerType)
 
-                            playerVM.isPartnerFriend = (selectedPartnerType == "friend")
+                            playerVM.isPartnerFriend = (selectedPartnerType == PartnerType.FRIEND)
                         }
                     )
 

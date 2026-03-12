@@ -56,6 +56,8 @@ import com.example.wepick.ui.theme.borderDislikes
 import com.example.wepick.ui.theme.borderLikes
 import com.example.wepick.ui.theme.contentDislikes
 import com.example.wepick.ui.theme.contentLikes
+import com.example.wepick.util.GenreStep
+import com.example.wepick.util.Players
 import com.example.wepick.viewmodel.PlayerViewModel
 
 
@@ -72,13 +74,13 @@ fun GenresScreen(
         "ru" -> "ru"
         else -> "en"
     }
-    val dislikesStep = playerVM.currentStep == "dislikes"
+    val dislikesStep = playerVM.currentStep == GenreStep.DISLIKES
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
     val lockedMessage = stringResource(R.string.error_genre)
 
 
     val currentPlayerName =
-        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { "Player 1" } else playerVM.friendName.ifEmpty { "Player 2" }
+        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { Players.PLAYER_1 } else playerVM.friendName.ifEmpty { Players.PLAYER_2 }
 
     Column(
         modifier = Modifier
@@ -219,11 +221,11 @@ fun GenresScreen(
                     }) == 3,
                     onNextClick = {
                         if (dislikesStep) {
-                            playerVM.currentStep = "likes"
+                            playerVM.currentStep = GenreStep.LIKES
                         } else {
                             if (playerVM.isPartnerFriend && playerVM.activePlayer == 1) {
                                 playerVM.activePlayer = 2
-                                playerVM.currentStep = "dislikes"
+                                playerVM.currentStep = GenreStep.DISLIKES
                             } else {
                                 navController.navigate(ScreenNav.Summary.route)
                             }
@@ -244,8 +246,8 @@ fun DecadePicker(
         if (playerVM.activePlayer == 1) playerVM.selectedDecade else playerVM.selectedDecadeFriend
 
     val currentPlayerName =
-        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { "Player 1" }
-        else playerVM.friendName.ifEmpty { "Player 2" }
+        if (playerVM.activePlayer == 1) playerVM.userName.ifEmpty { Players.PLAYER_1 }
+        else playerVM.friendName.ifEmpty { Players.PLAYER_2 }
 
 
     Column(

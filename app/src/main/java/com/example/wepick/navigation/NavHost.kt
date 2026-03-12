@@ -56,6 +56,5 @@ fun NavGraph(
             MatchScreen(navController, viewModel, modifier = Modifier, playerVM, contentVM)
         }
     }
-
 }
 

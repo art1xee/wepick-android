@@ -49,6 +49,7 @@ import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.util.PartnerType
 import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
@@ -117,7 +118,7 @@ fun CharacterPickerScreen(
                     enabled = selectedChar != null,
                     onNextClick = {
                         selectedChar?.let { char ->
-                            viewModel.updatePartnerType("character")
+                            viewModel.updatePartnerType(PartnerType.CHARACTER)
                             playerVM.selectCharacter(char.name)
                             playerVM.generateCharacterFullProfile()
                             playerVM.prepareForGenres()
