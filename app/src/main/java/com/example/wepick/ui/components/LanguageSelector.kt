@@ -26,13 +26,15 @@ import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.Language
 
 @Composable
 fun LanguageSelector(viewModel: MainViewModel) {
     val context = LocalContext.current
     val currentLang by viewModel.currentLanguage
 
-    val languages = listOf("EN" to "en", "UA" to "uk", "RU" to "ru")
+    val languages = listOf("EN" to Language.EN, "UA" to Language.UK, "RU" to Language.RU)
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally

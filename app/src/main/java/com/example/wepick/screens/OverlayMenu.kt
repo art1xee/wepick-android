@@ -48,6 +48,7 @@ import com.example.wepick.ui.theme.PressStart2P
 import androidx.core.net.toUri
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.Language
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
@@ -118,8 +119,8 @@ fun OverlayMenu(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val langs = listOf("EN" to "en", "UA" to "uk", "RU" to "ru")
-                    langs.forEach { (label, code) ->
+                    val supportedLanguages = listOf("EN" to Language.EN, "UA" to Language.UK, "RU" to Language.RU)
+                    supportedLanguages.forEach { (label, code) ->
                         val isSelected = currentLang == code
                         Box(
                             modifier = Modifier

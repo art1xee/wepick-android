@@ -14,6 +14,6 @@ object LocaleSettings {
 
     fun getLanguage(context: Context?): String {
         val prefs = context?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs?.getString(KEY_LANG, "en") ?: "en"
+        return prefs?.getString(KEY_LANG, Language.EN) ?: Language.EN
     }
 }

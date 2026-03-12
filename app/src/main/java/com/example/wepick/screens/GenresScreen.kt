@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -57,6 +58,7 @@ import com.example.wepick.ui.theme.borderLikes
 import com.example.wepick.ui.theme.contentDislikes
 import com.example.wepick.ui.theme.contentLikes
 import com.example.wepick.util.GenreStep
+import com.example.wepick.util.Language
 import com.example.wepick.util.Players
 import com.example.wepick.viewmodel.PlayerViewModel
 
@@ -69,10 +71,11 @@ fun GenresScreen(
     playerVM: PlayerViewModel,
     modifier: Modifier
 ) {
-    val lang = when (java.util.Locale.getDefault().language) {
-        "uk" -> "ua"
-        "ru" -> "ru"
-        else -> "en"
+    val local = LocalConfiguration.current.locales[0]
+    val lang = when (local.language) {
+        Language.UK -> Language.UA
+        Language.RU -> Language.RU
+        else -> Language.EN
     }
     val dislikesStep = playerVM.currentStep == GenreStep.DISLIKES
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()

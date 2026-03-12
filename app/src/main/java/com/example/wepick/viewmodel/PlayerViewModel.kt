@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wepick.data.local.GenresData
 import com.example.wepick.util.GenreStep
+import com.example.wepick.util.Language
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -97,8 +98,12 @@ class PlayerViewModel : ViewModel() {
     }
 
     // Character
-    fun generateCharacterFullProfile() {
-        val allGenres = GenresData.GENRES["ru"] ?: emptyList()
+    fun generateCharacterFullProfile(lang: String) {
+        val genresLang = when (lang) {
+            Language.UK -> Language.UA
+            else -> lang
+        }
+        val allGenres = GenresData.GENRES[genresLang] ?: emptyList()
         val shuffled = allGenres.shuffled()
         _selectedLikesFriend.clear()
         _selectedLikesFriend.addAll(shuffled.take(3))
