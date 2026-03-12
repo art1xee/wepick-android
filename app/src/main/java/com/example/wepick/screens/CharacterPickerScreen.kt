@@ -120,7 +120,7 @@ fun CharacterPickerScreen(
                         selectedChar?.let { char ->
                             viewModel.updatePartnerType(PartnerType.CHARACTER)
                             playerVM.selectCharacter(char.name)
-                            playerVM.generateCharacterFullProfile(lang = viewModel.currentLanguage.value)
+                            playerVM.generateCharacterFullProfile()
                             playerVM.prepareForGenres()
                             navController.navigate(ScreenNav.Genres.route)
                         }

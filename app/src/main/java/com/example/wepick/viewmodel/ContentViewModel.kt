@@ -11,6 +11,7 @@ import com.example.wepick.data.model.ContentType
 import com.example.wepick.data.model.jikan.toContentItem
 import com.example.wepick.data.model.tmdb.toContentItem
 import com.example.wepick.data.network.RetrofitClient
+import com.example.wepick.util.Language
 import kotlinx.coroutines.launch
 
 
@@ -43,13 +44,12 @@ class ContentViewModel : ViewModel() {
 
     fun processMatches(
         type: ContentType,
-        selectedLikes: List<String>,
-        selectedLikesFriend: List<String>,
-        selectedDislikes: List<String>,
-        selectedDislikesFriend: List<String>,
+        selectedLikes: List<Int>,
+        selectedLikesFriend: List<Int>,
+        selectedDislikes: List<Int>,
+        selectedDislikesFriend: List<Int>,
         selectedDecade: Int,
         selectedDecadeFriend: Int,
-        currentLanguage: String,
         onDone: () -> Unit,
     ) {
         randomPage = (1..20).random()
@@ -59,8 +59,9 @@ class ContentViewModel : ViewModel() {
                 val allDislikes = (selectedDislikes + selectedDislikesFriend).distinct()
                 val matchingGenres = allLikes.filter { it !in allDislikes }
 
-                val genreIdsString = matchingGenres
-                    .mapNotNull { getGenreIdForApi(it, type, currentLanguage) }
+                val genreIdsString = selectedLikes
+                    .mapNotNull { index -> GenresData.GENRES[Language.EN]?.getOrNull(index) }
+                    .mapNotNull { englishGenre -> GenresData.tmdbGenreIds[englishGenre] }
                     .joinToString(",")
 
                 val minYear = minOf(selectedDecade, selectedDecadeFriend)

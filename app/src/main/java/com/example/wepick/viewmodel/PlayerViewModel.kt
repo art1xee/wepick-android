@@ -55,27 +55,27 @@ class PlayerViewModel : ViewModel() {
     }
 
     // Genres
-    private val _selectedDislikes = mutableStateListOf<String>()
-    val selectedDislikes: List<String> = _selectedDislikes
+    private val _selectedDislikes = mutableStateListOf<Int>()
+    val selectedDislikes: List<Int> = _selectedDislikes
 
-    private val _selectedLikes = mutableStateListOf<String>()
-    val selectedLikes: List<String> = _selectedLikes
+    private val _selectedLikes = mutableStateListOf<Int>()
+    val selectedLikes: List<Int> = _selectedLikes
 
-    private val _selectedDislikesFriend = mutableStateListOf<String>()
-    val selectedDislikesFriend: List<String> = _selectedDislikesFriend
+    private val _selectedDislikesFriend = mutableStateListOf<Int>()
+    val selectedDislikesFriend: List<Int> = _selectedDislikesFriend
 
-    private val _selectedLikesFriend = mutableStateListOf<String>()
-    val selectedLikesFriend: List<String> = _selectedLikesFriend
+    private val _selectedLikesFriend = mutableStateListOf<Int>()
+    val selectedLikesFriend: List<Int> = _selectedLikesFriend
 
 
-    fun toggleGenre(genre: String, isDislike: Boolean) {
+    fun toggleGenre(index: Int, isDislike: Boolean) {
         val list = if (activePlayer == 1) {
             if (isDislike) _selectedDislikes else _selectedLikes
         } else {
             if (isDislike) _selectedDislikesFriend else _selectedLikesFriend
         }
-        if (list.contains(genre)) list.remove(genre)
-        else if (list.size < 3) list.add(genre)
+        if (list.contains(index)) list.remove(index)
+        else if (list.size < 3) list.add(index)
     }
 
     fun prepareForGenres() {
@@ -98,17 +98,12 @@ class PlayerViewModel : ViewModel() {
     }
 
     // Character
-    fun generateCharacterFullProfile(lang: String) {
-        val genresLang = when (lang) {
-            Language.UK -> Language.UA
-            else -> lang
-        }
-        val allGenres = GenresData.GENRES[genresLang] ?: emptyList()
-        val shuffled = allGenres.shuffled()
+    fun generateCharacterFullProfile() {
+        val indices = GenresData.GENRES[Language.EN]!!.indices.toList().shuffled()
         _selectedLikesFriend.clear()
-        _selectedLikesFriend.addAll(shuffled.take(3))
+        _selectedLikesFriend.addAll(indices.take(3))
         _selectedDislikesFriend.clear()
-        _selectedDislikesFriend.addAll(shuffled.drop(3).take(3))
+        _selectedDislikesFriend.addAll(indices.drop(3).take(3))
         selectedDecadeFriend = decades.random()
     }
 

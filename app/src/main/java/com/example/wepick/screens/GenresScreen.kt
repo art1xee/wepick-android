@@ -159,19 +159,19 @@ fun GenresScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         maxItemsInEachRow = 3
                     ) {
-                        genreList.forEach { genre ->
+                        genreList.forEachIndexed { index, genre ->
                             val listToCompare =
                                 if (playerVM.activePlayer == 1) playerVM.selectedDislikes else playerVM.selectedDislikesFriend
-                            val isAlreadyInDislikes = !dislikesStep && listToCompare.contains(genre)
+                            val isAlreadyInDislikes = !dislikesStep && listToCompare.contains(index)
 
                             val isSelected = if (dislikesStep) {
                                 if (playerVM.activePlayer == 1) playerVM.selectedDislikes.contains(
-                                    genre
-                                ) else playerVM.selectedDislikesFriend.contains(genre)
+                                    index
+                                ) else playerVM.selectedDislikesFriend.contains(index)
                             } else {
                                 if (playerVM.activePlayer == 1) playerVM.selectedLikes.contains(
-                                    genre
-                                ) else playerVM.selectedLikesFriend.contains(genre)
+                                    index
+                                ) else playerVM.selectedLikesFriend.contains(index)
                             }
 
                             GenreChip(
@@ -183,7 +183,7 @@ fun GenresScreen(
                                     if (isAlreadyInDislikes) {
                                         playerVM.showLockedError(lockedMessage)
                                     } else {
-                                        playerVM.toggleGenre(genre, isDislike = dislikesStep)
+                                        playerVM.toggleGenre(index, isDislike = dislikesStep)
                                     }
                                 }
                             )

@@ -244,7 +244,6 @@ fun MatchScreen(
                                     selectedDislikesFriend = playerVM.selectedDislikesFriend,
                                     selectedDecade = playerVM.selectedDecade,
                                     selectedDecadeFriend = playerVM.selectedDecadeFriend,
-                                    currentLanguage = viewModel.currentLanguage.value,
                                     onDone = { viewModel.navigateToMatch(navController) })
                             }
                         )

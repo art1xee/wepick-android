@@ -36,6 +36,7 @@ import com.example.wepick.data.model.ContentType
 import com.example.wepick.ui.components.FindContentButton
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
+import com.example.wepick.data.local.GenresData
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
@@ -47,15 +48,28 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.Language
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
-fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier, playerVM: PlayerViewModel, contentVM: ContentViewModel) {
+fun SummaryScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    modifier: Modifier,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel
+) {
     val selectedType by viewModel.selectedContentType
-    val userName =  playerVM.userName
+    val userName = playerVM.userName
     val friendName = playerVM.friendName
     val isFriend = playerVM.isPartnerFriend
+
+    val lang = when (viewModel.currentLanguage.value) {
+        Language.UK -> Language.UA
+        Language.RU -> Language.RU
+        else -> Language.EN
+    }
 
 
     val contentDisplayName = when (selectedType) {
@@ -74,7 +88,6 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
 
 
         Card(
@@ -147,7 +160,8 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                         name = userName,
                         dislikes = playerVM.selectedDislikes,
                         likes = playerVM.selectedLikes,
-                        decade = playerVM.selectedDecade
+                        decade = playerVM.selectedDecade,
+                        lang = lang
                     )
                     ParticipantColumn(
                         modifier = Modifier.weight(1f),
@@ -157,7 +171,8 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                         name = if (isFriend) friendName else playerVM.selectedCharacterName,
                         dislikes = playerVM.selectedDislikesFriend,
                         likes = playerVM.selectedLikesFriend,
-                        decade = playerVM.selectedDecadeFriend
+                        decade = playerVM.selectedDecadeFriend,
+                        lang = lang
                     )
                 }
 
@@ -168,15 +183,17 @@ fun SummaryScreen(navController: NavController, viewModel: MainViewModel, modifi
                     route = ScreenNav.Match.route,
                     text = stringResource(R.string.find_content, contentDisplayName),
                     enabled = true,
-                    onNextClick = { contentVM.processMatches(type = viewModel.selectedContentType.value ?: ContentType.Movie,
-                        selectedLikes = playerVM.selectedLikes,
-                        selectedLikesFriend = playerVM.selectedLikesFriend,
-                        selectedDislikes = playerVM.selectedDislikes,
-                        selectedDislikesFriend = playerVM.selectedDislikesFriend,
-                        selectedDecade = playerVM.selectedDecade,
-                        selectedDecadeFriend = playerVM.selectedDecadeFriend,
-                        currentLanguage = viewModel.currentLanguage.value,
-                        onDone = { viewModel.navigateToMatch(navController) }) }
+                    onNextClick = {
+                        contentVM.processMatches(
+                            type = viewModel.selectedContentType.value ?: ContentType.Movie,
+                            selectedLikes = playerVM.selectedLikes,
+                            selectedLikesFriend = playerVM.selectedLikesFriend,
+                            selectedDislikes = playerVM.selectedDislikes,
+                            selectedDislikesFriend = playerVM.selectedDislikesFriend,
+                            selectedDecade = playerVM.selectedDecade,
+                            selectedDecadeFriend = playerVM.selectedDecadeFriend,
+                            onDone = { viewModel.navigateToMatch(navController) })
+                    }
                 )
             }
         }
@@ -189,9 +206,10 @@ fun ParticipantColumn(
     modifier: Modifier,
     label: String,
     name: String,
-    dislikes: List<String>,
-    likes: List<String>,
-    decade: Int
+    dislikes: List<Int>,
+    likes: List<Int>,
+    decade: Int,
+    lang: String
 ) {
     Column(
         modifier = modifier
@@ -223,6 +241,7 @@ fun ParticipantColumn(
             label = stringResource(R.string.dislikes_watch),
             items = dislikes,
             color = DislikeContentColor.copy(0.5f),
+            lang = lang,
         )
 
         Spacer(Modifier.height(12.dp))
@@ -232,6 +251,7 @@ fun ParticipantColumn(
             label = stringResource(R.string.likes_watch),
             items = likes,
             color = LikeContentColor.copy(0.5f),
+            lang = lang,
         )
 
         Spacer(Modifier.height(12.dp))
@@ -265,7 +285,7 @@ fun ParticipantColumn(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
+fun SummaryInfoBlock(label: String, items: List<Int>, color: Color, lang: String) {
     Column(
         modifier = Modifier
             .background(White.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
@@ -296,15 +316,16 @@ fun SummaryInfoBlock(label: String, items: List<String>, color: Color) {
             if (items.isEmpty()) {
                 Text("—", fontFamily = PressStart2P, fontSize = 8.sp, color = Black.copy(0.4f))
             } else {
-                items.forEach { genre ->
+                items.forEach { index ->
+                    val genreName = GenresData.GENRES[lang]?.getOrNull(index) ?: ""
                     val dynamicFontSize = when {
-                        genre.length > 18 -> 6.sp
-                        genre.length > 12 -> 7.sp
+                        genreName.length > 18 -> 6.sp
+                        genreName.length > 12 -> 7.sp
                         else -> 8.sp
                     }
 
                     Text(
-                        text = "• $genre",
+                        text = "• $genreName",
                         fontFamily = PressStart2P,
                         fontSize = dynamicFontSize,
                         color = Black,
