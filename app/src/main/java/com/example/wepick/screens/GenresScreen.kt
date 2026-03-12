@@ -211,18 +211,13 @@ fun GenresScreen(
                 SaveGenres(
                     navController = navController,
                     modifier = Modifier,
-                    route = if (!dislikesStep && (playerVM.activePlayer == 2 || !playerVM.isPartnerFriend)) {
-                        ScreenNav.Summary.route
-                    } else {
-                        ""
-                    },
+                    route = "",
                     enabled = (if (dislikesStep) {
                         if (playerVM.activePlayer == 1) playerVM.selectedDislikes.size else playerVM.selectedDislikesFriend.size
                     } else {
                         if (playerVM.activePlayer == 1) playerVM.selectedLikes.size else playerVM.selectedLikesFriend.size
                     }) == 3,
                     onNextClick = {
-
                         if (dislikesStep) {
                             playerVM.currentStep = "likes"
                         } else {

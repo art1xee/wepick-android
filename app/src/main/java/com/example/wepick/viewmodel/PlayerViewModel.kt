@@ -78,7 +78,7 @@ class PlayerViewModel : ViewModel() {
 
     fun prepareForGenres() {
         activePlayer = 1
-        currentStep = "dislike"
+        currentStep = "dislikes"
         _selectedDislikes.clear()
         _selectedLikes.clear()
     }
@@ -113,7 +113,7 @@ class PlayerViewModel : ViewModel() {
         isPartnerFriend = false
         selectedCharacterName = ""
         activePlayer = 1
-        currentStep = "dislike"
+        currentStep = "dislikes"
         selectedDecade = 2000
         selectedDecadeFriend = 2000
         _selectedDislikes.clear()

@@ -87,7 +87,7 @@ fun FriendNameScreen(
                 NextButton(
                     navController = navController,
                     modifier = modifier,
-                    route = ScreenNav.Genres.route,
+                    route = "",
                     enabled = isFriendNameValid,
                     onNextClick = {
                         playerVM.updateFriendName(friendName)
