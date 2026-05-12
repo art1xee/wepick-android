@@ -1,4 +1,4 @@
-package com.example.wepick
+package com.example.wepick.util
 
 import android.content.Context
 import androidx.core.content.edit
@@ -14,6 +14,6 @@ object LocaleSettings {
 
     fun getLanguage(context: Context?): String {
         val prefs = context?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs?.getString(KEY_LANG, "en") ?: "en"
+        return prefs?.getString(KEY_LANG, Language.EN) ?: Language.EN
     }
 }

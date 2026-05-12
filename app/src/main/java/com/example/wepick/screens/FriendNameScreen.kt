@@ -1,6 +1,5 @@
 package com.example.wepick.screens
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,21 +24,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.wepick.MainViewModel
-import com.example.wepick.NextButton
+import com.example.wepick.viewmodel.MainViewModel
+import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
-import com.example.wepick.ui.theme.AccentRed
-import com.example.wepick.ui.theme.Black
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
-import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
-fun FriendNameScreen(navController: NavController, viewModel: MainViewModel, modifier: Modifier) {
+fun FriendNameScreen(
+    navController: NavController,
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    modifier: Modifier
+) {
     var friendName by remember { mutableStateOf("") }
     val isFriendNameValid = friendName.trim().isNotEmpty()
 
@@ -88,11 +87,11 @@ fun FriendNameScreen(navController: NavController, viewModel: MainViewModel, mod
                 NextButton(
                     navController = navController,
                     modifier = modifier,
-                    route = ScreenNav.Genres.route,
+                    route = "",
                     enabled = isFriendNameValid,
                     onNextClick = {
-                        viewModel.setFriendName(friendName)
-                        viewModel.prepareForGenres()
+                        playerVM.updateFriendName(friendName)
+                        playerVM.prepareForGenres()
                         navController.navigate(ScreenNav.Genres.route)
                     })
             }

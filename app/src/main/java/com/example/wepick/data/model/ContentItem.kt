@@ -1,7 +1,6 @@
-package com.example.wepick
+package com.example.wepick.data.model
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.Serializer
 
 /*
 * Класс, который имеет информацию про выбранный контент (фильмы, сериалы и аниме).

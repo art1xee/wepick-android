@@ -1,5 +1,6 @@
-package com.example.wepick
+package com.example.wepick.data.network
 
+import com.example.wepick.data.model.jikan.JikanResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

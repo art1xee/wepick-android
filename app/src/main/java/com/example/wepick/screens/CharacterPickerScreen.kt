@@ -39,21 +39,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.wepick.MainViewModel
-import com.example.wepick.NextButton
+import com.example.wepick.viewmodel.MainViewModel
+import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
-import com.example.wepick.characterList
+import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.data.local.characterList
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
+import com.example.wepick.util.PartnerType
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
 fun CharacterPickerScreen(
     navController: NavController,
     viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
     modifier: Modifier
 ) {
     // save id chosen character (null if no one is chosen by user)
@@ -115,10 +118,10 @@ fun CharacterPickerScreen(
                     enabled = selectedChar != null,
                     onNextClick = {
                         selectedChar?.let { char ->
-                            viewModel.setPartnerType("character") // Исправлено
-                            viewModel.selectCharacter(char.name)
-                            viewModel.generateCharacterFullProfile()
-                            viewModel.prepareForGenres()
+                            viewModel.updatePartnerType(PartnerType.CHARACTER)
+                            playerVM.selectCharacter(char.name)
+                            playerVM.generateCharacterFullProfile()
+                            playerVM.prepareForGenres()
                             navController.navigate(ScreenNav.Genres.route)
                         }
                     }

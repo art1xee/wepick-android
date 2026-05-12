@@ -1,5 +1,6 @@
 package com.example.wepick.screens
 
+import androidx.annotation.ContentView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -39,10 +40,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.wepick.CustomMatchButton
-import com.example.wepick.MainViewModel
+import com.example.wepick.ui.components.CustomMatchButton
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
-import com.example.wepick.ScreenNav
+import com.example.wepick.data.model.ContentType
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.ButtonResetBg
@@ -51,14 +53,18 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
 fun MatchScreen(
     navController: NavController,
     viewModel: MainViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel,
 ) {
-    val matchedItems by viewModel.items
+    val matchedItems by contentVM.items
     var currentIndex by remember { mutableIntStateOf(0) }
     val endMessage = stringResource(R.string.content_end)
 
@@ -152,18 +158,17 @@ fun MatchScreen(
                     }
 
                     AnimatedVisibility( // for showing error when user trying press next button but i`ts already 6/6
-                        visible = viewModel.errorMessage != null,
+                        visible = playerVM.errorMessage != null,
                         enter = fadeIn() + expandVertically(),
                         exit = fadeOut() + shrinkOut()
                     ) {
                         Text(
-                            text = viewModel.errorMessage ?: "",
+                            text = playerVM.errorMessage ?: "",
                             color = AccentRed,
                             fontFamily = PressStart2P,
                             fontSize = 8.sp,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
-//                                .padding(bottom = 8.dp)
                                 .fillMaxWidth()
                         )
                     }
@@ -209,13 +214,15 @@ fun MatchScreen(
                             text = ">",
                             fontFamily = PressStart2P,
                             fontSize = 20.sp,
-                            color = if (currentIndex < matchedItems.size - 1) AccentRed else Black.copy(alpha = 0.3f),
+                            color = if (currentIndex < matchedItems.size - 1) AccentRed else Black.copy(
+                                alpha = 0.3f
+                            ),
                             modifier = Modifier
                                 .clickable {
                                     if (currentIndex < matchedItems.size - 1) {
                                         currentIndex++
                                     } else {
-                                        viewModel.showLockedError(endMessage)
+                                        playerVM.showLockedError(endMessage)
                                     }
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -229,14 +236,25 @@ fun MatchScreen(
                             color = AccentRed,
                             onClick = {
                                 currentIndex = 0
-                                viewModel.processMatches(navController)
+                                contentVM.processMatches(
+                                    type = viewModel.selectedContentType.value ?: ContentType.Movie,
+                                    selectedLikes = playerVM.selectedLikes,
+                                    selectedLikesFriend = playerVM.selectedLikesFriend,
+                                    selectedDislikes = playerVM.selectedDislikes,
+                                    selectedDislikesFriend = playerVM.selectedDislikesFriend,
+                                    selectedDecade = playerVM.selectedDecade,
+                                    selectedDecadeFriend = playerVM.selectedDecadeFriend,
+                                    onDone = { viewModel.navigateToMatch(navController) })
                             }
                         )
                         CustomMatchButton( // start over button
                             text = stringResource(R.string.start_again),
                             color = ButtonResetBg,
                             onClick = {
-                                viewModel.resetAllData()
+                                viewModel.resetAll(
+                                    playerViewModel = playerVM,
+                                    contentViewModel = contentVM
+                                )
                                 navController.navigate(ScreenNav.Main.route) {
                                     popUpTo(0)
                                 }

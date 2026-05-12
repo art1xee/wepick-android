@@ -38,16 +38,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.wepick.CustomMatchButton
-import com.example.wepick.ScreenNav
+import com.example.wepick.ui.components.CustomMatchButton
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.ButtonResetBg
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import androidx.core.net.toUri
-import com.example.wepick.MainViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.Language
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 const val GIT_HUB = "https://github.com/art1xee/wepick-android"
 
@@ -55,7 +58,9 @@ const val GIT_HUB = "https://github.com/art1xee/wepick-android"
 fun OverlayMenu(
     onClose: () -> Unit,
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel
 ) {
     val annotatedText = buildAnnotatedString {
         pushStringAnnotation(tag = "URL", annotation = GIT_HUB)
@@ -114,8 +119,8 @@ fun OverlayMenu(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val langs = listOf("EN" to "en", "UA" to "uk", "RU" to "ru")
-                    langs.forEach { (label, code) ->
+                    val supportedLanguages = listOf("EN" to Language.EN, "UA" to Language.UK, "RU" to Language.RU)
+                    supportedLanguages.forEach { (label, code) ->
                         val isSelected = currentLang == code
                         Box(
                             modifier = Modifier
@@ -150,7 +155,10 @@ fun OverlayMenu(
                     color = ButtonResetBg,
                     onClick = {
                         onClose()
-                        viewModel.resetAllData()
+                        viewModel.resetAll(
+                            playerViewModel = playerVM,
+                            contentViewModel = contentVM,
+                        )
                         navController.navigate(ScreenNav.Main.route) {
                             popUpTo(0)
                         }

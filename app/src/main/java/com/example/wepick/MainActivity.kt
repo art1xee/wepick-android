@@ -7,11 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.wepick.navigation.NavGraph
+import com.example.wepick.util.LocaleSettings
 import com.example.wepick.screens.MainScaffold
 import com.example.wepick.ui.theme.WePickTheme
+import com.example.wepick.util.LocalHelper
+import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.MainViewModel
+import com.example.wepick.viewmodel.PlayerViewModel
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context?) {
@@ -23,14 +28,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel: MainViewModel by viewModels()
+        val playerVM: PlayerViewModel by viewModels()
+        val contentVM: ContentViewModel by viewModels()
         viewModel.initLanguage(this)
 
         enableEdgeToEdge()
         setContent {
             WePickTheme {
                 val navController = rememberNavController()
-                MainScaffold(viewModel, navController) {
-                    StartProgram(navController, viewModel)
+                MainScaffold(viewModel, playerVM, contentVM, navController) {
+                    StartProgram(navController, viewModel, playerVM, contentVM)
                 }
             }
         }
@@ -40,10 +47,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun StartProgram(navController: NavHostController, viewModel: MainViewModel) {
+fun StartProgram(
+    navController: NavHostController,
+    viewModel: MainViewModel,
+    playerVM: PlayerViewModel,
+    contentVM: ContentViewModel
+) {
     NavGraph(
         navController = navController,
-        viewModel = viewModel
+        viewModel = viewModel,
+        playerVM = playerVM,
+        contentVM = contentVM
     )
 }
 
