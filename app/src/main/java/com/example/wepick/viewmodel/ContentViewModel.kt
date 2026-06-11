@@ -12,6 +12,13 @@ import com.example.wepick.data.model.jikan.toContentItem
 import com.example.wepick.data.model.tmdb.toContentItem
 import com.example.wepick.data.network.RetrofitClient
 import com.example.wepick.util.Language
+import com.example.wepick.util.Paging
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -19,12 +26,39 @@ class ContentViewModel : ViewModel() {
     private val _items = mutableStateOf<List<ContentItem>>(emptyList())
     val items: State<List<ContentItem>> = _items
 
-    private var randomPage = (1..20).random()
+    private var matchJob: Job? = null
+    private var pool: List<ContentItem> = emptyList()
+    private var batchStart: Int = 0
+
+    private val _isMatching = mutableStateOf(false)
+    val isMatching: State<Boolean> = _isMatching
 
     init {
         loadContent(ContentType.Movie, BuildConfig.TMDB_API_KEY)
         loadContent(ContentType.Tv, BuildConfig.TMDB_API_KEY)
         loadContent(ContentType.Anime, BuildConfig.JIKAN_BASE_URL)
+    }
+
+    private fun setPool(items: List<ContentItem>) {
+        pool = items
+        batchStart = 0
+        emitCurrentBatch()
+    }
+
+    private fun emitCurrentBatch() {
+        if (pool.isEmpty()) {
+            _items.value = emptyList()
+            return
+        }
+        val end = minOf(batchStart + Paging.BATCH_SIZE, pool.size)
+        _items.value = pool.subList(batchStart, end)
+    }
+
+    fun showNextBatch() {
+        if (pool.isEmpty()) return
+        batchStart += Paging.BATCH_SIZE
+        if (batchStart >= pool.size) batchStart = 0
+        emitCurrentBatch()
     }
 
     fun loadContent(type: ContentType, apiKey: String) {
@@ -52,46 +86,64 @@ class ContentViewModel : ViewModel() {
         selectedDecadeFriend: Int,
         onDone: () -> Unit,
     ) {
-        randomPage = (1..20).random()
-        viewModelScope.launch {
+        matchJob?.cancel()
+        _isMatching.value = true
+        matchJob = viewModelScope.launch {
             try {
-                val allLikes = (selectedLikes + selectedLikesFriend).distinct()
-                val allDislikes = (selectedDislikes + selectedDislikesFriend).distinct()
-                val matchingGenres = allLikes.filter { it !in allDislikes }
-
-                val genreIdsString = selectedLikes
+                val genreIds = selectedLikes
                     .mapNotNull { index -> GenresData.GENRES[Language.EN]?.getOrNull(index) }
-                    .mapNotNull { englishGenre -> GenresData.tmdbGenreIds[englishGenre] }
-                    .joinToString(",")
+                    .mapNotNull { englishGenre ->
+                        if (type == ContentType.Anime) GenresData.jikanGenreIds[englishGenre]
+                        else GenresData.tmdbGenreIds[englishGenre]
+                    }
 
                 val minYear = minOf(selectedDecade, selectedDecadeFriend)
                 val maxYear = maxOf(selectedDecade, selectedDecadeFriend) + 9
 
                 when (type) {
-                    ContentType.Anime -> performJikanSearch(genreIdsString, minYear, maxYear)
-                    else -> performTmdbDiscover(type, genreIdsString, minYear, maxYear)
+                    ContentType.Anime -> performJikanSearch(genreIds.joinToString(","), minYear, maxYear)
+                    else -> performTmdbDiscover(type, genreIds.joinToString("|"), minYear, maxYear)
                 }
                 onDone()
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 println("Search Error: ${e.message}")
+            } finally {
+                _isMatching.value = false
             }
         }
     }
 
-    private suspend fun performJikanSearch(genreIds: String, startYear: Int, endYear: Int) {
-        try {
-            val response = RetrofitClient.instanceJikan.searchAnime(
-                genres = genreIds.ifEmpty { null },
-                page = randomPage,
-            )
-            _items.value = response.data.map { it.toContentItem() }.filter { anime ->
-                val year = anime.releaseDate.toIntOrNull() ?: 0
-                year in startYear..endYear
+    private suspend fun performJikanSearch(
+        genreIds: String,
+        startYear: Int,
+        endYear: Int
+    ) {
+        val startDate = "$startYear-01-01"
+        val endDate = "$endYear-12-31"
+        println("Jikan search: genres='$genreIds' dates=$startDate..$endDate")
+        val results = mutableListOf<com.example.wepick.data.model.jikan.AnimeItem>()
+        for (page in 1..Paging.MAX_PAGES) {
+            if (page > 1) delay(Paging.JIKAN_DELAY_MS)
+            try {
+                val pageData = RetrofitClient.instanceJikan.searchAnime(
+                    genres = genreIds.ifEmpty { null },
+                    page = page,
+                    startDate = startDate,
+                    endDate = endDate,
+                ).data
+                results += pageData
+                if (pageData.isEmpty()) break
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                println("Jikan page $page error: ${e.message}")
             }
-        } catch (e: Exception) {
-            println("Jikan Error: ${e.message}")
-            _items.value = emptyList()
         }
+        val deduped = results.distinctBy { it.malId }.map { it.toContentItem() }
+        println("Jikan search: raw=${results.size}, deduped=${deduped.size}")
+        setPool(deduped)
     }
 
     private suspend fun performTmdbDiscover(
@@ -99,29 +151,41 @@ class ContentViewModel : ViewModel() {
         genres: String,
         start: Int,
         end: Int
-    ) {
-        try {
-            val response = if (type == ContentType.Movie) {
-                RetrofitClient.instanceTmdb.getDiscoveryMovie(
-                    apiKey = BuildConfig.TMDB_API_KEY,
-                    genres = genres,
-                    dateStart = "$start-01-01",
-                    dateEnd = "$end-12-31",
-                    page = randomPage,
-                )
-            } else {
-                RetrofitClient.instanceTmdb.getDiscoveryTV(
-                    apiKey = BuildConfig.TMDB_API_KEY,
-                    genres = genres,
-                    dateStart = "$start-01-01",
-                    dateEnd = "$end-12-31",
-                )
+    ) = coroutineScope {
+        val responses = (1..Paging.MAX_PAGES).map { page ->
+            async {
+                try {
+                    if (type == ContentType.Movie) {
+                        RetrofitClient.instanceTmdb.getDiscoveryMovie(
+                            apiKey = BuildConfig.TMDB_API_KEY,
+                            genres = genres,
+                            dateStart = "$start-01-01",
+                            dateEnd = "$end-12-31",
+                            page = page,
+                        )
+                    } else {
+                        RetrofitClient.instanceTmdb.getDiscoveryTV(
+                            apiKey = BuildConfig.TMDB_API_KEY,
+                            genres = genres,
+                            dateStart = "$start-01-01",
+                            dateEnd = "$end-12-31",
+                            page = page,
+                        )
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    println("TMDB page $page error: ${e.message}")
+                    null
+                }
             }
-            _items.value = response.results.map { it.toContentItem() }
-        } catch (e: Exception) {
-            println("TMDB Discover Error: ${e.message}")
-            _items.value = emptyList()
-        }
+        }.awaitAll().filterNotNull()
+        setPool(
+            responses
+                .flatMap { it.results }
+                .distinctBy { it.id }
+                .map { it.toContentItem() }
+        )
     }
 
     private fun getGenreIdForApi(selectedGenre: String, type: ContentType, lang: String): Int? {
@@ -136,6 +200,9 @@ class ContentViewModel : ViewModel() {
     }
 
     fun resetItems() {
+        matchJob?.cancel()
+        pool = emptyList()
+        batchStart = 0
         _items.value = emptyList()
         loadContent(ContentType.Movie, BuildConfig.TMDB_API_KEY)
         loadContent(ContentType.Tv, BuildConfig.TMDB_API_KEY)

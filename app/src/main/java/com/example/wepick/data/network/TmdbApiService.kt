@@ -47,6 +47,7 @@ interface TmdbApiService {
         @Query("with_genres") genres: String,
         @Query("first_air_date.gte") dateStart: String,
         @Query("first_air_date.lte") dateEnd: String,
+        @Query("page") page: Int = 1,
         @Query("language") language: String = "ru_RU",
     ): TmdbResponse
 }

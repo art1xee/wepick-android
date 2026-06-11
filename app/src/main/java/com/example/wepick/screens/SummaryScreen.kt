@@ -37,7 +37,6 @@ import com.example.wepick.ui.components.FindContentButton
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
 import com.example.wepick.data.local.GenresData
-import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -178,11 +177,12 @@ fun SummaryScreen(
 
                 Spacer(Modifier.height(30.dp))
 
+                val isMatching by contentVM.isMatching
                 FindContentButton(
                     navController = navController,
-                    route = ScreenNav.Match.route,
+                    route = "",
                     text = stringResource(R.string.find_content, contentDisplayName),
-                    enabled = true,
+                    enabled = !isMatching,
                     onNextClick = {
                         contentVM.processMatches(
                             type = viewModel.selectedContentType.value ?: ContentType.Movie,

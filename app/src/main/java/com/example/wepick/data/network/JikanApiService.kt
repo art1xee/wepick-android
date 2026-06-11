@@ -14,6 +14,8 @@ interface JikanApiService {
     suspend fun searchAnime(
         @Query("genres") genres: String? = null,
         @Query("page") page: Int = 1,
+        @Query("start_date") startDate: String? = null,
+        @Query("end_date") endDate: String? = null,
         @Query("order_by") orderBy: String = "score",
         @Query("sort") sort: String = "desc",
         @Query("min_score") minScore: Double = 7.0,
