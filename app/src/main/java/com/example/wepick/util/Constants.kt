@@ -21,3 +21,9 @@ object Language {
     const val RU = "ru"
     const val UA = "ua"
 }
+
+object Paging {
+    const val MAX_PAGES = 20
+    const val JIKAN_DELAY_MS = 400L
+    const val BATCH_SIZE = 20
+}

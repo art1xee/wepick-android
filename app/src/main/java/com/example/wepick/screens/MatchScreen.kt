@@ -43,7 +43,6 @@ import coil.compose.AsyncImage
 import com.example.wepick.ui.components.CustomMatchButton
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.R
-import com.example.wepick.data.model.ContentType
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
@@ -236,15 +235,7 @@ fun MatchScreen(
                             color = AccentRed,
                             onClick = {
                                 currentIndex = 0
-                                contentVM.processMatches(
-                                    type = viewModel.selectedContentType.value ?: ContentType.Movie,
-                                    selectedLikes = playerVM.selectedLikes,
-                                    selectedLikesFriend = playerVM.selectedLikesFriend,
-                                    selectedDislikes = playerVM.selectedDislikes,
-                                    selectedDislikesFriend = playerVM.selectedDislikesFriend,
-                                    selectedDecade = playerVM.selectedDecade,
-                                    selectedDecadeFriend = playerVM.selectedDecadeFriend,
-                                    onDone = { viewModel.navigateToMatch(navController) })
+                                contentVM.showNextBatch()
                             }
                         )
                         CustomMatchButton( // start over button
