@@ -24,6 +24,8 @@ object Language {
 
 object Paging {
     const val MAX_PAGES = 20
-    const val JIKAN_DELAY_MS = 400L
+    const val JIKAN_MAX_PAGES = 5
+    const val JIKAN_DELAY_MS = 1000L
     const val BATCH_SIZE = 20
 }
+

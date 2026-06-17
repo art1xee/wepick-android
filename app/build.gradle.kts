@@ -25,9 +25,9 @@ android {
             localProperties.load(propertiesFile.inputStream())
         }
 
-        val jikanUrl = localProperties.getProperty("JIKAN_BASE_URL") ?: ""
-        val tmdbUrl = localProperties.getProperty("TMDB_BASE_URL") ?: ""
-        val tmdbKey = localProperties.getProperty("TMDB_API_KEY") ?: ""
+        val jikanUrl = localProperties.getProperty("JIKAN_BASE_URL") ?: "https://api.jikan.moe/v4/"
+        val tmdbUrl = localProperties.getProperty("TMDB_BASE_URL") ?: "https://api.themoviedb.org/3/"
+        val tmdbKey = localProperties.getProperty("TMDB_API_KEY") ?: "f0d0bc12560c00cff720536f062f5463"
 
         buildConfigField("String", "JIKAN_BASE_URL", "\"$jikanUrl\"")
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbKey\"")

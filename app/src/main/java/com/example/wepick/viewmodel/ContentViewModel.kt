@@ -8,6 +8,7 @@ import com.example.wepick.BuildConfig
 import com.example.wepick.data.local.GenresData
 import com.example.wepick.data.model.ContentItem
 import com.example.wepick.data.model.ContentType
+import com.example.wepick.data.model.jikan.AnimeItem
 import com.example.wepick.data.model.jikan.toContentItem
 import com.example.wepick.data.model.tmdb.toContentItem
 import com.example.wepick.data.network.RetrofitClient
@@ -101,7 +102,12 @@ class ContentViewModel : ViewModel() {
                 val maxYear = maxOf(selectedDecade, selectedDecadeFriend) + 9
 
                 when (type) {
-                    ContentType.Anime -> performJikanSearch(genreIds.joinToString(","), minYear, maxYear)
+                    ContentType.Anime -> performJikanSearch(
+                        genreIds.joinToString(","),
+                        minYear,
+                        maxYear
+                    )
+
                     else -> performTmdbDiscover(type, genreIds.joinToString("|"), minYear, maxYear)
                 }
                 onDone()
@@ -122,29 +128,43 @@ class ContentViewModel : ViewModel() {
     ) {
         val startDate = "$startYear-01-01"
         val endDate = "$endYear-12-31"
-        println("Jikan search: genres='$genreIds' dates=$startDate..$endDate")
         val results = mutableListOf<com.example.wepick.data.model.jikan.AnimeItem>()
+
+        // Используем MAX_PAGES (20), чтобы собрать максимум данных
         for (page in 1..Paging.MAX_PAGES) {
-            if (page > 1) delay(Paging.JIKAN_DELAY_MS)
+            if (page > 1) delay(Paging.JIKAN_DELAY_MS) // Задержка между страницами
+
             try {
-                val pageData = RetrofitClient.instanceJikan.searchAnime(
+                val response = RetrofitClient.instanceJikan.searchAnime(
                     genres = genreIds.ifEmpty { null },
                     page = page,
                     startDate = startDate,
                     endDate = endDate,
-                ).data
-                results += pageData
+                )
+
+                val pageData = response.data
                 if (pageData.isEmpty()) break
+                results += pageData
+
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
+                // Если страница выдала 504 или 429, мы НЕ прерываем цикл (break),
+                // а просто пишем в лог и пробуем следующую страницу.
                 println("Jikan page $page error: ${e.message}")
+
+                // Если поймали 429, подождем чуть дольше перед следующей страницей
+                if (e.message?.contains("429") == true) {
+                    delay(2000)
+                }
             }
         }
+
         val deduped = results.distinctBy { it.malId }.map { it.toContentItem() }
-        println("Jikan search: raw=${results.size}, deduped=${deduped.size}")
+        println("Jikan search finished: raw=${results.size}, deduped=${deduped.size}")
         setPool(deduped)
     }
+
 
     private suspend fun performTmdbDiscover(
         type: ContentType,
