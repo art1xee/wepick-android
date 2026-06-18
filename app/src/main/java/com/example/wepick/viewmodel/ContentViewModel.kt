@@ -130,9 +130,8 @@ class ContentViewModel : ViewModel() {
         val endDate = "$endYear-12-31"
         val results = mutableListOf<com.example.wepick.data.model.jikan.AnimeItem>()
 
-        // Используем MAX_PAGES (20), чтобы собрать максимум данных
         for (page in 1..Paging.MAX_PAGES) {
-            if (page > 1) delay(Paging.JIKAN_DELAY_MS) // Задержка между страницами
+            if (page > 1) delay(Paging.JIKAN_DELAY_MS)
 
             try {
                 val response = RetrofitClient.instanceJikan.searchAnime(
@@ -149,11 +148,8 @@ class ContentViewModel : ViewModel() {
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                // Если страница выдала 504 или 429, мы НЕ прерываем цикл (break),
-                // а просто пишем в лог и пробуем следующую страницу.
                 println("Jikan page $page error: ${e.message}")
 
-                // Если поймали 429, подождем чуть дольше перед следующей страницей
                 if (e.message?.contains("429") == true) {
                     delay(2000)
                 }
