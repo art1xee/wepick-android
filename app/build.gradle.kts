@@ -1,19 +1,23 @@
+import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
 import java.util.Properties
+
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.appdistribution)
 }
 
 android {
     namespace = "com.example.wepick"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.wepick"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -26,8 +30,10 @@ android {
         }
 
         val jikanUrl = localProperties.getProperty("JIKAN_BASE_URL") ?: "https://api.jikan.moe/v4/"
-        val tmdbUrl = localProperties.getProperty("TMDB_BASE_URL") ?: "https://api.themoviedb.org/3/"
-        val tmdbKey = localProperties.getProperty("TMDB_API_KEY") ?: "f0d0bc12560c00cff720536f062f5463"
+        val tmdbUrl =
+            localProperties.getProperty("TMDB_BASE_URL") ?: "https://api.themoviedb.org/3/"
+        val tmdbKey =
+            localProperties.getProperty("TMDB_API_KEY") ?: "f0d0bc12560c00cff720536f062f5463"
 
         buildConfigField("String", "JIKAN_BASE_URL", "\"$jikanUrl\"")
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbKey\"")
@@ -41,6 +47,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            firebaseAppDistribution {
+               artifactType = "APK"
+                testers = "makczub@gmail.com"
+            }
+
         }
     }
 
@@ -62,6 +74,9 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

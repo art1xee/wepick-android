@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871652837283",
+    "project_id": "wepick--android-version",
+    "storage_bucket": "wepick--android-version.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871652837283:android:912c185f44afb28601bc16",
+        "android_client_info": {
+          "package_name": "com.example.wepick"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL76Yx9OMQNGmp-IfEHrr72R0UCX1Z2EI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
