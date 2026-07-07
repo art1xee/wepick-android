@@ -2,6 +2,23 @@
 <resources>
     <string name="welcome_main">Stop arguing over what to watch! Let’s put some movie matrimony - back in your life.</string>
     <string name="enter_name_main">Enter your name</string>
+    <string name="login_main" >Login</string>
+    <string name="login_greeting_main" >We are glad to see you again</string>
+    <string name="login_email_main" >Email</string>
+    <string name="login_password_main" >Password</string>
+    <string name="login_remember_user_main" >Remember me</string>
+    <string name="login_forgot_password_main" >Forgot password?</string>
+    <string name="login_enter_main" >Login</string>
+    <string name="login_or_main" >Or</string>
+    <string name="registration_label_main">Registration</string>
+    <string name="registration_label_second">Create an account for a minute!</string>
+    <string name="registration_nickname">Nickname</string>
+    <string name="registration_email">Email</string>
+    <string name="registration_password">Password</string>
+    <string name="registration_password_confirm">Repeat password</string>
+    <string name="registration_create_account">Create Profile</string>
+    <string name="login_enter_email_main">Enter you`re email</string>
+    <string name="login_enter_password_main">Enter you`re password</string>
     <string name="next_button">Next!</string>
     <string name="selection_label">Hello %1$s! Choose content which you want to watch.</string>
     <string name="movie_content">Movie`s</string>

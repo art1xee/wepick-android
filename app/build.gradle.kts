@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.example.wepick"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.wepick"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -76,8 +76,8 @@ android {
 dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
     implementation(libs.retrofit)
+
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
@@ -106,6 +106,7 @@ dependencies {
     implementation(libs.androidx.benchmark.traceprocessor)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.foundation)
+    implementation(libs.firebase.auth)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

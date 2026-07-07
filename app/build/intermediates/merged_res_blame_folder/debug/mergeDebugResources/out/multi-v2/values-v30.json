@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.wepick.app-mergeDebugResources-45:/values-v30/values-v30.xml",
+            "outputFile": "com.example.wepick.app-mergeDebugResources-60:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\makcz\\.gradle\\caches\\8.13\\transforms\\daaf3313996fd94c80f47508a78e0a36\\transformed\\material3\\res\\values-v30\\values-v30.xml",
+                    "source": "C:\\Users\\makcz\\.gradle\\caches\\8.13\\transforms\\94d3a27d7203441eb511d766304073d8\\transformed\\material3\\res\\values-v30\\values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

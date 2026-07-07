@@ -104,7 +104,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
                     onValueChange = { name = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.enter_name_main),
+                            text = stringResource(R.string.login_enter_email_main),
                             fontFamily = PressStart2P
                         )
                     },

@@ -34,7 +34,6 @@
     <string name="decade_choose">%1$s Обери декаду: </string>
     <string name="dislikes_watch">Не хоче дивитися: </string>
     <string name="enter_name_friend_text_field">Ім\'я друга</string>
-    <string name="enter_name_main">Введіть ваше ім\'я</string>
     <string name="error_genre">Цей жанр вже вибранний!</string>
     <string name="find_content">Знайти %1$s!</string>
     <string name="friend_name_label">Передай пристрій другу - нехай введе своє ім\'я</string>
@@ -49,6 +48,18 @@
     <string name="google_storage_bucket" translatable="false">wepick--android-version.firebasestorage.app</string>
     <string name="likes_watch">Хоче дивитися: </string>
     <string name="loading">Загрузка…</string>
+    <string name="login_apple_main" translatable="false">Apple</string>
+    <string name="login_email_main">Емейл</string>
+    <string name="login_enter_email_main">Введіть ваше емейл</string>
+    <string name="login_enter_main">Увійти</string>
+    <string name="login_enter_password_main">Введіть ваш пароль</string>
+    <string name="login_forgot_password_main">Забули пароль?</string>
+    <string name="login_google_main" translatable="false">Google</string>
+    <string name="login_greeting_main">Ми раді бачити тебе знову</string>
+    <string name="login_main">Вхід</string>
+    <string name="login_or_main">Aбо</string>
+    <string name="login_password_main">Пароль</string>
+    <string name="login_remember_user_main">Запам\'ятати мене</string>
     <string name="movie_content">Фільми</string>
     <string name="movie_content_partner">Фільмів</string>
     <string name="movie_match_label">Зустрінь свою кінопару!</string>
@@ -61,6 +72,13 @@
     <string name="popular_character_partner">Популярний персонаж</string>
     <string name="project_id" translatable="false">wepick--android-version</string>
     <string name="rating">Рейтінг: </string>
+    <string name="registration_create_account">Створити аккаунт</string>
+    <string name="registration_email">Емейл</string>
+    <string name="registration_label_main">Зареєструватися</string>
+    <string name="registration_label_second">Створи свій профіль за хвилину!</string>
+    <string name="registration_nickname">Нікнейм</string>
+    <string name="registration_password">Пароль</string>
+    <string name="registration_password_confirm">Повторіть пароль</string>
     <string name="reload_content">Оновити підбір</string>
     <string name="second_user_name_summary">Ім\'я друга: </string>
     <string name="seen_content">Бачили - показити інше</string>

@@ -1,178 +1,130 @@
 [
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-hdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "com.example.wepick.app-debug-62:/font_press_start_2p.xml.flat",
+        "source": "com.example.wepick.app-main-64:/font/press_start_2p.xml"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xhdpi\\ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_john_wick.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\john_wick.jpg"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.example.wepick.app-debug-62:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-mdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-hdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_arthur_morgan.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\arthur_morgan.jpg"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-mdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\ic_launcher_background.xml"
+        "merged": "com.example.wepick.app-debug-62:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.wepick.app-main-64:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_sherlock.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/sherlock.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "com.example.wepick.app-debug-62:/drawable_arthur_morgan.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/arthur_morgan.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_saul_good_man.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\saul_good_man.jpg"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.example.wepick.app-debug-62:/xml_backup_rules.xml.flat",
+        "source": "com.example.wepick.app-main-64:/xml/backup_rules.xml"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\xml\\data_extraction_rules.xml"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_monkey_d_luffy.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\monkey_d_luffy.jpg"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_logo.png.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\logo.png"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_chopper.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/chopper.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_walter_white.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/walter_white.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_logo.png.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/logo.png"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_sherlock.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\sherlock.jpg"
+        "merged": "com.example.wepick.app-debug-62:/drawable_john_wick.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/john_wick.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-hdpi\\ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_saul_good_man.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/saul_good_man.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_levi_ackerman.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\levi_ackerman.jpg"
+        "merged": "com.example.wepick.app-debug-62:/drawable_levi_ackerman.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/levi_ackerman.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xxhdpi\\ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-62:/drawable_joker.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/joker.jpg"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "com.example.wepick.app-debug-62:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-64:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxhdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_joker.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\joker.jpg"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\xml\\backup_rules.xml"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-mdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-mdpi/ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\font_press_start_2p.xml.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\font\\press_start_2p.xml"
-    },
-    {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxhdpi/ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-mdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-hdpi/ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_chopper.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\chopper.jpg"
-    },
-    {
-        "merged": "com.example.wepick.app-debug-47:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-49:/mipmap-xxxhdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\mipmap-xhdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-debug-47:\\drawable_walter_white.jpg.flat",
-        "source": "C:\\Users\\makcz\\.gradle\\daemon\\8.13\\com.example.wepick.app-main-49:\\drawable\\walter_white.jpg"
+        "merged": "com.example.wepick.app-debug-62:/drawable_monkey_d_luffy.jpg.flat",
+        "source": "com.example.wepick.app-main-64:/drawable/monkey_d_luffy.jpg"
     }
 ]

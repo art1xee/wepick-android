@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_main">Перестаньте спорить про то, что смотреть! Вернём ваше киношное счастье - в вашу жизнь.</string>
-    <string name="enter_name_main">Введите ваше имя</string>
+    <string name="login_enter_email_main">Введите ваше имя </string>
+    <string name="login_enter_password_main">Введите ваш пароль</string>
+    <string name="login_main" >Войти</string>
+    <string name="login_greeting_main" >Мы рады видеть тебя снова!</string>
+    <string name="login_email_main" >Эмейл</string>
+    <string name="login_password_main" >Пароль</string>
+    <string name="login_remember_user_main" >Запомнить меня</string>
+    <string name="login_forgot_password_main" >Забыли пароль?</string>
+    <string name="login_enter_main" >Войти</string>
+    <string name="login_or_main" >Или</string>
+    <string name="registration_label_main">Регестрация</string>
+    <string name="registration_label_second">Создай аккаунт за минуту!</string>
+    <string name="registration_nickname">Никнейм</string>
+    <string name="registration_email">Эмейл</string>
+    <string name="registration_password">Пароль</string>
+    <string name="registration_password_confirm">Повторить пароль</string>
+    <string name="registration_create_account">Создать профиль</string>
     <string name="next_button">Далее!</string>
     <string name="selection_label">Привет %1$s! Выбери контент, который ты хочешь посмотреть.</string>
     <string name="movie_content">Фильмы</string>

@@ -9,6 +9,7 @@ import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
+import com.example.wepick.screens.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
@@ -27,8 +28,11 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenNav.Main.route
+        startDestination = ScreenNav.Login.route
     ) {
+        composable(ScreenNav.Login.route) {
+            LoginScreen(navController, viewModel, modifier = Modifier, playerVM)
+        }
         composable(ScreenNav.Main.route) {
             MainScreen(navController, viewModel, modifier = Modifier, playerVM)
         }

@@ -20,6 +20,7 @@ foundation = "1.10.1"
 foundationVersion = "1.10.4"
 okHttp = "4.12.0"
 firebaseAppDistribution = "5.1.1"
+firebaseAuth = "24.1.0"
 
 [libraries]
 firebase-appdistribution-gradle = { module = "com.google.firebase:firebase-appdistribution-gradle", version.ref = "firebaseAppDistribution" }
@@ -55,6 +56,7 @@ androidx-foundation = { group = "androidx.compose.foundation", name = "foundatio
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor"}
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okHttp"}
 okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp"}
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
