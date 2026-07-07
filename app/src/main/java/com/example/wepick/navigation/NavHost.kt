@@ -9,12 +9,15 @@ import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
+import com.example.wepick.screens.HomeScreen
 import com.example.wepick.screens.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
 import com.example.wepick.screens.SelectionScreen
+import com.example.wepick.screens.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
+import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
@@ -24,14 +27,22 @@ fun NavGraph(
     navController: NavHostController,
     viewModel: MainViewModel,
     playerVM: PlayerViewModel,
-    contentVM: ContentViewModel
+    contentVM: ContentViewModel,
+    authViewModel: AuthViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = ScreenNav.Login.route
     ) {
+       composable(ScreenNav.Home.route){
+           HomeScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
+       }
+
+        composable(ScreenNav.SignUp.route) {
+            SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
+        }
         composable(ScreenNav.Login.route) {
-            LoginScreen(navController, viewModel, modifier = Modifier, playerVM)
+            LoginScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.Main.route) {
             MainScreen(navController, viewModel, modifier = Modifier, playerVM)

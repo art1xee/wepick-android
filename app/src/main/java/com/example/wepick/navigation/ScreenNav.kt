@@ -2,6 +2,10 @@ package com.example.wepick.navigation
 
 sealed class ScreenNav(val route: String) {
     object Login : ScreenNav("login") // Экран для входа/регестрации в аккаунт
+
+    object SignUp : ScreenNav("sign_up")
+
+    object Home : ScreenNav("home" )
     object Main : ScreenNav("main")             // Экран ввода имени
 
     object Selection : ScreenNav("selection")  // Выбор: Фильмы/ТВ/Аниме
@@ -14,7 +18,7 @@ sealed class ScreenNav(val route: String) {
 
     object Genres : ScreenNav("genres")         // Выбор жанров
 
-    object Summary: ScreenNav("summary")
+    object Summary : ScreenNav("summary")
 
     object Match : ScreenNav("match")            // Финальная карточка
 }

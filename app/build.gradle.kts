@@ -95,6 +95,8 @@ dependencies {
     // Use the renamed core library
     implementation(libs.androidx.compose.ui.core)
 
+    implementation(libs.androidx.runtime.livedata)
+
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation(libs.androidx.compose.ui.graphics)
@@ -107,6 +109,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.foundation)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.compose.runtime.livedata)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

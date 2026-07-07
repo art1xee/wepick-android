@@ -14,6 +14,7 @@ import com.example.wepick.util.LocaleSettings
 import com.example.wepick.screens.MainScaffold
 import com.example.wepick.ui.theme.WePickTheme
 import com.example.wepick.util.LocalHelper
+import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
         val viewModel: MainViewModel by viewModels()
         val playerVM: PlayerViewModel by viewModels()
         val contentVM: ContentViewModel by viewModels()
+        val authViewModel: AuthViewModel by viewModels()
         viewModel.initLanguage(this)
 
         enableEdgeToEdge()
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
             WePickTheme {
                 val navController = rememberNavController()
                 MainScaffold(viewModel, playerVM, contentVM, navController) {
-                    StartProgram(navController, viewModel, playerVM, contentVM)
+                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel)
                 }
             }
         }
@@ -51,13 +53,16 @@ fun StartProgram(
     navController: NavHostController,
     viewModel: MainViewModel,
     playerVM: PlayerViewModel,
-    contentVM: ContentViewModel
-) {
+    contentVM: ContentViewModel,
+    authViewModel: AuthViewModel,
+
+    ) {
     NavGraph(
         navController = navController,
         viewModel = viewModel,
         playerVM = playerVM,
-        contentVM = contentVM
+        contentVM = contentVM,
+        authViewModel = authViewModel,
     )
 }
 

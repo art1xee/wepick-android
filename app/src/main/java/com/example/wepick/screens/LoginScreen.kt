@@ -1,7 +1,9 @@
 package com.example.wepick.screens
 
 
+import android.content.Context
 import android.widget.Space
+import android.widget.Toast
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
@@ -33,9 +35,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -44,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.CacheDrawModifierNode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -64,6 +70,8 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.AuthState
+import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -75,11 +83,30 @@ fun LoginScreen(
     navController: NavController,
     viewModel: MainViewModel,
     modifier: Modifier,
-    playerVM: PlayerViewModel
+    playerVM: PlayerViewModel,
+    authViewModel: AuthViewModel
 ) {
-    //firebase
-    firebaseAuth = FirebaseAuth.getInstance()
 
+    val authState by authViewModel.authState.observeAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(authState) {
+        when (authState) {
+            is AuthState.Authenticated -> {
+
+                navController.navigate(ScreenNav.Home.route) {
+                    popUpTo(ScreenNav.Login.route) { inclusive = true }
+                }
+            }
+            is AuthState.Error -> {
+                Toast.makeText(
+                    context, (authState as AuthState.Error).message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> Unit
+        }
+    }
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -203,7 +230,10 @@ fun LoginScreen(
 //                    })
 
                 Button(
-                    onClick = {}
+                    onClick = {
+                        authViewModel.login(email,password)
+                    },
+                    enabled = authState != AuthState.Loading
                 ) {
                     Text(
                         "Login"
@@ -233,11 +263,17 @@ fun LoginScreen(
 
                 Spacer(modifier.height(28.dp))
 
-                Text(
-                    "У мене нема аккаунту (створити)",
-                    fontSize = 10.sp,
 
+                TextButton(onClick = {
+                    navController.navigate(ScreenNav.SignUp.route)
+                }) {
+                    Text(
+                        "У мене нема аккаунту (створити)",
+                        fontSize = 10.sp,
                     )
+                }
+
+
             }
         }
     }
