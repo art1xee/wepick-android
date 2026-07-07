@@ -1,130 +1,134 @@
 [
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_levi_ackerman.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/levi_ackerman.jpg"
+        "merged": "com.example.wepick.app-debug-67:/drawable_monkey_d_luffy.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/monkey_d_luffy.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_logo.png.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/logo.png"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_joker.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/joker.jpg"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/font_press_start_2p.xml.flat",
-        "source": "com.example.wepick.app-main-65:/font/press_start_2p.xml"
+        "merged": "com.example.wepick.app-debug-67:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.wepick.app-main-69:/xml/data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_joker.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/joker.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_monkey_d_luffy.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/monkey_d_luffy.jpg"
+        "merged": "com.example.wepick.app-debug-67:/drawable_ic_google.png.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/ic_google.png"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_saul_good_man.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/saul_good_man.jpg"
+        "merged": "com.example.wepick.app-debug-67:/drawable_sherlock.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/sherlock.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-hdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_john_wick.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/john_wick.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_arthur_morgan.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/arthur_morgan.jpg"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.example.wepick.app-debug-67:/drawable_arthur_morgan.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/arthur_morgan.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_logo.png.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/logo.png"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-mdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-67:/font_press_start_2p.xml.flat",
+        "source": "com.example.wepick.app-main-69:/font/press_start_2p.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_john_wick.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/john_wick.jpg"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/xml_backup_rules.xml.flat",
-        "source": "com.example.wepick.app-main-65:/xml/backup_rules.xml"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xhdpi/ic_launcher_foreground.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.wepick.app-main-65:/xml/data_extraction_rules.xml"
+        "merged": "com.example.wepick.app-debug-67:/xml_backup_rules.xml.flat",
+        "source": "com.example.wepick.app-main-69:/xml/backup_rules.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_walter_white.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/walter_white.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/ic_launcher_background.xml"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_walter_white.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/walter_white.jpg"
+        "merged": "com.example.wepick.app-debug-67:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-hdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.example.wepick.app-debug-67:/drawable_saul_good_man.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/saul_good_man.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-mdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxhdpi/ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_sherlock.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/sherlock.jpg"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xxxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.wepick.app-main-65:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.example.wepick.app-debug-67:/drawable_chopper.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/chopper.jpg"
     },
     {
-        "merged": "com.example.wepick.app-debug-63:/drawable_chopper.jpg.flat",
-        "source": "com.example.wepick.app-main-65:/drawable/chopper.jpg"
+        "merged": "com.example.wepick.app-debug-67:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.example.wepick.app-main-69:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.example.wepick.app-debug-67:/drawable_levi_ackerman.jpg.flat",
+        "source": "com.example.wepick.app-main-69:/drawable/levi_ackerman.jpg"
     }
 ]

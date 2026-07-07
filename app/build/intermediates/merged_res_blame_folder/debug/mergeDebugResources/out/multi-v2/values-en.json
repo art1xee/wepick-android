@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.wepick.app-mergeDebugResources-61:/values-en/values-en.xml",
+            "outputFile": "com.example.wepick.app-mergeDebugResources-65:/values-en/values-en.xml",
             "map": [
                 {
                     "source": "N:\\wepick-android\\app\\src\\main\\res\\values-en\\string.xml",

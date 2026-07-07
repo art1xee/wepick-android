@@ -98,12 +98,14 @@ fun LoginScreen(
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
+
             is AuthState.Error -> {
                 Toast.makeText(
                     context, (authState as AuthState.Error).message,
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
             else -> Unit
         }
     }
@@ -231,7 +233,7 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
-                        authViewModel.login(email,password)
+                        authViewModel.login(email, password)
                     },
                     enabled = authState != AuthState.Loading
                 ) {
@@ -245,11 +247,22 @@ fun LoginScreen(
 
                 // google button
                 Button(
-                    onClick = {},
+                    onClick = { authViewModel.loginWithGoogle(context) },
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.login_google_main)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_google),
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.login_google_main),
+                            fontFamily = PressStart2P,
+                            fontSize = 10.sp
+                        )
+                    }
                 }
 
                 // apple button

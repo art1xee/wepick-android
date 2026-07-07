@@ -32,6 +32,7 @@
     <string name="content_type">Тип контенту:</string>
     <string name="decade">Декада: </string>
     <string name="decade_choose">%1$s Обери декаду: </string>
+    <string name="default_web_client_id" translatable="false">871652837283-djgdmj57j7mg1kkqdun3tktb2d8aas0j.apps.googleusercontent.com</string>
     <string name="dislikes_watch">Не хоче дивитися: </string>
     <string name="enter_name_friend_text_field">Ім\'я друга</string>
     <string name="error_genre">Цей жанр вже вибранний!</string>

@@ -92,6 +92,10 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.loggingInterceptor)
 
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
     // Use the renamed core library
     implementation(libs.androidx.compose.ui.core)
 
@@ -110,6 +114,9 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

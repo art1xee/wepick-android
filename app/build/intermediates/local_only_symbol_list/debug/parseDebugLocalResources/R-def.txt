@@ -13,6 +13,7 @@ color teal_700
 color white
 drawable arthur_morgan
 drawable chopper
+drawable ic_google
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable john_wick
@@ -37,6 +38,7 @@ string content_name
 string content_type
 string decade
 string decade_choose
+string default_web_client_id
 string dislikes_watch
 string enter_name_friend_text_field
 string error_genre
