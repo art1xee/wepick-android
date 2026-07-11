@@ -160,7 +160,7 @@ fun SignUpScreen(
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                    RetroCheckBox(rememberMeState) // Retro check box
+                 //   RetroCheckBox(rememberMeState) // Retro check box
                     ForgotPassword() // forgot password text
                 }
 

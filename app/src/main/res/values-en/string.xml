@@ -63,5 +63,6 @@
     <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
     <string name="select_lang">Select language: </string>
     <string name="content_end">You have reached the end!</string>
+    <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
 
 </resources>

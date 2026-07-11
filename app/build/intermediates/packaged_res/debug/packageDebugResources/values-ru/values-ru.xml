@@ -7,6 +7,7 @@
     <string name="content_end">Вы дошли до конца!</string>
     <string name="content_name">_</string>
     <string name="content_type">Тип контента:</string>
+    <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
     <string name="decade">Декада: </string>
     <string name="decade_choose">%1$s Выбери декаду: </string>
     <string name="dislikes_watch">Не хочет смотреть:</string>

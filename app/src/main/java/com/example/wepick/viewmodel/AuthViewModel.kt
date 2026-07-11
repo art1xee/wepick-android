@@ -1,5 +1,6 @@
 package com.example.wepick.viewmodel
 
+import android.app.Activity
 import android.content.Context
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
@@ -9,14 +10,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wepick.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.OAuthProvider
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.handleCoroutineException
 import kotlinx.coroutines.launch
+import perfetto.protos.AndroidStartupMetric
 
 
 class AuthViewModel : ViewModel() {
@@ -121,6 +125,15 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun loginWithGitHub(activity: Activity){
+        val provider = OAuthProvider.newBuilder("github.com")
+        auth.startActivityForSignInWithProvider(activity, provider.build())
+            .addOnSuccessListener {
+                _authState.value = AuthState.Authenticated
+            }.addOnFailureListener { e ->
+                _authState.value = AuthState.Error(e.message ?: "GitHub Error!")
+            }
+    }
 
 }
 

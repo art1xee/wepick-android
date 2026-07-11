@@ -747,6 +747,7 @@ drawable ic_call_answer_video
 drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
+drawable ic_github
 drawable ic_google
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -1147,6 +1148,7 @@ string content_end
 string content_name
 string content_type
 string copy_toast_msg
+string credential_fill
 string decade
 string decade_choose
 string default_error_message

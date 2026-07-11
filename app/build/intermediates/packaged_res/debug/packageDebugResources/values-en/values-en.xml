@@ -7,6 +7,7 @@
     <string name="content_end">You have reached the end!</string>
     <string name="content_name">_</string>
     <string name="content_type">Content type:</string>
+    <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
     <string name="decade">Decade: </string>
     <string name="decade_choose">%1$s Choose decade: </string>
     <string name="dislikes_watch">Don`t want to watch:</string>

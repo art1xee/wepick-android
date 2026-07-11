@@ -746,6 +746,7 @@ int drawable ic_call_answer_video 0x7f080076
 int drawable ic_call_answer_video_low 0x7f080077
 int drawable ic_call_decline 0x7f080078
 int drawable ic_call_decline_low 0x7f080079
+int drawable ic_github 0x7f080095
 int drawable ic_google 0x7f08007a
 int drawable ic_launcher_background 0x7f08007b
 int drawable ic_launcher_foreground 0x7f08007c
@@ -1146,6 +1147,7 @@ int string content_end 0x7f100041
 int string content_name 0x7f100042
 int string content_type 0x7f100043
 int string copy_toast_msg 0x7f100044
+int string credential_fill 0x7f1000ec
 int string decade 0x7f100045
 int string decade_choose 0x7f100046
 int string default_error_message 0x7f100047
