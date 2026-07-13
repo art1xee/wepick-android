@@ -1,58 +1,36 @@
 package com.example.wepick.screens
 
 
-import android.app.Activity
-import android.content.Context
-import android.widget.Space
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateValue
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -61,39 +39,41 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.CacheDrawModifierNode
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.size.Size
-import com.example.wepick.viewmodel.MainViewModel
-import com.example.wepick.ui.components.NextButton
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.ui.components.GoogleLoginButton
+import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.AccentRed
+import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.DeepPurple
+import com.example.wepick.ui.theme.FieldBeige
+import com.example.wepick.ui.theme.FieldBorder
+import com.example.wepick.ui.theme.InkSoft
+import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-
-private lateinit var firebaseAuth: FirebaseAuth
 
 @Composable
 fun LoginScreen(
@@ -106,7 +86,6 @@ fun LoginScreen(
 
     val authState by authViewModel.authState.observeAsState()
     val context = LocalContext.current
-    val authError = "The invalid email or password"
 
     LaunchedEffect(authState) {
         when (val state = authState) {
@@ -126,11 +105,6 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var visiblePassword by remember { mutableStateOf(false) }
-    val rememberMeState = remember { mutableStateOf(false) }
-
-    val credentialFill = stringResource(R.string.credential_fill)
-
     val isFormValid by remember {
         derivedStateOf {
             email.trim().isNotEmpty() && password.trim().isNotEmpty()
@@ -138,137 +112,88 @@ fun LoginScreen(
     }
     val isLoading = authState is AuthState.Loading
 
-//    // logo animation
-//    val infiniteTransition = rememberInfiniteTransition()
-//    val offsetY by infiniteTransition.animateValue(
-//        initialValue = 0.dp,
-//        targetValue = (-15).dp,
-//        typeConverter = Dp.VectorConverter,
-//        animationSpec = infiniteRepeatable(
-//            animation = tween(1000, easing = LinearEasing),
-//            repeatMode = RepeatMode.Reverse
-//        ),
-//        label = "offsetY"
-//    )
 
     Column(
         modifier
             .fillMaxSize()
-            .background(PrimaryPurple)
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(MidPurple, DeepPurple)
+                )
+            )
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
+
         Card(
-            modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = CardYellow)
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = CardYellow),
+            shape = RoundedCornerShape(26.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
 
             Column(
-                modifier.padding(16.dp),
+                modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.logo),
-//                    contentDescription = "Bouncing Logo",
-//                    modifier = Modifier
-//                        .size(140.dp)
-//                        .offset(y = offsetY)
-//                )
-
-                LoginCardText(
-                    text = stringResource(id = R.string.login_main), // Text: Login
+                // Login text (Pixel style with shadow)
+                Text(
+                    text = stringResource(id = R.string.login_main),
                     color = White,
-                    textAlign = TextAlign.Left,
-                    style = MaterialTheme.typography.titleMedium,
                     fontFamily = PressStart2P,
-                ) // Label text
-
-                Spacer(modifier.height(12.dp))
-
-                LoginCardText(
-                    text = stringResource(id = R.string.login_greeting_main), // Text: Ми раді бачити тебе знову
-                    color = TextTeal,
+                    fontSize = 18.sp,
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontFamily = PressStart2P,
-                ) // greeting text
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = Color(0xFFC58A1E),
+                            offset = Offset(8f, 8f),
+                            blurRadius = 0f
+                        )
+                    )
+                )
+
+                Spacer(modifier.height(18.dp))
+
+                // Greeting text TODO: change fontFamily
+                Text(
+                    text = stringResource(id = R.string.login_greeting_main),
+                    color = Black,
+                    textAlign = TextAlign.Center,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 17.sp,
+                    lineHeight = 24.sp
+                )
 
                 Spacer(modifier.height(24.dp))
 
-                OutlinedTextField(
+                // EMAIL Text field
+                EmailTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = email,
-                    onValueChange = { email = it },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.login_enter_email_main), // Text: enter you`re email
-                            fontFamily = PressStart2P,
-                            fontSize = 14.sp
-                        )
-                    },
-                    modifier = modifier.fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        fontFamily = PressStart2P,
-                        color = TextTeal,
-                        fontSize = 14.sp
-                    ),
-                    trailingIcon = {
-                        val image = Icons.Filled.Mail
-                        Icon(
-                            imageVector = image,
-                            contentDescription = "Mail text field",
-                            tint = TextTeal
-                        )
-                    }
+                    onValueChanged = { email = it },
+                    text = stringResource(R.string.login_email_main),
+                    textField = "email@example.com"
                 )
-//TODO: Make text field for email and password in separate func
+
                 Spacer(modifier.height(16.dp))
 
-                OutlinedTextField(
+                // PASSWORD Text field
+                PasswordTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = password,
-                    onValueChange = { password = it },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.login_enter_password_main), // Text: Enter you`re password
-                            fontFamily = PressStart2P,
-                            fontSize = 14.sp
-                        )
-                    },
-                    modifier = modifier.fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        fontFamily = PressStart2P,
-                        color = TextTeal,
-                        fontSize = 14.sp
-                    ),
-                    visualTransformation = if (visiblePassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        val image = if (visiblePassword)
-                            Icons.Filled.Visibility
-                        else Icons.Filled.VisibilityOff
-                        IconButton(onClick = {
-                            visiblePassword = !visiblePassword
-                        }) {
-                            Icon(
-                                imageVector = image,
-                                contentDescription = if (visiblePassword) "Hide password" else "Show password",
-                                tint = TextTeal
-                            )
-                        }
-                    }
+                    onValueChanged = { password = it },
+                    text = stringResource(R.string.login_password_main),
+                    textField = stringResource(R.string.login_password_main)
                 )
-                Column(
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    ForgotPassword() // forgot password text
-                }
 
+                ForgotPassword()
 
-                //TODO: Change the logic of the button and also change text on the button
                 Spacer(modifier.height(24.dp))
 
-                AnimatedVisibility( // for showing error when user write invalid password or email
+                // ERROR TEXT IF FORM IS NOT VALID
+                AnimatedVisibility(
                     visible = playerVM.errorMessage != null,
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkOut()
@@ -276,116 +201,68 @@ fun LoginScreen(
                     Text(
                         text = playerVM.errorMessage ?: "",
                         color = AccentRed,
-                        fontFamily = PressStart2P,
-                        fontSize = 8.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(bottom = 8.dp)
                     )
                 }
 
-                Button(
-                    onClick = {
-                        if (isFormValid) {
-                            authViewModel.login(email, password)
-                        } else {
-                            playerVM.showLockedError("ENTER EMAIL AND PASSWORD")
-                        }
-
-                    },
+                // LOGIN BUTTON
+                LoginButton(
+                    authViewModel = authViewModel,
+                    modifier = Modifier.fillMaxWidth(),
                     enabled = isFormValid && !isLoading,
-                    modifier = Modifier.fillMaxWidth()
-
-                ) {
-                    if (isLoading) {
-                        Text(
-                            text = "Loading...",
-                            fontFamily = PressStart2P,
-                            fontSize = 12.sp
-                        )
-                    } else {
-                        Text(
-                            text = "Login",
-                            fontFamily = PressStart2P,
-                            fontSize = 12.sp
-                        )
-                    }
-                }
-
-
-                //TODO: Change the logic of the button and also change text on the button
+                    text = stringResource(R.string.login_enter_main),
+                    loadingText = stringResource(R.string.loading),
+                    loading = isLoading,
+                    formValid = isFormValid,
+                    email = email,
+                    password = password,
+                )
 
                 LoginDivider()
 
-                // google button
-                Button(
+                // LOGIN WITH GOOGLE BUTTON
+                GoogleLoginButton(
                     onClick = { authViewModel.loginWithGoogle(context) },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_google),
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(id = R.string.login_google_main),
-                            fontFamily = PressStart2P,
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-
-                // gitHub button
-//                Button(
-//                    onClick = { authViewModel.loginWithGitHub(context as Activity) },
-//                    modifier = Modifier.fillMaxWidth(),
-//                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF24292E))
-//                ) {
-//                    Row(verticalAlignment = Alignment.CenterVertically) {
-//                        Image(
-//                            painter = painterResource(id = R.drawable.ic_github),
-//                            contentDescription = null,
-//                            modifier = Modifier.size(24.dp)
-//                        )
-//                        Spacer(Modifier.width(8.dp))
-//                    }
-//                    Text(
-//                        text = stringResource(id = R.string.login_apple_main),
-//                        fontFamily = PressStart2P,
-//                        fontSize = 14.sp
-//                    )
-//                }
-
-                //TODO: Button for GUEST MODE
-                Button(onClick = {}) {
-                    Text(
-                        text = "Guest Mode"
-                    )
-                }
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "Продовжити з Google", // TODO change localization text
+                )
 
                 Spacer(modifier.height(28.dp))
 
-
-                TextButton(onClick = {
-                    navController.navigate(ScreenNav.SignUp.route)
-                }) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Text(
-                        "У мене нема аккаунту (створити)",
-                        fontSize = 12.sp,
-                        fontFamily = PressStart2P,
+                        text = "У мене немає акаунту, ", // TODO change localization text
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        color = InkSoft
+                    )
+                    Text(
+                        text = "створити.", // TODO change localization text
+                        fontSize = 13.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.ExtraBold,
                         color = AccentRed,
-                        textAlign = TextAlign.Center
+                        modifier = Modifier.clickable {
+                            navController.navigate(ScreenNav.SignUp.route)
+                        }
                     )
                 }
-
-
             }
         }
     }
 }
 
+
+// =============================== COMPOSABLE FUNCTIONS ==================================
 @Composable
 fun LoginCardText(
     text: String,
@@ -404,90 +281,160 @@ fun LoginCardText(
     )
 }
 
-//@Composable
-//fun RetroCheckBox(
-//    checkedState: MutableState<Boolean>,
-//    modifier: Modifier = Modifier
-//) {
-//    Row(
-//        modifier = modifier.clickable { checkedState.value = !checkedState.value },
-//        verticalAlignment = Alignment.CenterVertically,
-//    ) {
-//        Box(
-//            modifier = Modifier
-//                .size(24.dp)
-//                .background(Color.White, shape = RectangleShape)
-//                .border(2.dp, TextTeal),
-//            contentAlignment = Alignment.Center
-//        ) {
-//            if (checkedState.value) {
-//                Text(
-//                    text = "X",
-//                    color = AccentRed,
-//                    fontFamily = PressStart2P,
-//                    fontSize = 14.sp,
-//                    textAlign = TextAlign.Center
-//                )
-//            }
-//        }
-//
-//        Spacer(modifier = Modifier.width(12.dp))
-//
-//        Text(
-//            text = stringResource(id = R.string.login_remember_user_main),
-//            fontFamily = PressStart2P,
-//            fontSize = 10.sp,
-//            color = TextTeal,
-//        )
-//    }
-//}
-
 @Composable
-fun ForgotPassword(
-) {
+fun ForgotPassword() {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
     ) {
         Text(
             text = stringResource(id = R.string.login_forgot_password_main),
-            fontSize = 10.sp,
-            color = AccentRed,
-            fontFamily = PressStart2P,
+            fontSize = 12.5.sp,
+            fontWeight = FontWeight.Bold,
+            color = InkSoft,
+            fontFamily = FontFamily.SansSerif,
+            textDecoration = TextDecoration.Underline,
+            modifier = Modifier.clickable { /* TODO */ }
         )
     }
 }
 
 @Composable
-fun LoginDivider(
-    modifier: Modifier = Modifier
-) {
+fun LoginDivider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(vertical = 22.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // left side
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.weight(1f),
-            thickness = 1.dp,
-            color = PrimaryPurple
+            thickness = 2.dp,
+            color = Black.copy(alpha = 0.15f)
         )
-
-        // text center
         Text(
             text = stringResource(id = R.string.login_or_main),
-            modifier = Modifier.padding(horizontal = 8.dp),
-            fontFamily = PressStart2P,
-            fontSize = 10.sp,
-            color = PrimaryPurple
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 12.sp,
+            color = InkSoft
         )
-
-        // right side
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.weight(1f),
-            thickness = 1.dp,
-            color = PrimaryPurple
+            thickness = 2.dp,
+            color = Black.copy(alpha = 0.15f)
         )
     }
+}
+
+@Composable
+fun FormTextFields(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    text: String,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    textField: String,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = text,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            color = InkSoft,
+            fontFamily = FontFamily.SansSerif,
+            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
+        )
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChanged,
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            shape = RoundedCornerShape(14.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = FieldBeige,
+                unfocusedContainerColor = FieldBeige,
+                focusedBorderColor = TextTeal,
+                unfocusedBorderColor = FieldBorder,
+            ),
+            textStyle = TextStyle(
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.SemiBold,
+                color = Black,
+                fontSize = 15.sp
+            ),
+            trailingIcon = trailingIcon,
+            visualTransformation = visualTransformation,
+            placeholder = {
+                Text(
+                    text = textField.lowercase(), // TODO change localization text
+                    color = Color(0xFFB7A574),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.SansSerif
+                )
+            }
+        )
+    }
+}
+
+@Composable
+fun EmailTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    text: String,
+    textField: String,
+) {
+    FormTextFields(
+        modifier = modifier,
+        value = value,
+        onValueChanged = onValueChanged,
+        text = text,
+        textField = textField,
+        trailingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Mail,
+                contentDescription = "Email Icon",
+                tint = InkSoft
+            )
+        }
+    )
+}
+
+@Composable
+fun PasswordTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    text: String,
+    textField: String,
+) {
+
+    var visiblePassword by remember { mutableStateOf(false) }
+    FormTextFields(
+        modifier = modifier,
+        value = value,
+        onValueChanged = onValueChanged,
+        text = text,
+        visualTransformation = if (visiblePassword) VisualTransformation.None else PasswordVisualTransformation(),
+        textField = textField,
+        trailingIcon = {
+            val image = if (visiblePassword)
+                Icons.Filled.Visibility
+            else Icons.Filled.VisibilityOff
+            IconButton(
+                onClick = {
+                    visiblePassword = !visiblePassword
+                }) {
+                Icon(
+                    imageVector = image,
+                    contentDescription = if (visiblePassword) "Hide password" else "Show Password",
+                    tint = InkSoft
+                )
+            }
+        }
+    )
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_main">Stop arguing over what to watch! Let’s put some movie matrimony - back in your life.</string>
-    <string name="enter_name_main">Enter your name</string>
     <string name="login_main" >Login</string>
     <string name="login_greeting_main" >We are glad to see you again</string>
     <string name="login_email_main" >Email</string>
@@ -9,6 +8,7 @@
     <string name="login_remember_user_main" >Remember me</string>
     <string name="login_forgot_password_main" >Forgot password?</string>
     <string name="login_enter_main" >Login</string>
+    <string name="loading_button">Loading…</string>
     <string name="login_or_main" >Or</string>
     <string name="registration_label_main">Registration</string>
     <string name="registration_label_second">Create an account for a minute!</string>
@@ -64,5 +64,6 @@
     <string name="select_lang">Select language: </string>
     <string name="content_end">You have reached the end!</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
+    <string name="register_account">I don`t have account (create).</string>
 
 </resources>

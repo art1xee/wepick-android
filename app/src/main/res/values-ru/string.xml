@@ -4,6 +4,7 @@
     <string name="login_enter_email_main">Введите ваше имя </string>
     <string name="login_enter_password_main">Введите ваш пароль</string>
     <string name="login_main" >Войти</string>
+    <string name="loading_button">Загрузка…</string>
     <string name="login_greeting_main" >Мы рады видеть тебя снова!</string>
     <string name="login_email_main" >Эмейл</string>
     <string name="login_password_main" >Пароль</string>
@@ -63,5 +64,6 @@
     <string name="select_lang">Выбери язык: </string>
     <string name="content_end">Вы дошли до конца!</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
+    <string name="register_account">У меня нет аккаунта (создать).</string>
 
 </resources>

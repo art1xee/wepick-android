@@ -1,14 +1,20 @@
 package com.example.wepick.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +26,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,9 +38,12 @@ import com.example.wepick.R
 import com.example.wepick.data.model.ContentType
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
+import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.DarkButtonPurple
 import com.example.wepick.ui.theme.Muted
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
+import com.example.wepick.viewmodel.AuthViewModel
 
 
 // the parent button
@@ -253,4 +265,96 @@ fun PartnerChooseButton(
             )
         }
     )
+}
+
+
+@Composable
+fun LoginButton(
+    authViewModel: AuthViewModel,
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    text: String,
+    loadingText: String,
+    loading: Boolean,
+    formValid: Boolean,
+    email: String,
+    password: String,
+) {
+    BaseRetroButton(
+        onClick = {
+            if (formValid) {
+                authViewModel.login(email, password)
+            }
+        },
+        enabled = enabled,
+        modifier = modifier,
+        containerColor = if (enabled) DarkButtonPurple else Muted.copy(alpha = 0.5f),
+        showShadow = enabled,
+        content = {
+            if (loading) {
+                Text(
+                    text = loadingText,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = if (enabled) CardYellow else Black.copy(alpha = 0.5f),
+                    fontSize = 15.5.sp
+                )
+            } else {
+                Text(
+                    text = text,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 15.5.sp,
+                    color = if (enabled) CardYellow else Black
+                )
+            }
+        }
+    )
+}
+
+@Composable
+fun GoogleLoginButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    text: String,
+    loading: Boolean = false,
+    loadingText: String = stringResource(R.string.loading)
+) {
+    Box(
+        modifier = modifier
+            .background(White, RoundedCornerShape(16.dp))
+            .border(2.dp, Color(0xFF241436), RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(vertical = 13.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        if (loading) {
+            Text(
+                text = loadingText,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.ExtraBold,
+                color = Black,
+                fontSize = 14.5.sp
+            )
+        } else {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_google),
+                    contentDescription = "Google Icon",
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = text,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Black,
+                    fontSize = 14.5.sp
+                )
+            }
+        }
+    }
 }

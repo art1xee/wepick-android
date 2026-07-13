@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">WePick!</string>
-    <string name="welcome_main">Припиніть сперечатися про те, що дивитися! Давайте повернемо кіношне подружжя - у ваше життя.</string>
-    <string name="login_main" >Вхід</string>
-    <string name="login_greeting_main" >Ми раді бачити тебе знову</string>
-    <string name="login_email_main" >Емейл</string>
-    <string name="login_password_main" >Пароль</string>
-    <string name="login_remember_user_main" >Запам\'ятати мене</string>
-    <string name="login_forgot_password_main" >Забули пароль?</string>
-    <string name="login_enter_main" >Увійти</string>
-    <string name="login_or_main" >Aбо</string>
+    <string name="welcome_main">Припиніть сперечатися про те, що дивитися! Повернім кіношне подружжя - у ваше життя.</string>
+    <string name="login_main">Вхід</string>
+    <string name="login_greeting_main">Ми раді знову тебе бачити!</string>
+    <string name="login_email_main">Емейл</string>
+    <string name="login_password_main">Пароль</string>
+    <string name="login_remember_user_main">Запам\'ятати мене</string>
+    <string name="login_forgot_password_main">Забули пароль?</string>
+    <string name="login_enter_main">Увійти</string>
+    <string name="loading_button">Завантаження…</string>
+    <string name="login_or_main">АБО</string>
     <string name="login_google_main" translatable="false">Google</string>
-    <string name="login_apple_main" translatable="false">Apple</string>
     <string name="registration_label_main">Зареєструватися</string>
     <string name="registration_label_second">Створи свій профіль за хвилину!</string>
     <string name="registration_nickname">Нікнейм</string>
@@ -18,8 +18,8 @@
     <string name="registration_password">Пароль</string>
     <string name="registration_password_confirm">Повторіть пароль</string>
     <string name="registration_create_account">Створити аккаунт</string>
-    <string name="login_enter_email_main">Введіть ваше емейл</string>
-    <string name="login_enter_password_main">Введіть ваш пароль</string>
+    <string name="login_enter_email_main">Введіть ваш емейл:</string>
+    <string name="login_enter_password_main">Введіть ваш пароль:</string>
     <string name="next_button">Далі!</string>
     <string name="selection_label">Привіт %1$s! Обери, контент який ти хочеш подивитися.</string>
     <string name="movie_content">Фільми</string>
@@ -52,20 +52,20 @@
     <string name="content_name">_</string>
     <string name="rating">Рейтінг: </string>
     <string name="pages">%1$s!</string>
-    <string name="seen_content">Бачили - показити інше</string>
+    <string name="seen_content">Бачили - продемонструвати інше</string>
     <string name="back_content">Назад</string>
     <string name="reload_content">Оновити підбір</string>
     <string name="start_again">Почати спочатку</string>
     <string name="wepick_about">Про WePick!</string>
     <string name="wepick_info">WePick! — це зручний інструмент для вибору фільмів, серіалів або іншого контенту, який сподобається всім учасникам. Ви встановлюєте спільні фільтри, а ми пропонуємо ідеальний варіант.</string>
     <string name="wepick_github">Код цього додатку доступний на GitHub:</string>
-    <string name="error_genre">Цей жанр вже вибранний!</string>
+    <string name="error_genre">Цей жанр вже обраний!</string>
     <string name="player">Гравець :</string>
-    <string name="no_found_content">Нажаль контент не був знайден. Спробуйте ще раз!</string>
+    <string name="no_found_content">Нажаль контент не був знайдений. Спробуйте ще раз!</string>
     <string name="select_lang">Обери мову: </string>
     <string name="content_end">Ви дійшли до кінця!</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
-
+    <string name="register_account">У мене немає акаунту, (створити).</string>
 
 
 </resources>

@@ -82,6 +82,21 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
+    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        if (email.isEmpty()) {
+            onError("Будь ласка, спочатку введіть ваш емейл")
+            return
+        }
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onError(task.exception?.message ?: "Помилка при скиданні паролю")
+                }
+            }
+    }
+
     fun loginWithGoogle(context: Context) {
 
         val credentialManager = CredentialManager.create(context)

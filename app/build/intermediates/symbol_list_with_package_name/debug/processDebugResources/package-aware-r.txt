@@ -1187,7 +1187,7 @@ string in_progress
 string indeterminate
 string likes_watch
 string loading
-string login_apple_main
+string loading_button
 string login_email_main
 string login_enter_email_main
 string login_enter_main
@@ -1282,6 +1282,7 @@ string project_id
 string range_end
 string range_start
 string rating
+string register_account
 string registration_create_account
 string registration_email
 string registration_label_main

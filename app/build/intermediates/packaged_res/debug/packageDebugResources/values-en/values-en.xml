@@ -12,7 +12,6 @@
     <string name="decade_choose">%1$s Choose decade: </string>
     <string name="dislikes_watch">Don`t want to watch:</string>
     <string name="enter_name_friend_text_field">Friend`s name</string>
-    <string name="enter_name_main">Enter your name</string>
     <string name="error_genre">This genre is already chosen!</string>
     <string name="find_content">Find %1$s!</string>
     <string name="friend_name_label">Pass the device to a friend — let them enter their name</string>
@@ -22,6 +21,7 @@
     <string name="genres_save">Save!</string>
     <string name="likes_watch">Want to watch: </string>
     <string name="loading">Loading…</string>
+    <string name="loading_button">Loading…</string>
     <string name="login_email_main">Email</string>
     <string name="login_enter_email_main">Enter you`re email</string>
     <string name="login_enter_main">Login</string>
@@ -43,6 +43,7 @@
     <string name="popular_character_label">Who do you want to play WePick with?</string>
     <string name="popular_character_partner">Popular character</string>
     <string name="rating">Rating :</string>
+    <string name="register_account">I don`t have account (create).</string>
     <string name="registration_create_account">Create Profile</string>
     <string name="registration_email">Email</string>
     <string name="registration_label_main">Registration</string>

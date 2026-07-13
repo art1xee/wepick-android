@@ -1186,7 +1186,7 @@ int string in_progress 0x7f100068
 int string indeterminate 0x7f100069
 int string likes_watch 0x7f10006a
 int string loading 0x7f10006b
-int string login_apple_main 0x7f10006c
+int string loading_button 0x7f1000ee
 int string login_email_main 0x7f10006d
 int string login_enter_email_main 0x7f10006e
 int string login_enter_main 0x7f10006f
@@ -1281,6 +1281,7 @@ int string project_id 0x7f1000c7
 int string range_end 0x7f1000c8
 int string range_start 0x7f1000c9
 int string rating 0x7f1000ca
+int string register_account 0x7f1000ed
 int string registration_create_account 0x7f1000cb
 int string registration_email 0x7f1000cc
 int string registration_label_main 0x7f1000cd

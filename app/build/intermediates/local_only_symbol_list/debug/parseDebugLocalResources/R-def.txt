@@ -57,7 +57,7 @@ string google_crash_reporting_api_key
 string google_storage_bucket
 string likes_watch
 string loading
-string login_apple_main
+string loading_button
 string login_email_main
 string login_enter_email_main
 string login_enter_main
@@ -81,6 +81,7 @@ string popular_character_label
 string popular_character_partner
 string project_id
 string rating
+string register_account
 string registration_create_account
 string registration_email
 string registration_label_main
