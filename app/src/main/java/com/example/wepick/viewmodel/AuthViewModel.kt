@@ -84,7 +84,7 @@ class AuthViewModel : ViewModel() {
 
     fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         if (email.isEmpty()) {
-            onError("Будь ласка, спочатку введіть ваш емейл")
+            onError("Please, firstly enter a password.")
             return
         }
         auth.sendPasswordResetEmail(email)
@@ -92,7 +92,7 @@ class AuthViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     onSuccess()
                 } else {
-                    onError(task.exception?.message ?: "Помилка при скиданні паролю")
+                    onError(task.exception?.message ?: "Password reset ERROR")
                 }
             }
     }

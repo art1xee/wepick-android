@@ -71,12 +71,14 @@ fun SignUpScreen(
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
+
             is AuthState.Error -> {
                 Toast.makeText(
                     context, (authState as AuthState.Error).message,
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
             else -> Unit
         }
     }
@@ -85,7 +87,6 @@ fun SignUpScreen(
     Column(
         modifier
             .fillMaxSize()
-            .background(PrimaryPurple)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -160,8 +161,8 @@ fun SignUpScreen(
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                 //   RetroCheckBox(rememberMeState) // Retro check box
-                    ForgotPassword() // forgot password text
+                    //   RetroCheckBox(rememberMeState) // Retro check box
+                    ForgotPassword(navController) // forgot password text
                 }
 
 

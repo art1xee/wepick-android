@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_main">Stop arguing over what to watch! Let’s put some movie matrimony - back in your life.</string>
-    <string name="login_main" >Login</string>
-    <string name="login_greeting_main" >We are glad to see you again</string>
-    <string name="login_email_main" >Email</string>
-    <string name="login_password_main" >Password</string>
-    <string name="login_remember_user_main" >Remember me</string>
-    <string name="login_forgot_password_main" >Forgot password?</string>
-    <string name="login_enter_main" >Login</string>
+    <string name="login_main">Login</string>
+    <string name="login_greeting_main">We are glad to see you again</string>
+    <string name="login_email_main">Email</string>
+    <string name="forgot_password_email_error">Check the format of the email — something is going wrong.</string>
+    <string name="login_password_main">Password</string>
+    <string name="forgot_password_send_link">Send link</string>
+    <string name="forgot_password_sending">Sending…</string>
+    <string name="forgot_password_back_login">Login to Account</string>
+    <string name="login_remember_user_main">Remember me</string>
+    <string name="login_forgot_password_main">Forgot password?</string>
+    <string name="login_enter_main">Login</string>
     <string name="loading_button">Loading…</string>
-    <string name="login_or_main" >Or</string>
+    <string name="login_or_main">OR</string>
+    <string name="login_form_validation_error">Incorrect email or password - try again.</string>
+    <string name="forgot_password_enter_email">Enter the email address you used when you registered — we’ll send you a recovery link.</string>
+    <string name="forgot_password_check_mail">We`ve sent instructions to your email. Please check your inbox and click the link to change your password!</string>
     <string name="registration_label_main">Registration</string>
     <string name="registration_label_second">Create an account for a minute!</string>
     <string name="registration_nickname">Nickname</string>
@@ -39,6 +46,7 @@
     <string name="genres_save">Save!</string>
     <string name="summary_selection">Selection summary: </string>
     <string name="content_type">Content type:</string>
+    <string name="login_google_main" translatable="false">Continue with Google</string>
     <string name="user_name_summary">You: </string>
     <string name="second_user_name_summary">Friend`s name: </string>
     <string name="character_name">Character`s name: </string>
@@ -46,10 +54,14 @@
     <string name="likes_watch">Want to watch: </string>
     <string name="decade">Decade: </string>
     <string name="find_content">Find %1$s!</string>
+    <string name="forgot_password_steps">Step 1 to 2</string>
+    <string name="forgot_password_ready">Ready</string>
     <string name="loading">Loading…</string>
     <string name="movie_match_label">Find your movie match!</string>
     <string name="content_name">_</string>
     <string name="rating">Rating :</string>
+    <string name="no_account">I don`t have account, </string>
+    <string name="create_account"> create.</string>
     <string name="pages">%1$s!</string>
     <string name="seen_content">Seen it - show another</string>
     <string name="back_content">Prev</string>
@@ -64,6 +76,5 @@
     <string name="select_lang">Select language: </string>
     <string name="content_end">You have reached the end!</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
-    <string name="register_account">I don`t have account (create).</string>
 
 </resources>

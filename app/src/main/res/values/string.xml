@@ -4,22 +4,33 @@
     <string name="login_main">Вхід</string>
     <string name="login_greeting_main">Ми раді знову тебе бачити!</string>
     <string name="login_email_main">Емейл</string>
+    <string name="forgot_password_email_error">Перевірте формат email — щось не так.</string>
+    <string name="login_form_validation_error">Невірна почта або пароль - спробуйте знову.</string>
+    <string name="forgot_password_send_link">Надіслати посилання</string>
+    <string name="forgot_password_sending">Надсилаємо…</string>
+    <string name="forgot_password_back_login">Увійти до Облікового Запису</string>
     <string name="login_password_main">Пароль</string>
     <string name="login_remember_user_main">Запам\'ятати мене</string>
     <string name="login_forgot_password_main">Забули пароль?</string>
-    <string name="login_enter_main">Увійти</string>
+    <string name="login_enter_main">Увійти </string>
     <string name="loading_button">Завантаження…</string>
+    <string name="forgot_password_enter_email">Введіть email, який ви використовували при реєстрації - ми надішлемо посилання для відновлення.</string>
+    <string name="forgot_password_check_mail">Ми надіслали інструкцію на вашу почту. Будь ласка, перевірте скриньку та перейдіть за посиланням, щоб змінити пароль!</string>
     <string name="login_or_main">АБО</string>
-    <string name="login_google_main" translatable="false">Google</string>
+    <string name="login_google_main">Продовжити з Google</string>
     <string name="registration_label_main">Зареєструватися</string>
     <string name="registration_label_second">Створи свій профіль за хвилину!</string>
     <string name="registration_nickname">Нікнейм</string>
     <string name="registration_email">Емейл</string>
     <string name="registration_password">Пароль</string>
+    <string name="no_account">У мене немає облікового запису, </string>
+    <string name="create_account"> створити.</string>
+    <string name="forgot_password_steps">Крок 1 з 2</string>
+    <string name="forgot_password_ready">Готово</string>
     <string name="registration_password_confirm">Повторіть пароль</string>
-    <string name="registration_create_account">Створити аккаунт</string>
-    <string name="login_enter_email_main">Введіть ваш емейл:</string>
-    <string name="login_enter_password_main">Введіть ваш пароль:</string>
+    <string name="registration_create_account">"Створити Обліковий Запис "</string>
+    <string name="login_enter_email_main">Введіть ваш емейл</string>
+    <string name="login_enter_password_main">Введіть ваш пароль</string>
     <string name="next_button">Далі!</string>
     <string name="selection_label">Привіт %1$s! Обери, контент який ти хочеш подивитися.</string>
     <string name="movie_content">Фільми</string>
@@ -47,7 +58,7 @@
     <string name="likes_watch">Хоче дивитися: </string>
     <string name="decade">Декада: </string>
     <string name="find_content">Знайти %1$s!</string>
-    <string name="loading">Загрузка…</string>
+    <string name="loading">Завантаження…</string>
     <string name="movie_match_label">Зустрінь свою кінопару!</string>
     <string name="content_name">_</string>
     <string name="rating">Рейтінг: </string>
@@ -65,7 +76,6 @@
     <string name="select_lang">Обери мову: </string>
     <string name="content_end">Ви дійшли до кінця!</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
-    <string name="register_account">У мене немає акаунту, (створити).</string>
 
 
 </resources>

@@ -7,6 +7,7 @@
     <string name="content_end">You have reached the end!</string>
     <string name="content_name">_</string>
     <string name="content_type">Content type:</string>
+    <string name="create_account"> create.</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
     <string name="decade">Decade: </string>
     <string name="decade_choose">%1$s Choose decade: </string>
@@ -14,6 +15,14 @@
     <string name="enter_name_friend_text_field">Friend`s name</string>
     <string name="error_genre">This genre is already chosen!</string>
     <string name="find_content">Find %1$s!</string>
+    <string name="forgot_password_back_login">Login to Account</string>
+    <string name="forgot_password_check_mail">We`ve sent instructions to your email. Please check your inbox and click the link to change your password!</string>
+    <string name="forgot_password_email_error">Check the format of the email — something is going wrong.</string>
+    <string name="forgot_password_enter_email">Enter the email address you used when you registered — we’ll send you a recovery link.</string>
+    <string name="forgot_password_ready">Ready</string>
+    <string name="forgot_password_send_link">Send link</string>
+    <string name="forgot_password_sending">Sending…</string>
+    <string name="forgot_password_steps">Step 1 to 2</string>
     <string name="friend_name_label">Pass the device to a friend — let them enter their name</string>
     <string name="friend_partner">Friend</string>
     <string name="genres_dislikes_choose">%1$s Select 3 genres that you do NOT like.</string>
@@ -27,15 +36,18 @@
     <string name="login_enter_main">Login</string>
     <string name="login_enter_password_main">Enter you`re password</string>
     <string name="login_forgot_password_main">Forgot password?</string>
+    <string name="login_form_validation_error">Incorrect email or password - try again.</string>
+    <string name="login_google_main" translatable="false">Continue with Google</string>
     <string name="login_greeting_main">We are glad to see you again</string>
     <string name="login_main">Login</string>
-    <string name="login_or_main">Or</string>
+    <string name="login_or_main">OR</string>
     <string name="login_password_main">Password</string>
     <string name="login_remember_user_main">Remember me</string>
     <string name="movie_content">Movie`s</string>
     <string name="movie_content_partner">Movie`s</string>
     <string name="movie_match_label">Find your movie match!</string>
     <string name="next_button">Next!</string>
+    <string name="no_account">I don`t have account, </string>
     <string name="no_found_content">Unfortunately the content was not found. Try again!</string>
     <string name="pages">%1$s!</string>
     <string name="partner_label">Now choose your fellow for watching: %1$s.</string>
@@ -43,7 +55,6 @@
     <string name="popular_character_label">Who do you want to play WePick with?</string>
     <string name="popular_character_partner">Popular character</string>
     <string name="rating">Rating :</string>
-    <string name="register_account">I don`t have account (create).</string>
     <string name="registration_create_account">Create Profile</string>
     <string name="registration_email">Email</string>
     <string name="registration_label_main">Registration</string>

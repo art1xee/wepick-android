@@ -775,6 +775,13 @@ drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable walter_white
+font nunito
+font nunito_bold
+font nunito_extrabold
+font nunito_extralight
+font nunito_extralight_italic
+font nunito_medium
+font nunito_regular
 font press_start_2p
 id ALT
 id CTRL
@@ -1148,6 +1155,7 @@ string content_end
 string content_name
 string content_type
 string copy_toast_msg
+string create_account
 string credential_fill
 string decade
 string decade_choose
@@ -1170,6 +1178,14 @@ string fingerprint_error_lockout
 string fingerprint_error_no_fingerprints
 string fingerprint_error_user_canceled
 string fingerprint_not_recognized
+string forgot_password_back_login
+string forgot_password_check_mail
+string forgot_password_email_error
+string forgot_password_enter_email
+string forgot_password_ready
+string forgot_password_send_link
+string forgot_password_sending
+string forgot_password_steps
 string friend_name_label
 string friend_partner
 string gcm_defaultSenderId
@@ -1193,6 +1209,7 @@ string login_enter_email_main
 string login_enter_main
 string login_enter_password_main
 string login_forgot_password_main
+string login_form_validation_error
 string login_google_main
 string login_greeting_main
 string login_main
@@ -1271,6 +1288,7 @@ string movie_content_partner
 string movie_match_label
 string navigation_menu
 string next_button
+string no_account
 string no_found_content
 string not_selected
 string pages
@@ -1282,7 +1300,6 @@ string project_id
 string range_end
 string range_start
 string rating
-string register_account
 string registration_create_account
 string registration_email
 string registration_label_main

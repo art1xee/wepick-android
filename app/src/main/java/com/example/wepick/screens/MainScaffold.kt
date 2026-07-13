@@ -27,9 +27,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.ui.graphics.Brush
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.DeepPurple
+import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.viewmodel.ContentViewModel
@@ -44,15 +49,24 @@ fun MainScaffold(
     content: @Composable (Modifier) -> Unit
 ) {
     val isMenuOpen by viewModel.isMenuOpen
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val shouldShowLogo = currentRoute != ScreenNav.Login.route &&
+            currentRoute != ScreenNav.SignUp.route &&
+            currentRoute != ScreenNav.ForgotPassword.route
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(PrimaryPurple)
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(MidPurple, DeepPurple)
+                )
+            )
     ) {
 
         content(Modifier.fillMaxSize())
-
 
         Row(
             modifier = Modifier
@@ -63,23 +77,25 @@ fun MainScaffold(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box {
-                Text(
-                    text = "WePick!",
-                    fontFamily = PressStart2P,
-                    fontSize = 18.sp,
-                    color = Black,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .offset(x = 2.dp, y = 2.dp),
-                )
-                Text(
-                    text = "WePick!",
-                    fontFamily = PressStart2P,
-                    fontSize = 18.sp,
-                    color = CardYellow,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+            Box(modifier = Modifier.weight(1f)) {
+                if (shouldShowLogo) {
+                    Text(
+                        text = "WePick!",
+                        fontFamily = PressStart2P,
+                        fontSize = 18.sp,
+                        color = Black,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .offset(x = 2.dp, y = 2.dp),
+                    )
+                    Text(
+                        text = "WePick!",
+                        fontFamily = PressStart2P,
+                        fontSize = 18.sp,
+                        color = CardYellow,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
             }
             Box(
                 modifier = Modifier

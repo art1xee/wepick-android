@@ -41,6 +41,7 @@ import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
 import com.example.wepick.ui.theme.Muted
+import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthViewModel
@@ -279,10 +280,13 @@ fun LoginButton(
     formValid: Boolean,
     email: String,
     password: String,
+    onClick: (() -> Unit)? = null
 ) {
     BaseRetroButton(
         onClick = {
-            if (formValid) {
+            if (onClick != null) {
+                onClick()
+            } else if (formValid) {
                 authViewModel.login(email, password)
             }
         },
@@ -294,7 +298,7 @@ fun LoginButton(
             if (loading) {
                 Text(
                     text = loadingText,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = Nunito,
                     fontWeight = FontWeight.ExtraBold,
                     color = if (enabled) CardYellow else Black.copy(alpha = 0.5f),
                     fontSize = 15.5.sp
@@ -302,7 +306,7 @@ fun LoginButton(
             } else {
                 Text(
                     text = text,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = Nunito,
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 15.5.sp,
                     color = if (enabled) CardYellow else Black
@@ -331,7 +335,7 @@ fun GoogleLoginButton(
         if (loading) {
             Text(
                 text = loadingText,
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = Nunito,
                 fontWeight = FontWeight.ExtraBold,
                 color = Black,
                 fontSize = 14.5.sp
@@ -344,12 +348,12 @@ fun GoogleLoginButton(
                 Image(
                     painter = painterResource(R.drawable.ic_google),
                     contentDescription = "Google Icon",
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = text,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = Nunito,
                     fontWeight = FontWeight.ExtraBold,
                     color = Black,
                     fontSize = 14.5.sp

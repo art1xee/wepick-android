@@ -55,6 +55,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.components.GoogleLoginButton
@@ -67,6 +68,7 @@ import com.example.wepick.ui.theme.FieldBeige
 import com.example.wepick.ui.theme.FieldBorder
 import com.example.wepick.ui.theme.InkSoft
 import com.example.wepick.ui.theme.MidPurple
+import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
@@ -104,23 +106,23 @@ fun LoginScreen(
     }
 
     var email by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
-    val isFormValid by remember {
-        derivedStateOf {
-            email.trim().isNotEmpty() && password.trim().isNotEmpty()
-        }
-    }
+    var passwordError by remember { mutableStateOf(false) }
+
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$".toRegex()
+
+    val isEmailValid = email.matches(emailRegex)
+    val isPasswordValid = password.isNotEmpty()
+
+
     val isLoading = authState is AuthState.Loading
 
 
     Column(
         modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(MidPurple, DeepPurple)
-                )
-            )
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -155,14 +157,13 @@ fun LoginScreen(
 
                 Spacer(modifier.height(18.dp))
 
-                // Greeting text TODO: change fontFamily
                 Text(
                     text = stringResource(id = R.string.login_greeting_main),
                     color = Black,
                     textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = Nunito,
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 17.sp,
+                    fontSize = 20.sp,
                     lineHeight = 24.sp
                 )
 
@@ -172,9 +173,13 @@ fun LoginScreen(
                 EmailTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = email,
-                    onValueChanged = { email = it },
+                    onValueChanged = {
+                        email = it
+                        if (emailError) emailError = false
+                    },
                     text = stringResource(R.string.login_email_main),
-                    textField = "email@example.com"
+                    textField = "email@example.com",
+                    isError = emailError,
                 )
 
                 Spacer(modifier.height(16.dp))
@@ -183,45 +188,60 @@ fun LoginScreen(
                 PasswordTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = password,
-                    onValueChanged = { password = it },
+                    onValueChanged = {
+                        password = it
+                        if (passwordError) passwordError = false
+                    },
                     text = stringResource(R.string.login_password_main),
-                    textField = stringResource(R.string.login_password_main)
+                    textField = "password",
+                    isError = passwordError,
+                    errorText = if (passwordError) stringResource(R.string.login_form_validation_error) else null,
                 )
 
-                ForgotPassword()
+                ForgotPassword(
+                    navController = navController
+                )
 
                 Spacer(modifier.height(24.dp))
 
-                // ERROR TEXT IF FORM IS NOT VALID
-                AnimatedVisibility(
-                    visible = playerVM.errorMessage != null,
-                    enter = fadeIn() + expandVertically(),
-                    exit = fadeOut() + shrinkOut()
-                ) {
-                    Text(
-                        text = playerVM.errorMessage ?: "",
-                        color = AccentRed,
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 12.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp)
-                    )
-                }
+//                // ERROR TEXT IF FORM IS NOT VALID
+//                AnimatedVisibility(
+//                    visible = playerVM.errorMessage != null,
+//                    enter = fadeIn() + expandVertically(),
+//                    exit = fadeOut() + shrinkOut()
+//                ) {
+//                    Text(
+//                        text = playerVM.errorMessage ?: "",
+//                        color = AccentRed,
+//                        fontFamily = FontFamily.SansSerif,
+//                        fontWeight = FontWeight.Bold,
+//                        fontSize = 12.sp,
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(bottom = 8.dp)
+//                    )
+//                }
 
                 // LOGIN BUTTON
                 LoginButton(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = isFormValid && !isLoading,
+                    enabled = !isLoading,
                     text = stringResource(R.string.login_enter_main),
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
-                    formValid = isFormValid,
+                    formValid = true,
                     email = email,
                     password = password,
+                    onClick = {
+                        if (isEmailValid && isPasswordValid) {
+                            authViewModel.login(email, password)
+                        } else {
+                            emailError = !isEmailValid
+                            passwordError = !isPasswordValid
+                        }
+                    }
                 )
 
                 LoginDivider()
@@ -230,7 +250,7 @@ fun LoginScreen(
                 GoogleLoginButton(
                     onClick = { authViewModel.loginWithGoogle(context) },
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Продовжити з Google", // TODO change localization text
+                    text = stringResource(R.string.login_google_main),
                 )
 
                 Spacer(modifier.height(28.dp))
@@ -240,15 +260,15 @@ fun LoginScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "У мене немає акаунту, ", // TODO change localization text
+                        text = stringResource(R.string.no_account),
                         fontSize = 13.sp,
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = Nunito,
                         color = InkSoft
                     )
                     Text(
-                        text = "створити.", // TODO change localization text
+                        text = stringResource(R.string.create_account),
                         fontSize = 13.sp,
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = Nunito,
                         fontWeight = FontWeight.ExtraBold,
                         color = AccentRed,
                         modifier = Modifier.clickable {
@@ -282,7 +302,9 @@ fun LoginCardText(
 }
 
 @Composable
-fun ForgotPassword() {
+fun ForgotPassword(
+    navController: NavController
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End
@@ -292,9 +314,11 @@ fun ForgotPassword() {
             fontSize = 12.5.sp,
             fontWeight = FontWeight.Bold,
             color = InkSoft,
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = Nunito,
             textDecoration = TextDecoration.Underline,
-            modifier = Modifier.clickable { /* TODO */ }
+            modifier = Modifier.clickable {
+                navController.navigate(ScreenNav.ForgotPassword.route)
+            }
         )
     }
 }
@@ -315,7 +339,7 @@ fun LoginDivider() {
         )
         Text(
             text = stringResource(id = R.string.login_or_main),
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = Nunito,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 12.sp,
             color = InkSoft
@@ -337,14 +361,16 @@ fun FormTextFields(
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textField: String,
+    isError: Boolean = false,
+    errorText: String? = null
 ) {
     Column(modifier = modifier) {
         Text(
             text = text,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
-            color = InkSoft,
-            fontFamily = FontFamily.SansSerif,
+            color = if (isError) AccentRed else InkSoft,
+            fontFamily = Nunito,
             modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
         )
         OutlinedTextField(
@@ -353,14 +379,18 @@ fun FormTextFields(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             shape = RoundedCornerShape(14.dp),
+            isError = isError,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = FieldBeige,
                 unfocusedContainerColor = FieldBeige,
                 focusedBorderColor = TextTeal,
                 unfocusedBorderColor = FieldBorder,
+                errorBorderColor = AccentRed,
+                errorTrailingIconColor = AccentRed,
+                errorContainerColor = FieldBeige,
             ),
             textStyle = TextStyle(
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = Nunito,
                 fontWeight = FontWeight.SemiBold,
                 color = Black,
                 fontSize = 15.sp
@@ -369,14 +399,25 @@ fun FormTextFields(
             visualTransformation = visualTransformation,
             placeholder = {
                 Text(
-                    text = textField.lowercase(), // TODO change localization text
+                    text = textField.lowercase(),
                     color = Color(0xFFB7A574),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
-                    fontFamily = FontFamily.SansSerif
+                    fontFamily = Nunito
                 )
             }
         )
+        if (isError && errorText != null) {
+            Text(
+                text = errorText,
+                color = AccentRed,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = Nunito,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 4.dp, start = 2.dp)
+            )
+        }
     }
 }
 
@@ -387,6 +428,8 @@ fun EmailTextField(
     onValueChanged: (String) -> Unit,
     text: String,
     textField: String,
+    isError: Boolean = false,
+    errorText: String? = null
 ) {
     FormTextFields(
         modifier = modifier,
@@ -394,11 +437,13 @@ fun EmailTextField(
         onValueChanged = onValueChanged,
         text = text,
         textField = textField,
+        isError = isError,
+        errorText = errorText,
         trailingIcon = {
             Icon(
                 imageVector = Icons.Filled.Mail,
                 contentDescription = "Email Icon",
-                tint = InkSoft
+                tint = if (isError) AccentRed else InkSoft
             )
         }
     )
@@ -411,6 +456,8 @@ fun PasswordTextField(
     onValueChanged: (String) -> Unit,
     text: String,
     textField: String,
+    isError: Boolean = false,
+    errorText: String? = null
 ) {
 
     var visiblePassword by remember { mutableStateOf(false) }
@@ -421,6 +468,8 @@ fun PasswordTextField(
         text = text,
         visualTransformation = if (visiblePassword) VisualTransformation.None else PasswordVisualTransformation(),
         textField = textField,
+        isError = isError,
+        errorText = errorText,
         trailingIcon = {
             val image = if (visiblePassword)
                 Icons.Filled.Visibility

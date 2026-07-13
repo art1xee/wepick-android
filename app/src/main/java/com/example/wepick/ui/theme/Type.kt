@@ -1,6 +1,7 @@
 package com.example.wepick.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -11,6 +12,14 @@ import com.example.wepick.R
 // Set of Material typography styles to start with
 val PressStart2P = FontFamily(
     Font(R.font.press_start_2p, FontWeight.Normal)
+)
+
+val Nunito = FontFamily(
+    Font(R.font.nunito_regular, FontWeight.Normal),
+    Font(R.font.nunito_medium, FontWeight.Medium),
+    Font(R.font.nunito_bold, FontWeight.Bold),
+    Font(R.font.nunito_extrabold, FontWeight.ExtraBold),
+    Font(R.font.nunito_extralight, FontWeight.ExtraLight)
 )
 
 
