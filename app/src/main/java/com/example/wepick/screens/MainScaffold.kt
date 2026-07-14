@@ -70,6 +70,10 @@ fun MainScaffold(
     val screensWithBottomBar = listOf(
         ScreenNav.Home.route,
         ScreenNav.SettingScreen.route
+        // TODO profile screen
+        // TODO Game screen
+        // TODO favourite screen
+        // etc.
     )
     val shouldShowBottomBar = currentRoute in screensWithBottomBar
 
@@ -144,10 +148,11 @@ fun MainScaffold(
                         colors = listOf(MidPurple, DeepPurple)
                     )
                 )
-                .padding(paddingValues)
         ) {
-
-            content(Modifier.fillMaxSize())
+            // Apply padding only to the main content
+            Box(modifier = Modifier.padding(paddingValues)) {
+                content(Modifier.fillMaxSize())
+            }
 
             Row(
                 modifier = Modifier
