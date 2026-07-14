@@ -6,7 +6,7 @@
     <string name="login_email_main">Емейл</string>
     <string name="forgot_password_email_error">Перевірте формат email — щось не так.</string>
     <string name="login_form_validation_error">Невірна почта або пароль - спробуйте знову.</string>
-    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
+    <string name="signup_form_password_error">Паролі не збігаються - спробуйте знову.</string>
     <string name="forgot_password_send_link">Надіслати посилання</string>
     <string name="forgot_password_sending">Надсилаємо…</string>
     <string name="forgot_password_back_login">Увійти до Облікового Запису</string>

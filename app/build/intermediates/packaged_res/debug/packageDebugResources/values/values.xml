@@ -99,7 +99,7 @@
     <string name="selection_label">Привіт %1$s! Обери, контент який ти хочеш подивитися.</string>
     <string name="series_content">Серіали</string>
     <string name="series_content_partner">Серіалів</string>
-    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
+    <string name="signup_form_password_error">Паролі не збігаються - спробуйте знову.</string>
     <string name="start_again">Почати спочатку</string>
     <string name="summary_selection">Підсумок вибору: </string>
     <string name="user_name_summary">Ви: </string>

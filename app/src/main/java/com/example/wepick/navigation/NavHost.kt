@@ -16,6 +16,7 @@ import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
 import com.example.wepick.screens.SelectionScreen
+import com.example.wepick.screens.SettingsScreen
 import com.example.wepick.screens.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
 import com.example.wepick.viewmodel.AuthViewModel
@@ -35,18 +36,26 @@ fun NavGraph(
         navController = navController,
         startDestination = ScreenNav.Login.route
     ) {
-       composable(ScreenNav.Home.route){
-           HomeScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
-       }
-
+        composable(ScreenNav.Home.route) {
+            HomeScreen(navController, authViewModel)
+        }
+        composable(ScreenNav.SettingScreen.route) {
+            SettingsScreen(navController, viewModel, modifier = Modifier, playerVM,)
+        }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.Login.route) {
             LoginScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
         }
-        composable(ScreenNav.ForgotPassword.route){
-            ForgotPasswordScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
+        composable(ScreenNav.ForgotPassword.route) {
+            ForgotPasswordScreen(
+                navController,
+                viewModel,
+                modifier = Modifier,
+                playerVM,
+                authViewModel
+            )
 
         }
         composable(ScreenNav.Main.route) {

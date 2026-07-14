@@ -131,7 +131,9 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         Card(
-            modifier.fillMaxWidth(),
+            modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
             shape = RoundedCornerShape(26.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)

@@ -7,6 +7,7 @@ sealed class ScreenNav(val route: String) {
 
     object ForgotPassword : ScreenNav("forgot_password") // Screen when user forgot his password 
 
+    object SettingScreen : ScreenNav("setting_screen") // screen for settings
     object Home : ScreenNav("home" )
     object Main : ScreenNav("main")             // Экран ввода имени
 
