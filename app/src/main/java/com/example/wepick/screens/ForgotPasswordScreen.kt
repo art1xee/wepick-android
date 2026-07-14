@@ -58,6 +58,7 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.ProgressGray
 import com.example.wepick.ui.theme.TealSuccess
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -75,7 +76,8 @@ fun ForgotPasswordScreen(
     var currentStep by remember { mutableIntStateOf(1) }
     val context = LocalContext.current
 
-    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$".toRegex()
+    val emailRegex = REGEX_LIST.toRegex()
+
 
     val isEmailValid = remember(email) {
         email.matches(emailRegex)

@@ -1315,6 +1315,7 @@ int string selected 0x7f1000d7
 int string selection_label 0x7f1000d8
 int string series_content 0x7f1000d9
 int string series_content_partner 0x7f1000da
+int string signup_form_password_error 0x7f1000fa
 int string snackbar_pane_title 0x7f1000db
 int string start_again 0x7f1000dc
 int string state_empty 0x7f1000dd

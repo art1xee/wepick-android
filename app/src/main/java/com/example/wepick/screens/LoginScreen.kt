@@ -72,6 +72,7 @@ import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.MainViewModel
@@ -111,7 +112,7 @@ fun LoginScreen(
     var passwordError by remember { mutableStateOf(false) }
 
 
-    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$".toRegex()
+    val emailRegex = REGEX_LIST.toRegex()
 
     val isEmailValid = email.matches(emailRegex)
     val isPasswordValid = password.isNotEmpty()
@@ -134,9 +135,8 @@ fun LoginScreen(
             shape = RoundedCornerShape(26.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
-
             Column(
-                modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
+                modifier.padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Login text (Pixel style with shadow)
@@ -203,25 +203,6 @@ fun LoginScreen(
                 )
 
                 Spacer(modifier.height(24.dp))
-
-//                // ERROR TEXT IF FORM IS NOT VALID
-//                AnimatedVisibility(
-//                    visible = playerVM.errorMessage != null,
-//                    enter = fadeIn() + expandVertically(),
-//                    exit = fadeOut() + shrinkOut()
-//                ) {
-//                    Text(
-//                        text = playerVM.errorMessage ?: "",
-//                        color = AccentRed,
-//                        fontFamily = FontFamily.SansSerif,
-//                        fontWeight = FontWeight.Bold,
-//                        fontSize = 12.sp,
-//                        textAlign = TextAlign.Center,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(bottom = 8.dp)
-//                    )
-//                }
 
                 // LOGIN BUTTON
                 LoginButton(
@@ -415,7 +396,9 @@ fun FormTextFields(
                 fontWeight = FontWeight.Bold,
                 fontFamily = Nunito,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 4.dp, start = 2.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp)
             )
         }
     }

@@ -59,12 +59,17 @@ class AuthViewModel : ViewModel() {
             }
     }
 
-    fun signup(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
+    fun signup(email: String, password: String, confirmPassword: String) {
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             _authState.value =
                 AuthState.Error("Email or password can`t be empty")
             return
         }
+        if (password != confirmPassword) {
+            _authState.value = AuthState.Error("Passwords do not match")
+            return
+        }
+
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -140,7 +145,7 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun loginWithGitHub(activity: Activity){
+    fun loginWithGitHub(activity: Activity) {
         val provider = OAuthProvider.newBuilder("github.com")
         auth.startActivityForSignInWithProvider(activity, provider.build())
             .addOnSuccessListener {

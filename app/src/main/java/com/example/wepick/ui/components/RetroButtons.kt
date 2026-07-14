@@ -317,6 +317,54 @@ fun LoginButton(
 }
 
 @Composable
+fun CreateAccountButton(
+    authViewModel: AuthViewModel,
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    text: String,
+    loadingText: String,
+    loading: Boolean,
+    formValid: Boolean,
+    email: String,
+    password: String,
+    confirmPassword: String,
+    onClick: (() -> Unit)? = null
+) {
+    BaseRetroButton(
+        onClick = {
+            if (onClick != null) {
+                onClick()
+            } else if (formValid) {
+                authViewModel.signup(email, password, confirmPassword)
+            }
+        },
+        enabled = enabled,
+        modifier = modifier,
+        containerColor = if (enabled) DarkButtonPurple else Muted.copy(alpha = 0.5f),
+        showShadow = enabled,
+        content = {
+            if (loading) {
+                Text(
+                    text = loadingText,
+                    fontFamily = Nunito,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = if (enabled) CardYellow else Black.copy(alpha = 0.5f),
+                    fontSize = 15.5.sp
+                )
+            } else {
+                Text(
+                    text = text,
+                    fontFamily = Nunito,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 15.5.sp,
+                    color = if (enabled) CardYellow else Black
+                )
+            }
+        }
+    )
+}
+
+@Composable
 fun GoogleLoginButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

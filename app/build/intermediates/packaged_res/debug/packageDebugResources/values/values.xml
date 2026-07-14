@@ -30,7 +30,7 @@
     <string name="content_end">Ви дійшли до кінця!</string>
     <string name="content_name">_</string>
     <string name="content_type">Тип контенту:</string>
-    <string name="create_account"> створити.</string>
+    <string name="create_account">створити</string>
     <string name="credential_fill">Enter your credentials (email and password) in the fields below.</string>
     <string name="decade">Декада: </string>
     <string name="decade_choose">%1$s Обери декаду: </string>
@@ -76,7 +76,7 @@
     <string name="movie_content_partner">Фільмів</string>
     <string name="movie_match_label">Зустрінь свою кінопару!</string>
     <string name="next_button">Далі!</string>
-    <string name="no_account">У мене немає облікового запису, </string>
+    <string name="no_account">У мене немає облікового запису,</string>
     <string name="no_found_content">Нажаль контент не був знайдений. Спробуйте ще раз!</string>
     <string name="pages">%1$s!</string>
     <string name="partner_label">Зараз обери свого партнера для перегляду: %1$s.</string>
@@ -99,6 +99,7 @@
     <string name="selection_label">Привіт %1$s! Обери, контент який ти хочеш подивитися.</string>
     <string name="series_content">Серіали</string>
     <string name="series_content_partner">Серіалів</string>
+    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
     <string name="start_again">Почати спочатку</string>
     <string name="summary_selection">Підсумок вибору: </string>
     <string name="user_name_summary">Ви: </string>

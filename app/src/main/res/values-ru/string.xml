@@ -37,6 +37,7 @@
     <string name="series_content_partner">Сериалов</string>
     <string name="forgot_password_steps">Шаг 1 из 2</string>
     <string name="forgot_password_ready">Готово</string>
+    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
     <string name="login_form_validation_error">Неправильная почта или пароль - попробуйте снова.</string>
     <string name="asian_content_partner">Аниме</string>
     <string name="partner_label">Сейчас выбери партнёра для просмотра: %1$s.</string>

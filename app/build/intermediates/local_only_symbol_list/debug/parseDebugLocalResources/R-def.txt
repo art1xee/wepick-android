@@ -113,6 +113,7 @@ string select_lang
 string selection_label
 string series_content
 string series_content_partner
+string signup_form_password_error
 string start_again
 string summary_selection
 string user_name_summary

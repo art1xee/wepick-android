@@ -9,6 +9,7 @@
     <string name="forgot_password_send_link">Send link</string>
     <string name="forgot_password_sending">Sending…</string>
     <string name="forgot_password_back_login">Login to Account</string>
+    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
     <string name="login_remember_user_main">Remember me</string>
     <string name="login_forgot_password_main">Forgot password?</string>
     <string name="login_enter_main">Login</string>

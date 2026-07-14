@@ -29,3 +29,4 @@ object Paging {
     const val BATCH_SIZE = 20
 }
 
+const val REGEX_LIST = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$"

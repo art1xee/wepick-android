@@ -1316,6 +1316,7 @@ string selected
 string selection_label
 string series_content
 string series_content_partner
+string signup_form_password_error
 string snackbar_pane_title
 string start_again
 string state_empty

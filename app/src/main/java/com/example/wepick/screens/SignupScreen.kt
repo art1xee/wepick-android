@@ -1,14 +1,18 @@
 package com.example.wepick.screens
 
+import android.widget.Space
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -25,9 +29,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,11 +44,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.ui.components.CreateAccountButton
+import com.example.wepick.ui.components.GoogleLoginButton
+import com.example.wepick.ui.components.LoginButton
+import com.example.wepick.ui.theme.AccentRed
+import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.InkSoft
+import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
+import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
@@ -56,12 +72,35 @@ fun SignUpScreen(
     authViewModel: AuthViewModel,
 ) {
 
-
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
     val authState by authViewModel.authState.observeAsState()
     val context = LocalContext.current
+
+    var email by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf(false) }
+    var confirmPassword by remember { mutableStateOf("") }
+    var confirmPasswordError by remember { mutableStateOf(false) }
+
+
+    val emailRegex = REGEX_LIST.toRegex()
+    val isEmailValid = email.matches(emailRegex)
+    val isPasswordValid =
+        password.isNotEmpty() && password == confirmPassword && password.length < 6
+
+    val formErrorMessage = when {
+        confirmPasswordError -> stringResource(R.string.signup_form_password_error)
+        emailError -> stringResource(R.string.forgot_password_email_error)
+        passwordError -> "The password cannot be empty"
+
+        else -> null
+    }
+
+
+    val isFormValid = isEmailValid && isPasswordValid
+
+    val isLoading = authState is AuthState.Loading
+
 
     LaunchedEffect(authState) {
         when (authState) {
@@ -93,114 +132,150 @@ fun SignUpScreen(
     ) {
         Card(
             modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = CardYellow)
+            colors = CardDefaults.cardColors(containerColor = CardYellow),
+            shape = RoundedCornerShape(26.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
-
             Column(
-                modifier.padding(16.dp),
+                modifier.padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                LoginCardText(
+                // Registration text (Pixel style with shadow)
+                Text(
                     text = stringResource(id = R.string.registration_label_main),
                     color = White,
-                    textAlign = TextAlign.Left,
-                    style = MaterialTheme.typography.titleMedium,
                     fontFamily = PressStart2P,
-                ) // Label text
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp,
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = Color(0xFFC58A1E),
+                            offset = Offset(8f, 8f),
+                            blurRadius = 0f,
+                        )
+                    )
+                )
+
+                Spacer(modifier.height(18.dp))
+
+                Text(
+                    text = stringResource(id = R.string.registration_label_second),
+                    color = Black,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = Nunito,
+                    fontSize = 20.sp,
+                    lineHeight = 24.sp,
+                )
+
+                Spacer(modifier.height(24.dp))
+
+                // EMAIL Text field
+                EmailTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = email,
+                    onValueChanged = {
+                        email = it
+                        if (emailError) emailError = false
+                    },
+                    text = stringResource(R.string.login_email_main),
+                    textField = "email@example.com",
+                    isError = emailError,
+                )
 
                 Spacer(modifier.height(12.dp))
 
-                LoginCardText(
-                    text = stringResource(id = R.string.registration_label_second),
-                    color = TextTeal,
-                    textAlign = TextAlign.Left,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontFamily = PressStart2P,
-                ) // greeting text
-
-                Spacer(modifier.height(24.dp))
-
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.login_enter_email_main), // Text: enter you`re email
-                            fontFamily = PressStart2P
-                        )
-                    },
-                    modifier = modifier.fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        fontFamily = PressStart2P,
-                        color = TextTeal,
-                        fontSize = 16.sp
-                    ),
-                )
-
-                Spacer(modifier.height(16.dp))
-
-                OutlinedTextField(
+                // PASSWORD Text field
+                PasswordTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = password,
-                    onValueChange = { password = it },
-                    label = {
-                        Text(
-                            text = stringResource(R.string.login_enter_password_main), // Text: Enter you`re password
-                            fontFamily = PressStart2P
-                        )
+                    onValueChanged = {
+                        password = it
+                        if (passwordError) passwordError = false
                     },
-                    modifier = modifier.fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        fontFamily = PressStart2P,
-                        color = TextTeal,
-                        fontSize = 16.sp
-                    ),
+                    text = stringResource(R.string.login_password_main),
+                    textField = "password",
+                    isError = passwordError,
                 )
-                Column(
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    //   RetroCheckBox(rememberMeState) // Retro check box
-                    ForgotPassword(navController) // forgot password text
-                }
+                Spacer(modifier.height(12.dp))
 
+                // CONFIRM PASSWORD Text field
+                PasswordTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = confirmPassword,
+                    onValueChanged = {
+                        confirmPassword = it
+                        if (confirmPasswordError) confirmPasswordError = false
+                    },
+                    text = "Confirm password",
+                    textField = "repeat password",
+                    isError = confirmPasswordError,
+                )
 
-                //TODO: Change the logic of the button and also change text on the button
-                Spacer(modifier.height(24.dp))
-//                NextButton(
-//                    navController = navController,
-//                    modifier = modifier,
-//                    route = ScreenNav.Main.route,
-//                    enabled = isNameValid,
-//                    onNextClick = {
-//                        playerVM.updateUserName(name)
-//                    })
-
-                Button(
-                    onClick = {
-                        authViewModel.signup(email, password)
-
-                    }, enabled = authState != AuthState.Loading
-                ) {
+                if (formErrorMessage != null) {
                     Text(
-                        "Create account"
+                        text = formErrorMessage,
+                        color = AccentRed,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        fontFamily = Nunito
                     )
                 }
-                //TODO: Change the logic of the button and also change text on the button
+
+                Spacer(modifier.height(20.dp))
+
+                CreateAccountButton(
+                    authViewModel = authViewModel,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = !isLoading,
+                    text = "Create",
+                    loadingText = stringResource(R.string.loading),
+                    loading = isLoading,
+                    formValid = true,
+                    email = email,
+                    password = password,
+                    confirmPassword = confirmPassword,
+                    onClick = {
+                        if (isEmailValid && isPasswordValid) {
+                            authViewModel.signup(email, password, confirmPassword)
+                        } else {
+                            emailError = !isEmailValid
+                            passwordError = !isPasswordValid
+                            confirmPasswordError = !isPasswordValid
+                        }
+                    }
+                )
 
                 LoginDivider()
 
+                // LOGIN WITH GOOGLE BUTTON
+                GoogleLoginButton(
+                    onClick = { authViewModel.loginWithGoogle(context) },
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.login_google_main),
+                )
 
                 Spacer(modifier.height(28.dp))
 
-
-                TextButton(onClick = {
-                    navController.navigate(ScreenNav.Login.route)
-                }) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Text(
-                        "Already have an account, Login",
-                        fontSize = 10.sp,
+                        text = "Already have an account, ",
+                        fontSize = 13.sp,
+                        fontFamily = Nunito,
+                        color = InkSoft
+                    )
+                    Text(
+                        text = "Login",
+                        fontSize = 13.sp,
+                        fontFamily = Nunito,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = AccentRed,
+                        modifier = Modifier.clickable {
+                            navController.navigate(ScreenNav.Login.route)
+                        }
                     )
                 }
 

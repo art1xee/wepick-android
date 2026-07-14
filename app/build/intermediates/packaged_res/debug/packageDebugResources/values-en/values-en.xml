@@ -69,6 +69,7 @@
     <string name="selection_label">Hello %1$s! Choose content which you want to watch.</string>
     <string name="series_content">Series</string>
     <string name="series_content_partner">Series</string>
+    <string name="signup_form_password_error">Паролі не збігаються - введіть заново.</string>
     <string name="start_again">Start over</string>
     <string name="summary_selection">Selection summary: </string>
     <string name="user_name_summary">You: </string>
