@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
+import com.example.wepick.screens.FavoriteScreen
 import com.example.wepick.screens.ForgotPasswordScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
@@ -36,6 +37,10 @@ fun NavGraph(
         navController = navController,
         startDestination = ScreenNav.Login.route
     ) {
+      composable(ScreenNav.Favorite.route){
+          FavoriteScreen(navController, viewModel, modifier = Modifier, playerVM,)
+      }
+
         composable(ScreenNav.Home.route) {
             HomeScreen(navController, authViewModel)
         }

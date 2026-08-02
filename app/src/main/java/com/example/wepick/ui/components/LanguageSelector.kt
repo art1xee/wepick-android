@@ -41,7 +41,7 @@ fun LanguageSelector(viewModel: MainViewModel) {
     ) {
 
         Text(
-            text = stringResource(R.string.select_lang).uppercase(),
+            text = stringResource(R.string.settings_language).uppercase(),
             fontFamily = PressStart2P,
             fontSize = 8.sp,
             color = Muted,

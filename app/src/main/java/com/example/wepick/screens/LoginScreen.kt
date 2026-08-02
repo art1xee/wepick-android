@@ -1,12 +1,6 @@
 package com.example.wepick.screens
 
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +25,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
@@ -55,7 +47,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.components.GoogleLoginButton
@@ -63,11 +54,9 @@ import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.FieldBeige
 import com.example.wepick.ui.theme.FieldBorder
 import com.example.wepick.ui.theme.InkSoft
-import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.TextTeal
@@ -141,7 +130,7 @@ fun LoginScreen(
             ) {
                 // Login text (Pixel style with shadow)
                 Text(
-                    text = stringResource(id = R.string.login_main),
+                    text = stringResource(id = R.string.login_title),
                     color = White,
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
@@ -158,7 +147,7 @@ fun LoginScreen(
                 Spacer(modifier.height(18.dp))
 
                 Text(
-                    text = stringResource(id = R.string.login_greeting_main),
+                    text = stringResource(id = R.string.login_subtitle),
                     color = Black,
                     textAlign = TextAlign.Center,
                     fontFamily = Nunito,
@@ -177,7 +166,7 @@ fun LoginScreen(
                         email = it
                         if (emailError) emailError = false
                     },
-                    text = stringResource(R.string.login_email_main),
+                    text = stringResource(R.string.login_email_label),
                     textField = "email@example.com",
                     isError = emailError,
                 )
@@ -192,10 +181,10 @@ fun LoginScreen(
                         password = it
                         if (passwordError) passwordError = false
                     },
-                    text = stringResource(R.string.login_password_main),
+                    text = stringResource(R.string.login_password_label),
                     textField = "password",
                     isError = passwordError,
-                    errorText = if (passwordError) stringResource(R.string.login_form_validation_error) else null,
+                    errorText = if (passwordError) stringResource(R.string.login_error_invalid_credentials) else null,
                 )
 
                 ForgotPassword(
@@ -209,7 +198,7 @@ fun LoginScreen(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    text = stringResource(R.string.login_enter_main),
+                    text = stringResource(R.string.login_button),
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
                     formValid = true,
@@ -231,7 +220,7 @@ fun LoginScreen(
                 GoogleLoginButton(
                     onClick = { authViewModel.loginWithGoogle(context) },
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.login_google_main),
+                    text = stringResource(R.string.login_google_button),
                 )
 
                 Spacer(modifier.height(28.dp))
@@ -241,13 +230,13 @@ fun LoginScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.no_account),
+                        text = stringResource(R.string.login_no_account),
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         color = InkSoft
                     )
                     Text(
-                        text = stringResource(R.string.create_account),
+                        text = stringResource(R.string.login_create_account),
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         fontWeight = FontWeight.ExtraBold,
@@ -291,7 +280,7 @@ fun ForgotPassword(
         horizontalArrangement = Arrangement.End
     ) {
         Text(
-            text = stringResource(id = R.string.login_forgot_password_main),
+            text = stringResource(id = R.string.login_forgot_password),
             fontSize = 12.5.sp,
             fontWeight = FontWeight.Bold,
             color = InkSoft,
@@ -319,7 +308,7 @@ fun LoginDivider() {
             color = Black.copy(alpha = 0.15f)
         )
         Text(
-            text = stringResource(id = R.string.login_or_main),
+            text = stringResource(id = R.string.login_or),
             fontFamily = Nunito,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 12.sp,

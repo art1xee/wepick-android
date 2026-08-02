@@ -1,7 +1,5 @@
 package com.example.wepick.screens
 
-import android.widget.Space
-import androidx.compose.ui.R.string
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +23,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +31,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
@@ -44,15 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NavUtils
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
-import com.example.wepick.ui.theme.DeepPurple
-import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.ProgressGray
@@ -115,8 +108,8 @@ fun ForgotPasswordScreen(
                 )
             }
             Text(
-                text = if (currentStep == 1) stringResource(R.string.forgot_password_steps) else stringResource(
-                    R.string.forgot_password_ready
+                text = if (currentStep == 1) stringResource(R.string.forgot_password_step) else stringResource(
+                    R.string.forgot_password_complete
                 ),
                 color = White.copy(alpha = 0.55f),
                 fontFamily = Nunito,
@@ -179,7 +172,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(18.dp))
 
                     Text(
-                        text = stringResource(R.string.login_forgot_password_main),
+                        text = stringResource(R.string.login_forgot_password),
                         fontFamily = PressStart2P,
                         color = White,
                         fontSize = 20.sp,
@@ -195,7 +188,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(14.dp))
 
                     Text(
-                        text = stringResource(R.string.forgot_password_enter_email),
+                        text = stringResource(R.string.forgot_password_description),
                         fontFamily = Nunito,
                         color = Black,
                         fontWeight = FontWeight.Bold,
@@ -213,7 +206,7 @@ fun ForgotPasswordScreen(
                             email = it
                             if (emailError) emailError = false
                         },
-                        text = stringResource(R.string.login_email_main),
+                        text = stringResource(R.string.login_email_label),
                         textField = "email@example.com",
                         isError = emailError,
                         errorText = stringResource(R.string.forgot_password_email_error)
@@ -224,7 +217,7 @@ fun ForgotPasswordScreen(
                         authViewModel = authViewModel,
                         modifier = Modifier.fillMaxWidth(),
                         enabled = true,
-                        text = stringResource(R.string.forgot_password_send_link),
+                        text = stringResource(R.string.forgot_password_send_button),
                         loadingText = stringResource(R.string.forgot_password_sending),
                         loading = false,
                         formValid = true,
@@ -273,7 +266,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(14.dp))
 
                     Text(
-                        text = stringResource(R.string.forgot_password_check_mail),
+                        text = stringResource(R.string.forgot_password_success),
                         fontFamily = Nunito,
                         color = Black,
                         textAlign = TextAlign.Center,
@@ -286,7 +279,7 @@ fun ForgotPasswordScreen(
                         authViewModel = authViewModel,
                         modifier = Modifier.fillMaxWidth(),
                         enabled = true,
-                        text = stringResource(R.string.forgot_password_back_login),
+                        text = stringResource(R.string.forgot_password_back_to_login),
                         loadingText = "",
                         loading = false,
                         formValid = true,

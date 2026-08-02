@@ -81,7 +81,7 @@ fun CharacterPickerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.popular_character_label),
+                    text = stringResource(R.string.partner_choose_character),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     style = MaterialTheme.typography.bodyMedium,

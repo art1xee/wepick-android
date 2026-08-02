@@ -1,8 +1,6 @@
 package com.example.wepick.screens
 
-import android.widget.Space
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,13 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,27 +33,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.observe
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.components.CreateAccountButton
 import com.example.wepick.ui.components.GoogleLoginButton
-import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.InkSoft
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.PrimaryPurple
-import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
 import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
@@ -86,10 +74,10 @@ fun SignUpScreen(
     val emailRegex = REGEX_LIST.toRegex()
     val isEmailValid = email.matches(emailRegex)
     val isPasswordValid =
-        password.isNotEmpty() && password == confirmPassword && password.length < 6
+        password.isNotEmpty() && password == confirmPassword && password.length >= 6
 
     val formErrorMessage = when {
-        confirmPasswordError -> stringResource(R.string.signup_form_password_error)
+        confirmPasswordError -> stringResource(R.string.signup_error_password_mismatch)
         emailError -> stringResource(R.string.forgot_password_email_error)
         passwordError -> "The password cannot be empty"
 
@@ -144,7 +132,7 @@ fun SignUpScreen(
             ) {
                 // Registration text (Pixel style with shadow)
                 Text(
-                    text = stringResource(id = R.string.registration_label_main),
+                    text = stringResource(id = R.string.signup_title),
                     color = White,
                     fontFamily = PressStart2P,
                     textAlign = TextAlign.Center,
@@ -161,7 +149,7 @@ fun SignUpScreen(
                 Spacer(modifier.height(18.dp))
 
                 Text(
-                    text = stringResource(id = R.string.registration_label_second),
+                    text = stringResource(id = R.string.signup_subtitle),
                     color = Black,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.ExtraBold,
@@ -180,7 +168,7 @@ fun SignUpScreen(
                         email = it
                         if (emailError) emailError = false
                     },
-                    text = stringResource(R.string.login_email_main),
+                    text = stringResource(R.string.login_email_label),
                     textField = "email@example.com",
                     isError = emailError,
                 )
@@ -195,7 +183,7 @@ fun SignUpScreen(
                         password = it
                         if (passwordError) passwordError = false
                     },
-                    text = stringResource(R.string.login_password_main),
+                    text = stringResource(R.string.login_password_label),
                     textField = "password",
                     isError = passwordError,
                 )
@@ -254,7 +242,7 @@ fun SignUpScreen(
                 GoogleLoginButton(
                     onClick = { authViewModel.loginWithGoogle(context) },
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.login_google_main),
+                    text = stringResource(R.string.login_google_button),
                 )
 
                 Spacer(modifier.height(28.dp))

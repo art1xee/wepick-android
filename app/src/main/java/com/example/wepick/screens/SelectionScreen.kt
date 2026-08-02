@@ -61,7 +61,7 @@ fun SelectionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.selection_label, playerVM.userName),
+                    text = stringResource(R.string.selection_title, playerVM.userName),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     style = MaterialTheme.typography.titleMedium,
@@ -79,7 +79,7 @@ fun SelectionScreen(
                         onClick = { viewModel.setContentType(ContentType.Movie) },
                         modifier = modifier,
                         activeColor = Movie,
-                        text = stringResource(R.string.movie_content)
+                        text = stringResource(R.string.selection_movie)
                     )
                     Spacer(modifier.height(12.dp))
 
@@ -89,7 +89,7 @@ fun SelectionScreen(
                         onClick = { viewModel.setContentType(ContentType.Tv) },
                         modifier = modifier,
                         activeColor = Series,
-                        text = stringResource(R.string.series_content)
+                        text = stringResource(R.string.selection_series)
                     )
                     Spacer(modifier.height(12.dp))
                     ContentTypeButton( // content button for anime/asian content
@@ -98,7 +98,7 @@ fun SelectionScreen(
                         onClick = { viewModel.setContentType(ContentType.Anime) },
                         modifier = modifier,
                         activeColor = Anime,
-                        text = stringResource(R.string.asian_content)
+                        text = stringResource(R.string.selection_anime)
                     )
                 }
                 Spacer(modifier.height(24.dp))

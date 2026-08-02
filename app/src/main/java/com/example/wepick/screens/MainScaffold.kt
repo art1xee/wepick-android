@@ -30,23 +30,30 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import android.widget.Toast
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Games
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.PeopleOutline
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PersonOutline
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Games
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.ui.theme.Black
-import com.example.wepick.ui.theme.White
 import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.CardYellowSoft
 import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
@@ -69,7 +76,8 @@ fun MainScaffold(
 
     val screensWithBottomBar = listOf(
         ScreenNav.Home.route,
-        ScreenNav.SettingScreen.route
+        ScreenNav.SettingScreen.route,
+        ScreenNav.Favorite.route
         // TODO profile screen
         // TODO Game screen
         // TODO favourite screen
@@ -84,21 +92,32 @@ fun MainScaffold(
                     containerColor = Color.Transparent,
                     contentColor = CardYellow
                 ) {
-                    IconButton(
-                        onClick = {
-                            navController.navigate(ScreenNav.Home.route) {
-                                popUpTo(ScreenNav.Home.route) { inclusive = true }
-                            }
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = null,
-                            modifier = Modifier.size(26.dp),
-                            tint = if (currentRoute == ScreenNav.Home.route) White else Color.DarkGray
-                        )
-                    }
+
+                    // Home bottom bar
+                    IconsBottomBar(
+                        navController = navController,
+                        isInclusive = true,
+                        navRoute = ScreenNav.Home,
+                        backRoute = ScreenNav.Home,
+                        modifier = Modifier.weight(1f),
+                        imageVector =
+                            if (currentRoute == ScreenNav.Home.route) Icons.Filled.Home else Icons.Outlined.Home,
+                        contentDescription = null,
+                        tint = if (currentRoute == ScreenNav.Home.route) CardYellow else CardYellowSoft,
+                    )
+
+                    // Favorite bottom bar 
+                    IconsBottomBar(
+                        navController = navController,
+                        navRoute = ScreenNav.Favorite,
+                        backRoute = ScreenNav.Home,
+                        modifier = Modifier.weight(1f),
+                        imageVector = if (currentRoute == ScreenNav.Favorite.route) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                        contentDescription = null,
+                        tint = if (currentRoute == ScreenNav.Favorite.route) AccentRed else CardYellowSoft,
+                        isInclusive = false,
+                    )
+
 
                     Box(
                         modifier = Modifier
@@ -108,33 +127,44 @@ fun MainScaffold(
                     ) {
                         FloatingActionButton(
                             onClick = {
-                                Toast.makeText(context, "Open Bottom Sheet", Toast.LENGTH_SHORT).show()
+                                navController.navigate(ScreenNav.Selection.route) {
+                                    popUpTo(ScreenNav.Home.route)
+                                }
                             },
                             containerColor = CardYellow
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Add,
+                                imageVector = if (currentRoute == ScreenNav.Selection.route) Icons.Filled.Games else Icons.Outlined.Games,
                                 contentDescription = null,
                                 tint = DeepPurple
                             )
                         }
                     }
 
-                    IconButton(
-                        onClick = {
-                            navController.navigate(ScreenNav.SettingScreen.route) {
-                                popUpTo(ScreenNav.Home.route)
-                            }
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = null,
-                            modifier = Modifier.size(26.dp),
-                            tint = if (currentRoute == ScreenNav.SettingScreen.route) White else Color.DarkGray
-                        )
-                    }
+
+                    // Profile bottom bar
+                    IconsBottomBar(
+                        navController = navController,
+                        navRoute = ScreenNav.SettingScreen,
+                        backRoute = ScreenNav.Home,
+                        modifier = Modifier.weight(1f),
+                        imageVector = if (currentRoute == ScreenNav.SettingScreen.route) Icons.Filled.Person else Icons.Filled.PersonOutline,
+                        contentDescription = null,
+                        tint = if (currentRoute == ScreenNav.SettingScreen.route) CardYellow else CardYellowSoft,
+                        isInclusive = false
+                    )
+                    IconsBottomBar(
+                        navController = navController,
+                        navRoute = ScreenNav.Partner,
+                        backRoute = ScreenNav.Home,
+                        modifier = Modifier.weight(1f),
+                        imageVector = if (currentRoute == ScreenNav.Partner.route) Icons.Filled.People else Icons.Filled.PeopleOutline,
+                        contentDescription = null,
+                        tint = if (currentRoute == ScreenNav.Partner.route) CardYellow else CardYellowSoft,
+                        isInclusive = false
+                    )
+
+
                 }
             }
         },
@@ -217,5 +247,37 @@ fun MainScaffold(
 
             }
         }
+    }
+}
+
+
+@Composable
+fun IconsBottomBar(
+    navController: NavController,
+    navRoute: ScreenNav,
+    backRoute: ScreenNav,
+    modifier: Modifier = Modifier,
+    imageVector: ImageVector,
+    contentDescription: String?,
+    tint: Color,
+    isInclusive: Boolean, // it's mean that this screen gonna be the main point of program after the login/signup
+) {
+    IconButton(
+        onClick = {
+            navController.navigate(navRoute.route) {// the route where user gonna be after press the bottom bar button
+                popUpTo(backRoute.route) {
+                    inclusive =
+                        isInclusive // if the screen 'inclusive' the value MUST be "TRUE" in other situations use "FALSE"
+                }
+            }
+        },
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = imageVector, // Icon for the bottom bar
+            contentDescription = contentDescription, // content description (optional)
+            modifier = Modifier.size(48.dp),
+            tint = tint, // change color for the icon
+        )
     }
 }

@@ -72,9 +72,9 @@ fun SummaryScreen(
 
 
     val contentDisplayName = when (selectedType) {
-        ContentType.Movie -> stringResource(R.string.movie_content)
-        ContentType.Tv -> stringResource(R.string.series_content)
-        ContentType.Anime -> stringResource(R.string.asian_content)
+        ContentType.Movie -> stringResource(R.string.selection_movie)
+        ContentType.Tv -> stringResource(R.string.selection_series)
+        ContentType.Anime -> stringResource(R.string.selection_anime)
         null -> ""
     }
 
@@ -99,7 +99,7 @@ fun SummaryScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.summary_selection).uppercase(),
+                    text = stringResource(R.string.summary_title).uppercase(),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     fontSize = 16.sp,
@@ -118,7 +118,7 @@ fun SummaryScreen(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "${stringResource(R.string.content_type)} ",
+                            text = "${stringResource(R.string.summary_content_type)} ",
                             fontFamily = PressStart2P,
                             fontSize = 12.sp,
                             color = TextTeal
@@ -155,7 +155,7 @@ fun SummaryScreen(
                 ) {
                     ParticipantColumn(
                         modifier = Modifier.weight(1f),
-                        label = stringResource(R.string.user_name_summary),
+                        label = stringResource(R.string.summary_user),
                         name = userName,
                         dislikes = playerVM.selectedDislikes,
                         likes = playerVM.selectedLikes,
@@ -164,8 +164,8 @@ fun SummaryScreen(
                     )
                     ParticipantColumn(
                         modifier = Modifier.weight(1f),
-                        label = if (isFriend) stringResource(R.string.second_user_name_summary) else stringResource(
-                            R.string.character_name
+                        label = if (isFriend) stringResource(R.string.summary_friend) else stringResource(
+                            R.string.summary_character
                         ),
                         name = if (isFriend) friendName else playerVM.selectedCharacterName,
                         dislikes = playerVM.selectedDislikesFriend,
@@ -181,7 +181,7 @@ fun SummaryScreen(
                 FindContentButton(
                     navController = navController,
                     route = "",
-                    text = stringResource(R.string.find_content, contentDisplayName),
+                    text = stringResource(R.string.summary_find_button, contentDisplayName),
                     enabled = !isMatching,
                     onNextClick = {
                         contentVM.processMatches(
@@ -238,7 +238,7 @@ fun ParticipantColumn(
 
         // genres dislikes
         SummaryInfoBlock(
-            label = stringResource(R.string.dislikes_watch),
+            label = stringResource(R.string.summary_dislikes),
             items = dislikes,
             color = DislikeContentColor.copy(0.5f),
             lang = lang,
@@ -248,7 +248,7 @@ fun ParticipantColumn(
 
         // genres likes
         SummaryInfoBlock(
-            label = stringResource(R.string.likes_watch),
+            label = stringResource(R.string.summary_likes),
             items = likes,
             color = LikeContentColor.copy(0.5f),
             lang = lang,
@@ -266,7 +266,7 @@ fun ParticipantColumn(
             horizontalAlignment = Alignment.Start,
         ) {
             Text(
-                stringResource(R.string.decade),
+                stringResource(R.string.decade_label),
                 fontFamily = PressStart2P,
                 fontSize = 7.sp,
                 color = TextTeal,

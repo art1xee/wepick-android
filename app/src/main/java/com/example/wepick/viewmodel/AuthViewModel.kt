@@ -87,7 +87,7 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
-    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun  resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         if (email.isEmpty()) {
             onError("Please, firstly enter a password.")
             return

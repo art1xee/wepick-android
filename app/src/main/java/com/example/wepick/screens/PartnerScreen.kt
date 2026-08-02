@@ -46,9 +46,9 @@ fun PartnerScreen(
     val selectedType = viewModel.selectedContentType.value
 
     val contentDisplayName = when (selectedType) {
-        ContentType.Movie -> stringResource(R.string.movie_content_partner)
-        ContentType.Tv -> stringResource(R.string.series_content_partner)
-        ContentType.Anime -> stringResource(R.string.asian_content_partner)
+        ContentType.Movie -> stringResource(R.string.selection_movie)
+        ContentType.Tv -> stringResource(R.string.selection_series)
+        ContentType.Anime -> stringResource(R.string.selection_anime)
         null -> ""
     }
 
@@ -69,7 +69,7 @@ fun PartnerScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.partner_label, contentDisplayName),
+                    text = stringResource(R.string.partner_title, contentDisplayName),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     style = MaterialTheme.typography.titleMedium,
@@ -85,7 +85,7 @@ fun PartnerScreen(
                         onClick = { viewModel.updatePartnerType(PartnerType.FRIEND) },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = FriendColor,
-                        text = stringResource(R.string.friend_partner)
+                        text = stringResource(R.string.partner_friend)
                     )
                     Spacer(modifier.height(12.dp))
                     PartnerChooseButton(
@@ -93,7 +93,7 @@ fun PartnerScreen(
                         onClick = { viewModel.updatePartnerType(PartnerType.CHARACTER) },
                         modifier = modifier.padding(bottom = 8.dp),
                         activeColor = PopularCharacterColor,
-                        text = stringResource(R.string.popular_character_partner)
+                        text = stringResource(R.string.partner_character)
                     )
                     Spacer(modifier.height(24.dp))
                     NextButton(

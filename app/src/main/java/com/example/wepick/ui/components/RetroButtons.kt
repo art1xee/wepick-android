@@ -28,7 +28,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -115,7 +114,7 @@ fun NextButton(
         showShadow = enabled,
         content = {
             Text(
-                text = stringResource(R.string.next_button),
+                text = stringResource(R.string.selection_next),
                 fontFamily = PressStart2P,
                 color = if (enabled) White else Black.copy(alpha = 0.5f),
                 fontSize = 16.sp
@@ -174,7 +173,7 @@ fun SaveGenres(
         showShadow = enabled,
         content = {
             Text(
-                text = stringResource(R.string.genres_save),
+                text = stringResource(R.string.genres_save_button),
                 fontFamily = PressStart2P,
                 color = if (enabled) White else Black.copy(alpha = 0.5f),
                 fontSize = 16.sp

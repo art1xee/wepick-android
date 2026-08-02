@@ -90,7 +90,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
                         .offset(y = offsetY)
                 )
                 Text(
-                    text = stringResource(id = R.string.welcome_main),
+                    text = stringResource(id = R.string.welcome_message),
                     color = TextTeal,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium,
@@ -104,7 +104,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel, modifier:
                     onValueChange = { name = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.login_enter_email_main),
+                            text = stringResource(R.string.login_email_hint),
                             fontFamily = PressStart2P
                         )
                     },

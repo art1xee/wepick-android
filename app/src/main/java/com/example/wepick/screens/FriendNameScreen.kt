@@ -61,7 +61,7 @@ fun FriendNameScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    stringResource(R.string.friend_name_label),
+                    stringResource(R.string.partner_friend_name),
                     fontFamily = PressStart2P,
                     color = TextTeal,
                     style = MaterialTheme.typography.titleMedium,
@@ -74,7 +74,7 @@ fun FriendNameScreen(
                     onValueChange = { friendName = it },
                     label = {
                         Text(
-                            text = stringResource(R.string.enter_name_friend_text_field),
+                            text = stringResource(R.string.partner_friend_name_hint),
                             fontFamily = PressStart2P
                         )
                     },

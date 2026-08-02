@@ -79,7 +79,7 @@ fun GenresScreen(
     }
     val dislikesStep = playerVM.currentStep == GenreStep.DISLIKES
     val genreList = GenresData.GENRES[lang]?.take(16) ?: emptyList()
-    val lockedMessage = stringResource(R.string.error_genre)
+    val lockedMessage = stringResource(R.string.genres_error_duplicate)
 
 
     val currentPlayerName =
@@ -99,7 +99,7 @@ fun GenresScreen(
             Text(
                 text = "${
                     stringResource(
-                        R.string.player,
+                        R.string.summary_player,
                         playerVM.activePlayer
                     )
                 }$currentPlayerName",
@@ -120,7 +120,7 @@ fun GenresScreen(
             ) {
                 Text(
                     text = stringResource(
-                        if (dislikesStep) R.string.genres_dislikes_choose else R.string.genres_likes_choose,
+                        if (dislikesStep) R.string.genres_dislike_title else R.string.genres_like_title,
                         currentPlayerName
                     ),
                     style = MaterialTheme.typography.bodyMedium,
@@ -261,7 +261,7 @@ fun DecadePicker(
             .padding(vertical = 8.dp)
     ) {
         Text(
-            text = stringResource(R.string.decade_choose, currentPlayerName),
+            text = stringResource(R.string.decade_title, currentPlayerName),
             fontFamily = PressStart2P,
             fontSize = 10.sp,
             color = TextTeal,

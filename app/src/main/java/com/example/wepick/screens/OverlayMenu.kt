@@ -91,7 +91,7 @@ fun OverlayMenu(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.wepick_about),
+                    text = stringResource(R.string.about_title),
                     fontFamily = PressStart2P,
                     fontSize = 16.sp,
                     color = AccentRed,
@@ -99,7 +99,7 @@ fun OverlayMenu(
                 Spacer(Modifier.height(16.dp))
                 DashedDivider()
                 Text(
-                    text = stringResource(R.string.wepick_info),
+                    text = stringResource(R.string.about_description),
                     fontFamily = PressStart2P,
                     fontSize = 10.sp,
                     textAlign = TextAlign.Center,
@@ -111,7 +111,7 @@ fun OverlayMenu(
 
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text = stringResource(R.string.select_lang),
+                    text = stringResource(R.string.settings_language),
                     fontFamily = PressStart2P,
                     fontSize = 9.sp,
                     color = Muted
@@ -151,7 +151,7 @@ fun OverlayMenu(
                 Spacer(Modifier.height(16.dp))
 
                 CustomMatchButton( // start over (reset) button
-                    text = stringResource(R.string.start_again),
+                    text = stringResource(R.string.result_restart),
                     color = ButtonResetBg,
                     onClick = {
                         onClose()
@@ -166,7 +166,7 @@ fun OverlayMenu(
                 )
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    text = stringResource(R.string.wepick_github),
+                    text = stringResource(R.string.about_github),
                     fontFamily = PressStart2P,
                     color = Muted,
                     textAlign = TextAlign.Center,

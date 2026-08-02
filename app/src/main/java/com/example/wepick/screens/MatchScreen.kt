@@ -1,6 +1,5 @@
 package com.example.wepick.screens
 
-import androidx.annotation.ContentView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -65,7 +64,7 @@ fun MatchScreen(
 ) {
     val matchedItems by contentVM.items
     var currentIndex by remember { mutableIntStateOf(0) }
-    val endMessage = stringResource(R.string.content_end)
+    val endMessage = stringResource(R.string.result_end)
 
     Column(
         modifier = Modifier
@@ -87,7 +86,7 @@ fun MatchScreen(
 
                 Box(contentAlignment = Alignment.Center) {
                     Text(
-                        text = stringResource(R.string.movie_match_label).uppercase(),
+                        text = stringResource(R.string.result_title).uppercase(),
                         fontFamily = PressStart2P,
                         color = White,
                         fontSize = 14.sp,
@@ -95,7 +94,7 @@ fun MatchScreen(
                         modifier = Modifier.offset(x = 2.dp, y = 2.dp)
                     )
                     Text(
-                        text = stringResource(R.string.movie_match_label).uppercase(),
+                        text = stringResource(R.string.result_title).uppercase(),
                         fontFamily = PressStart2P,
                         color = AccentRed,
                         fontSize = 14.sp,
@@ -141,7 +140,7 @@ fun MatchScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = stringResource(R.string.rating) + " ",
+                            text = stringResource(R.string.result_rating) + " ",
                             fontFamily = PressStart2P,
                             fontSize = 10.sp,
                             color = Black,
@@ -231,7 +230,7 @@ fun MatchScreen(
 
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         CustomMatchButton( // reload search button
-                            text = stringResource(R.string.reload_content),
+                            text = stringResource(R.string.result_reload),
                             color = AccentRed,
                             onClick = {
                                 currentIndex = 0
@@ -239,7 +238,7 @@ fun MatchScreen(
                             }
                         )
                         CustomMatchButton( // start over button
-                            text = stringResource(R.string.start_again),
+                            text = stringResource(R.string.result_restart),
                             color = ButtonResetBg,
                             onClick = {
                                 viewModel.resetAll(
@@ -254,7 +253,7 @@ fun MatchScreen(
                     }
                 } else {
                     Text(
-                        text = stringResource(R.string.no_found_content),
+                        text = stringResource(R.string.result_not_find),
                         fontFamily = PressStart2P,
                         color = Black,
                         fontSize = 12.sp,
