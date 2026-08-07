@@ -10,21 +10,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wepick.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.OAuthProvider
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.handleCoroutineException
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import perfetto.protos.AndroidStartupMetric
 
 
 class AuthViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
@@ -34,11 +31,26 @@ class AuthViewModel : ViewModel() {
     }
 
     fun checkAuthStatus() {
-        if (auth.currentUser == null) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
             _authState.value = AuthState.Unauthenticated
         } else {
-            _authState.value = AuthState.Authenticated
+            verifyUserProfile(currentUser.uid)
         }
+    }
+
+
+    fun verifyUserProfile(uid: String) {
+        db.collection("users").document(uid).get().addOnSuccessListener { document ->
+            if (document.exists() && document.getBoolean("profileCompleted") == true) {
+                _authState.value = AuthState.Authenticated
+            } else {
+                _authState.value = AuthState.NeedsProfileSetup
+            }
+        }
+            .addOnFailureListener {
+                _authState.value = AuthState.Error("Failed to check profile")
+            }
     }
 
     fun login(email: String, password: String) {
@@ -51,7 +63,7 @@ class AuthViewModel : ViewModel() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
+                    verifyUserProfile(task.result.user!!.uid)
                 } else {
                     _authState.value =
                         AuthState.Error(task.exception?.message ?: "Something went wrong")
@@ -74,7 +86,7 @@ class AuthViewModel : ViewModel() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
+                    verifyUserProfile(task.result.user!!.uid)
                 } else {
                     _authState.value =
                         AuthState.Error(task.exception?.message ?: "Something went wrong")
@@ -87,7 +99,7 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
-    fun  resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         if (email.isEmpty()) {
             onError("Please, firstly enter a password.")
             return
@@ -136,7 +148,7 @@ class AuthViewModel : ViewModel() {
             auth.signInWithCredential(authCredential)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        _authState.value = AuthState.Authenticated
+                        verifyUserProfile(task.result.user!!.uid)
                     } else {
                         _authState.value =
                             AuthState.Error(task.exception?.message ?: "Firebase Auth Failed")
@@ -145,20 +157,11 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun loginWithGitHub(activity: Activity) {
-        val provider = OAuthProvider.newBuilder("github.com")
-        auth.startActivityForSignInWithProvider(activity, provider.build())
-            .addOnSuccessListener {
-                _authState.value = AuthState.Authenticated
-            }.addOnFailureListener { e ->
-                _authState.value = AuthState.Error(e.message ?: "GitHub Error!")
-            }
-    }
-
 }
 
 sealed class AuthState {
     object Authenticated : AuthState()
+    object NeedsProfileSetup : AuthState()
     object Unauthenticated : AuthState()
     object Loading : AuthState()
     data class Error(val message: String) : AuthState()
