@@ -16,6 +16,7 @@ import com.example.wepick.screens.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
+import com.example.wepick.screens.ProfileSetup
 import com.example.wepick.screens.SelectionScreen
 import com.example.wepick.screens.SettingsScreen
 import com.example.wepick.screens.SignUpScreen
@@ -23,6 +24,7 @@ import com.example.wepick.screens.SummaryScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.ProfileSetupViewModel
 
 
 @Composable
@@ -31,21 +33,24 @@ fun NavGraph(
     viewModel: MainViewModel,
     playerVM: PlayerViewModel,
     contentVM: ContentViewModel,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    profileViewModel: ProfileSetupViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = ScreenNav.Login.route
     ) {
-      composable(ScreenNav.Favorite.route){
-          FavoriteScreen(navController, viewModel, modifier = Modifier, playerVM,)
-      }
-
+        composable(ScreenNav.Favorite.route) {
+            FavoriteScreen(navController, viewModel, modifier = Modifier, playerVM)
+        }
+        composable(ScreenNav.ProfileSetup.route) {
+            ProfileSetup(navController, profileViewModel, modifier = Modifier)
+        }
         composable(ScreenNav.Home.route) {
             HomeScreen(navController, authViewModel)
         }
         composable(ScreenNav.SettingScreen.route) {
-            SettingsScreen(navController, viewModel, modifier = Modifier, playerVM,)
+            SettingsScreen(navController, viewModel, modifier = Modifier, playerVM)
         }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)

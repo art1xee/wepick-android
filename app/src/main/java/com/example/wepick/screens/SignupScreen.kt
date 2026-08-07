@@ -98,7 +98,11 @@ fun SignUpScreen(
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
-
+            is AuthState.NeedsProfileSetup -> {
+                navController.navigate(ScreenNav.ProfileSetup.route) {
+                    popUpTo(ScreenNav.SignUp.route) { inclusive = true }
+                }
+            }
             is AuthState.Error -> {
                 Toast.makeText(
                     context, (authState as AuthState.Error).message,

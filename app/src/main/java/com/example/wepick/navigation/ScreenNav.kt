@@ -3,6 +3,7 @@ package com.example.wepick.navigation
 sealed class ScreenNav(val route: String) {
     object Login : ScreenNav("login") // Экран для входа/регестрации в аккаунт
 
+    object  ProfileSetup: ScreenNav("profile_setup")
     object Favorite: ScreenNav("favourite")
     object SignUp : ScreenNav("sign_up")
 

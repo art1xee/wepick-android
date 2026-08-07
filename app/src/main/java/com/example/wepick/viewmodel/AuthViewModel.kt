@@ -2,6 +2,7 @@ package com.example.wepick.viewmodel
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -41,15 +42,22 @@ class AuthViewModel : ViewModel() {
 
 
     fun verifyUserProfile(uid: String) {
-        db.collection("users").document(uid).get().addOnSuccessListener { document ->
-            if (document.exists() && document.getBoolean("profileCompleted") == true) {
-                _authState.value = AuthState.Authenticated
-            } else {
-                _authState.value = AuthState.NeedsProfileSetup
+        Log.d("AuthDebug", "Начинаем проверку профиля для UID: $uid")
+
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                Log.d("AuthDebug", "Успешный ответ от Firestore! Документ существует: ${document.exists()}")
+                if (document.exists() && document.getBoolean("profileCompleted") == true) {
+                    _authState.value = AuthState.Authenticated
+                } else {
+                    _authState.value = AuthState.NeedsProfileSetup
+                }
             }
-        }
-            .addOnFailureListener {
-                _authState.value = AuthState.Error("Failed to check profile")
+            .addOnFailureListener { e ->
+                // ВОТ ЭТА СТРОКА РАСПЕЧАТАЕТ НАСТОЯЩУЮ ПРИЧИНУ:
+                Log.e("AuthDebug", "КРИТИЧЕСКАЯ ОШИБКА FIRESTORE", e)
+
+                _authState.value = AuthState.Error(e.localizedMessage ?: "Firestore error")
             }
     }
 

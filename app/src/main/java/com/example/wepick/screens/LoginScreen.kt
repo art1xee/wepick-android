@@ -1,6 +1,7 @@
 package com.example.wepick.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -80,14 +81,25 @@ fun LoginScreen(
     val context = LocalContext.current
 
     LaunchedEffect(authState) {
+        Log.d("AuthDebug", "Текущее состояние: $authState")
         when (val state = authState) {
             is AuthState.Authenticated -> {
+                Log.d("AuthDebug", "Переход на Home")
                 navController.navigate(ScreenNav.Home.route) {
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
 
+            is AuthState.NeedsProfileSetup -> {
+                Log.d("AuthDebug", "Переход на ProfileSetup")
+                navController.navigate(ScreenNav.ProfileSetup.route) {
+                    popUpTo(ScreenNav.Login.route) { inclusive = true }
+                }
+
+            }
+
             is AuthState.Error -> {
+                Log.e("AuthDebug", "ОШИБКА АВТОРИЗАЦИИ: ${state.message}")
                 playerVM.showLockedError(state.message)
             }
 

@@ -49,7 +49,7 @@ android {
             )
 
             firebaseAppDistribution {
-               artifactType = "APK"
+                artifactType = "APK"
                 testers = "makczub@gmail.com"
             }
 
@@ -76,7 +76,6 @@ android {
 dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.firestore.ktx)
     implementation(libs.retrofit)
     implementation(libs.firebase.firestore)
     implementation(libs.converter.gson)
