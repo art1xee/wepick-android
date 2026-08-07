@@ -41,6 +41,14 @@
     <string name="signup_button">Создать профиль</string>
     <string name="signup_error_password_mismatch">Пароли не совпадают. Попробуйте ещё раз.</string>
 
+    <!-- PROFILE SETUP -->
+    <string name="profile_setup_title">СОЗДАНИЕ ПРОФИЛЯ</string>
+    <string name="profile_setup_subtitle">Почти готово! Закончим с настройкой вашего профиля.</string>
+    <string name="profile_setup_display_name_label">Ваше Имя:</string>
+    <string name="profile_setup_display_name_example">Введите ваше Имя</string>
+    <string name="profile_setup_display_email_label">Ваш Email (Подтверждённый):</string>
+    <string name="profile_setup_save_profile_button">Создать профиль</string>
+
     <!-- SELECTION -->
     <string name="selection_title">Привет, %1$s! Выберите, что хотите посмотреть.</string>
     <string name="selection_movie">Фильмы</string>

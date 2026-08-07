@@ -44,6 +44,7 @@ import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthViewModel
+import com.example.wepick.viewmodel.ProfileSetupViewModel
 
 
 // the parent button
@@ -408,4 +409,50 @@ fun GoogleLoginButton(
             }
         }
     }
+}
+
+@Composable
+fun SetupProfileButton(
+    profileViewModel: ProfileSetupViewModel,
+    error: Boolean = false,
+    name: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    text: String,
+    loadingText: String,
+    loading: Boolean,
+) {
+    var nameError = error
+    BaseRetroButton(
+        onClick = {
+            if (name.isNotBlank()) {
+                profileViewModel.saveProfile()
+            } else {
+                nameError = true
+            }
+        },
+        enabled = enabled,
+        modifier = modifier,
+        containerColor = if (enabled) AccentRed else Muted.copy(alpha = 0.5f),
+        showShadow = enabled,
+        content = {
+            if (loading) {
+                Text(
+                    text = loadingText,
+                    fontFamily = Nunito,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = if (enabled) White else Black.copy(alpha = 0.5f),
+                    fontSize = 15.5.sp
+                )
+            } else {
+                Text(
+                    text = text,
+                    fontFamily = Nunito,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 15.5.sp,
+                    color = if (enabled) White else Black
+                )
+            }
+        }
+    )
 }

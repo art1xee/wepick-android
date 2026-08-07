@@ -40,6 +40,12 @@
     <string name="partner_friend_name">Передайте устройство другу, чтобы он ввёл своё имя.</string>
     <string name="partner_friend_name_hint">Имя друга</string>
     <string name="partner_title">Теперь выберите, с кем будете смотреть: %1$s.</string>
+    <string name="profile_setup_display_email_label">Ваш Email (Подтверждённый):</string>
+    <string name="profile_setup_display_name_example">Введите ваше Имя</string>
+    <string name="profile_setup_display_name_label">Ваше Имя:</string>
+    <string name="profile_setup_save_profile_button">Создать профиль</string>
+    <string name="profile_setup_subtitle">Почти готово! Закончим с настройкой вашего профиля.</string>
+    <string name="profile_setup_title">СОЗДАНИЕ ПРОФИЛЯ</string>
     <string name="result_content_name">_</string>
     <string name="result_end">Вы дошли до конца!</string>
     <string name="result_next">Уже смотрели — показать другое</string>

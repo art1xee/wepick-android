@@ -43,6 +43,14 @@
     <string name="signup_button">Create Profile</string>
     <string name="signup_error_password_mismatch">Passwords do not match — please enter again.</string>
 
+    <!-- PROFILE SETUP -->
+    <string name="profile_setup_title">PROFILE SETUP</string>
+    <string name="profile_setup_subtitle">Almost there! Let’s complete your profile.</string>
+    <string name="profile_setup_display_name_label">Display Name:</string>
+    <string name="profile_setup_display_name_example">Enter your Name</string>
+    <string name="profile_setup_display_email_label">Your Email (Verified):</string>
+    <string name="profile_setup_save_profile_button">Create Profile</string>
+
     <!-- SELECTION -->
     <string name="selection_title">Hello %1$s! Choose content which you want to watch.</string>
     <string name="selection_movie">Movies</string>

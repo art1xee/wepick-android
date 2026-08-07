@@ -83,6 +83,12 @@ string partner_friend
 string partner_friend_name
 string partner_friend_name_hint
 string partner_title
+string profile_setup_display_email_label
+string profile_setup_display_name_example
+string profile_setup_display_name_label
+string profile_setup_save_profile_button
+string profile_setup_subtitle
+string profile_setup_title
 string project_id
 string result_content_name
 string result_end

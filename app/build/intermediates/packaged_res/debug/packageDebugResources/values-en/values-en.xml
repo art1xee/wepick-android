@@ -40,6 +40,12 @@
     <string name="partner_friend_name">Pass the device to a friend — let them enter their name</string>
     <string name="partner_friend_name_hint">Friend`s name</string>
     <string name="partner_title">Now choose your fellow for watching: %1$s.</string>
+    <string name="profile_setup_display_email_label">Your Email (Verified):</string>
+    <string name="profile_setup_display_name_example">Enter your Name</string>
+    <string name="profile_setup_display_name_label">Display Name:</string>
+    <string name="profile_setup_save_profile_button">Create Profile</string>
+    <string name="profile_setup_subtitle">Almost there! Let’s complete your profile.</string>
+    <string name="profile_setup_title">PROFILE SETUP</string>
     <string name="result_content_name">_</string>
     <string name="result_end">You have reached the end!</string>
     <string name="result_next">Seen it - show another</string>

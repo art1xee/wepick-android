@@ -1,17 +1,48 @@
 package com.example.wepick.screens
 
-import android.widget.Space
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,10 +50,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
-import com.example.wepick.ui.components.LoginButton
-import com.example.wepick.ui.theme.*
+import com.example.wepick.ui.components.SetupProfileButton
+import com.example.wepick.ui.theme.Black
+import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.FieldBeige
+import com.example.wepick.ui.theme.FieldBorder
+import com.example.wepick.ui.theme.InkSoft
+import com.example.wepick.ui.theme.Nunito
+import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.ProfileSetupViewModel
 
 @Composable
@@ -37,6 +76,18 @@ fun ProfileSetup(
     val isLoading by profileViewModel.isLoading.collectAsState()
 
 
+    val photoUrl by profileViewModel.photoUrl.collectAsState()
+    val isImageUploading by profileViewModel.isImageUploading.collectAsState()
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            if (uri != null) {
+                profileViewModel.uploadProfileImage(uri)
+            }
+        }
+    )
+
     var nameError by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -45,8 +96,8 @@ fun ProfileSetup(
 
     LaunchedEffect(isSaved) {
         if (isSaved) {
-          profileViewModel.reloadData()
-           navController.navigate(ScreenNav.Home.route) {
+            profileViewModel.reloadData()
+            navController.navigate(ScreenNav.Home.route) {
                 popUpTo(ScreenNav.ProfileSetup.route) { inclusive = true }
             }
         }
@@ -70,7 +121,7 @@ fun ProfileSetup(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "PROFILE SETUP",
+                    text = stringResource(R.string.profile_setup_title),
                     color = White,
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
@@ -87,7 +138,7 @@ fun ProfileSetup(
                 Spacer(Modifier.height(18.dp))
 
                 Text(
-                    text = "Almost there! Let`s complete your profile.",
+                    text = stringResource(R.string.profile_setup_subtitle),
                     color = Black,
                     fontFamily = Nunito,
                     fontSize = 16.sp,
@@ -97,20 +148,57 @@ fun ProfileSetup(
                 )
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Заглушка для аватарки (потом заменить на Coil Image)
-                Surface(
-                    modifier = Modifier.size(100.dp),
-                    shape = CircleShape,
-                    color = FieldBeige,
-                    border = BorderStroke(2.dp, FieldBorder)
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .background(FieldBeige)
+                        .border(2.dp, FieldBorder, CircleShape)
+                        .clickable(enabled = !isImageUploading) {
+                            photoPickerLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Text(
-                            text = "PHOTO",
-                            color = InkSoft,
-                            fontFamily = Nunito,
-                            fontWeight = FontWeight.Bold,
+
+                    AsyncImage(
+                        model = photoUrl,
+                        contentDescription = "Profile Photo",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    if (photoUrl == null && !isImageUploading) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = FieldBeige,
+                            border = BorderStroke(2.dp, FieldBorder)
+                        ) {}
+                        Icon(
+                            imageVector = Icons.Default.PhotoCamera,
+                            contentDescription = "Add photo",
+                            tint = InkSoft,
                         )
+                    }
+
+
+                    if (isImageUploading) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Black.copy(alpha = 0.6f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                color = White,
+                                modifier = Modifier.size(30.dp),
+                                strokeWidth = 3.dp
+                            )
+                        }
                     }
                 }
 
@@ -123,8 +211,8 @@ fun ProfileSetup(
                         profileViewModel.updateName(it)
                         if (nameError) nameError = false
                     },
-                    text = "Display Name",
-                    textField = "e.g. John Doe",
+                    text = stringResource(R.string.profile_setup_display_name_label),
+                    textField = stringResource(R.string.profile_setup_display_name_example),
                     isError = nameError,
                     errorText = if (nameError) "Name cannot be empty" else null
                 )
@@ -135,38 +223,22 @@ fun ProfileSetup(
                     modifier = Modifier.fillMaxWidth(),
                     value = email,
                     onValueChanged = {},
-                    text = "Email (Verified)",
+                    text = stringResource(R.string.profile_setup_display_email_label),
                     textField = "",
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(
-                    onClick = {
-                        if (name.isNotBlank()) {
-                            profileViewModel.saveProfile()
-                        } else {
-                            nameError = true
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Black),
-                    shape = RoundedCornerShape(14.dp),
-                    enabled = !isLoading
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(color = White, modifier = Modifier.size(24.dp))
-                    } else {
-                        Text(
-                            text = "SAVE PROFILE",
-                            color = White,
-                            fontFamily = PressStart2P,
-                            fontSize = 12.sp
-                        )
-                    }
-                }
+                SetupProfileButton(
+                    profileViewModel = profileViewModel,
+                    error = nameError,
+                    name = name,
+                    modifier = modifier,
+                    enabled = !isLoading,
+                    text = stringResource(R.string.profile_setup_save_profile_button),
+                    loadingText = stringResource(R.string.loading),
+                    loading = isLoading,
+                )
             }
         }
     }

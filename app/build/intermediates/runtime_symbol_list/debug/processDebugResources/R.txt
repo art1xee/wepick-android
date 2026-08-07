@@ -1281,6 +1281,12 @@ int string partner_friend 0x7f1000c0
 int string partner_friend_name 0x7f1000c1
 int string partner_friend_name_hint 0x7f1000c2
 int string partner_title 0x7f1000c3
+int string profile_setup_display_email_label 0x7f1000f5
+int string profile_setup_display_name_example 0x7f1000f6
+int string profile_setup_display_name_label 0x7f1000f7
+int string profile_setup_save_profile_button 0x7f1000f8
+int string profile_setup_subtitle 0x7f1000f9
+int string profile_setup_title 0x7f1000fa
 int string project_id 0x7f1000c4
 int string range_end 0x7f1000c5
 int string range_start 0x7f1000c6

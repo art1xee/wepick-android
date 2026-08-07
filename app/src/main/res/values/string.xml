@@ -43,6 +43,17 @@
     <string name="signup_button">Створити профіль</string>
     <string name="signup_error_password_mismatch">Паролі не збігаються. Спробуйте ще раз.</string>
 
+    <!-- PROFILE SETUP -->
+    <string name="profile_setup_title">СТВОРЕННЯ ПРОФІЛЮ</string>
+    <string name="profile_setup_subtitle">Майже готово! Скінчім з налаштуванням вашого профілю.</string>
+    <string name="profile_setup_display_name_label">Ваше Ім\'я:</string>
+    <string name="profile_setup_display_name_example">Введіть ваше Ім\'я</string>
+    <string name="profile_setup_display_email_label">Ваш Email (Підтверджений):</string>
+    <string name="profile_setup_save_profile_button">Створити профіль!</string>
+
+
+
+
     <!-- SELECTION -->
     <string name="selection_title">Привіт, %1$s! Оберіть, що хочете подивитися.</string>
     <string name="selection_movie">Фільми</string>

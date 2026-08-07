@@ -118,6 +118,9 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
+    implementation("com.google.firebase:firebase-storage")
+
+    implementation("io.coil-kt:coil-compose:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

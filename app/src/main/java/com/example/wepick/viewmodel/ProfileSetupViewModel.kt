@@ -1,5 +1,7 @@
 package com.example.wepick.viewmodel
 
+import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +10,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +20,7 @@ import kotlinx.coroutines.tasks.await
 class ProfileSetupViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
+    private val storage = FirebaseStorage.getInstance()
 
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
@@ -32,6 +36,9 @@ class ProfileSetupViewModel : ViewModel() {
 
     private val _isSaved = MutableStateFlow(false)
     val isSaved: StateFlow<Boolean> = _isSaved.asStateFlow()
+
+    private val _isImageUploading = MutableStateFlow(false)
+    val isImageUploading = _isImageUploading.asStateFlow()
 
     init {
         loadInitialData()
@@ -91,6 +98,27 @@ class ProfileSetupViewModel : ViewModel() {
             _email.value = user.email ?: ""
             _name.value = user.displayName ?: ""
             _photoUrl.value = user.photoUrl?.toString()
+        }
+    }
+
+    fun uploadProfileImage(imageUrl: Uri) {
+        val currentUser = auth.currentUser ?: return
+
+        viewModelScope.launch {
+            _isImageUploading.value = true
+            try {
+                val storageRef = storage.reference.child("profile_images/${currentUser.uid}.jpg")
+
+                storageRef.putFile(imageUrl).await()
+
+                val downloadUrl = storageRef.downloadUrl.await()
+
+                _photoUrl.value = downloadUrl.toString()
+            } catch (e: Exception) {
+                Log.e("ProfileSetup", "ERROR: cannot load the photo", e)
+            } finally {
+                _isImageUploading.value = false
+            }
         }
     }
 }
