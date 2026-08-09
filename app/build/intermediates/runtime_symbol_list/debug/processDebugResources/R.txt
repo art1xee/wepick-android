@@ -1284,6 +1284,8 @@ int string partner_title 0x7f1000c3
 int string profile_setup_display_email_label 0x7f1000f5
 int string profile_setup_display_name_example 0x7f1000f6
 int string profile_setup_display_name_label 0x7f1000f7
+int string profile_setup_error_enter_username 0x7f1000fb
+int string profile_setup_load_photo 0x7f1000fc
 int string profile_setup_save_profile_button 0x7f1000f8
 int string profile_setup_subtitle 0x7f1000f9
 int string profile_setup_title 0x7f1000fa

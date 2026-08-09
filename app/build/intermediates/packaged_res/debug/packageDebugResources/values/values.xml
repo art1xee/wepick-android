@@ -69,12 +69,14 @@
     <string name="partner_friend_name">Передайте пристрій другу, щоб він ввів своє ім\'я.</string>
     <string name="partner_friend_name_hint">Ім\'я друга</string>
     <string name="partner_title">Тепер оберіть, з ким будете дивитися: %1$s.</string>
-    <string name="profile_setup_display_email_label">Ваш Email (Підтверджений):</string>
+    <string name="profile_setup_display_email_label">Email</string>
     <string name="profile_setup_display_name_example">Введіть ваше Ім\'я</string>
-    <string name="profile_setup_display_name_label">Ваше Ім\'я:</string>
+    <string name="profile_setup_display_name_label">Ім\'я:</string>
+    <string name="profile_setup_error_enter_username">Поле з іменем не може бути порожнім!</string>
+    <string name="profile_setup_load_photo">Завантажте ваше фото (необов\'язково)</string>
     <string name="profile_setup_save_profile_button">Створити профіль!</string>
-    <string name="profile_setup_subtitle">Майже готово! Скінчім з налаштуванням вашого профілю.</string>
-    <string name="profile_setup_title">СТВОРЕННЯ ПРОФІЛЮ</string>
+    <string name="profile_setup_subtitle">Майже готово! Налаштуймо ваш профіль.</string>
+    <string name="profile_setup_title">НАЛАШТУВАННЯ ПРОФІЛЮ</string>
     <string name="project_id" translatable="false">wepick--android-version</string>
     <string name="result_content_name">_</string>
     <string name="result_end">Ви дійшли до кінця!</string>

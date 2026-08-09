@@ -14,19 +14,25 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
@@ -56,11 +63,14 @@ import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.ui.components.SetupProfileButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
+import com.example.wepick.ui.theme.DarkButtonPurple
 import com.example.wepick.ui.theme.FieldBeige
 import com.example.wepick.ui.theme.FieldBorder
 import com.example.wepick.ui.theme.InkSoft
+import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.ProfileSetupViewModel
 
@@ -149,58 +159,25 @@ fun ProfileSetup(
                 Spacer(modifier = Modifier.height(24.dp))
 
 
-                Box(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(FieldBeige)
-                        .border(2.dp, FieldBorder, CircleShape)
-                        .clickable(enabled = !isImageUploading) {
-                            photoPickerLauncher.launch(
-                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    AsyncImage(
-                        model = photoUrl,
-                        contentDescription = "Profile Photo",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-
-                    if (photoUrl == null && !isImageUploading) {
-                        Surface(
-                            modifier = Modifier.fillMaxSize(),
-                            color = FieldBeige,
-                            border = BorderStroke(2.dp, FieldBorder)
-                        ) {}
-                        Icon(
-                            imageVector = Icons.Default.PhotoCamera,
-                            contentDescription = "Add photo",
-                            tint = InkSoft,
+                ProfileAvatar(
+                    photoUrl = photoUrl,
+                    isImageUploading = isImageUploading,
+                    onAddClick = {
+                        photoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }
+                )
 
+                Spacer(modifier = Modifier.height(18.dp))
 
-                    if (isImageUploading) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Black.copy(alpha = 0.6f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator(
-                                color = White,
-                                modifier = Modifier.size(30.dp),
-                                strokeWidth = 3.dp
-                            )
-                        }
-                    }
-                }
+                Text(
+                    text = stringResource(R.string.profile_setup_load_photo),
+                    fontSize = 16.sp,
+                    fontFamily = Nunito,
+                    color = PrimaryPurple,
+                    textAlign = TextAlign.Center,
+                )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -214,17 +191,14 @@ fun ProfileSetup(
                     text = stringResource(R.string.profile_setup_display_name_label),
                     textField = stringResource(R.string.profile_setup_display_name_example),
                     isError = nameError,
-                    errorText = if (nameError) "Name cannot be empty" else null
+                    errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
                 )
 
                 Spacer(Modifier.height(16.dp))
 
-                FormTextFields(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = email,
-                    onValueChanged = {},
-                    text = stringResource(R.string.profile_setup_display_email_label),
-                    textField = "",
+
+                LockedEmailField(
+                    email = email
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -244,3 +218,115 @@ fun ProfileSetup(
     }
 }
 
+@Composable
+fun ProfileAvatar(
+    photoUrl: String?,
+    isImageUploading: Boolean,
+    onAddClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier.size(88.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(CircleShape)
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFFFFE49A), Color(0xFFFFC94D))
+                    )
+                )
+                .border(3.dp, DarkButtonPurple, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isImageUploading) {
+                CircularProgressIndicator(
+                    color = DarkButtonPurple,
+                    modifier = Modifier.size(30.dp)
+                )
+            } else if (photoUrl != null) {
+                AsyncImage(
+                    model = photoUrl,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Text(
+                    text = "?",
+                    style = TextStyle(
+                        fontFamily = PressStart2P,
+                        fontSize = 32.sp,
+                        color = DarkButtonPurple,
+                        fontWeight = FontWeight.Black
+                    )
+                )
+            }
+        }
+        
+        if (!isImageUploading) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .offset(x = 2.dp, y = 2.dp)
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(DarkButtonPurple)
+                    .border(2.dp, CardYellow, CircleShape)
+                    .clickable { onAddClick() },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Photo",
+                    tint = CardYellow,
+                    modifier = Modifier.size(14.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun LockedEmailField(
+    email: String
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "Email",
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            color = InkSoft,
+            fontFamily = Nunito,
+            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
+        )
+        OutlinedTextField(
+            value = email,
+            onValueChange = {},
+            enabled = false,
+            readOnly = true,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(14.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                disabledContainerColor = Color(0x0F241436),
+                disabledBorderColor = FieldBorder,
+                disabledTextColor = InkSoft,
+                disabledPlaceholderColor = InkSoft
+            ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = null,
+                    tint = InkSoft,
+                    modifier = Modifier.size(16.dp)
+                )
+            },
+            textStyle = TextStyle(
+                fontFamily = Nunito,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 15.sp
+            )
+        )
+    }
+}

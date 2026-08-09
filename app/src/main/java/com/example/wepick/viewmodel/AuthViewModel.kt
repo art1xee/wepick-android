@@ -3,6 +3,9 @@ package com.example.wepick.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -26,6 +29,8 @@ class AuthViewModel : ViewModel() {
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
+    var transitionState by mutableStateOf<AuthTransitionState?>(null)
+        private set
 
     init {
         checkAuthStatus()
@@ -46,7 +51,10 @@ class AuthViewModel : ViewModel() {
 
         db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
-                Log.d("AuthDebug", "Успешный ответ от Firestore! Документ существует: ${document.exists()}")
+                Log.d(
+                    "AuthDebug",
+                    "Успешный ответ от Firestore! Документ существует: ${document.exists()}"
+                )
                 if (document.exists() && document.getBoolean("profileCompleted") == true) {
                     _authState.value = AuthState.Authenticated
                 } else {
@@ -90,10 +98,17 @@ class AuthViewModel : ViewModel() {
             return
         }
 
+
+        viewModelScope.launch {
+            transitionState = AuthTransitionState.Loading("Creating Account...")
+        }
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    viewModelScope.launch {
+                        transitionState = AuthTransitionState.Success("Welcome!")
+                    }
                     verifyUserProfile(task.result.user!!.uid)
                 } else {
                     _authState.value =

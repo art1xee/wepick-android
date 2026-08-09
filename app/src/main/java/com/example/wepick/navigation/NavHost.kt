@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.wepick.screens.AuthTransitionScreen
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
 import com.example.wepick.screens.FavoriteScreen
@@ -21,6 +22,7 @@ import com.example.wepick.screens.SelectionScreen
 import com.example.wepick.screens.SettingsScreen
 import com.example.wepick.screens.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
+import com.example.wepick.viewmodel.AuthTransitionState
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -94,6 +96,9 @@ fun NavGraph(
         composable(ScreenNav.Match.route) {
             MatchScreen(navController, viewModel, modifier = Modifier, playerVM, contentVM)
         }
+    }
+    authViewModel.transitionState?.let { state ->
+        AuthTransitionScreen(state)
     }
 }
 

@@ -1285,6 +1285,8 @@ string partner_title
 string profile_setup_display_email_label
 string profile_setup_display_name_example
 string profile_setup_display_name_label
+string profile_setup_error_enter_username
+string profile_setup_load_photo
 string profile_setup_save_profile_button
 string profile_setup_subtitle
 string profile_setup_title
