@@ -119,99 +119,115 @@ fun ProfileSetup(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = CardYellow),
-                    shape = RoundedCornerShape(26.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.profile_setup_title),
-                            color = White,
-                            fontFamily = PressStart2P,
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center,
-                            style = TextStyle(
-                                shadow = Shadow(
-                                    color = Color(0xFFC58A1E),
-                                    offset = Offset(8f, 8f),
-                                    blurRadius = 0f
-                                )
-                            )
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = CardYellow),
+            shape = RoundedCornerShape(26.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = stringResource(R.string.profile_setup_title),
+                    color = White,
+                    fontFamily = PressStart2P,
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        shadow = Shadow(
+                            color = Color(0xFFC58A1E),
+                            offset = Offset(8f, 8f),
+                            blurRadius = 0f
                         )
+                    )
+                )
 
-                        Spacer(Modifier.height(18.dp))
+                Spacer(Modifier.height(18.dp))
 
-                        Text(
-                            text = stringResource(R.string.profile_setup_subtitle),
-                            color = Black,
-                            fontFamily = Nunito,
-                            fontSize = 16.sp,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            lineHeight = 22.sp
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = stringResource(R.string.profile_setup_subtitle),
+                    color = Black,
+                    fontFamily = Nunito,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 22.sp
+                )
+                Spacer(modifier = Modifier.height(24.dp))
 
-                        ProfileAvatar(
-                            photoUrl = photoUrl,
-                            isImageUploading = isImageUploading,
-                            onAddClick = {
-                                photoPickerLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
-                            }
-                        )
-
-                        Spacer(modifier = Modifier.height(18.dp))
-
-                        Text(
-                            text = stringResource(R.string.profile_setup_load_photo),
-                            fontSize = 16.sp,
-                            fontFamily = Nunito,
-                            color = PrimaryPurple,
-                            textAlign = TextAlign.Center,
-                        )
-
-                        Spacer(modifier = Modifier.height(24.dp))
-
-                        FormTextFields(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = name,
-                            onValueChanged = {
-                                profileViewModel.updateName(it)
-                                if (nameError) nameError = false
-                            },
-                            text = stringResource(R.string.profile_setup_display_name_label),
-                            textField = stringResource(R.string.profile_setup_display_name_example),
-                            isError = nameError,
-                            errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
-                        )
-
-                        Spacer(Modifier.height(16.dp))
-
-                        LockedEmailField(email = email)
-
-                        Spacer(modifier = Modifier.height(32.dp))
-
-                        SetupProfileButton(
-                            profileViewModel = profileViewModel,
-                            error = nameError,
-                            name = name,
-                            modifier = modifier,
-                            enabled = !isLoading,
-                            text = stringResource(R.string.profile_setup_save_profile_button),
-                            loadingText = stringResource(R.string.loading),
-                            loading = isLoading,
+                ProfileAvatar(
+                    photoUrl = photoUrl,
+                    isImageUploading = isImageUploading,
+                    onAddClick = {
+                        photoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }
-                }
+                )
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Text(
+                    text = stringResource(R.string.profile_setup_load_photo),
+                    fontSize = 16.sp,
+                    fontFamily = Nunito,
+                    color = PrimaryPurple,
+                    textAlign = TextAlign.Center,
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                FormTextFields(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = name,
+                    onValueChanged = {
+                        profileViewModel.updateName(it)
+                        if (nameError) nameError = false
+                    },
+                    text = stringResource(R.string.profile_setup_display_name_label),
+                    textField = stringResource(R.string.profile_setup_display_name_example),
+                    isError = nameError,
+                    errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
+                )
+
+                Spacer(Modifier.height(16.dp))
+
+                FormTextFields(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = name,
+                    onValueChanged = {
+                        profileViewModel.updateName(it)
+                        if (nameError) nameError = false
+                    },
+                    text = "Nick name: (add in R.string)",
+                    textField = "enter a nick name (add in R.string)",
+                    isError = nameError,
+                    errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
+                )
+
+
+                Spacer(Modifier.height(16.dp))
+
+                LockedEmailField(email = email)
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                SetupProfileButton(
+                    profileViewModel = profileViewModel,
+                    error = nameError,
+                    name = name,
+                    modifier = modifier,
+                    enabled = !isLoading,
+                    text = stringResource(R.string.profile_setup_save_profile_button),
+                    loadingText = stringResource(R.string.loading),
+                    loading = isLoading,
+                ) // TODO: if text fields - empty. add error than field cannot be empty
             }
         }
+    }
+}
 
 
 @Composable
@@ -290,7 +306,7 @@ fun LockedEmailField(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Email",
+            text = stringResource(R.string.profile_setup_display_email_label),
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
             color = InkSoft,

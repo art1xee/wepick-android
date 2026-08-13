@@ -40,7 +40,7 @@
     <string name="partner_friend_name">Передайте устройство другу, чтобы он ввёл своё имя.</string>
     <string name="partner_friend_name_hint">Имя друга</string>
     <string name="partner_title">Теперь выберите, с кем будете смотреть: %1$s.</string>
-    <string name="profile_setup_display_email_label">Email</string>
+    <string name="profile_setup_display_email_label">Email (Этот email будет привязан к вашему профилю)</string>
     <string name="profile_setup_display_name_example">Введите ваше Имя</string>
     <string name="profile_setup_display_name_label">Имя:</string>
     <string name="profile_setup_error_enter_username">Поле с именем не может быть - пустым!</string>

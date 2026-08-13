@@ -13,7 +13,7 @@
     <string name="login_password_label">Пароль</string>
     <string name="login_button">Увійти</string>
     <string name="login_or">АБО</string>
-    <string name="login_google_button" translatable="false">Продовжити через Google</string>
+    <string name="login_google_button">Продовжити через Google</string>
     <string name="login_remember_me">Запам\'ятати мене</string>
     <string name="login_forgot_password">Забули пароль?</string>
     <string name="login_email_hint">Введіть email</string>
@@ -45,11 +45,11 @@
 
     <!-- PROFILE SETUP -->
     <string name="profile_setup_title">НАЛАШТУВАННЯ ПРОФІЛЮ</string>
-    <string name="profile_setup_subtitle">Майже готово! Налаштуймо ваш профіль.</string>
+    <string name="profile_setup_subtitle">Майже готово!\nНалаштуймо ваш профіль.</string>
     <string name="profile_setup_load_photo">Завантажте ваше фото (необов\'язково)</string>
     <string name="profile_setup_display_name_label">Ім\'я:</string>
     <string name="profile_setup_display_name_example">Введіть ваше Ім\'я</string>
-    <string name="profile_setup_display_email_label">Email</string>
+    <string name="profile_setup_display_email_label">Email (Цей email буде прив\'язан  к вашому профілю)</string>
     <string name="profile_setup_save_profile_button">Створити профіль!</string>
     <string name="profile_setup_error_enter_username">Поле з іменем не може бути порожнім!</string>
 

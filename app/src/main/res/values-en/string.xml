@@ -49,7 +49,7 @@
     <string name="profile_setup_load_photo">Load your photo (not optional)</string>
     <string name="profile_setup_display_name_label">Display Name:</string>
     <string name="profile_setup_display_name_example">Enter your Name</string>
-    <string name="profile_setup_display_email_label">Your Email (Verified):</string>
+    <string name="profile_setup_display_email_label">Email (This email will be linked to your profile)</string>
     <string name="profile_setup_save_profile_button">Create Profile</string>
     <string name="profile_setup_error_enter_username">Name field cannot be empty!</string>
 

@@ -55,7 +55,7 @@
     <string name="login_email_label">Email</string>
     <string name="login_error_invalid_credentials">Неправильний email або пароль. Спробуйте ще раз.</string>
     <string name="login_forgot_password">Забули пароль?</string>
-    <string name="login_google_button" translatable="false">Продовжити через Google</string>
+    <string name="login_google_button">Продовжити через Google</string>
     <string name="login_no_account">У мене немає облікового запису, </string>
     <string name="login_or">АБО</string>
     <string name="login_password_hint">Введіть пароль</string>
@@ -69,13 +69,13 @@
     <string name="partner_friend_name">Передайте пристрій другу, щоб він ввів своє ім\'я.</string>
     <string name="partner_friend_name_hint">Ім\'я друга</string>
     <string name="partner_title">Тепер оберіть, з ким будете дивитися: %1$s.</string>
-    <string name="profile_setup_display_email_label">Email</string>
+    <string name="profile_setup_display_email_label">Email (Цей email буде прив\'язан  к вашому профілю)</string>
     <string name="profile_setup_display_name_example">Введіть ваше Ім\'я</string>
     <string name="profile_setup_display_name_label">Ім\'я:</string>
     <string name="profile_setup_error_enter_username">Поле з іменем не може бути порожнім!</string>
     <string name="profile_setup_load_photo">Завантажте ваше фото (необов\'язково)</string>
     <string name="profile_setup_save_profile_button">Створити профіль!</string>
-    <string name="profile_setup_subtitle">Майже готово! Налаштуймо ваш профіль.</string>
+    <string name="profile_setup_subtitle">Майже готово!\nНалаштуймо ваш профіль.</string>
     <string name="profile_setup_title">НАЛАШТУВАННЯ ПРОФІЛЮ</string>
     <string name="project_id" translatable="false">wepick--android-version</string>
     <string name="result_content_name">_</string>

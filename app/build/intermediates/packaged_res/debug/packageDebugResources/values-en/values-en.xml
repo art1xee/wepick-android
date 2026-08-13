@@ -40,7 +40,7 @@
     <string name="partner_friend_name">Pass the device to a friend — let them enter their name</string>
     <string name="partner_friend_name_hint">Friend`s name</string>
     <string name="partner_title">Now choose your fellow for watching: %1$s.</string>
-    <string name="profile_setup_display_email_label">Your Email (Verified):</string>
+    <string name="profile_setup_display_email_label">Email (This email will be linked to your profile)</string>
     <string name="profile_setup_display_name_example">Enter your Name</string>
     <string name="profile_setup_display_name_label">Display Name:</string>
     <string name="profile_setup_error_enter_username">Name field cannot be empty!</string>
