@@ -21,15 +21,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.transform.CircleCropTransformation
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.MidPurple
+import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.TealSuccess
 import com.example.wepick.ui.theme.White
@@ -49,45 +55,72 @@ fun AuthTransitionScreen(state: AuthTransitionState) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AnimatedContent(
-                targetState = state,
-                label = "auth_transition",
-                transitionSpec = { fadeIn() togetherWith fadeOut() }
-            ) { s ->
-                when (s) {
-                    is AuthTransitionState.Loading -> CircularProgressIndicator(
-                        color = CardYellow,
-                        strokeWidth = 4.dp,
-                        modifier = Modifier.size(54.dp)
-                    )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                when (state) {
+                    is AuthTransitionState.Loading -> {
+                        CircularProgressIndicator(
+                            color = CardYellow,
+                            strokeWidth = 4.dp,
+                            modifier = Modifier.size(54.dp)
+                        )
+                        Spacer(Modifier.height(24.dp))
+                        Text(
+                            text = state.message,
+                            color = White,
+                            fontFamily = Nunito,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
 
-                    is AuthTransitionState.Success -> Box(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .background(TealSuccess),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Check,
-                            contentDescription = null,
-                            tint = White,
-                            modifier = Modifier.size(40.dp)
+                    is AuthTransitionState.Success -> {
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .background(TealSuccess, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Check,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+
+                        Spacer(Modifier.height(24.dp))
+
+                        Text(
+                            text = "Ласкаво просимо!",
+                            fontFamily = PressStart2P,
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center,
+                            style = TextStyle(
+                                shadow = Shadow(
+                                    color = Color(0x40000000),
+                                    offset = Offset(4f, 4f),
+                                    blurRadius = 8f
+                                )
+                            )
+                        )
+
+                        Spacer(Modifier.height(16.dp))
+
+                        Text(
+                            text = "Профіль готовий. Переходимо у застосунок...",
+                            fontFamily = Nunito,
+                            color = Color.White.copy(alpha = 0.8f),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            lineHeight = 22.sp
                         )
                     }
                 }
             }
-            Spacer(Modifier.height(24.dp))
-            Text(
-                text = when (state) {
-                    is AuthTransitionState.Loading -> state.message
-                    is AuthTransitionState.Success -> state.message
-                },
-                color = White,
-                fontFamily = PressStart2P,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
 }
+
+

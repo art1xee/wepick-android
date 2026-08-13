@@ -82,12 +82,12 @@ fun SignUpScreen(
     var passwordError by remember { mutableStateOf(false) }
     var confirmPassword by remember { mutableStateOf("") }
     var confirmPasswordError by remember { mutableStateOf(false) }
-    var isAccountCreated by remember { mutableStateOf(false) }
 
     val emailRegex = REGEX_LIST.toRegex()
     val isEmailValid = email.matches(emailRegex)
     val isPasswordValid =
         password.isNotEmpty() && password == confirmPassword && password.length >= 6
+
 
     val formErrorMessage = when {
         confirmPasswordError -> stringResource(R.string.signup_error_password_mismatch)
@@ -97,7 +97,6 @@ fun SignUpScreen(
         else -> null
     }
 
-
     val isFormValid = isEmailValid && isPasswordValid
 
     val isLoading = authState is AuthState.Loading
@@ -106,9 +105,6 @@ fun SignUpScreen(
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Authenticated -> {
-                isAccountCreated = true
-                delay(2500.milliseconds)
-
                 navController.navigate(ScreenNav.Home.route) {
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
@@ -131,233 +127,165 @@ fun SignUpScreen(
         }
     }
 
-    val rememberMeState = remember { mutableStateOf(false) }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        // --- 1. ЭКРАН ФОРМЫ РЕГИСТРАЦИИ ---
-        AnimatedVisibility(
-            visible = !isAccountCreated,
-            enter = fadeIn(),
-            exit = fadeOut()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            colors = CardDefaults.cardColors(containerColor = CardYellow),
+            shape = RoundedCornerShape(26.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
             ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardYellow),
-                    shape = RoundedCornerShape(26.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        // Registration text (Pixel style with shadow)
-                        Text(
-                            text = stringResource(id = R.string.signup_title),
-                            color = White,
-                            fontFamily = PressStart2P,
-                            textAlign = TextAlign.Center,
-                            fontSize = 18.sp,
-                            style = TextStyle(
-                                shadow = Shadow(
-                                    color = Color(0xFFC58A1E),
-                                    offset = Offset(8f, 8f),
-                                    blurRadius = 0f,
-                                )
-                            )
-                        )
-
-                        Spacer(modifier.height(18.dp))
-
-                        Text(
-                            text = stringResource(id = R.string.signup_subtitle),
-                            color = Black,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontFamily = Nunito,
-                            fontSize = 20.sp,
-                            lineHeight = 24.sp,
-                        )
-
-                        Spacer(modifier.height(24.dp))
-
-                        // EMAIL Text field
-                        EmailTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = email,
-                            onValueChanged = {
-                                email = it
-                                if (emailError) emailError = false
-                            },
-                            text = stringResource(R.string.login_email_label),
-                            textField = "email@example.com",
-                            isError = emailError,
-                        )
-
-                        Spacer(modifier.height(12.dp))
-
-                        // PASSWORD Text field
-                        PasswordTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = password,
-                            onValueChanged = {
-                                password = it
-                                if (passwordError) passwordError = false
-                            },
-                            text = stringResource(R.string.login_password_label),
-                            textField = "password",
-                            isError = passwordError,
-                        )
-                        Spacer(modifier.height(12.dp))
-
-                        // CONFIRM PASSWORD Text field
-                        PasswordTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = confirmPassword,
-                            onValueChanged = {
-                                confirmPassword = it
-                                if (confirmPasswordError) confirmPasswordError = false
-                            },
-                            text = "Confirm password",
-                            textField = "repeat password",
-                            isError = confirmPasswordError,
-                        )
-
-                        if (formErrorMessage != null) {
-                            Text(
-                                text = formErrorMessage,
-                                color = AccentRed,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth(),
-                                fontFamily = Nunito
-                            )
-                        }
-
-                        Spacer(modifier.height(20.dp))
-
-                        CreateAccountButton(
-                            authViewModel = authViewModel,
-                            modifier = Modifier.fillMaxWidth(),
-                            enabled = !isLoading,
-                            text = "Create",
-                            loadingText = stringResource(R.string.loading),
-                            loading = isLoading,
-                            formValid = true,
-                            email = email,
-                            password = password,
-                            confirmPassword = confirmPassword,
-                            onClick = {
-                                if (isEmailValid && isPasswordValid) {
-                                    authViewModel.signup(email, password, confirmPassword)
-                                } else {
-                                    emailError = !isEmailValid
-                                    passwordError = !isPasswordValid
-                                    confirmPasswordError = !isPasswordValid
-                                }
-                            }
-                        )
-
-                        LoginDivider()
-
-                        // LOGIN WITH GOOGLE BUTTON
-                        GoogleLoginButton(
-                            onClick = { authViewModel.loginWithGoogle(context) },
-                            modifier = Modifier.fillMaxWidth(),
-                            text = stringResource(R.string.login_google_button),
-                        )
-
-                        Spacer(modifier.height(28.dp))
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Already have an account, ",
-                                fontSize = 13.sp,
-                                fontFamily = Nunito,
-                                color = InkSoft
-                            )
-                            Text(
-                                text = "Login",
-                                fontSize = 13.sp,
-                                fontFamily = Nunito,
-                                fontWeight = FontWeight.ExtraBold,
-                                color = AccentRed,
-                                modifier = Modifier.clickable {
-                                    navController.navigate(ScreenNav.Login.route)
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // --- 2. ЭКРАН УСПЕХА (WELCOME) ---
-        AnimatedVisibility(
-            visible = isAccountCreated,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .background(TealSuccess, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Check,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(40.dp)
-                    )
-                }
-
-                Spacer(Modifier.height(24.dp))
-
+                // Registration text (Pixel style with shadow)
                 Text(
-                    text = "Welcome!",
+                    text = stringResource(id = R.string.signup_title),
+                    color = White,
                     fontFamily = PressStart2P,
-                    color = Color.White,
-                    fontSize = 20.sp,
                     textAlign = TextAlign.Center,
+                    fontSize = 18.sp,
                     style = TextStyle(
                         shadow = Shadow(
-                            color = Color(0x40000000),
-                            offset = Offset(4f, 4f),
-                            blurRadius = 8f
+                            color = Color(0xFFC58A1E),
+                            offset = Offset(8f, 8f),
+                            blurRadius = 0f,
                         )
                     )
                 )
 
-                Spacer(Modifier.height(16.dp))
+                Spacer(modifier.height(18.dp))
 
                 Text(
-                    text = "Ваш профіль готовий.\nПереходимо у застосунок...",
-                    fontFamily = Nunito,
-                    color = Color.White.copy(alpha = 0.8f),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
+                    text = stringResource(id = R.string.signup_subtitle),
+                    color = Black,
                     textAlign = TextAlign.Center,
-                    lineHeight = 22.sp
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = Nunito,
+                    fontSize = 20.sp,
+                    lineHeight = 24.sp,
                 )
+
+                Spacer(modifier.height(24.dp))
+
+                // EMAIL Text field
+                EmailTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = email,
+                    onValueChanged = {
+                        email = it
+                        if (emailError) emailError = false
+                    },
+                    text = stringResource(R.string.login_email_label),
+                    textField = "email@example.com",
+                    isError = emailError,
+                )
+
+                Spacer(modifier.height(12.dp))
+
+                // PASSWORD Text field
+                PasswordTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = password,
+                    onValueChanged = {
+                        password = it
+                        if (passwordError) passwordError = false
+                    },
+                    text = stringResource(R.string.login_password_label),
+                    textField = "password",
+                    isError = passwordError,
+                )
+                Spacer(modifier.height(12.dp))
+
+                // CONFIRM PASSWORD Text field
+                PasswordTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = confirmPassword,
+                    onValueChanged = {
+                        confirmPassword = it
+                        if (confirmPasswordError) confirmPasswordError = false
+                    },
+                    text = "Confirm password",
+                    textField = "repeat password",
+                    isError = confirmPasswordError,
+                )
+
+                if (formErrorMessage != null) {
+                    Text(
+                        text = formErrorMessage,
+                        color = AccentRed,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        fontFamily = Nunito
+                    )
+                }
+
+                Spacer(modifier.height(20.dp))
+
+                CreateAccountButton(
+                    authViewModel = authViewModel,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = !isLoading,
+                    text = "Create",
+                    loadingText = stringResource(R.string.loading),
+                    loading = isLoading,
+                    formValid = true,
+                    email = email,
+                    password = password,
+                    confirmPassword = confirmPassword,
+                    onClick = {
+                        if (isEmailValid && isPasswordValid) {
+                            authViewModel.signup(email, password, confirmPassword)
+                        } else {
+                            emailError = !isEmailValid
+                            passwordError = !isPasswordValid
+                            confirmPasswordError = !isPasswordValid
+                        }
+                    }
+                )
+
+                LoginDivider()
+
+                // LOGIN WITH GOOGLE BUTTON
+                GoogleLoginButton(
+                    onClick = { authViewModel.loginWithGoogle(context) },
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.login_google_button),
+                )
+
+                Spacer(modifier.height(28.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Already have an account, ",
+                        fontSize = 13.sp,
+                        fontFamily = Nunito,
+                        color = InkSoft
+                    )
+                    Text(
+                        text = "Login",
+                        fontSize = 13.sp,
+                        fontFamily = Nunito,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = AccentRed,
+                        modifier = Modifier.clickable {
+                            navController.navigate(ScreenNav.Login.route)
+                        }
+                    )
+                }
             }
         }
     }
 }
+

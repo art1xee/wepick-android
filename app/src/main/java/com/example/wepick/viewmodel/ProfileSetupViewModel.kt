@@ -2,7 +2,9 @@ package com.example.wepick.viewmodel
 
 import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wepick.screens.UserProfile
@@ -11,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,6 +43,9 @@ class ProfileSetupViewModel : ViewModel() {
     private val _isImageUploading = MutableStateFlow(false)
     val isImageUploading = _isImageUploading.asStateFlow()
 
+    var transitionState by mutableStateOf<AuthTransitionState?>(null)
+        private set
+
     init {
         loadInitialData()
     }
@@ -68,6 +74,7 @@ class ProfileSetupViewModel : ViewModel() {
 
         viewModelScope.launch {
             _isLoading.value = true
+            transitionState = AuthTransitionState.Loading("Зберігаємо профіль...")
             try {
                 val userProfile = UserProfile(
                     uid = currentUser.uid,
@@ -79,8 +86,12 @@ class ProfileSetupViewModel : ViewModel() {
 
                 db.collection("users").document(currentUser.uid).set(userProfile).await()
 
+                transitionState = AuthTransitionState.Success("Ласкаво просимо!")
+                delay(2000)
+                transitionState = null
                 _isSaved.value = true
             } catch (e: Exception) {
+                transitionState = null
                 e.printStackTrace()
             } finally {
                 _isLoading.value = false

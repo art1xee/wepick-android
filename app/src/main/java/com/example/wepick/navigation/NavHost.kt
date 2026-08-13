@@ -100,5 +100,8 @@ fun NavGraph(
     authViewModel.transitionState?.let { state ->
         AuthTransitionScreen(state)
     }
+    profileViewModel.transitionState?.let { state ->
+        AuthTransitionScreen(state)
+    }
 }
 
