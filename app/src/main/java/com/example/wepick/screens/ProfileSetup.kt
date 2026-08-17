@@ -80,6 +80,7 @@ fun ProfileSetup(
     modifier: Modifier = Modifier
 ) {
     val name by profileViewModel.name.collectAsState()
+    val userName by profileViewModel.userName.collectAsState()
     val email by profileViewModel.email.collectAsState()
     val isSaved by profileViewModel.isSaved.collectAsState()
     val isLoading by profileViewModel.isLoading.collectAsState()
@@ -194,11 +195,11 @@ fun ProfileSetup(
 
                 Spacer(Modifier.height(16.dp))
 
-                FormTextFields(
+                FormTextFields( // TODO: when user write user name, text field must add @ in start of the user name
                     modifier = Modifier.fillMaxWidth(),
-                    value = name,
+                    value = userName,
                     onValueChanged = {
-                        profileViewModel.updateName(it)
+                        profileViewModel.updateUsername(it)
                         if (nameError) nameError = false
                     },
                     text = "Nick name: (add in R.string)",

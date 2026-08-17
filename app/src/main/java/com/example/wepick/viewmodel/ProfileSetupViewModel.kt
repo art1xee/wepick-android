@@ -20,13 +20,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class ProfileSetupViewModel : ViewModel() {
+class ProfileSetupViewModel() : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
     private val storage = FirebaseStorage.getInstance()
 
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
+
+    private val _userName = MutableStateFlow("")
+    val userName = _userName.asStateFlow()
 
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
@@ -45,6 +48,7 @@ class ProfileSetupViewModel : ViewModel() {
 
     var transitionState by mutableStateOf<AuthTransitionState?>(null)
         private set
+
 
     init {
         loadInitialData()
@@ -66,18 +70,34 @@ class ProfileSetupViewModel : ViewModel() {
         _name.value = newName
     }
 
+    fun updateUsername(newUserName: String) {
+        _userName.value = newUserName
+    }
+
+
+
     fun saveProfile() {
         val currentUser = auth.currentUser ?: return
+        val currentUserName = _userName.value.trim()
         val currentName = _name.value.trim()
+
+        val formattedUserName = if (currentUserName.startsWith("@")) {
+            currentUserName
+        } else {
+            "@$currentUserName"
+        }
+
 
         if (currentName.isEmpty()) return
 
         viewModelScope.launch {
             _isLoading.value = true
-            transitionState = AuthTransitionState.Loading("Зберігаємо профіль...")
+            transitionState =
+                AuthTransitionState.Loading("Зберігаємо профіль...") // TODO: Add in R.string
             try {
                 val userProfile = UserProfile(
                     uid = currentUser.uid,
+                    userName = formattedUserName,
                     name = currentName,
                     email = _email.value,
                     photoUrl = _photoUrl.value,
@@ -86,7 +106,8 @@ class ProfileSetupViewModel : ViewModel() {
 
                 db.collection("users").document(currentUser.uid).set(userProfile).await()
 
-                transitionState = AuthTransitionState.Success("Ласкаво просимо!")
+                transitionState =
+                    AuthTransitionState.Success("Ласкаво просимо!") // TODO: add R.string
                 delay(2000)
                 transitionState = null
                 _isSaved.value = true
