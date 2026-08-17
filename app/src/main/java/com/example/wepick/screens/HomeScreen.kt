@@ -44,11 +44,13 @@ import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.ProfileSetupViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     authViewModel: AuthViewModel,
+    profileViewModel: ProfileSetupViewModel,
 ) {
     val authState = authViewModel.authState.observeAsState()
 
@@ -73,6 +75,7 @@ fun HomeScreen(
         TextButton(
             onClick = {
                 authViewModel.signout()
+                profileViewModel.clearProfileData()
             }
         ) {
             Text(

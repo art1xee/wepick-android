@@ -213,8 +213,8 @@ fun SignUpScreen(
                         confirmPassword = it
                         if (confirmPasswordError) confirmPasswordError = false
                     },
-                    text = "Confirm password",
-                    textField = "repeat password",
+                    text = stringResource(R.string.signup_confirm_password_label),
+                    textField = stringResource(R.string.signup_confirm_password_text_field),
                     isError = confirmPasswordError,
                 )
 
@@ -234,7 +234,7 @@ fun SignUpScreen(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    text = "Create",
+                    text = "Create", // TODO: change the lang
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
                     formValid = true,
@@ -268,13 +268,13 @@ fun SignUpScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Already have an account, ",
+                        text = "Already have an account, ", // TODO: change the lang
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         color = InkSoft
                     )
                     Text(
-                        text = "Login",
+                        text = "Login", // TODO: change the lang
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         fontWeight = FontWeight.ExtraBold,

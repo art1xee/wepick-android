@@ -110,6 +110,7 @@ string selection_title
 string settings_language
 string signup_button
 string signup_confirm_password_label
+string signup_confirm_password_text_field
 string signup_email_label
 string signup_error_password_mismatch
 string signup_password_label

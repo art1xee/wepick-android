@@ -48,7 +48,7 @@ fun NavGraph(
             ProfileSetup(navController, profileViewModel, modifier = Modifier)
         }
         composable(ScreenNav.Home.route) {
-            HomeScreen(navController, authViewModel)
+            HomeScreen(navController, authViewModel,profileViewModel)
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
             ProfileSettingScreen(navController, viewModel, modifier = Modifier, playerVM, profileViewModel)

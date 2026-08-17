@@ -96,6 +96,7 @@
     <string name="settings_language">Оберіть мову:</string>
     <string name="signup_button">Створити профіль</string>
     <string name="signup_confirm_password_label">Повторіть пароль</string>
+    <string name="signup_confirm_password_text_field">повторіть пароль</string>
     <string name="signup_email_label">Email</string>
     <string name="signup_error_password_mismatch">Паролі не збігаються. Спробуйте ще раз.</string>
     <string name="signup_password_label">Пароль</string>

@@ -38,6 +38,7 @@
     <string name="signup_email_label">Email</string>
     <string name="signup_password_label">Пароль</string>
     <string name="signup_confirm_password_label">Повторите пароль</string>
+    <string name="signup_confirm_password_text_field">повторите пароль</string>
     <string name="signup_button">Создать профиль</string>
     <string name="signup_error_password_mismatch">Пароли не совпадают. Попробуйте ещё раз.</string>
 

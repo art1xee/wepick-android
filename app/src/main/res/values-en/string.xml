@@ -40,6 +40,7 @@
     <string name="signup_email_label">Email</string>
     <string name="signup_password_label">Password</string>
     <string name="signup_confirm_password_label">Repeat password</string>
+    <string name="signup_confirm_password_text_field">repeat password</string>
     <string name="signup_button">Create Profile</string>
     <string name="signup_error_password_mismatch">Passwords do not match — please enter again.</string>
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wepick.screens.UserProfile
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
@@ -51,13 +52,21 @@ class ProfileSetupViewModel() : ViewModel() {
 
 
     init {
-        loadInitialData()
+        auth.addAuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user != null) {
+                loadInitialData()
+                fetchUserProfile()
+            } else {
+                clearProfileData()
+            }
+        }
     }
 
     fun loadInitialData() {
         val currentUser = auth.currentUser
         currentUser?.let { user ->
-            // the blocking possibility change user email `cause it`s always written
+            // the blocking possibility change user email `cause it's always written
             _email.value = user.email ?: ""
 
             _name.value = user.displayName ?: ""
@@ -79,16 +88,21 @@ class ProfileSetupViewModel() : ViewModel() {
         val currentUser = auth.currentUser ?: return
         viewModelScope.launch {
             try {
+                Log.d("ProfileSetup", "Начинаем загрузку из Firestore для UID: ${currentUser.uid}")
                 val document = db.collection("users").document(currentUser.uid).get().await()
-                if(document.exists()){
+                if (document.exists()) {
                     val profile = document.toObject(UserProfile::class.java)
+                    Log.d("ProfileSetup", "Данные из базы получены: $profile") // Смотрим в Logcat!
                     profile?.let {
                         _photoUrl.value = it.photoUrl
                         _name.value = it.name
-                        _userName.value = it.userName
+                        _userName.value = it.userName.removePrefix("@")
+                        _email.value = it.email
                     }
+                }else{
+                    Log.d("ProfileSetup", "Документ пользователя в Firestore НЕ СУЩЕСТВУЕТ!")
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("ProfileSetup", "Error loading profile from DB", e)
             }
         }
@@ -124,6 +138,15 @@ class ProfileSetupViewModel() : ViewModel() {
 
                 db.collection("users").document(currentUser.uid).set(userProfile).await()
 
+                val profileUpdates =
+                    UserProfileChangeRequest.Builder().setDisplayName(currentName).apply {
+                        if (!_photoUrl.value.isNullOrEmpty()) {
+                            photoUri = Uri.parse(_photoUrl.value)
+                        }
+                    }.build()
+
+                currentUser.updateProfile(profileUpdates).await()
+
                 transitionState =
                     AuthTransitionState.Success("Ласкаво просимо!") // TODO: add R.string
                 delay(2000)
@@ -150,6 +173,15 @@ class ProfileSetupViewModel() : ViewModel() {
             _photoUrl.value = user.photoUrl?.toString()
         }
     }
+
+    fun clearProfileData() {
+        _name.value = ""
+        _userName.value = ""
+        _email.value = ""
+        _photoUrl.value = null
+        _isSaved.value = false
+    }
+
 
     fun uploadProfileImage(imageUrl: Uri) {
         val currentUser = auth.currentUser ?: return

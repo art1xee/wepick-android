@@ -1312,6 +1312,7 @@ int string selection_title 0x7f1000d7
 int string settings_language 0x7f1000d8
 int string signup_button 0x7f1000d9
 int string signup_confirm_password_label 0x7f1000da
+int string signup_confirm_password_text_field 0x7f1000fd
 int string signup_email_label 0x7f1000db
 int string signup_error_password_mismatch 0x7f1000dc
 int string signup_password_label 0x7f1000dd
