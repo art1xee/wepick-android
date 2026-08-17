@@ -75,6 +75,24 @@ class ProfileSetupViewModel() : ViewModel() {
     }
 
 
+    fun fetchUserProfile() {
+        val currentUser = auth.currentUser ?: return
+        viewModelScope.launch {
+            try {
+                val document = db.collection("users").document(currentUser.uid).get().await()
+                if(document.exists()){
+                    val profile = document.toObject(UserProfile::class.java)
+                    profile?.let {
+                        _photoUrl.value = it.photoUrl
+                        _name.value = it.name
+                        _userName.value = it.userName
+                    }
+                }
+            }catch (e: Exception){
+                Log.e("ProfileSetup", "Error loading profile from DB", e)
+            }
+        }
+    }
 
     fun saveProfile() {
         val currentUser = auth.currentUser ?: return

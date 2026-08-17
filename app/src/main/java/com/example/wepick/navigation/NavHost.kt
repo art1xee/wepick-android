@@ -19,10 +19,9 @@ import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
 import com.example.wepick.screens.ProfileSetup
 import com.example.wepick.screens.SelectionScreen
-import com.example.wepick.screens.SettingsScreen
+import com.example.wepick.screens.ProfileSettingScreen
 import com.example.wepick.screens.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
-import com.example.wepick.viewmodel.AuthTransitionState
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -51,8 +50,8 @@ fun NavGraph(
         composable(ScreenNav.Home.route) {
             HomeScreen(navController, authViewModel)
         }
-        composable(ScreenNav.SettingScreen.route) {
-            SettingsScreen(navController, viewModel, modifier = Modifier, playerVM)
+        composable(ScreenNav.ProfileSettingScreen.route) {
+            ProfileSettingScreen(navController, viewModel, modifier = Modifier, playerVM, profileViewModel)
         }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
