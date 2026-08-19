@@ -1,4 +1,4 @@
-package com.example.wepick.screens
+package com.example.wepick.screens.auth.forgot_password
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
+import com.example.wepick.screens.auth.login.EmailTextField
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow

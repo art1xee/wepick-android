@@ -1121,6 +1121,10 @@ int string androidx_compose_foundation_autofill 0x7f100020
 int string androidx_compose_ui_autofill 0x7f100021
 int string androidx_startup 0x7f100022
 int string app_name 0x7f100023
+int string auth_transition_logining 0x7f1000fe
+int string auth_transition_logining_with_google 0x7f1000ff
+int string auth_transition_subtitle 0x7f100100
+int string auth_transition_welcome 0x7f100101
 int string call_notification_answer_action 0x7f100024
 int string call_notification_answer_video_action 0x7f100025
 int string call_notification_decline_action 0x7f100026

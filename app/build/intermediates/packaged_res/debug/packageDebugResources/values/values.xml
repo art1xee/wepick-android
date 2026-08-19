@@ -26,6 +26,10 @@
     <string name="about_github">Код цього застосунку доступний на GitHub:</string>
     <string name="about_title">Про WePick!</string>
     <string name="app_name" translatable="false">WePick!</string>
+    <string name="auth_transition_logining">Входимо…</string>
+    <string name="auth_transition_logining_with_google">Входимо…</string>
+    <string name="auth_transition_subtitle">Профіль готовий. Переходимо у застосунок…</string>
+    <string name="auth_transition_welcome">Ласкаво просимо!</string>
     <string name="decade_label">Десятиліття:</string>
     <string name="decade_title">%1$s Оберіть десятиліття:</string>
     <string name="default_web_client_id" translatable="false">871652837283-djgdmj57j7mg1kkqdun3tktb2d8aas0j.apps.googleusercontent.com</string>

@@ -107,17 +107,17 @@ fun MainScaffold(
                         tint = if (currentRoute == ScreenNav.Home.route) CardYellow else CardYellowSoft,
                     )
 
-                    // Favorite bottom bar 
-                    IconsBottomBar(
-                        navController = navController,
-                        navRoute = ScreenNav.Favorite,
-                        backRoute = ScreenNav.Home,
-                        modifier = Modifier.weight(1f),
-                        imageVector = if (currentRoute == ScreenNav.Favorite.route) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                        contentDescription = null,
-                        tint = if (currentRoute == ScreenNav.Favorite.route) AccentRed else CardYellowSoft,
-                        isInclusive = false,
-                    )
+//                    // Favorite bottom bar
+//                    IconsBottomBar(
+//                        navController = navController,
+//                        navRoute = ScreenNav.Favorite,
+//                        backRoute = ScreenNav.Home,
+//                        modifier = Modifier.weight(1f),
+//                        imageVector = if (currentRoute == ScreenNav.Favorite.route) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+//                        contentDescription = null,
+//                        tint = if (currentRoute == ScreenNav.Favorite.route) AccentRed else CardYellowSoft,
+//                        isInclusive = false,
+//                    )
 
 
                     Box(

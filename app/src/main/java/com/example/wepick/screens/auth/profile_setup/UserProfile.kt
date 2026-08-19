@@ -1,4 +1,4 @@
-package com.example.wepick.screens
+package com.example.wepick.screens.auth.profile_setup
 
 data class UserProfile(
     val uid: String = "",

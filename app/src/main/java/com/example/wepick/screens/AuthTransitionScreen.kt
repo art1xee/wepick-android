@@ -1,9 +1,5 @@
 package com.example.wepick.screens
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,18 +16,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.transform.CircleCropTransformation
+import com.example.wepick.R
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.MidPurple
@@ -91,7 +86,7 @@ fun AuthTransitionScreen(state: AuthTransitionState) {
                         Spacer(Modifier.height(24.dp))
 
                         Text(
-                            text = "Ласкаво просимо!",
+                            text = stringResource(R.string.auth_transition_welcome),
                             fontFamily = PressStart2P,
                             color = Color.White,
                             fontSize = 20.sp,
@@ -108,7 +103,7 @@ fun AuthTransitionScreen(state: AuthTransitionState) {
                         Spacer(Modifier.height(16.dp))
 
                         Text(
-                            text = "Профіль готовий. Переходимо у застосунок...",
+                            text = stringResource(R.string.auth_transition_subtitle),
                             fontFamily = Nunito,
                             color = Color.White.copy(alpha = 0.8f),
                             fontWeight = FontWeight.Bold,

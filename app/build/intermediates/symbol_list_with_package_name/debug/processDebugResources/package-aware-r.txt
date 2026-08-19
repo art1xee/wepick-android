@@ -1122,6 +1122,10 @@ string androidx_compose_foundation_autofill
 string androidx_compose_ui_autofill
 string androidx_startup
 string app_name
+string auth_transition_logining
+string auth_transition_logining_with_google
+string auth_transition_subtitle
+string auth_transition_welcome
 string call_notification_answer_action
 string call_notification_answer_video_action
 string call_notification_decline_action

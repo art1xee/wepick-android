@@ -8,20 +8,25 @@ import androidx.navigation.compose.composable
 import com.example.wepick.screens.AuthTransitionScreen
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
-import com.example.wepick.screens.FavoriteScreen
-import com.example.wepick.screens.ForgotPasswordScreen
+import com.example.wepick.screens.profile_screens.FavoriteContentScreen
+import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
 import com.example.wepick.screens.HomeScreen
-import com.example.wepick.screens.LoginScreen
+import com.example.wepick.screens.auth.login.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
-import com.example.wepick.screens.ProfileSetup
+import com.example.wepick.screens.auth.profile_setup.ProfileSetup
 import com.example.wepick.screens.SelectionScreen
-import com.example.wepick.screens.ProfileSettingScreen
-import com.example.wepick.screens.SignUpScreen
+import com.example.wepick.screens.profile_screens.ProfileSettingScreen
+import com.example.wepick.screens.auth.signup.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
+import com.example.wepick.screens.profile_screens.ChangePasswordScreen
+import com.example.wepick.screens.profile_screens.DeleteAccountScreen
+import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
+import com.example.wepick.screens.profile_screens.HelpScreen
+import com.example.wepick.screens.profile_screens.PersonalDataScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -41,17 +46,68 @@ fun NavGraph(
         navController = navController,
         startDestination = ScreenNav.Login.route
     ) {
+        composable(ScreenNav.PersonalData.route) {
+            PersonalDataScreen(
+                navController,
+                viewModel,
+                modifier = Modifier,
+                playerVM,
+                profileViewModel
+            )
+        }
+        composable(ScreenNav.Help.route) {
+            HelpScreen(
+                navController,
+                viewModel,
+                playerVM,
+                profileViewModel,
+            )
+
+        }
+
+        composable(ScreenNav.DeleteAccount.route) {
+            DeleteAccountScreen(
+                navController,
+                viewModel,
+                playerVM,
+                profileViewModel,
+            )
+        }
+        composable(ScreenNav.ChangePassword.route) {
+            ChangePasswordScreen(
+                navController,
+                viewModel,
+                playerVM,
+                profileViewModel,
+            )
+        }
+        composable(ScreenNav.AppSetting.route) {
+            AppSettingScreen(
+                navController,
+                viewModel,
+                modifier = Modifier,
+                playerVM,
+                profileViewModel,
+            )
+        }
         composable(ScreenNav.Favorite.route) {
-            FavoriteScreen(navController, viewModel, modifier = Modifier, playerVM)
+            FavoriteContentScreen(navController, viewModel, modifier = Modifier, playerVM)
         }
         composable(ScreenNav.ProfileSetup.route) {
             ProfileSetup(navController, profileViewModel, modifier = Modifier)
         }
         composable(ScreenNav.Home.route) {
-            HomeScreen(navController, authViewModel,profileViewModel)
+            HomeScreen(navController, authViewModel, profileViewModel)
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
-            ProfileSettingScreen(navController, viewModel, modifier = Modifier, playerVM, profileViewModel)
+            ProfileSettingScreen(
+                navController,
+                viewModel,
+                modifier = Modifier,
+                playerVM,
+                authViewModel,
+                profileViewModel,
+            )
         }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)

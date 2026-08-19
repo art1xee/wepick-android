@@ -1,4 +1,4 @@
-package com.example.wepick.screens
+package com.example.wepick.screens.auth.login
 
 
 import android.util.Log
