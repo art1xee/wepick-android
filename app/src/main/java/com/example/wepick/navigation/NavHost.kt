@@ -101,12 +101,9 @@ fun NavGraph(
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
             ProfileSettingScreen(
-                navController,
-                viewModel,
-                modifier = Modifier,
-                playerVM,
-                authViewModel,
-                profileViewModel,
+                authViewModel = authViewModel,
+                profileViewModel = profileViewModel,
+                navController = navController,
             )
         }
         composable(ScreenNav.SignUp.route) {

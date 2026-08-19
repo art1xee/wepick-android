@@ -59,8 +59,9 @@ fun AuthTransitionScreen(state: AuthTransitionState) {
                             modifier = Modifier.size(54.dp)
                         )
                         Spacer(Modifier.height(24.dp))
+
                         Text(
-                            text = state.message,
+                            text = state.message.asString(),
                             color = White,
                             fontFamily = Nunito,
                             fontSize = 16.sp,

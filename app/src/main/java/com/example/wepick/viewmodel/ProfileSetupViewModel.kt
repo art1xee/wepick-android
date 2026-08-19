@@ -5,14 +5,17 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wepick.R
 import com.example.wepick.screens.auth.profile_setup.UserProfile
+import com.example.wepick.util.UiText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +26,7 @@ import kotlinx.coroutines.tasks.await
 
 class ProfileSetupViewModel() : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
-    private val db = Firebase.firestore
+    private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
 
     private val _name = MutableStateFlow("")
@@ -88,19 +91,20 @@ class ProfileSetupViewModel() : ViewModel() {
         val currentUser = auth.currentUser ?: return
         viewModelScope.launch {
             try {
-                Log.d("ProfileSetup", "Начинаем загрузку из Firestore для UID: ${currentUser.uid}")
+                Log.d("ProfileSetup", "Starting loading from Firestore for UID: ${currentUser.uid}")
                 val document = db.collection("users").document(currentUser.uid).get().await()
+
                 if (document.exists()) {
                     val profile = document.toObject(UserProfile::class.java)
-                    Log.d("ProfileSetup", "Данные из базы получены: $profile") // Смотрим в Logcat!
+                    Log.d("ProfileSetup", "Date from db is get: $profile") // Смотрим в Logcat!
                     profile?.let {
                         _photoUrl.value = it.photoUrl
                         _name.value = it.name
                         _userName.value = it.userName.removePrefix("@")
                         _email.value = it.email
                     }
-                }else{
-                    Log.d("ProfileSetup", "Документ пользователя в Firestore НЕ СУЩЕСТВУЕТ!")
+                } else {
+                    Log.d("ProfileSetup", "Document of the user in Firestore doesn't exist!")
                 }
             } catch (e: Exception) {
                 Log.e("ProfileSetup", "Error loading profile from DB", e)
@@ -125,7 +129,7 @@ class ProfileSetupViewModel() : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             transitionState =
-                AuthTransitionState.Loading("Зберігаємо профіль...") // TODO: Add in R.string
+                AuthTransitionState.Loading(UiText.StringResource(R.string.profile_view_model_saving_profile)) // TODO: Add in R.string
             try {
                 val userProfile = UserProfile(
                     uid = currentUser.uid,
@@ -148,7 +152,7 @@ class ProfileSetupViewModel() : ViewModel() {
                 currentUser.updateProfile(profileUpdates).await()
 
                 transitionState =
-                    AuthTransitionState.Success("Ласкаво просимо!") // TODO: add R.string
+                    AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome)) // TODO: add R.string
                 delay(2000)
                 transitionState = null
                 _isSaved.value = true
@@ -190,12 +194,15 @@ class ProfileSetupViewModel() : ViewModel() {
             _isImageUploading.value = true
             try {
                 val storageRef = storage.reference.child("profile_images/${currentUser.uid}.jpg")
-
                 storageRef.putFile(imageUrl).await()
 
-                val downloadUrl = storageRef.downloadUrl.await()
+                val downloadUrl = storageRef.downloadUrl.await().toString()
 
-                _photoUrl.value = downloadUrl.toString()
+                db.collection("users").document(currentUser.uid).update("photoUrl", downloadUrl)
+                    .await()
+
+                _photoUrl.value = downloadUrl
+
             } catch (e: Exception) {
                 Log.e("ProfileSetup", "ERROR: cannot load the photo", e)
             } finally {

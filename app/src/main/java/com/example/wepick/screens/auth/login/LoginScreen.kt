@@ -100,7 +100,7 @@ fun LoginScreen(
 
             is AuthState.Error -> {
                 Log.e("AuthDebug", "ОШИБКА АВТОРИЗАЦИИ: ${state.message}")
-                playerVM.showLockedError(state.message)
+                playerVM.showLockedError(state.message.asString(context))
             }
 
             else -> Unit

@@ -41,7 +41,7 @@
     <string name="signup_password_label">Пароль</string>
     <string name="signup_confirm_password_label">Повторіть пароль</string>
     <string name="signup_confirm_password_text_field">повторіть пароль</string>
-    <string name="signup_button">Створити профіль</string>
+    <string name="signup_button">Створити акаунт</string>
     <string name="signup_error_password_mismatch">Паролі не збігаються. Спробуйте ще раз.</string>
 
     <!-- PROFILE SETUP -->
@@ -50,7 +50,9 @@
     <string name="profile_setup_load_photo">Завантажте ваше фото (необов\'язково)</string>
     <string name="profile_setup_display_name_label">Ім\'я:</string>
     <string name="profile_setup_display_name_example">Введіть ваше Ім\'я</string>
-    <string name="profile_setup_display_email_label">Email (Цей email буде прив\'язан  к вашому профілю)</string>
+    <string name="profile_setup_display_username_label">Нікнейм:</string>
+    <string name="profile_setup_display_username_example">Введіть ваш нікнейм</string>
+    <string name="profile_setup_display_email_label">Email (Цей email буде прив\'язан к вашому профілю)</string>
     <string name="profile_setup_save_profile_button">Створити профіль!</string>
     <string name="profile_setup_error_enter_username">Поле з іменем не може бути порожнім!</string>
 
@@ -58,7 +60,37 @@
     <string name="auth_transition_welcome">Ласкаво просимо!</string>
     <string name="auth_transition_subtitle">Профіль готовий. Переходимо у застосунок…</string>
     <string name="auth_transition_logining">Входимо…</string>
-    <string name="auth_transition_logining_with_google">Входимо…</string>
+    <string name="auth_transition_logining_error">Помилка входу!</string>
+    <string name="auth_transition_logining_with_google">Входимо через Google…</string>
+    <string name="auth_transition_logining_with_google_error">Не вийшло ввійти в акаунт через Google…</string>
+    <string name="auth_transition_reset_password_error">Помилка при спробі змінити пароль!</string>
+    <string name="auth_transition_enter_password">Для початку введіть пароль!</string>
+    <string name="auth_transition_enter_fields_error">Заповніть всі поля</string>
+    <string name="auth_transition_password_mismatch">Паролі не збігаються!</string>
+    <string name="auth_transition_creating_account">Створюємо акаунт…</string>
+    <string name="auth_transition_registration_error">Помилка реєстрації!</string>
+
+
+    <!--PROFILE VIEW MODEL  -->
+    <string name="profile_view_model_saving_profile">Зберігаємо профіль…</string>
+
+    <!--PROFILE SETTINGS -->
+    <string name="profile_setting_label">Профіль</string>
+    <string name="profile_setting_personal_data_title">Про користувача</string>
+    <string name="profile_setting_personal_data_subtitle">Ім\'я, фото, про себе</string>
+    <string name="profile_setting_title">Налаштування застосунку</string>
+    <string name="profile_setting_subtitle">Налаштуйте ваш застосунок</string>
+    <string name="profile_setting_help_title">Допомога</string>
+    <string name="profile_setting_help_subtitle">FAQ, контакти, фідбек</string>
+    <string name="profile_setting_change_password_title">Змінити пароль</string>
+    <string name="profile_setting_change_password_subtitle">Змінить пароль вашого аккаунту</string>
+    <string name="profile_setting_delete_account">Видалити аккаунт</string>
+    <string name="profile_setting_delete_account_alert">Ця операція є незворотною. Усі ваші дані будуть остаточно видалені. Ви абсолютно впевнені?</string>
+    <string name="profile_setting_delete_account_confirm">Видалити</string>
+    <string name="profile_setting_sign_out">Вийти із аккаунту</string>
+    <string name="profile_setting_sign_out_alert">Ви впевнені, що хочете вийти з акаунту?</string>
+    <string name="profile_setting_sign_out_confirm">Вийти</string>
+    <string name="profile_setting_cancel">Відмінити</string>
 
 
     <!-- SELECTION -->

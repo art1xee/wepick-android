@@ -228,7 +228,9 @@ fun ForgotPasswordScreen(
                                 authViewModel.resetPassword(
                                     email = email,
                                     onSuccess = { currentStep = 2 },
-                                    onError = { playerVM.showLockedError(it) }
+                                    onError = { errorUiText ->
+                                        playerVM.showLockedError(errorUiText.asString(context))
+                                    }
                                 )
                             } else {
                                 emailError = true

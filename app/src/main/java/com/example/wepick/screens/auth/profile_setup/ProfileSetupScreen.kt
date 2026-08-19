@@ -195,8 +195,8 @@ fun ProfileSetup(
                         profileViewModel.updateUsername(it)
                         if (nameError) nameError = false
                     },
-                    text = "Nick name: (add in R.string)",
-                    textField = "enter a nick name (add in R.string)",
+                    text = stringResource(R.string.profile_setup_display_username_label),
+                    textField = stringResource(R.string.profile_setup_display_username_example),
                     isError = nameError,
                     errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
                 )

@@ -108,7 +108,7 @@ fun SignUpScreen(
 
             is AuthState.Error -> {
                 Toast.makeText(
-                    context, (authState as AuthState.Error).message,
+                    context, (authState as AuthState.Error).message.asString(context),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -224,7 +224,7 @@ fun SignUpScreen(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    text = "Create", // TODO: change the lang
+                    text = stringResource(R.string.signup_button), // TODO: change the lang
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
                     formValid = true,

@@ -1,29 +1,26 @@
 package com.example.wepick.viewmodel
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wepick.R
+import com.example.wepick.util.UiText // Обязательный импорт твоего нового класса!
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-
 
 class AuthViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -36,7 +33,7 @@ class AuthViewModel : ViewModel() {
         private set
 
     private suspend fun handeAuthSuccess(uid: String) {
-        transitionState = AuthTransitionState.Success("Welcome")
+        transitionState = AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome))
         delay(2000)
         transitionState = null
         verifyUserProfile(uid)
@@ -55,15 +52,14 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-
     fun verifyUserProfile(uid: String) {
-        Log.d("AuthDebug", "Начинаем проверку профиля для UID: $uid")
+        Log.d("AuthDebug", "Starting check profile for UID: $uid")
 
         db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
                 Log.d(
                     "AuthDebug",
-                    "Успешный ответ от Firestore! Документ существует: ${document.exists()}"
+                    "Success respond of Firestore! Document is exist: ${document.exists()}"
                 )
                 if (document.exists() && document.getBoolean("profileCompleted") == true) {
                     _authState.value = AuthState.Authenticated
@@ -72,16 +68,18 @@ class AuthViewModel : ViewModel() {
                 }
             }
             .addOnFailureListener { e ->
-                // ВОТ ЭТА СТРОКА РАСПЕЧАТАЕТ НАСТОЯЩУЮ ПРИЧИНУ:
-                Log.e("AuthDebug", "КРИТИЧЕСКАЯ ОШИБКА FIRESTORE", e)
+                Log.e("AuthDebug", "CRITICAL ERROR OF FIRESTORE", e)
+                val errorMsg = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.DynamicString("Firestore error")
 
-                _authState.value = AuthState.Error(e.localizedMessage ?: "Firestore error")
+                _authState.value = AuthState.Error(errorMsg)
             }
     }
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading("Входимо...") // TODO: add this text in R.string
+            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining))
             try {
                 auth.signInWithEmailAndPassword(email, password).await()
                 delay(2000)
@@ -89,23 +87,27 @@ class AuthViewModel : ViewModel() {
                 verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
-                _authState.value = AuthState.Error(e.localizedMessage ?: "Помилка входу") // TODO: add this text in R.string
+                val errorMessage = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_logining_error)
+
+                _authState.value = AuthState.Error(errorMessage)
             }
         }
     }
 
     fun signup(email: String, password: String, confirmPassword: String) {
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            _authState.value = AuthState.Error("Заповніть всі поля") // TODO: add this text in R.string
+            _authState.value = AuthState.Error(UiText.StringResource(R.string.auth_transition_enter_fields_error))
             return
         }
         if (password != confirmPassword) {
-            _authState.value = AuthState.Error("Паролі не збігаются") // TODO: add this text in R.string
+            _authState.value = AuthState.Error(UiText.StringResource(R.string.auth_transition_password_mismatch))
             return
         }
 
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading("Створюємо акаунт...") // TODO: add this text in R.string
+            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_creating_account))
             try {
                 auth.createUserWithEmailAndPassword(email, password).await()
                 delay(2500)
@@ -113,7 +115,11 @@ class AuthViewModel : ViewModel() {
                 verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
-                _authState.value = AuthState.Error(e.localizedMessage ?: "Помилка реєстрації") // TODO: add this text in R.string
+                val errorMessage = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_registration_error)
+
+                _authState.value = AuthState.Error(errorMessage)
             }
         }
     }
@@ -123,18 +129,33 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
-    fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit){
+    fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit) {
         val user = auth.currentUser
-        user?.delete()?.addOnSuccessListener {
-            onSuccess()
-        }?.addOnFailureListener {e ->
-            onError(e)
+        val uid = user?.uid
+
+        if (uid != null) {
+            // 1. Сначала удаляем документ юзера
+            db.collection("users").document(uid).delete()
+                .addOnSuccessListener {
+                    // 2. Затем удаляем сам аккаунт из аутентификации
+                    user.delete()
+                        .addOnSuccessListener {
+                            _authState.value = AuthState.Unauthenticated
+                            onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            onError(e)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    onError(e)
+                }
         }
     }
 
-    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (UiText) -> Unit) {
         if (email.isEmpty()) {
-            onError("Please, firstly enter a password.") // TODO: add this text in R.string
+            onError(UiText.StringResource(R.string.auth_transition_enter_password))
             return
         }
         auth.sendPasswordResetEmail(email)
@@ -142,7 +163,11 @@ class AuthViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     onSuccess()
                 } else {
-                    onError(task.exception?.message ?: "Password reset ERROR") // TODO: add this text in R.string
+                    val errorMsg = task.exception?.message?.let {
+                        UiText.DynamicString(it)
+                    } ?: UiText.StringResource(R.string.auth_transition_reset_password_error)
+
+                    onError(errorMsg)
                 }
             }
     }
@@ -160,23 +185,26 @@ class AuthViewModel : ViewModel() {
             .build()
 
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading("Входимо через Google...") // TODO: add this text in R.string
+            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining_with_google))
             try {
                 val result = credentialManager.getCredential(context, request)
                 val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(result.credential.data)
                 val authCredential = GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
-                
+
                 auth.signInWithCredential(authCredential).await()
                 delay(2000)
                 transitionState = null
                 verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
-                _authState.value = AuthState.Error(e.message ?: "Google Auth Failed") // TODO: add this text in R.string
+                val errorMessage = e.message?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_logining_with_google_error)
+
+                _authState.value = AuthState.Error(errorMessage)
             }
         }
     }
-
 }
 
 sealed class AuthState {
@@ -184,5 +212,5 @@ sealed class AuthState {
     object NeedsProfileSetup : AuthState()
     object Unauthenticated : AuthState()
     object Loading : AuthState()
-    data class Error(val message: String) : AuthState()
+    data class Error(val message: UiText) : AuthState()
 }

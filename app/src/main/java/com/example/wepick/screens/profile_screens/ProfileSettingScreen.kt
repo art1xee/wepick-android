@@ -68,6 +68,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -75,13 +76,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.screens.profile_screens.components.ActionConfirmDialog
+import com.example.wepick.screens.profile_screens.components.DangerZoneButton
+import com.example.wepick.screens.profile_screens.components.ProfileBoxButton
+import com.example.wepick.screens.profile_screens.components.ProfileInfoBlock
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
+import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
@@ -92,9 +100,6 @@ import com.example.wepick.viewmodel.ProfileSetupViewModel
 @Composable
 fun ProfileSettingScreen(
     navController: NavController,
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier,
-    playerVM: PlayerViewModel,
     authViewModel: AuthViewModel,
     profileViewModel: ProfileSetupViewModel
 ) {
@@ -105,7 +110,6 @@ fun ProfileSettingScreen(
 
     val name by profileViewModel.name.collectAsState()
     val userName by profileViewModel.userName.collectAsState()
-    val email by profileViewModel.email.collectAsState()
 
     val photoUrl by profileViewModel.photoUrl.collectAsState()
     val isImageUploading by profileViewModel.isImageUploading.collectAsState()
@@ -125,7 +129,13 @@ fun ProfileSettingScreen(
 
     LaunchedEffect(authState.value) {
         when (authState.value) {
-            is AuthState.Unauthenticated -> navController.navigate(ScreenNav.Login.route)
+            is AuthState.Unauthenticated -> {
+                navController.navigate(ScreenNav.Login.route) {
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }
+            }
+
             else -> Unit
         }
     }
@@ -151,7 +161,7 @@ fun ProfileSettingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text( // TODO make this text in separate func
-                    text = "Profile",
+                    text = stringResource(R.string.profile_setting_label),
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
                     color = White,
@@ -177,18 +187,17 @@ fun ProfileSettingScreen(
                     },
                     name = name,
                     userName = userName,
-                ) // TODO: when user save profile icon from "profile setting screen" the avatar doesn't save when app is reloaded
+                )
 
                 Spacer(Modifier.height(10.dp))
 
                 // Profile box button with personal data of user: name, username, date of birth, email, bio etc. (user can change the values in this screen)
                 ProfileBoxButton(
-                    navController = navController,
-                    route = ScreenNav.PersonalData.route,
-                    contentDescription = "Personal Data",
+                    onClick = { navController.navigate(ScreenNav.PersonalData.route) },
+                    contentDescription = stringResource(R.string.profile_setting_personal_data_title),
                     icon = Icons.Default.Person,
-                    text = "Personal Data", // Про користувача / Про пользователя
-                    subtext = "Name, avatar, bio",
+                    text = stringResource(R.string.profile_setting_personal_data_title), // Про користувача / Про пользователя
+                    subtext = stringResource(R.string.profile_setting_personal_data_subtitle),
                     firstStartColor = Color(0xFF613477),
                     secondStartColor = Color(0xFF2A1044),
                     firstEndColor = Color(0xFF9B4DB3),
@@ -199,12 +208,11 @@ fun ProfileSettingScreen(
 
                 // Profile box button with app settings: Get email msg, Change app language, make user profile private/non-private, push-msg from app in user phone
                 ProfileBoxButton(
-                    navController = navController,
-                    route = ScreenNav.AppSetting.route,
-                    contentDescription = "App Setting",
+                    onClick = { navController.navigate(ScreenNav.AppSetting.route) },
+                    contentDescription = stringResource(R.string.profile_setting_title),
                     icon = Icons.Default.SettingsApplications,
-                    text = "App Setting",// Налаштування застосунку / Настройки приложения
-                    subtext = "Change setting of the app",
+                    text = stringResource(R.string.profile_setting_title),// Налаштування застосунку / Настройки приложения
+                    subtext = stringResource(R.string.profile_setting_subtitle),
                     //start color of the block
                     firstStartColor = Color(0xFF64748B),
                     secondStartColor = Color(0xFF1E293B),
@@ -228,12 +236,11 @@ fun ProfileSettingScreen(
 
                 // Profile box button with: FAQ, feedback, contacts
                 ProfileBoxButton(
-                    navController = navController,
-                    route = ScreenNav.Help.route,
-                    contentDescription = "Help",
+                    onClick = { navController.navigate(ScreenNav.Help.route) },
+                    contentDescription = stringResource(R.string.profile_setting_help_title),
                     icon = Icons.AutoMirrored.Filled.Help,
-                    text = "Help",// change language
-                    subtext = "FAQ, feedback, contacts",
+                    text = stringResource(R.string.profile_setting_help_title),// change language
+                    subtext = stringResource(R.string.profile_setting_help_subtitle),
                     //start color of the block
                     firstStartColor = Color(0xFF3B82F6),
                     secondStartColor = Color(0xFF1E40AF),
@@ -246,12 +253,11 @@ fun ProfileSettingScreen(
 
                 // Profile box button with: Changing the password of the user account
                 ProfileBoxButton(
-                    navController = navController,
-                    route = ScreenNav.ChangePassword.route,
-                    contentDescription = "Change Password",
+                    onClick = { navController.navigate(ScreenNav.ChangePassword.route) },
+                    contentDescription = stringResource(R.string.profile_setting_change_password_title),
                     icon = Icons.Default.Shield,
-                    text = "Change Password",// change language
-                    subtext = "Change password of the account",
+                    text = stringResource(R.string.profile_setting_change_password_title),// change language
+                    subtext = stringResource(R.string.profile_setting_change_password_subtitle),
                     //start color of the block
                     firstStartColor = Color(0xFFB45309),
                     secondStartColor = Color(0xFF78350F),
@@ -260,82 +266,55 @@ fun ProfileSettingScreen(
                     secondEndColor = Color(0xFFDC2626),
                 )
 
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(18.dp))
 
                 DangerZoneButton(
                     icon = Icons.Default.Delete,
-                    text = "Delete account",
+                    text = stringResource(R.string.profile_setting_delete_account),
                     textColor = White,
-                    onClick = { showDeleteDialog = true }
+                    onClick = { showDeleteDialog = true },
+                    borderColor = AccentRed,
+                    containerColor = AccentRed,
                 )
+
                 if (showDeleteDialog) {
                     ActionConfirmDialog(
-                        title = "Delete account",
-                        text = "This account is irreversible. All your data will be permanently deleted. Are you absolutely sure?",
-                        confirmText = "Delete",
+                        title = stringResource(R.string.profile_setting_delete_account),
+                        text = stringResource(R.string.profile_setting_delete_account_alert),
+                        confirmText = stringResource(R.string.profile_setting_delete_account_confirm),
+                        isDestructive = true,
                         onConfirm = {
                             showDeleteDialog = false
                             authViewModel.deleteAccount(
                                 onSuccess = {
-                                    profileViewModel.clearProfileData()
-                                    navController.navigate(ScreenNav.Login.route){
-                                        popUpTo(0)
+                                    navController.navigate(ScreenNav.Login.route) {
+                                        popUpTo(0) { inclusive = true }
+                                        launchSingleTop = true
                                     }
+                                    profileViewModel.clearProfileData()
                                 },
                                 onError = {
-                                    Log.e("DeletingAccountError", "Something went wrong with deleting account")
+                                    Log.e("DeletingAccountError", "Deleting error: ${it.message}")
                                 }
                             )
-                            profileViewModel.clearProfileData()
                         },
                         onDismiss = { showDeleteDialog = false }
                     )
                 }
 
-
-                Spacer(Modifier.height(4.dp))
-
-                // The button which signout of the user account
-//                Button(
-//                    onClick = {
-//                        authViewModel.signout()
-//                        profileViewModel.clearProfileData()
-//                    },
-//                    colors = ButtonDefaults.buttonColors(AccentRed)
-//                ) {
-//                    Row(
-//                        verticalAlignment = Alignment.CenterVertically,
-//                        horizontalArrangement = Arrangement.Start
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Default.ArrowBackIosNew,
-//                            contentDescription = "Sign Out",
-//                            tint = White,
-//                            modifier = Modifier.size(24.dp),
-//                        )
-//                        Spacer(Modifier.height(18.dp))
-//
-//                        Text(
-//                            text = "Sign Out",
-//                            fontFamily = Nunito,
-//                            color = White,
-//                            fontSize = 14.sp,
-//                            textAlign = TextAlign.End,
-//                            fontWeight = FontWeight.Black
-//                        )
-//                    }
-//                }
+                Spacer(Modifier.height(8.dp))
 
                 DangerZoneButton(
                     icon = Icons.AutoMirrored.Filled.ExitToApp,
-                    text = "Sign Out",
-                    onClick = { showSignOutDialog = true }
+                    text = stringResource(R.string.profile_setting_sign_out),
+                    onClick = { showSignOutDialog = true },
+                    borderColor = AccentRed,
                 )
                 if (showSignOutDialog) {
                     ActionConfirmDialog(
-                        title = "Sign Out",
-                        text = "Are you sure you want to sign out?",
-                        confirmText = "Sign Out",
+                        title = stringResource(R.string.profile_setting_sign_out),
+                        text = stringResource(R.string.profile_setting_sign_out_alert),
+                        confirmText = stringResource(R.string.profile_setting_sign_out_confirm),
                         onConfirm = {
                             showSignOutDialog = false
                             authViewModel.signout()
@@ -349,373 +328,4 @@ fun ProfileSettingScreen(
 
         }
     }
-}
-
-@Composable
-fun ProfileInfoBlock(
-    photoUrl: String?,
-    isImageUploading: Boolean = false,
-    onAddClick: () -> Unit,
-    name: String,
-    userName: String,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
-    ) {
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(26.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
-        ) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(Color(0xFFFFE49A), Color(0xFFFFC94D))
-                        )
-                    )
-                    .padding(vertical = 18.dp, horizontal = 16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-                    // avatar
-                    Box(
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(CircleShape)
-                            .background(Color.White)
-                            .border(3.dp, DarkButtonPurple, CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (isImageUploading) {
-                            CircularProgressIndicator(
-                                color = DarkButtonPurple,
-                                modifier = Modifier.size(30.dp)
-                            )
-                        } else if (photoUrl != null) {
-                            AsyncImage(
-                                model = photoUrl,
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                        } else {
-                            Text(
-                                text = "?",
-                                style = TextStyle(
-                                    fontFamily = PressStart2P,
-                                    fontSize = 32.sp,
-                                    color = DarkButtonPurple,
-                                    fontWeight = FontWeight.Black
-                                )
-                            )
-                        }
-
-                        if (!isImageUploading) {
-                            Box( // TODO: to solve problem with location "+" button
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .offset(x = 2.dp, y = 2.dp)
-                                    .size(28.dp)
-                                    .clip(CircleShape)
-                                    .background(DarkButtonPurple)
-                                    .border(2.dp, CardYellow, CircleShape)
-                                    .clickable { onAddClick() },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = "Add Photo",
-                                    tint = CardYellow,
-                                    modifier = Modifier.size(14.dp)
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(Modifier.height(12.dp))
-
-                    // text for name
-                    Text(
-                        text = name.ifEmpty { "???" },
-                        fontFamily = Nunito,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Black,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(Modifier.height(2.dp))
-
-                    // text for username
-                    Text(
-                        text = "@$userName",
-                        fontFamily = Nunito,
-                        fontSize = 12.sp,
-                        color = Black.copy(alpha = 0.7f),
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(Modifier.height(6.dp))
-
-
-                    /* EMAIL BLOCK: MOVE THIS TEXT (EMAIL ADRESS) IN PERSONAL DATA
-                    *  Box(
-                        modifier = Modifier
-                            .background(
-                                color = Color.White.copy(alpha = 0.6f),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                            .padding(horizontal = 16.dp, vertical = 6.dp)
-                    ) {
-                        Text(
-                            text = email,
-                            fontFamily = Nunito,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Black,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                    * */
-
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ProfileBoxButton(
-    navController: NavController,
-    route: String,
-    contentDescription: String,
-    firstStartColor: Color,
-    secondStartColor: Color,
-    firstEndColor: Color,
-    secondEndColor: Color,
-    icon: ImageVector,
-    text: String,
-    subtext: String,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-
-    // Движение карточки
-    val offsetX by animateDpAsState(
-        targetValue = if (isPressed) 6.dp else 0.dp,
-        animationSpec = tween(150),
-        label = "offset"
-    )
-
-    // Цвет карточки
-    val startColor by animateColorAsState(
-        targetValue = if (isPressed)
-            firstStartColor
-        else
-            secondStartColor,
-        animationSpec = tween(150),
-        label = "startColor"
-    )
-
-    val endColor by animateColorAsState(
-        targetValue = if (isPressed)
-            firstEndColor
-        else
-            secondEndColor,
-        animationSpec = tween(150),
-        label = "endColor"
-    )
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(x = offsetX)
-            .hoverable(interactionSource)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null
-            ) {
-                navController.navigate(route)
-            }
-            .border(
-                width = 1.dp,
-                color = Color.White.copy(alpha = 0.5f),
-                shape = RoundedCornerShape(12.dp)
-            ),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            startColor,
-                            endColor
-                        )
-                    )
-                )
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 12.dp
-                ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            // Иконка слева
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-                tint = CardYellow,
-                modifier = Modifier.size(24.dp)
-            )
-
-            Spacer(
-                modifier = Modifier.width(14.dp)
-            )
-
-            // Название + описание
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = text,
-                    fontFamily = Nunito,
-                    color = Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(
-                    modifier = Modifier.height(2.dp)
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        text = subtext,
-                        fontFamily = Nunito,
-                        color = Color(0xFFBFA9C8),
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Normal
-                    )
-                }
-            }
-
-            // Стрелка справа
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                contentDescription = null,
-                tint = Color(0xFFBFA9C8),
-                modifier = Modifier.size(14.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun DangerZoneButton(
-    icon: ImageVector,
-    text: String,
-    textColor: Color = AccentRed,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .border(1.dp, textColor.copy(0.3f), shape = RoundedCornerShape(12.dp)),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = text,
-                tint = textColor,
-                modifier = Modifier.size(24.dp)
-            )
-
-            Spacer(Modifier.width(14.dp))
-
-            Text(
-                text = text,
-                fontFamily = Nunito,
-                fontSize = 14.sp,
-                color = textColor,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-    }
-}
-
-@Composable
-fun ActionConfirmDialog(
-    title: String,
-    text: String,
-    confirmText: String,
-    isDestructive: Boolean = false,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(
-                text = title,
-                fontFamily = Nunito,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        text = {
-            Text(
-                text = text,
-                fontFamily = Nunito
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(
-                    text = confirmText,
-                    color = if (isDestructive) AccentRed else DarkButtonPurple,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = "Cancel", color = Color.Gray) // change the language
-            }
-        },
-        containerColor = Color.White, // Или цвет твоего фона карточек
-        shape = RoundedCornerShape(16.dp)
-    )
 }
