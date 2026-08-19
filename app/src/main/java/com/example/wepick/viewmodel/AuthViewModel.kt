@@ -123,6 +123,15 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
+    fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit){
+        val user = auth.currentUser
+        user?.delete()?.addOnSuccessListener {
+            onSuccess()
+        }?.addOnFailureListener {e ->
+            onError(e)
+        }
+    }
+
     fun resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
         if (email.isEmpty()) {
             onError("Please, firstly enter a password.") // TODO: add this text in R.string
