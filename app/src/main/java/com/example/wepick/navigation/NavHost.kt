@@ -27,6 +27,7 @@ import com.example.wepick.screens.profile_screens.DeleteAccountScreen
 import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
 import com.example.wepick.screens.profile_screens.HelpScreen
 import com.example.wepick.screens.profile_screens.PersonalDataScreen
+import com.example.wepick.screens.profile_screens.ProfileEditScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
@@ -105,6 +106,10 @@ fun NavGraph(
                 profileViewModel = profileViewModel,
                 navController = navController,
             )
+        }
+
+        composable(ScreenNav.ProfileEdit.route){
+            ProfileEditScreen(navController,authViewModel,profileViewModel,modifier = Modifier)
         }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)

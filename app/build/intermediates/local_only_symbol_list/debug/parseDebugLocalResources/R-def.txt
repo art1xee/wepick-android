@@ -121,6 +121,9 @@ string profile_setup_load_photo
 string profile_setup_save_profile_button
 string profile_setup_subtitle
 string profile_setup_title
+string profile_view_model_error_change_name
+string profile_view_model_error_change_user_name
+string profile_view_model_error_empty_field
 string profile_view_model_saving_profile
 string project_id
 string result_content_name

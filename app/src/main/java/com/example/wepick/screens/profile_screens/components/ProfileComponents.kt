@@ -25,12 +25,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -55,6 +57,8 @@ import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
+import com.example.wepick.ui.theme.DeepPurple
+import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 
@@ -66,6 +70,7 @@ fun ProfileInfoBlock(
     onAddClick: () -> Unit,
     name: String,
     userName: String,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -92,9 +97,8 @@ fun ProfileInfoBlock(
                     .padding(vertical = 12.dp, horizontal = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
-
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
                     // avatar
@@ -139,7 +143,6 @@ fun ProfileInfoBlock(
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.BottomEnd)
-
                                     .offset(x = 2.dp, y = (-2).dp)
                                     .size(26.dp)
                                     .clip(CircleShape)
@@ -179,6 +182,23 @@ fun ProfileInfoBlock(
                         textAlign = TextAlign.Center
                     )
                 }
+                IconButton(
+                    onClick = { onClick() },
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.TopEnd)
+                        .size(32.dp),
+                    enabled = true,
+                    shape = RoundedCornerShape(26.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit profile",
+                        tint = DarkButtonPurple,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+
             }
         }
     }

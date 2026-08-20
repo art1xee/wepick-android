@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wepick.R
@@ -82,10 +81,69 @@ class ProfileSetupViewModel() : ViewModel() {
         _name.value = newName
     }
 
+
+    enum class ProfileField {
+        NAME,
+        USERNAME,
+        // email,
+        // birth date,
+        // bio
+    }
+
+    fun saveMultipleFields(
+        updates: Map<ProfileField, String>,
+        onSuccess: () -> Unit,
+        onError: (UiText) -> Unit
+    ) {
+        val currentUser = auth.currentUser ?: return
+
+        val firestoreUpdates = mutableMapOf<String, Any>()
+
+        for ((field, value) in updates) {
+            val cleanValue = value.trim()
+
+            if (cleanValue.isEmpty()) {
+                onError(UiText.DynamicString("Поля не могут быть пустыми"))
+                return
+            }
+
+            when (field) {
+                ProfileField.NAME -> firestoreUpdates["name"] = cleanValue
+                ProfileField.USERNAME -> firestoreUpdates["userName"] = cleanValue.removePrefix("@")
+            }
+        }
+
+        if (firestoreUpdates.isEmpty()) {
+            onSuccess()
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                db.collection("users").document(currentUser.uid)
+                    .update(firestoreUpdates)
+                    .await()
+
+                if (firestoreUpdates.containsKey("name")) {
+                    _name.value = firestoreUpdates["name"] as String
+                }
+                if (firestoreUpdates.containsKey("userName")) {
+                    _userName.value = firestoreUpdates["userName"] as String
+                }
+
+                onSuccess()
+            } catch (e: Exception) {
+                val errorMsg = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.DynamicString("Save error")
+                onError(errorMsg)
+            }
+        }
+    }
+
     fun updateUsername(newUserName: String) {
         _userName.value = newUserName
     }
-
 
     fun fetchUserProfile() {
         val currentUser = auth.currentUser ?: return

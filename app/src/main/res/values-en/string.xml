@@ -72,6 +72,9 @@
 
     <!--PROFILE VIEW MODEL  -->
     <string name="profile_view_model_saving_profile">Saving profile…</string>
+    <string name="profile_view_model_error_empty_field">The fields cannot be empty!</string>
+    <string name="profile_view_model_error_change_name">Enter a new name!</string>
+    <string name="profile_view_model_error_change_user_name">Enter a new username!</string>
 
     <!--PROFILE SETTINGS -->
     <string name="profile_setting_label">Profile</string>

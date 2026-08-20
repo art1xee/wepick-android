@@ -1319,6 +1319,9 @@ int string profile_setup_load_photo 0x7f1000fc
 int string profile_setup_save_profile_button 0x7f1000f8
 int string profile_setup_subtitle 0x7f1000f9
 int string profile_setup_title 0x7f1000fa
+int string profile_view_model_error_change_name 0x7f10011e
+int string profile_view_model_error_change_user_name 0x7f10011f
+int string profile_view_model_error_empty_field 0x7f10011d
 int string profile_view_model_saving_profile 0x7f10011a
 int string project_id 0x7f1000c4
 int string range_end 0x7f1000c5

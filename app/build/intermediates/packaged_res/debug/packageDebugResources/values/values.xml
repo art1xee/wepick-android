@@ -107,6 +107,9 @@
     <string name="profile_setup_save_profile_button">Створити профіль!</string>
     <string name="profile_setup_subtitle">Майже готово!\nНалаштуймо ваш профіль.</string>
     <string name="profile_setup_title">НАЛАШТУВАННЯ ПРОФІЛЮ</string>
+    <string name="profile_view_model_error_change_name">Впишіть нове ім\'я!</string>
+    <string name="profile_view_model_error_change_user_name">Впишіть новий нікнейм!</string>
+    <string name="profile_view_model_error_empty_field">Поля не можуть бути порожніми!</string>
     <string name="profile_view_model_saving_profile">Зберігаємо профіль…</string>
     <string name="project_id" translatable="false">wepick--android-version</string>
     <string name="result_content_name">_</string>

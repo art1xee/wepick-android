@@ -78,6 +78,9 @@
     <string name="profile_setup_save_profile_button">Create Profile</string>
     <string name="profile_setup_subtitle">Almost there! Let’s complete your profile.</string>
     <string name="profile_setup_title">PROFILE SETUP</string>
+    <string name="profile_view_model_error_change_name">Enter a new name!</string>
+    <string name="profile_view_model_error_change_user_name">Enter a new username!</string>
+    <string name="profile_view_model_error_empty_field">The fields cannot be empty!</string>
     <string name="profile_view_model_saving_profile">Saving profile…</string>
     <string name="result_content_name">_</string>
     <string name="result_end">You have reached the end!</string>

@@ -1,56 +1,29 @@
 package com.example.wepick.screens.profile_screens
 
-import android.app.AlertDialog
 import android.util.Log
-import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.Help
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -61,21 +34,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.screens.profile_screens.components.ActionConfirmDialog
@@ -83,18 +50,11 @@ import com.example.wepick.screens.profile_screens.components.DangerZoneButton
 import com.example.wepick.screens.profile_screens.components.ProfileBoxButton
 import com.example.wepick.screens.profile_screens.components.ProfileInfoBlock
 import com.example.wepick.ui.theme.AccentRed
-import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.DarkButtonPurple
-import com.example.wepick.ui.theme.DeepPurple
-import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.MainViewModel
-import com.example.wepick.viewmodel.PlayerViewModel
 import com.example.wepick.viewmodel.ProfileSetupViewModel
 
 @Composable
@@ -135,7 +95,6 @@ fun ProfileSettingScreen(
                     launchSingleTop = true
                 }
             }
-
             else -> Unit
         }
     }
@@ -160,7 +119,8 @@ fun ProfileSettingScreen(
                     .padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text( // TODO make this text in separate func
+                //TODO: add this text block on the components app level
+                Text(
                     text = stringResource(R.string.profile_setting_label),
                     fontFamily = PressStart2P,
                     fontSize = 18.sp,
@@ -187,6 +147,7 @@ fun ProfileSettingScreen(
                     },
                     name = name,
                     userName = userName,
+                    onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }
                 )
 
                 Spacer(Modifier.height(10.dp))
