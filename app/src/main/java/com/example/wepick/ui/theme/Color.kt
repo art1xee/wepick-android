@@ -1,5 +1,6 @@
 package com.example.wepick.ui.theme
 
+import androidx.compose.material3.ButtonColors
 import androidx.compose.ui.graphics.Color
 
 
@@ -15,7 +16,7 @@ val Pink40 = Color(0xFF7D5260)
 // the main colors for every screens
 val PrimaryPurple = Color(0xFF800E9C)
 val DeepPurple = Color(0xFF3A1259)
-val MidPurple = Color(0xFF5B1E86)
+val MidPurple= Color(0xFF5B1E86)
 val AccentRed = Color(0xFFFF0037)
 val Muted = Color(0xFF8B8B8B)
 

@@ -52,6 +52,16 @@
     <string name="partner_friend_name">Передайте устройство другу, чтобы он ввёл своё имя.</string>
     <string name="partner_friend_name_hint">Имя друга</string>
     <string name="partner_title">Теперь выберите, с кем будете смотреть: %1$s.</string>
+    <string name="profile_edit_button_edit">Изменить!</string>
+    <string name="profile_edit_button_edit_loading">Сохраняем…</string>
+    <string name="profile_edit_change_photo">Изменить фото</string>
+    <string name="profile_edit_email_field">Email:</string>
+    <string name="profile_edit_label">Редактирование профиля</string>
+    <string name="profile_edit_name_field">Имя: </string>
+    <string name="profile_edit_previous_email_field">ваш старый email: %s:</string>
+    <string name="profile_edit_previous_name_field">ваше старое имя: %s</string>
+    <string name="profile_edit_previous_user_name_field">ваш старый никнейм: %s</string>
+    <string name="profile_edit_user_name_field">Никнейм:</string>
     <string name="profile_setting_cancel">Отмена</string>
     <string name="profile_setting_change_password_subtitle">Измените пароль вашего аккаунта</string>
     <string name="profile_setting_change_password_title">Изменить пароль</string>

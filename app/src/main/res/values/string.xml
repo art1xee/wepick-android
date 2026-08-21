@@ -77,7 +77,6 @@
     <string name="profile_view_model_error_change_name">Впишіть нове ім\'я!</string>
     <string name="profile_view_model_error_change_user_name">Впишіть новий нікнейм!</string>
 
-
     <!--PROFILE SETTINGS -->
     <string name="profile_setting_label">Профіль</string>
     <string name="profile_setting_personal_data_title">Про користувача</string>
@@ -96,6 +95,17 @@
     <string name="profile_setting_sign_out_confirm">Вийти</string>
     <string name="profile_setting_cancel">Відмінити</string>
 
+    <!--PROFILE SETTINGS -->
+    <string name="profile_edit_label">Редагування профілю</string>
+    <string name="profile_edit_name_field">Ім\'я: </string>
+    <string name="profile_edit_previous_name_field">ваше старе ім\'я: %s</string>
+    <string name="profile_edit_user_name_field">Нікнейм:</string>
+    <string name="profile_edit_previous_user_name_field">ваш старий нікнейм: %s</string>
+    <string name="profile_edit_email_field">Email:</string>
+    <string name="profile_edit_previous_email_field">ваш старий email: %s:</string>
+    <string name="profile_edit_button_edit">Змінити!</string>
+    <string name="profile_edit_button_edit_loading">Зберігаємо…</string>
+    <string name="profile_edit_change_photo">Змінити фото</string>
 
     <!-- SELECTION -->
     <string name="selection_title">Привіт, %1$s! Оберіть, що хочете подивитися.</string>

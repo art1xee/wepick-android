@@ -139,12 +139,6 @@ fun ProfileSettingScreen(
                 //Profile info block with: avatar, name, username, email
                 ProfileInfoBlock(
                     photoUrl = photoUrl,
-                    isImageUploading = isImageUploading,
-                    onAddClick = {
-                        photoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    },
                     name = name,
                     userName = userName,
                     onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }

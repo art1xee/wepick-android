@@ -456,3 +456,30 @@ fun SetupProfileButton(
         }
     )
 }
+
+@Composable
+fun RetroEditProfileButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    text: String,
+    loadingText: String,
+    loading: Boolean,
+) {
+BaseRetroButton(
+    onClick = onClick,
+    modifier = modifier,
+    enabled =enabled,
+    containerColor = if(enabled) AccentRed else Muted,
+    showShadow = enabled,
+    content = {
+        Text(
+            text = if(loading) loadingText else text,
+            fontFamily = Nunito,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 15.5.sp,
+            color = if (enabled) White else Black.copy(alpha = 0.5f)
+        )
+    }
+)
+}

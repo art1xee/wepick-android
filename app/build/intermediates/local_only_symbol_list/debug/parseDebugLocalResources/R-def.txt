@@ -95,6 +95,16 @@ string partner_friend
 string partner_friend_name
 string partner_friend_name_hint
 string partner_title
+string profile_edit_button_edit
+string profile_edit_button_edit_loading
+string profile_edit_change_photo
+string profile_edit_email_field
+string profile_edit_label
+string profile_edit_name_field
+string profile_edit_previous_email_field
+string profile_edit_previous_name_field
+string profile_edit_previous_user_name_field
+string profile_edit_user_name_field
 string profile_setting_cancel
 string profile_setting_change_password_subtitle
 string profile_setting_change_password_title

@@ -1293,6 +1293,16 @@ int string partner_friend 0x7f1000c0
 int string partner_friend_name 0x7f1000c1
 int string partner_friend_name_hint 0x7f1000c2
 int string partner_title 0x7f1000c3
+int string profile_edit_button_edit 0x7f100120
+int string profile_edit_button_edit_loading 0x7f100121
+int string profile_edit_change_photo 0x7f100122
+int string profile_edit_email_field 0x7f100123
+int string profile_edit_label 0x7f100124
+int string profile_edit_name_field 0x7f100125
+int string profile_edit_previous_email_field 0x7f100126
+int string profile_edit_previous_name_field 0x7f100127
+int string profile_edit_previous_user_name_field 0x7f100128
+int string profile_edit_user_name_field 0x7f100129
 int string profile_setting_cancel 0x7f10010a
 int string profile_setting_change_password_subtitle 0x7f10010b
 int string profile_setting_change_password_title 0x7f10010c

@@ -94,6 +94,18 @@
     <string name="profile_setting_sign_out_confirm">Sign Out</string>
     <string name="profile_setting_cancel">Cancel</string>
 
+    <!--PROFILE SETTINGS -->
+    <string name="profile_edit_label">Edit profile</string>
+    <string name="profile_edit_name_field">Name: </string>
+    <string name="profile_edit_previous_name_field">your old name: %s</string>
+    <string name="profile_edit_user_name_field">Username:</string>
+    <string name="profile_edit_previous_user_name_field">your old username: %s</string>
+    <string name="profile_edit_email_field">Email:</string>
+    <string name="profile_edit_previous_email_field">your old email: %s:</string>
+    <string name="profile_edit_button_edit">Change!</string>
+    <string name="profile_edit_button_edit_loading">Saving…</string>
+    <string name="profile_edit_change_photo">Change photo</string>
+
     <!-- SELECTION -->
     <string name="selection_title">Hello %1$s! Choose content which you want to watch.</string>
     <string name="selection_movie">Movies</string>

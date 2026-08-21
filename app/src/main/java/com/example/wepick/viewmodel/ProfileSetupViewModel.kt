@@ -52,6 +52,8 @@ class ProfileSetupViewModel() : ViewModel() {
     var transitionState by mutableStateOf<AuthTransitionState?>(null)
         private set
 
+    val isGoogleSignup: Boolean
+        get() = auth.currentUser?.providerData?.any { it.providerId == "google.com" } == true
 
     init {
         auth.addAuthStateListener { firebaseAuth ->
@@ -85,7 +87,7 @@ class ProfileSetupViewModel() : ViewModel() {
     enum class ProfileField {
         NAME,
         USERNAME,
-        // email,
+        EMAIL,
         // birth date,
         // bio
     }
@@ -110,6 +112,7 @@ class ProfileSetupViewModel() : ViewModel() {
             when (field) {
                 ProfileField.NAME -> firestoreUpdates["name"] = cleanValue
                 ProfileField.USERNAME -> firestoreUpdates["userName"] = cleanValue.removePrefix("@")
+                ProfileField.EMAIL -> firestoreUpdates["email"] = cleanValue
             }
         }
 
@@ -129,6 +132,9 @@ class ProfileSetupViewModel() : ViewModel() {
                 }
                 if (firestoreUpdates.containsKey("userName")) {
                     _userName.value = firestoreUpdates["userName"] as String
+                }
+                if (firestoreUpdates.containsKey("email")) {
+                    _email.value = firestoreUpdates["email"] as String
                 }
 
                 onSuccess()
