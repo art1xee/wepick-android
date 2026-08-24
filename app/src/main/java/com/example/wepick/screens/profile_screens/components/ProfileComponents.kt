@@ -130,7 +130,7 @@ fun ProfileInfoBlock(
                     )
 
                     Text(
-                        text = "@$userName",
+                        text = userName,
                         fontFamily = Nunito,
                         fontSize = 12.sp,
                         color = Black.copy(alpha = 0.7f),

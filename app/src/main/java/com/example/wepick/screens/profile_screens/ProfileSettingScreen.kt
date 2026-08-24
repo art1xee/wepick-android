@@ -227,10 +227,6 @@ fun ProfileSettingScreen(
                             showDeleteDialog = false
                             authViewModel.deleteAccount(
                                 onSuccess = {
-                                    navController.navigate(ScreenNav.Login.route) {
-                                        popUpTo(0) { inclusive = true }
-                                        launchSingleTop = true
-                                    }
                                     profileViewModel.clearProfileData()
                                 },
                                 onError = {

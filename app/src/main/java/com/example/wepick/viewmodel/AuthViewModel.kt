@@ -33,7 +33,8 @@ class AuthViewModel : ViewModel() {
         private set
 
     private suspend fun handeAuthSuccess(uid: String) {
-        transitionState = AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome))
+        transitionState =
+            AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome))
         delay(2000)
         transitionState = null
         verifyUserProfile(uid)
@@ -79,7 +80,8 @@ class AuthViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining))
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining))
             try {
                 auth.signInWithEmailAndPassword(email, password).await()
                 delay(2000)
@@ -98,16 +100,19 @@ class AuthViewModel : ViewModel() {
 
     fun signup(email: String, password: String, confirmPassword: String) {
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            _authState.value = AuthState.Error(UiText.StringResource(R.string.auth_transition_enter_fields_error))
+            _authState.value =
+                AuthState.Error(UiText.StringResource(R.string.auth_transition_enter_fields_error))
             return
         }
         if (password != confirmPassword) {
-            _authState.value = AuthState.Error(UiText.StringResource(R.string.auth_transition_password_mismatch))
+            _authState.value =
+                AuthState.Error(UiText.StringResource(R.string.auth_transition_password_mismatch))
             return
         }
 
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_creating_account))
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_creating_account))
             try {
                 auth.createUserWithEmailAndPassword(email, password).await()
                 delay(2500)
@@ -130,26 +135,20 @@ class AuthViewModel : ViewModel() {
     }
 
     fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit) {
-        val user = auth.currentUser
-        val uid = user?.uid
+        val user = auth.currentUser ?: return
+        val uid = user.uid
 
-        if (uid != null) {
-            // 1. Сначала удаляем документ юзера
-            db.collection("users").document(uid).delete()
-                .addOnSuccessListener {
-                    // 2. Затем удаляем сам аккаунт из аутентификации
-                    user.delete()
-                        .addOnSuccessListener {
-                            _authState.value = AuthState.Unauthenticated
-                            onSuccess()
-                        }
-                        .addOnFailureListener { e ->
-                            onError(e)
-                        }
-                }
-                .addOnFailureListener { e ->
-                    onError(e)
-                }
+        viewModelScope.launch {
+            try {
+                db.collection("users").document(uid).delete().await()
+
+                user.delete()?.await()
+
+                _authState.value = AuthState.Unauthenticated
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e)
+            }
         }
     }
 
@@ -185,11 +184,14 @@ class AuthViewModel : ViewModel() {
             .build()
 
         viewModelScope.launch {
-            transitionState = AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining_with_google))
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining_with_google))
             try {
                 val result = credentialManager.getCredential(context, request)
-                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(result.credential.data)
-                val authCredential = GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
+                val googleIdTokenCredential =
+                    GoogleIdTokenCredential.createFrom(result.credential.data)
+                val authCredential =
+                    GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
 
                 auth.signInWithCredential(authCredential).await()
                 delay(2000)

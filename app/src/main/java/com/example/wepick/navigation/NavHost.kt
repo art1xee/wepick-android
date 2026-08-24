@@ -108,8 +108,8 @@ fun NavGraph(
             )
         }
 
-        composable(ScreenNav.ProfileEdit.route){
-            ProfileEditScreen(navController,authViewModel,profileViewModel,modifier = Modifier)
+        composable(ScreenNav.ProfileEdit.route) {
+            ProfileEditScreen(navController, profileViewModel, modifier = Modifier)
         }
         composable(ScreenNav.SignUp.route) {
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
