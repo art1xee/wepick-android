@@ -2,7 +2,6 @@ package com.example.wepick.screens.profile_screens
 
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -55,7 +54,7 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 @Composable
 fun ProfileSettingScreen(

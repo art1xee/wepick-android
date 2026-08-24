@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
-import com.example.wepick.viewmodel.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 @Composable
 fun AppSettingScreen(

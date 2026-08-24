@@ -31,7 +31,7 @@ import com.example.wepick.screens.profile_screens.ProfileEditScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
-import com.example.wepick.viewmodel.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
 @Composable

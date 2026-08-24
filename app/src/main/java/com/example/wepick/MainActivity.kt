@@ -18,7 +18,7 @@ import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
-import com.example.wepick.viewmodel.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context?) {

@@ -64,7 +64,7 @@ import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.PrimaryPurple
 import com.example.wepick.ui.theme.White
-import com.example.wepick.viewmodel.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 @Composable
 fun ProfileSetup(
