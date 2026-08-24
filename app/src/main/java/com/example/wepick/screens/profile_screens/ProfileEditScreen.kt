@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.wepick.R
@@ -65,20 +66,11 @@ import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 @Composable
 fun ProfileEditScreen(
     navController: NavHostController,
-    authViewModel: AuthViewModel,
     profileViewModel: ProfileSetupViewModel,
     modifier: Modifier = Modifier
 ) {
-    val authState = authViewModel.authState.observeAsState()
+    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
 
-
-    val currentName by profileViewModel.name.collectAsState()
-    val currentUserName by profileViewModel.userName.collectAsState()
-    val currentEmail by profileViewModel.email.collectAsState()
-
-
-    val photoUrl by profileViewModel.photoUrl.collectAsState()
-    val isImageUploading by profileViewModel.isImageUploading.collectAsState()
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
@@ -90,15 +82,15 @@ fun ProfileEditScreen(
 
     val context = LocalContext.current
 
-    var textStateName by remember(currentName) { mutableStateOf(currentName) }
-    var textStateUserName by remember(currentUserName) { mutableStateOf(currentUserName) }
-    var textStateEmail by remember(currentEmail) { mutableStateOf(currentEmail) }
+    var textStateName by remember(uiState.name) { mutableStateOf(uiState.name) }
+    var textStateUserName by remember(uiState.userName) { mutableStateOf(uiState.userName) }
+    var textStateEmail by remember(uiState.email) { mutableStateOf(uiState.email) }
 
     var isLoading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf<String?>(null) }
 
     //TODO: good idea add this value when user gonna create account
-//    val birthDate by profileViewModel.birthDate.collectAsState()
+    //val birthDate by profileViewModel.birthDate.collectAsState()
 
     LaunchedEffect(Unit) {
         profileViewModel.fetchUserProfile()
@@ -176,13 +168,13 @@ fun ProfileEditScreen(
                 Spacer(Modifier.height(8.dp))
 
                 EditAvatar(
-                    photoUrl = photoUrl,
+                    photoUrl = uiState.photoUrl,
                     onAddClick = {
                         photoPickerLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     },
-                    isImageUploading = isImageUploading,
+                    isImageUploading = uiState.isImageUploading,
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -197,7 +189,7 @@ fun ProfileEditScreen(
                     text = stringResource(R.string.profile_edit_name_field),
                     textField = stringResource(
                         R.string.profile_edit_previous_name_field,
-                        currentName
+                        uiState.name
                     )
                 )
 
@@ -213,7 +205,7 @@ fun ProfileEditScreen(
                     text = stringResource(R.string.profile_edit_user_name_field),
                     textField = stringResource(
                         R.string.profile_edit_previous_user_name_field,
-                        currentUserName
+                        uiState.userName
                     )
                 )
 
@@ -231,7 +223,7 @@ fun ProfileEditScreen(
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
                             R.string.profile_edit_previous_email_field,
-                            currentEmail
+                            uiState.email
                         ),
                     )
                 }
@@ -262,13 +254,13 @@ fun ProfileEditScreen(
 
                         val updates = mutableMapOf<ProfileSetupViewModel.ProfileField, String>()
 
-                        if (trimmedName != currentName.trim()) {
+                        if (trimmedName != uiState.name.trim()) {
                             updates[ProfileSetupViewModel.ProfileField.NAME] = trimmedName
                         }
-                        if (trimmedUserName != currentUserName.trim()) {
+                        if (trimmedUserName != uiState.userName.trim()) {
                             updates[ProfileSetupViewModel.ProfileField.USERNAME] = trimmedUserName
                         }
-                        if (trimmedEmail != currentEmail.trim()) {
+                        if (trimmedEmail != uiState.email.trim()) {
                             updates[ProfileSetupViewModel.ProfileField.EMAIL] = trimmedEmail
                         }
 

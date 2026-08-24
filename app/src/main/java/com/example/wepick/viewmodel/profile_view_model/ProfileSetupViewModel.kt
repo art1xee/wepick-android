@@ -58,7 +58,7 @@ class ProfileSetupViewModel() : ViewModel() {
         NAME,
         USERNAME,
         EMAIL,
-//        USER_BIO
+        //USER_BIO
         // BIRTHDAY
     }
 

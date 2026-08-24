@@ -30,7 +30,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.wepick.R
@@ -72,14 +72,8 @@ fun ProfileSetup(
     profileViewModel: ProfileSetupViewModel,
     modifier: Modifier = Modifier
 ) {
-    val name by profileViewModel.name.collectAsState()
-    val userName by profileViewModel.userName.collectAsState()
-    val email by profileViewModel.email.collectAsState()
-    val isSaved by profileViewModel.isSaved.collectAsState()
-    val isLoading by profileViewModel.isLoading.collectAsState()
 
-    val photoUrl by profileViewModel.photoUrl.collectAsState()
-    val isImageUploading by profileViewModel.isImageUploading.collectAsState()
+    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -92,14 +86,8 @@ fun ProfileSetup(
 
     var nameError by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        profileViewModel.reloadData()
-    }
-
-    LaunchedEffect(isSaved) {
-        if (isSaved) {
-            profileViewModel.reloadData()
-
+    LaunchedEffect(uiState.isSaved) {
+        if (uiState.isSaved) {
             navController.navigate(ScreenNav.Home.route) {
                 popUpTo(ScreenNav.ProfileSetup.route) { inclusive = true }
             }
@@ -152,8 +140,8 @@ fun ProfileSetup(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 ProfileAvatar(
-                    photoUrl = photoUrl,
-                    isImageUploading = isImageUploading,
+                    photoUrl = uiState.photoUrl,
+                    isImageUploading = uiState.isImageUploading,
                     onAddClick = {
                         photoPickerLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -175,7 +163,7 @@ fun ProfileSetup(
 
                 FormTextFields(
                     modifier = Modifier.fillMaxWidth(),
-                    value = name,
+                    value = uiState.name,
                     onValueChanged = {
                         profileViewModel.updateName(it)
                         if (nameError) nameError = false
@@ -190,7 +178,7 @@ fun ProfileSetup(
 
                 FormTextFields( // TODO: when user write user name, text field must add @ in start of the user name
                     modifier = Modifier.fillMaxWidth(),
-                    value = userName,
+                    value = uiState.userName,
                     onValueChanged = {
                         profileViewModel.updateUsername(it)
                         if (nameError) nameError = false
@@ -204,19 +192,19 @@ fun ProfileSetup(
 
                 Spacer(Modifier.height(16.dp))
 
-                LockedEmailField(email = email)
+                LockedEmailField(email = uiState.email)
 
                 Spacer(modifier = Modifier.height(32.dp))
 
                 SetupProfileButton(
                     profileViewModel = profileViewModel,
                     error = nameError,
-                    name = name,
-                    modifier = modifier,
-                    enabled = !isLoading,
+                    name = uiState.name,
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = !uiState.isLoading,
                     text = stringResource(R.string.profile_setup_save_profile_button),
                     loadingText = stringResource(R.string.loading),
-                    loading = isLoading,
+                    loading = uiState.isLoading,
                 ) // TODO: if text fields - empty. add error than field cannot be empty
             }
         }
