@@ -1,8 +1,6 @@
 package com.example.wepick.screens.profile_screens
 
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +23,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +38,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
@@ -67,19 +65,7 @@ fun ProfileSettingScreen(
 
     val authState = authViewModel.authState.observeAsState()
 
-    val name by profileViewModel.name.collectAsState()
-    val userName by profileViewModel.userName.collectAsState()
-
-    val photoUrl by profileViewModel.photoUrl.collectAsState()
-    val isImageUploading by profileViewModel.isImageUploading.collectAsState()
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri ->
-            if (uri != null) {
-                profileViewModel.uploadProfileImage(uri)
-            }
-        }
-    )
+    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         profileViewModel.fetchUserProfile()
@@ -137,9 +123,9 @@ fun ProfileSettingScreen(
 
                 //Profile info block with: avatar, name, username, email
                 ProfileInfoBlock(
-                    photoUrl = photoUrl,
-                    name = name,
-                    userName = userName,
+                    photoUrl = uiState.photoUrl,
+                    name = uiState.name,
+                    userName = uiState.userName,
                     onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }
                 )
 
