@@ -25,35 +25,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.collections.iterator
+import androidx.core.net.toUri
+import kotlin.time.Duration.Companion.milliseconds
 
 class ProfileSetupViewModel() : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
-
-    private val _name = MutableStateFlow("")
-    val name = _name.asStateFlow()
-
-    private val _userName = MutableStateFlow("")
-    val userName = _userName.asStateFlow()
-
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email.asStateFlow()
-
-    private val _userBio = MutableStateFlow("")
-    val userBio = _userBio.asStateFlow()
-
-    private val _photoUrl = MutableStateFlow<String?>(null)
-    val photoUrl: StateFlow<String?> = _photoUrl.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-    private val _isSaved = MutableStateFlow(false)
-    val isSaved: StateFlow<Boolean> = _isSaved.asStateFlow()
-
-    private val _isImageUploading = MutableStateFlow(false)
-    val isImageUploading = _isImageUploading.asStateFlow()
 
     private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
@@ -69,39 +47,12 @@ class ProfileSetupViewModel() : ViewModel() {
         auth.addAuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                loadInitialData()
                 fetchUserProfile()
             } else {
                 clearProfileData()
             }
         }
     }
-
-    fun loadInitialData() {
-        val currentUser = auth.currentUser
-        currentUser?.let { user ->
-            _email.value = user.email ?: ""
-
-            _name.value = user.displayName ?: ""
-            _photoUrl.value = user.photoUrl?.toString()
-
-        }
-    }
-
-    fun reloadData() {
-        _isSaved.value = false
-        _isLoading.value = false
-
-        val currentUser = auth.currentUser
-
-        currentUser?.let { user ->
-            _email.value = user.email ?: ""
-            _name.value = user.displayName ?: ""
-            // _userBio.value = user.userAbout ?: ""
-            _photoUrl.value = user.photoUrl?.toString()
-        }
-    }
-
 
     enum class ProfileField {
         NAME,
@@ -146,15 +97,16 @@ class ProfileSetupViewModel() : ViewModel() {
                     .update(firestoreUpdates)
                     .await()
 
-                if (firestoreUpdates.containsKey("name")) {
-                    _name.value = firestoreUpdates["name"] as String
-                }
-                if (firestoreUpdates.containsKey("userName")) {
-                    _userName.value = firestoreUpdates["userName"] as String
-                }
-                if (firestoreUpdates.containsKey("email")) {
-                    _email.value = firestoreUpdates["email"] as String
-                }
+                    _uiState.update {
+                        it.copy(
+                            // 1. find any value if firestoreUpdates
+                            // 2. if program find "new value" - write "new value"
+                            // 3. if key missed, working ?: it.value and in the field stayed value which already was in text-field
+                            name = (firestoreUpdates["name"] as? String) ?: it.name,
+                            userName = (firestoreUpdates["userName"] as? String)?: it.userName,
+                            email = (firestoreUpdates["email"] as? String) ?: it.email,
+                        )
+                    }
 
                 onSuccess()
             } catch (e: Exception) {
@@ -219,9 +171,12 @@ class ProfileSetupViewModel() : ViewModel() {
     }
 
     fun saveProfile() {
+        val currentUiState = _uiState.value
+
         val currentUser = auth.currentUser ?: return
-        val currentUserName = _userName.value.trim()
-        val currentName = _name.value.trim()
+        val currentUserName = currentUiState.userName.trim()
+        val currentName = currentUiState.name.trim()
+
 
         val formattedUserName = if (currentUserName.startsWith("@")) {
             currentUserName
@@ -233,7 +188,11 @@ class ProfileSetupViewModel() : ViewModel() {
         if (currentName.isEmpty()) return
 
         viewModelScope.launch {
-            _isLoading.value = true
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
             transitionState =
                 AuthTransitionState.Loading(UiText.StringResource(R.string.profile_view_model_saving_profile))
             try {
@@ -241,9 +200,9 @@ class ProfileSetupViewModel() : ViewModel() {
                     uid = currentUser.uid,
                     userName = formattedUserName,
                     name = currentName,
-                    email = _email.value,
-                    photoUrl = _photoUrl.value,
-                    userBio = _userBio.value,
+                    email = currentUiState.email,
+                    photoUrl = currentUiState.photoUrl,
+                    bio = currentUiState.bio,
                     profileCompleted = true,
                 )
 
@@ -251,8 +210,8 @@ class ProfileSetupViewModel() : ViewModel() {
 
                 val profileUpdates =
                     UserProfileChangeRequest.Builder().setDisplayName(currentName).apply {
-                        if (!_photoUrl.value.isNullOrEmpty()) {
-                            photoUri = Uri.parse(_photoUrl.value)
+                        if (!currentUiState.photoUrl.isNullOrEmpty()) {
+                            photoUri = currentUiState.photoUrl.toUri()
                         }
                     }.build()
 
@@ -260,14 +219,22 @@ class ProfileSetupViewModel() : ViewModel() {
 
                 transitionState =
                     AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome))
-                delay(2000)
+                delay(2000.milliseconds)
                 transitionState = null
-                _isSaved.value = true
+                _uiState.update {
+                    it.copy(
+                        isSaved = true
+                    )
+                }
             } catch (e: Exception) {
                 transitionState = null
                 e.printStackTrace()
             } finally {
-                _isLoading.value = false
+                _uiState.update {
+                    it.copy(
+                        isLoading = false
+                    )
+                }
             }
         }
     }
@@ -284,7 +251,11 @@ class ProfileSetupViewModel() : ViewModel() {
         val currentUser = auth.currentUser ?: return
 
         viewModelScope.launch {
-            _isImageUploading.value = true
+            _uiState.update {
+                it.copy(
+                    isImageUploading = true
+                )
+            }
             try {
                 val storageRef = storage.reference.child("profile_images/${currentUser.uid}.jpg")
                 storageRef.putFile(imageUrl).await()
@@ -294,12 +265,19 @@ class ProfileSetupViewModel() : ViewModel() {
                 db.collection("users").document(currentUser.uid).update("photoUrl", downloadUrl)
                     .await()
 
-                _photoUrl.value = downloadUrl
-
+                _uiState.update {
+                    it.copy(
+                        photoUrl = downloadUrl
+                    )
+                }
             } catch (e: Exception) {
                 Log.e("ProfileSetup", "ERROR: cannot load the photo", e)
             } finally {
-                _isImageUploading.value = false
+                _uiState.update {
+                    it.copy(
+                        isImageUploading = false
+                    )
+                }
 
             }
         }
