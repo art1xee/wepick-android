@@ -39,6 +39,7 @@ class ProfileSetupViewModel() : ViewModel() {
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
     private var usernameJob: Job? = null
+    private var emailJob: Job? = null
 
 
     var transitionState by mutableStateOf<AuthTransitionState?>(null)
@@ -191,6 +192,53 @@ class ProfileSetupViewModel() : ViewModel() {
             } catch (e: Exception) {
                 Log.e("ProfileSetupAvailability", "Error loading username from DB", e)
                 _uiState.update { it.copy(userNameStatus = ValidationStatus.IDLE) }
+            }
+        }
+    }
+
+    fun checkEmailAvailability(emailToCheck: String) {
+        val cleanEmail = emailToCheck.trim()
+
+        emailJob?.cancel()
+        emailJob = viewModelScope.launch {
+            delay(500.milliseconds)
+
+            if (cleanEmail.isEmpty()) {
+                _uiState.update {
+                    it.copy(
+                        emailStatus = ValidationStatus.IDLE
+                    )
+                }
+                try {
+                    _uiState.update {
+                        it.copy(
+                            emailStatus = ValidationStatus.IDLE
+                        )
+                    }
+
+                    val snapshot =
+                        db.collection("users").whereEqualTo("email", emailToCheck).get().await()
+                    val currentUid = auth.currentUser?.uid
+                    val isTaken = snapshot.documents.any { doc -> doc.id != currentUid }
+
+                    if(!isTaken){
+                        _uiState.update {
+                            it.copy(
+                                emailStatus = ValidationStatus.AVAILABLE
+                            )
+                        }
+                    }else{
+                        _uiState.update {
+                            it.copy(
+                                emailStatus = ValidationStatus.TAKEN
+                            )
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    Log.e("ProfileSetupAvailability", "Error loading email from DB", e)
+                    _uiState.update { it.copy(emailStatus = ValidationStatus.IDLE) }
+                }
             }
         }
     }
