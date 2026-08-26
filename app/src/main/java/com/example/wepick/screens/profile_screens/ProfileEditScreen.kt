@@ -53,6 +53,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.screens.auth.login.FormTextFields
+import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
 import com.example.wepick.ui.components.RetroEditProfileButton
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.CardYellow
@@ -88,6 +89,9 @@ fun ProfileEditScreen(
 
     var isLoading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf<String?>(null) }
+
+    val isUserNameTaken = uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
+    val isEmailTaken = uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
 
     //TODO: good idea add this value when user gonna create account
     //val birthDate by profileViewModel.birthDate.collectAsState()
@@ -200,13 +204,19 @@ fun ProfileEditScreen(
                     value = textStateUserName,
                     onValueChanged = { newValue ->
                         textStateUserName = newValue
+                        if (newValue.trim() != uiState.userName.trim()) {
+                            profileViewModel.checkUsernameAvailability(newValue)
+                        }
                         errorMsg = null
                     },
+                    isError = isUserNameTaken,
+                    errorText = if (isUserNameTaken) "This username already taken" else null,
                     text = stringResource(R.string.profile_edit_user_name_field),
                     textField = stringResource(
                         R.string.profile_edit_previous_user_name_field,
                         uiState.userName
-                    )
+                    ),
+                    trailingIcon = { ValidationTrailingIcon(status = uiState.userNameStatus) }
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -218,13 +228,20 @@ fun ProfileEditScreen(
                         value = textStateEmail,
                         onValueChanged = { newValue ->
                             textStateEmail = newValue
+                            if (newValue.trim() != uiState.email.trim()) {
+                                profileViewModel.checkEmailAvailability(newValue)
+                            }
+
                             errorMsg = null
                         },
+                        isError = isEmailTaken,
+                        errorText = if (isEmailTaken) "Another account has this email" else null,
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
                             R.string.profile_edit_previous_email_field,
                             uiState.email
                         ),
+                        trailingIcon = { ValidationTrailingIcon(status = uiState.emailStatus) }
                     )
                 }
 
@@ -241,34 +258,42 @@ fun ProfileEditScreen(
                 }
 
 
+                val trimmedName = textStateName.trim()
+                val trimmedUserName = textStateUserName.trim()
+                val trimmedEmail = textStateEmail.trim()
+
+                val isNameChanged = textStateName.trim() != uiState.name.trim()
+                val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
+                val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
+                val hasChanges = isNameChanged || isUserNameChanged || isEmailChanged
+
+                val isUserNameValid =
+                    !isUserNameChanged || uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE
+                val isEmailValid =
+                    !isEmailChanged || uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE
+
                 RetroEditProfileButton(
+
                     modifier = Modifier.fillMaxWidth(),
                     loading = isLoading,
-                    enabled = !isLoading &&
-                            uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE &&
-                            uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE,
+                    enabled = !isLoading && hasChanges && isEmailValid && isUserNameValid && textStateName.isNotBlank() && textStateUserName.isNotBlank(),
                     text = stringResource(R.string.profile_edit_button_edit),
                     loadingText = stringResource(R.string.profile_edit_button_edit_loading),
                     onClick = {
-                        val trimmedName = textStateName.trim()
-                        val trimmedUserName = textStateUserName.trim()
-                        val trimmedEmail = textStateEmail.trim()
+
 
                         val updates = mutableMapOf<ProfileSetupViewModel.ProfileField, String>()
 
-                        if (trimmedName != uiState.name.trim()) {
+                        if (isNameChanged) {
                             updates[ProfileSetupViewModel.ProfileField.NAME] = trimmedName
                         }
-                        if (trimmedUserName != uiState.userName.trim()) {
+                        if (isUserNameChanged) {
                             updates[ProfileSetupViewModel.ProfileField.USERNAME] = trimmedUserName
                         }
-                        if (trimmedEmail != uiState.email.trim()) {
+                        if (isEmailChanged) {
                             updates[ProfileSetupViewModel.ProfileField.EMAIL] = trimmedEmail
                         }
 
-                        if (trimmedUserName == uiState.userName && trimmedEmail == uiState.email) {
-                            errorMsg
-                        }
 
                         isLoading = true
 
@@ -283,6 +308,7 @@ fun ProfileEditScreen(
                                 errorMsg = errorUiText.asString(context)
                             }
                         )
+
 
                     }
                 )
