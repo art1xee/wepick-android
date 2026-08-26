@@ -54,6 +54,7 @@ import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.screens.auth.login.FormTextFields
+import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
 import com.example.wepick.ui.components.SetupProfileButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -85,6 +86,7 @@ fun ProfileSetup(
     )
 
     var nameError by remember { mutableStateOf(false) }
+    val isUserNameTaken = uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
 
     LaunchedEffect(uiState.isSaved) {
         if (uiState.isSaved) {
@@ -181,12 +183,13 @@ fun ProfileSetup(
                     value = uiState.userName,
                     onValueChanged = {
                         profileViewModel.updateUsername(it)
-                        if (nameError) nameError = false
+                        profileViewModel.checkUsernameAvailability(it)
                     },
                     text = stringResource(R.string.profile_setup_display_username_label),
                     textField = stringResource(R.string.profile_setup_display_username_example),
-                    isError = nameError,
-                    errorText = if (nameError) stringResource(R.string.profile_setup_error_enter_username) else null
+                    isError = isUserNameTaken,
+                    errorText = if (isUserNameTaken) "This username already taken" else null,// TODO: add in the R.string
+                    trailingIcon = { ValidationTrailingIcon(status = uiState.userNameStatus) }
                 )
 
 
@@ -201,11 +204,14 @@ fun ProfileSetup(
                     error = nameError,
                     name = uiState.name,
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = !uiState.isLoading,
+                    enabled = !uiState.isLoading &&
+                            uiState.name.isNotBlank() &&
+                            uiState.userName.isNotBlank() &&
+                            uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE,
                     text = stringResource(R.string.profile_setup_save_profile_button),
                     loadingText = stringResource(R.string.loading),
                     loading = uiState.isLoading,
-                ) // TODO: if text fields - empty. add error than field cannot be empty
+                ) // TODO: if text fields - empty. add error than field cannot be empty and if username which user write already be in db show an error
             }
         }
     }
@@ -324,3 +330,4 @@ fun LockedEmailField(
         )
     }
 }
+

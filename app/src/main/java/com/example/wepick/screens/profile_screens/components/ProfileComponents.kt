@@ -25,6 +25,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -61,6 +63,7 @@ import com.example.wepick.ui.theme.DeepPurple
 import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
 @Composable
@@ -157,231 +160,268 @@ fun ProfileInfoBlock(
     }
 }
 
-    @Composable
-    fun ProfileBoxButton(
-        onClick: () -> Unit,
-        contentDescription: String,
-        firstStartColor: Color,
-        secondStartColor: Color,
-        firstEndColor: Color,
-        secondEndColor: Color,
-        icon: ImageVector,
-        text: String,
-        subtext: String,
+@Composable
+fun ProfileBoxButton(
+    onClick: () -> Unit,
+    contentDescription: String,
+    firstStartColor: Color,
+    secondStartColor: Color,
+    firstEndColor: Color,
+    secondEndColor: Color,
+    icon: ImageVector,
+    text: String,
+    subtext: String,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    // Движение карточки
+    val offsetX by animateDpAsState(
+        targetValue = if (isPressed) 6.dp else 0.dp,
+        animationSpec = tween(150),
+        label = "offset"
+    )
+
+    // Цвет карточки
+    val startColor by animateColorAsState(
+        targetValue = if (isPressed)
+            firstStartColor
+        else
+            secondStartColor,
+        animationSpec = tween(150),
+        label = "startColor"
+    )
+
+    val endColor by animateColorAsState(
+        targetValue = if (isPressed)
+            firstEndColor
+        else
+            secondEndColor,
+        animationSpec = tween(150),
+        label = "endColor"
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .offset(x = offsetX)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                onClick()
+            }
+            .border(
+                width = 1.dp,
+                color = Color.White.copy(alpha = 0.5f),
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        )
     ) {
-        val interactionSource = remember { MutableInteractionSource() }
-        val isPressed by interactionSource.collectIsPressedAsState()
-
-        // Движение карточки
-        val offsetX by animateDpAsState(
-            targetValue = if (isPressed) 6.dp else 0.dp,
-            animationSpec = tween(150),
-            label = "offset"
-        )
-
-        // Цвет карточки
-        val startColor by animateColorAsState(
-            targetValue = if (isPressed)
-                firstStartColor
-            else
-                secondStartColor,
-            animationSpec = tween(150),
-            label = "startColor"
-        )
-
-        val endColor by animateColorAsState(
-            targetValue = if (isPressed)
-                firstEndColor
-            else
-                secondEndColor,
-            animationSpec = tween(150),
-            label = "endColor"
-        )
-
-        Card(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(x = offsetX)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    onClick()
-                }
-                .border(
-                    width = 1.dp,
-                    color = Color.White.copy(alpha = 0.5f),
-                    shape = RoundedCornerShape(12.dp)
-                ),
-            shape = RoundedCornerShape(12.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = Color.Transparent
-            )
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                startColor,
-                                endColor
-                            )
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            startColor,
+                            endColor
                         )
                     )
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 12.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                )
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-                // Иконка слева
-                Icon(
-                    imageVector = icon,
-                    contentDescription = contentDescription,
-                    tint = CardYellow,
-                    modifier = Modifier.size(24.dp)
+            // Иконка слева
+            Icon(
+                imageVector = icon,
+                contentDescription = contentDescription,
+                tint = CardYellow,
+                modifier = Modifier.size(24.dp)
+            )
+
+            Spacer(
+                modifier = Modifier.width(14.dp)
+            )
+
+            // Название + описание
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = text,
+                    fontFamily = Nunito,
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
                 )
 
                 Spacer(
-                    modifier = Modifier.width(14.dp)
+                    modifier = Modifier.height(2.dp)
                 )
 
-                // Название + описание
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.Center
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Text(
-                        text = text,
+                        text = subtext,
                         fontFamily = Nunito,
-                        color = Color.White,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold
+                        color = Color(0xFFBFA9C8),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Normal
                     )
-
-                    Spacer(
-                        modifier = Modifier.height(2.dp)
-                    )
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Text(
-                            text = subtext,
-                            fontFamily = Nunito,
-                            color = Color(0xFFBFA9C8),
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                    }
                 }
-
-                // Стрелка справа
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = null,
-                    tint = Color(0xFFBFA9C8),
-                    modifier = Modifier.size(14.dp)
-                )
             }
+
+            // Стрелка справа
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                contentDescription = null,
+                tint = Color(0xFFBFA9C8),
+                modifier = Modifier.size(14.dp)
+            )
         }
     }
+}
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun DangerZoneButton(
-        icon: ImageVector,
-        text: String,
-        borderColor: Color,
-        containerColor: Color = Color.Transparent,
-        textColor: Color = AccentRed,
-        onClick: () -> Unit
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DangerZoneButton(
+    icon: ImageVector,
+    text: String,
+    borderColor: Color,
+    containerColor: Color = Color.Transparent,
+    textColor: Color = AccentRed,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(2.dp, borderColor.copy(0.3f), shape = RoundedCornerShape(12.dp)),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
-        Card(
-            onClick = onClick,
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(2.dp, borderColor.copy(0.3f), shape = RoundedCornerShape(12.dp)),
-            shape = RoundedCornerShape(12.dp),
-            colors = CardDefaults.cardColors(containerColor = containerColor),
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                .padding(15.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = text,
-                    tint = textColor,
-                    modifier = Modifier.size(24.dp)
-                )
+            Icon(
+                imageVector = icon,
+                contentDescription = text,
+                tint = textColor,
+                modifier = Modifier.size(24.dp)
+            )
 
-                Spacer(Modifier.width(14.dp))
+            Spacer(Modifier.width(14.dp))
 
+            Text(
+                text = text,
+                fontFamily = Nunito,
+                fontSize = 14.sp,
+                color = textColor,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+    }
+}
+
+@Composable
+fun ActionConfirmDialog(
+    title: String,
+    text: String,
+    confirmText: String,
+    isDestructive: Boolean = false,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = title,
+                fontFamily = Nunito,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Text(
+                text = text,
+                fontFamily = Nunito
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
                 Text(
-                    text = text,
-                    fontFamily = Nunito,
-                    fontSize = 14.sp,
-                    color = textColor,
+                    text = confirmText,
+                    color = if (isDestructive) AccentRed else DarkButtonPurple,
                     fontWeight = FontWeight.Bold
                 )
             }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(
+                    text = stringResource(R.string.profile_setting_cancel),
+                    color = Color.Gray
+                )
+            }
+        },
+        containerColor = Color.White, // Или цвет твоего фона карточек
+        shape = RoundedCornerShape(16.dp)
+    )
+}
 
+@Composable
+fun ValidationTrailingIcon(
+    status: ProfileSetupViewModel.ValidationStatus,
+    modifier: Modifier = Modifier,
+) {
+    when (status) {
+        ProfileSetupViewModel.ValidationStatus.LOADING -> {
+            CircularProgressIndicator(
+                modifier = modifier.size(18.dp),
+                strokeWidth = 2.dp,
+                color = DarkButtonPurple,
+            )
+        }
+
+        ProfileSetupViewModel.ValidationStatus.AVAILABLE -> {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = "Available",
+                tint = Color(0xFF2E7D32),
+                modifier = modifier.size(20.dp)
+            )
+        }
+
+        ProfileSetupViewModel.ValidationStatus.TAKEN -> {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = "Taken",
+                tint = Color(0xFFD32F2F),
+                modifier = modifier.size(20.dp)
+            )
+        }
+
+        ProfileSetupViewModel.ValidationStatus.IDLE -> {
+            // when status is IDLE showing nothing
         }
     }
-
-    @Composable
-    fun ActionConfirmDialog(
-        title: String,
-        text: String,
-        confirmText: String,
-        isDestructive: Boolean = false,
-        onConfirm: () -> Unit,
-        onDismiss: () -> Unit
-    ) {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            title = {
-                Text(
-                    text = title,
-                    fontFamily = Nunito,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            text = {
-                Text(
-                    text = text,
-                    fontFamily = Nunito
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    Text(
-                        text = confirmText,
-                        color = if (isDestructive) AccentRed else DarkButtonPurple,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) {
-                    Text(
-                        text = stringResource(R.string.profile_setting_cancel),
-                        color = Color.Gray
-                    )
-                }
-            },
-            containerColor = Color.White, // Или цвет твоего фона карточек
-            shape = RoundedCornerShape(16.dp)
-        )
-    }
-
+}

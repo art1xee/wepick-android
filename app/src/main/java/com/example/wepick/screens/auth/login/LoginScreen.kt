@@ -339,12 +339,13 @@ fun FormTextFields(
     modifier: Modifier = Modifier,
     value: String,
     onValueChanged: (String) -> Unit,
+    trailingIcon: (@Composable () -> Unit)? = null,
+
     text: String,
-    trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textField: String,
     isError: Boolean = false,
-    errorText: String? = null
+    errorText: String? = null,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -387,7 +388,7 @@ fun FormTextFields(
                     fontSize = 15.sp,
                     fontFamily = Nunito
                 )
-            }
+            },
         )
         if (isError && errorText != null) {
             Text(

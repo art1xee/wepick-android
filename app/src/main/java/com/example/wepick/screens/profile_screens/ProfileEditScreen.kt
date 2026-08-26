@@ -244,7 +244,9 @@ fun ProfileEditScreen(
                 RetroEditProfileButton(
                     modifier = Modifier.fillMaxWidth(),
                     loading = isLoading,
-                    enabled = !isLoading,
+                    enabled = !isLoading &&
+                            uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE &&
+                            uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE,
                     text = stringResource(R.string.profile_edit_button_edit),
                     loadingText = stringResource(R.string.profile_edit_button_edit_loading),
                     onClick = {
@@ -264,7 +266,7 @@ fun ProfileEditScreen(
                             updates[ProfileSetupViewModel.ProfileField.EMAIL] = trimmedEmail
                         }
 
-                        if(trimmedUserName == uiState.userName && trimmedEmail == uiState.email ){
+                        if (trimmedUserName == uiState.userName && trimmedEmail == uiState.email) {
                             errorMsg
                         }
 
@@ -281,6 +283,7 @@ fun ProfileEditScreen(
                                 errorMsg = errorUiText.asString(context)
                             }
                         )
+
                     }
                 )
             }
