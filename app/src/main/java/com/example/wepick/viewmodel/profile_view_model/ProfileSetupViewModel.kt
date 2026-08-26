@@ -246,6 +246,26 @@ class ProfileSetupViewModel() : ViewModel() {
         }
     }
 
+
+    fun resetUserNameValidation() {
+        usernameJob?.cancel()
+        _uiState.update {
+            it.copy(
+                userNameStatus = ValidationStatus.IDLE,
+            )
+        }
+    }
+
+    fun resetEmailValidation() {
+        emailJob?.cancel()
+        _uiState.update {
+            it.copy(
+                emailStatus = ValidationStatus.IDLE,
+            )
+        }
+    }
+
+
     fun fetchUserProfile() {
         val currentUser = auth.currentUser ?: return
         viewModelScope.launch {
@@ -272,6 +292,13 @@ class ProfileSetupViewModel() : ViewModel() {
 
                 } else {
                     Log.d("ProfileSetup", "Document of the user in Firestore doesn't exist!")
+                    _uiState.update {
+                        it.copy(
+                            email = currentUser.email ?: "",
+                            name = it.name.ifEmpty { currentUser.displayName ?: "" },
+                            photoUrl = it.photoUrl ?: currentUser.photoUrl?.toString()
+                        )
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("ProfileSetup", "Error loading profile from DB", e)
@@ -281,20 +308,12 @@ class ProfileSetupViewModel() : ViewModel() {
 
     fun saveProfile() {
         val currentUiState = _uiState.value
-
         val currentUser = auth.currentUser ?: return
-        val currentUserName = currentUiState.userName.trim()
-        val currentName = currentUiState.name.trim()
 
+        val cleanName = currentUiState.name.trim()
+        val cleanUserName = currentUiState.userName.trim().removePrefix("@")
 
-        val formattedUserName = if (currentUserName.startsWith("@")) {
-            currentUserName
-        } else {
-            "@$currentUserName"
-        }
-
-
-        if (currentName.isEmpty()) return
+        if (cleanName.isEmpty() || cleanUserName.isEmpty()) return
 
         viewModelScope.launch {
             _uiState.update {
@@ -307,8 +326,8 @@ class ProfileSetupViewModel() : ViewModel() {
             try {
                 val userProfile = UserProfile(
                     uid = currentUser.uid,
-                    userName = formattedUserName,
-                    name = currentName,
+                    userName = cleanUserName,
+                    name = cleanName,
                     email = currentUiState.email,
                     photoUrl = currentUiState.photoUrl,
                     bio = currentUiState.bio,
@@ -318,7 +337,7 @@ class ProfileSetupViewModel() : ViewModel() {
                 db.collection("users").document(currentUser.uid).set(userProfile).await()
 
                 val profileUpdates =
-                    UserProfileChangeRequest.Builder().setDisplayName(currentName).apply {
+                    UserProfileChangeRequest.Builder().setDisplayName(cleanName).apply {
                         if (!currentUiState.photoUrl.isNullOrEmpty()) {
                             photoUri = currentUiState.photoUrl.toUri()
                         }

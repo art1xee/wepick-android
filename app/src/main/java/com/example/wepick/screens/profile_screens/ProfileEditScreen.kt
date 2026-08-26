@@ -83,9 +83,21 @@ fun ProfileEditScreen(
 
     val context = LocalContext.current
 
-    var textStateName by remember(uiState.name) { mutableStateOf(uiState.name) }
-    var textStateUserName by remember(uiState.userName) { mutableStateOf(uiState.userName) }
-    var textStateEmail by remember(uiState.email) { mutableStateOf(uiState.email) }
+    var textStateName by remember() { mutableStateOf("") }
+    var textStateUserName by remember() { mutableStateOf("") }
+    var textStateEmail by remember() { mutableStateOf("") }
+
+    LaunchedEffect(uiState.name, uiState.userName, uiState.email) {
+        if (textStateName.isEmpty() && uiState.name.isNotEmpty()) {
+            textStateName = uiState.name
+        }
+        if (textStateUserName.isEmpty() && uiState.userName.isNotEmpty()) {
+            textStateUserName = uiState.userName
+        }
+        if (textStateEmail.isEmpty() && uiState.email.isNotEmpty()) {
+            textStateEmail = uiState.email
+        }
+    }
 
     var isLoading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf<String?>(null) }
@@ -206,11 +218,13 @@ fun ProfileEditScreen(
                         textStateUserName = newValue
                         if (newValue.trim() != uiState.userName.trim()) {
                             profileViewModel.checkUsernameAvailability(newValue)
+                        } else {
+                            profileViewModel.resetUserNameValidation()
                         }
                         errorMsg = null
                     },
                     isError = isUserNameTaken,
-                    errorText = if (isUserNameTaken) "This username already taken" else null,
+                    errorText = if (isUserNameTaken) "This username already taken" else null, // TODO: add in the R.string
                     text = stringResource(R.string.profile_edit_user_name_field),
                     textField = stringResource(
                         R.string.profile_edit_previous_user_name_field,
@@ -230,12 +244,14 @@ fun ProfileEditScreen(
                             textStateEmail = newValue
                             if (newValue.trim() != uiState.email.trim()) {
                                 profileViewModel.checkEmailAvailability(newValue)
+                            } else {
+                                profileViewModel.resetEmailValidation()
                             }
 
                             errorMsg = null
                         },
                         isError = isEmailTaken,
-                        errorText = if (isEmailTaken) "Another account has this email" else null,
+                        errorText = if (isEmailTaken) "Another account has this email" else null, // TODO: add in the R.string
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
                             R.string.profile_edit_previous_email_field,
