@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.collections.iterator
 import androidx.core.net.toUri
+import kotlinx.coroutines.Job
 import kotlin.time.Duration.Companion.milliseconds
 
 class ProfileSetupViewModel() : ViewModel() {
@@ -36,6 +37,8 @@ class ProfileSetupViewModel() : ViewModel() {
 
     private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
+
+    private var usernameJob: Job? = null
 
 
     var transitionState by mutableStateOf<AuthTransitionState?>(null)
@@ -149,7 +152,17 @@ class ProfileSetupViewModel() : ViewModel() {
     fun checkUsernameAvailability(userNameToCheck: String) {
         val cleanUserName = userNameToCheck.trim().removePrefix("@")
 
-        viewModelScope.launch {
+        usernameJob?.cancel()
+        usernameJob = viewModelScope.launch {
+            delay(500.milliseconds)
+            if (cleanUserName.isEmpty()) {
+                _uiState.update {
+                    it.copy(
+                        userNameStatus = ValidationStatus.IDLE
+                    )
+                }
+                return@launch
+            }
             try {
                 _uiState.update {
                     it.copy(
@@ -157,7 +170,7 @@ class ProfileSetupViewModel() : ViewModel() {
                     )
                 }
                 val snapshot =
-                    db.collection("users").whereEqualTo("userName", userNameToCheck).get().await()
+                    db.collection("users").whereEqualTo("userName", cleanUserName).get().await()
                 val currentUid = auth.currentUser?.uid
                 val isTaken = snapshot.documents.any { doc -> doc.id != currentUid }
 
@@ -174,16 +187,10 @@ class ProfileSetupViewModel() : ViewModel() {
                         )
                     }
                 }
-                if (cleanUserName.isEmpty()) {
-                    _uiState.update {
-                        it.copy(
-                            userNameStatus = ValidationStatus.IDLE
-                        )
-                    }
-                    return@launch
-                }
+
             } catch (e: Exception) {
                 Log.e("ProfileSetupAvailability", "Error loading username from DB", e)
+                _uiState.update { it.copy(userNameStatus = ValidationStatus.IDLE) }
             }
         }
     }
