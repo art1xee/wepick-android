@@ -264,6 +264,9 @@ fun ProfileEditScreen(
                             updates[ProfileSetupViewModel.ProfileField.EMAIL] = trimmedEmail
                         }
 
+                        if(trimmedUserName == uiState.userName && trimmedEmail == uiState.email ){
+                            errorMsg
+                        }
 
                         isLoading = true
 

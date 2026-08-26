@@ -33,6 +33,7 @@ class ProfileSetupViewModel() : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
 
+
     private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
@@ -60,6 +61,13 @@ class ProfileSetupViewModel() : ViewModel() {
         EMAIL,
         //USER_BIO
         // BIRTHDAY
+    }
+
+    enum class ValidationStatus {
+        IDLE,
+        LOADING,
+        AVAILABLE,
+        TAKEN,
     }
 
     fun saveMultipleFields(
@@ -97,16 +105,16 @@ class ProfileSetupViewModel() : ViewModel() {
                     .update(firestoreUpdates)
                     .await()
 
-                    _uiState.update {
-                        it.copy(
-                            // 1. find any value if firestoreUpdates
-                            // 2. if program find "new value" - write "new value"
-                            // 3. if key missed, working ?: it.value and in the field stayed value which already was in text-field
-                            name = (firestoreUpdates["name"] as? String) ?: it.name,
-                            userName = (firestoreUpdates["userName"] as? String)?: it.userName,
-                            email = (firestoreUpdates["email"] as? String) ?: it.email,
-                        )
-                    }
+                _uiState.update {
+                    it.copy(
+                        // 1. find any value if firestoreUpdates
+                        // 2. if program find "new value" - write "new value"
+                        // 3. if key missed, working ?: it.value and in the field stayed value which already was in text-field
+                        name = (firestoreUpdates["name"] as? String) ?: it.name,
+                        userName = (firestoreUpdates["userName"] as? String) ?: it.userName,
+                        email = (firestoreUpdates["email"] as? String) ?: it.email,
+                    )
+                }
 
                 onSuccess()
             } catch (e: Exception) {
@@ -124,6 +132,7 @@ class ProfileSetupViewModel() : ViewModel() {
         }
     }
 
+
     fun updateUsername(newUserName: String) {
         _uiState.update {
             it.copy(userName = newUserName)
@@ -136,6 +145,48 @@ class ProfileSetupViewModel() : ViewModel() {
         }
     }
 
+
+    fun checkUsernameAvailability(userNameToCheck: String) {
+        val cleanUserName = userNameToCheck.trim().removePrefix("@")
+
+        viewModelScope.launch {
+            try {
+                _uiState.update {
+                    it.copy(
+                        userNameStatus = ValidationStatus.LOADING,
+                    )
+                }
+                val snapshot =
+                    db.collection("users").whereEqualTo("userName", userNameToCheck).get().await()
+                val currentUid = auth.currentUser?.uid
+                val isTaken = snapshot.documents.any { doc -> doc.id != currentUid }
+
+                if (!isTaken) {
+                    _uiState.update {
+                        it.copy(
+                            userNameStatus = ValidationStatus.AVAILABLE
+                        )
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            userNameStatus = ValidationStatus.TAKEN
+                        )
+                    }
+                }
+                if (cleanUserName.isEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            userNameStatus = ValidationStatus.IDLE
+                        )
+                    }
+                    return@launch
+                }
+            } catch (e: Exception) {
+                Log.e("ProfileSetupAvailability", "Error loading username from DB", e)
+            }
+        }
+    }
 
     fun fetchUserProfile() {
         val currentUser = auth.currentUser ?: return

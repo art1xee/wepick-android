@@ -9,5 +9,7 @@ data class ProfileUiState(
     val photoUrl: String? = null,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
-    val isImageUploading: Boolean = false
+    val isImageUploading: Boolean = false,
+    val userNameStatus: ProfileSetupViewModel.ValidationStatus = ProfileSetupViewModel.ValidationStatus.IDLE,
+    val emailStatus: ProfileSetupViewModel.ValidationStatus = ProfileSetupViewModel.ValidationStatus.IDLE
 )
