@@ -1,6 +1,5 @@
 package com.example.wepick.screens.profile_screens
 
-import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,18 +19,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,6 +47,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,7 +66,7 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.Calendar
 
 @Composable
 fun ProfileEditScreen(
@@ -88,14 +86,12 @@ fun ProfileEditScreen(
     )
 
     val context = LocalContext.current
-    val datePickerState = rememberDatePickerState()
 
     var textStateName by remember() { mutableStateOf("") }
     var textStateUserName by remember() { mutableStateOf("") }
     var textStateEmail by remember() { mutableStateOf("") }
     var textStateBio by remember() { mutableStateOf("") }
     var textStateBirthday by remember() { mutableStateOf("") }
-    var showDatePicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         profileViewModel.fetchUserProfile()
@@ -125,6 +121,7 @@ fun ProfileEditScreen(
     val isUserNameTaken = uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
     val isEmailTaken = uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
     val isBioOverLimit = textStateBio.length > 150
+    val isBirthdayValid = isValidDate(textStateBirthday)
 
     //TODO: good idea add this value when user gonna create account
     //val birthDate by profileViewModel.birthDate.collectAsState()
@@ -285,29 +282,21 @@ fun ProfileEditScreen(
 
 
                 //BIRTHDAY FIELD (optional field for fill)
-                Box(modifier = Modifier.fillMaxWidth()) {
+
                     FormTextFields(
                         modifier = modifier.fillMaxWidth(),
-                        readOnly = true,
                         value = textStateBirthday,
-                        onValueChanged = {},
-                        trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.CalendarMonth,
-                                tint = DarkButtonPurple,
-                                contentDescription = "Select Birthday"
-                            )
+                        onValueChanged = { newValue ->
+                            val filtered = newValue.filter { it.isDigit() || it == '.' }
+                            if (filtered.length <= 10)
+                                textStateBirthday = filtered
                         },
-                        text = "Birthday (optional)",
-                        textField = "enter your birthday",
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        text = "Birthday (optional)", // TODO: Change the language
+                        textField = "DD.MM.YYYY", // TODO: Change the language,
+                        isError = !isBirthdayValid && textStateBirthday.isNotEmpty(),
+                        errorText = if (!isBirthdayValid && textStateBirthday.isNotEmpty()) "Enter valid date: DD.MM.YYYY" else null
                     )
-                    Box(
-                        modifier = Modifier
-                            .matchParentSize()
-                            .clip(RoundedCornerShape(14.dp))
-                            .clickable { showDatePicker = true }
-                    )
-                }
 
                 Spacer(Modifier.height(12.dp))
 
@@ -338,44 +327,6 @@ fun ProfileEditScreen(
                 }
 
                 Spacer(Modifier.height(12.dp))
-
-//                if (showDatePicker) {
-//                    DatePickerDialog(
-//                        onDismissRequest = { showDatePicker = false },
-//                        confirmButton = {
-//                            TextButton(
-//                                onClick = {
-//                                    datePickerState.selectedDateMillis?.let { millis ->
-//                                        val formatted = SimpleDateFormat(
-//                                            "dd.MM.yyyy",
-//                                            java.util.Locale.getDefault()
-//                                        )
-//                                        textStateBirthday = formatted.format(Date(millis))
-//                                    }
-//                                    showDatePicker = false
-//                                }
-//                            ) {
-//                                Text(
-//                                    "OK",
-//                                    color = DarkButtonPurple,
-//                                    fontWeight = FontWeight.Bold
-//                                )
-//                            }
-//                        },
-//                        dismissButton = {
-//                            TextButton(
-//                                onClick = {
-//                                    showDatePicker = false
-//                                }
-//                            ) {
-//                                Text("Cancel", color = Color.Gray)
-//                            }
-//                        }
-//                    ) {
-//                        DatePicker(state = datePickerState)
-//                    }
-//                }
-
 
                 if (errorMsg != null) {
                     Text(
@@ -413,6 +364,7 @@ fun ProfileEditScreen(
                     loading = isLoading,
                     enabled = !isLoading &&
                             hasChanges &&
+                            isBirthdayValid &&
                             isEmailValid &&
                             isUserNameValid &&
                             !isBioOverLimit &&
@@ -529,6 +481,28 @@ fun EditAvatar(
     }
 }
 
+
+fun isValidDate(dateString: String): Boolean {
+
+    if (dateString.isEmpty()) return true
+
+    if (dateString.length != 10) return false
+
+    return try {
+        val formatter = SimpleDateFormat("dd.MM.yyyy", java.util.Locale.getDefault()).apply {
+            isLenient = false
+        }
+        val parsedDate = formatter.parse(dateString) ?: return false
+
+        val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+        val cal = java.util.Calendar.getInstance().apply { time = parsedDate }
+        val year = cal.get(java.util.Calendar.YEAR)
+
+        year in 1920..currentYear
+    } catch (e: Exception) {
+        false
+    }
+}
 
 
 
