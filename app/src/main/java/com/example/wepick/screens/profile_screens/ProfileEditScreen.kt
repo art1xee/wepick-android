@@ -1,5 +1,6 @@
 package com.example.wepick.screens.profile_screens
 
+import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,12 +22,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -61,6 +67,8 @@ import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun ProfileEditScreen(
@@ -80,12 +88,14 @@ fun ProfileEditScreen(
     )
 
     val context = LocalContext.current
+    val datePickerState = rememberDatePickerState()
 
     var textStateName by remember() { mutableStateOf("") }
     var textStateUserName by remember() { mutableStateOf("") }
     var textStateEmail by remember() { mutableStateOf("") }
     var textStateBio by remember() { mutableStateOf("") }
     var textStateBirthday by remember() { mutableStateOf("") }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         profileViewModel.fetchUserProfile()
@@ -104,7 +114,7 @@ fun ProfileEditScreen(
         if (textStateBio.isEmpty() && uiState.bio.isNotEmpty()) {
             textStateBio = uiState.bio
         }
-        if (textStateBirthday.isEmpty() && !uiState.birthday.isNullOrEmpty()) {
+        if (textStateBirthday.isEmpty() && uiState.birthday.isNotEmpty()) {
             textStateBirthday = uiState.birthday ?: ""
         }
     }
@@ -267,24 +277,40 @@ fun ProfileEditScreen(
                     },
                     minLines = 3,
                     maxLines = 5,
-                    text = "Bio",
-                    textField = "Enter your bio",
+                    text = "Bio (optional)",// TODO: add in the R.string
+                    textField = "Enter your bio",// TODO: add in the R.string
                     isError = isBioOverLimit,
-                    )
-                Spacer(Modifier.height(12.dp))
-
-                //BIRTHDAY FIELD (optional field for fill)
-                FormTextFields(
-                    modifier = modifier.fillMaxWidth(),
-                    value = textStateBirthday,
-                    onValueChanged = { newValue ->
-                        textStateBirthday = newValue
-                        errorMsg = null
-                    },
-                    text = "Birthday",
-                    textField = "enter your birthday",
                 )
                 Spacer(Modifier.height(12.dp))
+
+
+                //BIRTHDAY FIELD (optional field for fill)
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    FormTextFields(
+                        modifier = modifier.fillMaxWidth(),
+                        readOnly = true,
+                        value = textStateBirthday,
+                        onValueChanged = {},
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.CalendarMonth,
+                                tint = DarkButtonPurple,
+                                contentDescription = "Select Birthday"
+                            )
+                        },
+                        text = "Birthday (optional)",
+                        textField = "enter your birthday",
+                    )
+                    Box(
+                        modifier = Modifier
+                            .matchParentSize()
+                            .clip(RoundedCornerShape(14.dp))
+                            .clickable { showDatePicker = true }
+                    )
+                }
+
+                Spacer(Modifier.height(12.dp))
+
                 //EMAIL FIELD
                 if (!profileViewModel.isGoogleSignup) {
                     FormTextFields(
@@ -312,6 +338,43 @@ fun ProfileEditScreen(
                 }
 
                 Spacer(Modifier.height(12.dp))
+
+//                if (showDatePicker) {
+//                    DatePickerDialog(
+//                        onDismissRequest = { showDatePicker = false },
+//                        confirmButton = {
+//                            TextButton(
+//                                onClick = {
+//                                    datePickerState.selectedDateMillis?.let { millis ->
+//                                        val formatted = SimpleDateFormat(
+//                                            "dd.MM.yyyy",
+//                                            java.util.Locale.getDefault()
+//                                        )
+//                                        textStateBirthday = formatted.format(Date(millis))
+//                                    }
+//                                    showDatePicker = false
+//                                }
+//                            ) {
+//                                Text(
+//                                    "OK",
+//                                    color = DarkButtonPurple,
+//                                    fontWeight = FontWeight.Bold
+//                                )
+//                            }
+//                        },
+//                        dismissButton = {
+//                            TextButton(
+//                                onClick = {
+//                                    showDatePicker = false
+//                                }
+//                            ) {
+//                                Text("Cancel", color = Color.Gray)
+//                            }
+//                        }
+//                    ) {
+//                        DatePicker(state = datePickerState)
+//                    }
+//                }
 
 
                 if (errorMsg != null) {

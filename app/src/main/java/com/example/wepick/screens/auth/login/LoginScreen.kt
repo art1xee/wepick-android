@@ -351,6 +351,7 @@ fun FormTextFields(
     supportingText: @Composable (() -> Unit)? = null,
     minLines: Int = 1,
     maxLines: Int = 1,
+    readOnly: Boolean = false,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -363,6 +364,7 @@ fun FormTextFields(
         )
         OutlinedTextField(
             value = value,
+            readOnly = readOnly,
             onValueChange = onValueChanged,
             modifier = Modifier.fillMaxWidth(),
             singleLine = singleLine,
