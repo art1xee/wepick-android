@@ -3,13 +3,22 @@ package com.example.wepick.navigation
 sealed class ScreenNav(val route: String) {
     object Login : ScreenNav("login") // Экран для входа/регестрации в аккаунт
 
-    object Favorite: ScreenNav("favourite")
+    object ProfileSetup : ScreenNav("profile_setup")
+    object Favorite : ScreenNav("favourite")
     object SignUp : ScreenNav("sign_up")
+    object Help: ScreenNav("help")
 
+    object ChangePassword: ScreenNav("change_password")
+
+    object DeleteAccount: ScreenNav("delete_account")
+    object PersonalData : ScreenNav("personal_data")
+    object  AppSetting: ScreenNav("app_setting")
+
+    object ProfileEdit: ScreenNav("profile_edit")
     object ForgotPassword : ScreenNav("forgot_password") // Screen when user forgot his password 
 
-    object SettingScreen : ScreenNav("setting_screen") // screen for settings
-    object Home : ScreenNav("home" )
+    object ProfileSettingScreen : ScreenNav("profile_setting_screen") // screen for settings
+    object Home : ScreenNav("home")
     object Main : ScreenNav("main")             // Экран ввода имени
 
     object Selection : ScreenNav("selection")  // Выбор: Фильмы/ТВ/Аниме

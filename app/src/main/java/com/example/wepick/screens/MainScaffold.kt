@@ -72,11 +72,12 @@ fun MainScaffold(
 
     val shouldShowLogo = currentRoute != ScreenNav.Login.route &&
             currentRoute != ScreenNav.ForgotPassword.route &&
-            currentRoute != ScreenNav.SignUp.route
+            currentRoute != ScreenNav.SignUp.route &&
+            currentRoute != ScreenNav.ProfileSettingScreen.route
 
     val screensWithBottomBar = listOf(
         ScreenNav.Home.route,
-        ScreenNav.SettingScreen.route,
+        ScreenNav.ProfileSettingScreen.route,
         ScreenNav.Favorite.route
         // TODO profile screen
         // TODO Game screen
@@ -106,17 +107,17 @@ fun MainScaffold(
                         tint = if (currentRoute == ScreenNav.Home.route) CardYellow else CardYellowSoft,
                     )
 
-                    // Favorite bottom bar 
-                    IconsBottomBar(
-                        navController = navController,
-                        navRoute = ScreenNav.Favorite,
-                        backRoute = ScreenNav.Home,
-                        modifier = Modifier.weight(1f),
-                        imageVector = if (currentRoute == ScreenNav.Favorite.route) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                        contentDescription = null,
-                        tint = if (currentRoute == ScreenNav.Favorite.route) AccentRed else CardYellowSoft,
-                        isInclusive = false,
-                    )
+//                    // Favorite bottom bar
+//                    IconsBottomBar(
+//                        navController = navController,
+//                        navRoute = ScreenNav.Favorite,
+//                        backRoute = ScreenNav.Home,
+//                        modifier = Modifier.weight(1f),
+//                        imageVector = if (currentRoute == ScreenNav.Favorite.route) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+//                        contentDescription = null,
+//                        tint = if (currentRoute == ScreenNav.Favorite.route) AccentRed else CardYellowSoft,
+//                        isInclusive = false,
+//                    )
 
 
                     Box(
@@ -145,12 +146,12 @@ fun MainScaffold(
                     // Profile bottom bar
                     IconsBottomBar(
                         navController = navController,
-                        navRoute = ScreenNav.SettingScreen,
+                        navRoute = ScreenNav.ProfileSettingScreen,
                         backRoute = ScreenNav.Home,
                         modifier = Modifier.weight(1f),
-                        imageVector = if (currentRoute == ScreenNav.SettingScreen.route) Icons.Filled.Person else Icons.Filled.PersonOutline,
+                        imageVector = if (currentRoute == ScreenNav.ProfileSettingScreen.route) Icons.Filled.Person else Icons.Filled.PersonOutline,
                         contentDescription = null,
-                        tint = if (currentRoute == ScreenNav.SettingScreen.route) CardYellow else CardYellowSoft,
+                        tint = if (currentRoute == ScreenNav.ProfileSettingScreen.route) CardYellow else CardYellowSoft,
                         isInclusive = false
                     )
                     IconsBottomBar(

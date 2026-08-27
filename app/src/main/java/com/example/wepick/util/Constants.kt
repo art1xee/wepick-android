@@ -20,6 +20,9 @@ object Language {
     const val EN = "en"
     const val RU = "ru"
     const val UA = "ua"
+    // const val PL = "pl"
+    // const val DE = "de"
+    // const val ES = "es"
 }
 
 object Paging {

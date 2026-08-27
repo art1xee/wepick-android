@@ -40,8 +40,71 @@
     <string name="signup_email_label">Email</string>
     <string name="signup_password_label">Password</string>
     <string name="signup_confirm_password_label">Repeat password</string>
+    <string name="signup_confirm_password_text_field">repeat password</string>
     <string name="signup_button">Create Profile</string>
     <string name="signup_error_password_mismatch">Passwords do not match — please enter again.</string>
+
+    <!-- PROFILE SETUP -->
+    <string name="profile_setup_title">PROFILE SETUP</string>
+    <string name="profile_setup_subtitle">Almost there! Let’s complete your profile.</string>
+    <string name="profile_setup_load_photo">Load your photo (not optional)</string>
+    <string name="profile_setup_display_name_label">Display Name:</string>
+    <string name="profile_setup_display_name_example">Enter your Name</string>
+    <string name="profile_setup_display_username_label">Username:</string>
+    <string name="profile_setup_display_username_example">Enter your username</string>
+    <string name="profile_setup_display_email_label">Email (This email will be linked to your profile)</string>
+    <string name="profile_setup_save_profile_button">Create Profile</string>
+    <string name="profile_setup_error_enter_username">Name field cannot be empty!</string>
+
+    <!--AUTH TRANSITION -->
+    <string name="auth_transition_welcome">Welcome!</string>
+    <string name="auth_transition_subtitle">Profile is ready. Moving to the app…</string>
+    <string name="auth_transition_logining">Signing in…</string>
+    <string name="auth_transition_logining_error">Sign in error!</string>
+    <string name="auth_transition_logining_with_google">Signing in with Google…</string>
+    <string name="auth_transition_logining_with_google_error">Failed to sign in with Google…</string>
+    <string name="auth_transition_reset_password_error">Error while trying to reset password!</string>
+    <string name="auth_transition_enter_password">Please enter a password first!</string>
+    <string name="auth_transition_enter_fields_error">Please fill in all fields</string>
+    <string name="auth_transition_password_mismatch">Passwords do not match!</string>
+    <string name="auth_transition_creating_account">Creating account…</string>
+    <string name="auth_transition_registration_error">Registration error!</string>
+
+    <!--PROFILE VIEW MODEL  -->
+    <string name="profile_view_model_saving_profile">Saving profile…</string>
+    <string name="profile_view_model_error_empty_field">The fields cannot be empty!</string>
+    <string name="profile_view_model_error_change_name">Enter a new name!</string>
+    <string name="profile_view_model_error_change_user_name">Enter a new username!</string>
+
+    <!--PROFILE SETTINGS -->
+    <string name="profile_setting_label">Profile</string>
+    <string name="profile_setting_personal_data_title">Personal Data</string>
+    <string name="profile_setting_personal_data_subtitle">Name, photo, bio</string>
+    <string name="profile_setting_title">App Settings</string>
+    <string name="profile_setting_subtitle">Configure your app</string>
+    <string name="profile_setting_help_title">Help</string>
+    <string name="profile_setting_help_subtitle">FAQ, contacts, feedback</string>
+    <string name="profile_setting_change_password_title">Change Password</string>
+    <string name="profile_setting_change_password_subtitle">Change the password of your account</string>
+    <string name="profile_setting_delete_account">Delete account</string>
+    <string name="profile_setting_delete_account_alert">This action is irreversible. All your data will be permanently deleted. Are you absolutely sure?</string>
+    <string name="profile_setting_delete_account_confirm">Delete</string>
+    <string name="profile_setting_sign_out">Sign Out</string>
+    <string name="profile_setting_sign_out_alert">Are you sure you want to sign out?</string>
+    <string name="profile_setting_sign_out_confirm">Sign Out</string>
+    <string name="profile_setting_cancel">Cancel</string>
+
+    <!--PROFILE SETTINGS -->
+    <string name="profile_edit_label">Edit profile</string>
+    <string name="profile_edit_name_field">Name: </string>
+    <string name="profile_edit_previous_name_field">your old name: %s</string>
+    <string name="profile_edit_user_name_field">Username:</string>
+    <string name="profile_edit_previous_user_name_field">your old username: %s</string>
+    <string name="profile_edit_email_field">Email:</string>
+    <string name="profile_edit_previous_email_field">your old email: %s:</string>
+    <string name="profile_edit_button_edit">Change!</string>
+    <string name="profile_edit_button_edit_loading">Saving…</string>
+    <string name="profile_edit_change_photo">Change photo</string>
 
     <!-- SELECTION -->
     <string name="selection_title">Hello %1$s! Choose content which you want to watch.</string>

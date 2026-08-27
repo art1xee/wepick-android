@@ -1,85 +1,132 @@
 package com.example.wepick.viewmodel
 
-import android.app.Activity
 import android.content.Context
-import androidx.credentials.Credential
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.credentials.CredentialManager
-import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wepick.MainActivity
+import com.example.wepick.R
+import com.example.wepick.util.UiText // Обязательный импорт твоего нового класса!
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.OAuthProvider
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.handleCoroutineException
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import perfetto.protos.AndroidStartupMetric
-
+import kotlinx.coroutines.tasks.await
 
 class AuthViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
+
+    var transitionState by mutableStateOf<AuthTransitionState?>(null)
+        private set
+
+    private suspend fun handeAuthSuccess(uid: String) {
+        transitionState =
+            AuthTransitionState.Success(UiText.StringResource(R.string.auth_transition_welcome))
+        delay(2000)
+        transitionState = null
+        verifyUserProfile(uid)
+    }
 
     init {
         checkAuthStatus()
     }
 
     fun checkAuthStatus() {
-        if (auth.currentUser == null) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
             _authState.value = AuthState.Unauthenticated
         } else {
-            _authState.value = AuthState.Authenticated
+            verifyUserProfile(currentUser.uid)
         }
     }
 
-    fun login(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            _authState.value =
-                AuthState.Error("Email or password can`t be empty")
-            return
-        }
-        _authState.value = AuthState.Loading
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+    fun verifyUserProfile(uid: String) {
+        Log.d("AuthDebug", "Starting check profile for UID: $uid")
+
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                Log.d(
+                    "AuthDebug",
+                    "Success respond of Firestore! Document is exist: ${document.exists()}"
+                )
+                if (document.exists() && document.getBoolean("profileCompleted") == true) {
                     _authState.value = AuthState.Authenticated
                 } else {
-                    _authState.value =
-                        AuthState.Error(task.exception?.message ?: "Something went wrong")
+                    _authState.value = AuthState.NeedsProfileSetup
                 }
             }
+            .addOnFailureListener { e ->
+                Log.e("AuthDebug", "CRITICAL ERROR OF FIRESTORE", e)
+                val errorMsg = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.DynamicString("Firestore error")
+
+                _authState.value = AuthState.Error(errorMsg)
+            }
+    }
+
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining))
+            try {
+                auth.signInWithEmailAndPassword(email, password).await()
+                delay(2000)
+                transitionState = null
+                verifyUserProfile(auth.currentUser!!.uid)
+            } catch (e: Exception) {
+                transitionState = null
+                val errorMessage = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_logining_error)
+
+                _authState.value = AuthState.Error(errorMessage)
+            }
+        }
     }
 
     fun signup(email: String, password: String, confirmPassword: String) {
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             _authState.value =
-                AuthState.Error("Email or password can`t be empty")
+                AuthState.Error(UiText.StringResource(R.string.auth_transition_enter_fields_error))
             return
         }
         if (password != confirmPassword) {
-            _authState.value = AuthState.Error("Passwords do not match")
+            _authState.value =
+                AuthState.Error(UiText.StringResource(R.string.auth_transition_password_mismatch))
             return
         }
 
-        _authState.value = AuthState.Loading
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _authState.value = AuthState.Authenticated
-                } else {
-                    _authState.value =
-                        AuthState.Error(task.exception?.message ?: "Something went wrong")
-                }
+        viewModelScope.launch {
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_creating_account))
+            try {
+                auth.createUserWithEmailAndPassword(email, password).await()
+                delay(2500)
+                transitionState = null
+                verifyUserProfile(auth.currentUser!!.uid)
+            } catch (e: Exception) {
+                transitionState = null
+                val errorMessage = e.localizedMessage?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_registration_error)
+
+                _authState.value = AuthState.Error(errorMessage)
             }
+        }
     }
 
     fun signout() {
@@ -87,9 +134,27 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Unauthenticated
     }
 
-    fun  resetPassword(email: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit) {
+        val user = auth.currentUser ?: return
+        val uid = user.uid
+
+        viewModelScope.launch {
+            try {
+                db.collection("users").document(uid).delete().await()
+
+                user.delete()?.await()
+
+                _authState.value = AuthState.Unauthenticated
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e)
+            }
+        }
+    }
+
+    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (UiText) -> Unit) {
         if (email.isEmpty()) {
-            onError("Please, firstly enter a password.")
+            onError(UiText.StringResource(R.string.auth_transition_enter_password))
             return
         }
         auth.sendPasswordResetEmail(email)
@@ -97,15 +162,17 @@ class AuthViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     onSuccess()
                 } else {
-                    onError(task.exception?.message ?: "Password reset ERROR")
+                    val errorMsg = task.exception?.message?.let {
+                        UiText.DynamicString(it)
+                    } ?: UiText.StringResource(R.string.auth_transition_reset_password_error)
+
+                    onError(errorMsg)
                 }
             }
     }
 
     fun loginWithGoogle(context: Context) {
-
         val credentialManager = CredentialManager.create(context)
-
         val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId("871652837283-djgdmj57j7mg1kkqdun3tktb2d8aas0j.apps.googleusercontent.com")
@@ -117,49 +184,35 @@ class AuthViewModel : ViewModel() {
             .build()
 
         viewModelScope.launch {
+            transitionState =
+                AuthTransitionState.Loading(UiText.StringResource(R.string.auth_transition_logining_with_google))
             try {
                 val result = credentialManager.getCredential(context, request)
-                handleGoogleCredential(result.credential)
+                val googleIdTokenCredential =
+                    GoogleIdTokenCredential.createFrom(result.credential.data)
+                val authCredential =
+                    GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
+
+                auth.signInWithCredential(authCredential).await()
+                delay(2000)
+                transitionState = null
+                verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
-                _authState.value = AuthState.Error(e.message ?: "Google Auth Failed")
+                transitionState = null
+                val errorMessage = e.message?.let {
+                    UiText.DynamicString(it)
+                } ?: UiText.StringResource(R.string.auth_transition_logining_with_google_error)
+
+                _authState.value = AuthState.Error(errorMessage)
             }
         }
     }
-
-    private fun handleGoogleCredential(credential: Credential) {
-        if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-            val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-            val authCredential =
-                GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
-
-
-            auth.signInWithCredential(authCredential)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _authState.value = AuthState.Authenticated
-                    } else {
-                        _authState.value =
-                            AuthState.Error(task.exception?.message ?: "Firebase Auth Failed")
-                    }
-                }
-        }
-    }
-
-    fun loginWithGitHub(activity: Activity) {
-        val provider = OAuthProvider.newBuilder("github.com")
-        auth.startActivityForSignInWithProvider(activity, provider.build())
-            .addOnSuccessListener {
-                _authState.value = AuthState.Authenticated
-            }.addOnFailureListener { e ->
-                _authState.value = AuthState.Error(e.message ?: "GitHub Error!")
-            }
-    }
-
 }
 
 sealed class AuthState {
     object Authenticated : AuthState()
+    object NeedsProfileSetup : AuthState()
     object Unauthenticated : AuthState()
     object Loading : AuthState()
-    data class Error(val message: String) : AuthState()
+    data class Error(val message: UiText) : AuthState()
 }

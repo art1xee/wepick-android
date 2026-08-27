@@ -1,4 +1,4 @@
-package com.example.wepick.screens
+package com.example.wepick.screens.auth.signup
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -36,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.screens.auth.login.EmailTextField
+import com.example.wepick.screens.auth.login.LoginDivider
+import com.example.wepick.screens.auth.login.PasswordTextField
 import com.example.wepick.ui.components.CreateAccountButton
 import com.example.wepick.ui.components.GoogleLoginButton
 import com.example.wepick.ui.theme.AccentRed
@@ -70,11 +73,11 @@ fun SignUpScreen(
     var confirmPassword by remember { mutableStateOf("") }
     var confirmPasswordError by remember { mutableStateOf(false) }
 
-
     val emailRegex = REGEX_LIST.toRegex()
     val isEmailValid = email.matches(emailRegex)
     val isPasswordValid =
         password.isNotEmpty() && password == confirmPassword && password.length >= 6
+
 
     val formErrorMessage = when {
         confirmPasswordError -> stringResource(R.string.signup_error_password_mismatch)
@@ -84,7 +87,6 @@ fun SignUpScreen(
         else -> null
     }
 
-
     val isFormValid = isEmailValid && isPasswordValid
 
     val isLoading = authState is AuthState.Loading
@@ -93,15 +95,20 @@ fun SignUpScreen(
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Authenticated -> {
-
                 navController.navigate(ScreenNav.Home.route) {
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
 
+            is AuthState.NeedsProfileSetup -> {
+                navController.navigate(ScreenNav.ProfileSetup.route) {
+                    popUpTo(ScreenNav.SignUp.route) { inclusive = true }
+                }
+            }
+
             is AuthState.Error -> {
                 Toast.makeText(
-                    context, (authState as AuthState.Error).message,
+                    context, (authState as AuthState.Error).message.asString(context),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -109,17 +116,16 @@ fun SignUpScreen(
             else -> Unit
         }
     }
-    val rememberMeState = remember { mutableStateOf(false) }
 
     Column(
-        modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Card(
-            modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
             colors = CardDefaults.cardColors(containerColor = CardYellow),
@@ -127,7 +133,7 @@ fun SignUpScreen(
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
-                modifier.padding(horizontal = 22.dp, vertical = 28.dp),
+                modifier = Modifier.padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Registration text (Pixel style with shadow)
@@ -197,8 +203,8 @@ fun SignUpScreen(
                         confirmPassword = it
                         if (confirmPasswordError) confirmPasswordError = false
                     },
-                    text = "Confirm password",
-                    textField = "repeat password",
+                    text = stringResource(R.string.signup_confirm_password_label),
+                    textField = stringResource(R.string.signup_confirm_password_text_field),
                     isError = confirmPasswordError,
                 )
 
@@ -218,7 +224,7 @@ fun SignUpScreen(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    text = "Create",
+                    text = stringResource(R.string.signup_button), // TODO: change the lang
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
                     formValid = true,
@@ -252,13 +258,13 @@ fun SignUpScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Already have an account, ",
+                        text = "Already have an account, ", // TODO: change the lang
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         color = InkSoft
                     )
                     Text(
-                        text = "Login",
+                        text = "Login", // TODO: change the lang
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         fontWeight = FontWeight.ExtraBold,
@@ -268,9 +274,8 @@ fun SignUpScreen(
                         }
                     )
                 }
-
-
             }
         }
     }
 }
+

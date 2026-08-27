@@ -1,6 +1,9 @@
-package com.example.wepick.screens
+package com.example.wepick.screens.auth.login
 
 
+import android.R.attr.maxLines
+import android.R.attr.minLines
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Visibility
@@ -23,6 +27,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -80,15 +86,26 @@ fun LoginScreen(
     val context = LocalContext.current
 
     LaunchedEffect(authState) {
+        Log.d("AuthDebug", "Текущее состояние: $authState")
         when (val state = authState) {
             is AuthState.Authenticated -> {
+                Log.d("AuthDebug", "Переход на Home")
                 navController.navigate(ScreenNav.Home.route) {
                     popUpTo(ScreenNav.Login.route) { inclusive = true }
                 }
             }
 
+            is AuthState.NeedsProfileSetup -> {
+                Log.d("AuthDebug", "Переход на ProfileSetup")
+                navController.navigate(ScreenNav.ProfileSetup.route) {
+                    popUpTo(ScreenNav.Login.route) { inclusive = true }
+                }
+
+            }
+
             is AuthState.Error -> {
-                playerVM.showLockedError(state.message)
+                Log.e("AuthDebug", "ОШИБКА АВТОРИЗАЦИИ: ${state.message}")
+                playerVM.showLockedError(state.message.asString(context))
             }
 
             else -> Unit
@@ -327,12 +344,18 @@ fun FormTextFields(
     modifier: Modifier = Modifier,
     value: String,
     onValueChanged: (String) -> Unit,
+    trailingIcon: (@Composable () -> Unit)? = null,
     text: String,
-    trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textField: String,
     isError: Boolean = false,
-    errorText: String? = null
+    errorText: String? = null,
+    singleLine: Boolean = false,
+    supportingText: @Composable (() -> Unit)? = null,
+    minLines: Int = 1,
+    maxLines: Int = 1,
+    readOnly: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -341,15 +364,18 @@ fun FormTextFields(
             fontWeight = FontWeight.Bold,
             color = if (isError) AccentRed else InkSoft,
             fontFamily = Nunito,
-            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
+            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp),
         )
         OutlinedTextField(
             value = value,
+            readOnly = readOnly,
             onValueChange = onValueChanged,
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
+            singleLine = singleLine,
             shape = RoundedCornerShape(14.dp),
             isError = isError,
+            minLines = minLines,
+            maxLines = maxLines,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = FieldBeige,
                 unfocusedContainerColor = FieldBeige,
@@ -359,6 +385,8 @@ fun FormTextFields(
                 errorTrailingIconColor = AccentRed,
                 errorContainerColor = FieldBeige,
             ),
+            keyboardOptions = keyboardOptions,
+            supportingText = supportingText,
             textStyle = TextStyle(
                 fontFamily = Nunito,
                 fontWeight = FontWeight.SemiBold,
@@ -375,8 +403,9 @@ fun FormTextFields(
                     fontSize = 15.sp,
                     fontFamily = Nunito
                 )
-            }
-        )
+            },
+
+            )
         if (isError && errorText != null) {
             Text(
                 text = errorText,
@@ -392,6 +421,7 @@ fun FormTextFields(
         }
     }
 }
+
 
 @Composable
 fun EmailTextField(

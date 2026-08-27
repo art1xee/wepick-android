@@ -38,8 +38,73 @@
     <string name="signup_email_label">Email</string>
     <string name="signup_password_label">Пароль</string>
     <string name="signup_confirm_password_label">Повторите пароль</string>
+    <string name="signup_confirm_password_text_field">повторите пароль</string>
     <string name="signup_button">Создать профиль</string>
     <string name="signup_error_password_mismatch">Пароли не совпадают. Попробуйте ещё раз.</string>
+
+    <!-- PROFILE SETUP -->
+    <string name="profile_setup_title">НАСТРОЙКА ПРОФИЛЯ</string>
+    <string name="profile_setup_subtitle">Почти готово! Давайте настроим ваш профиль.</string>
+    <string name="profile_setup_load_photo">Загрузите вашу аватарку (необязательно)</string>
+    <string name="profile_setup_display_name_label">Имя:</string>
+    <string name="profile_setup_display_name_example">Введите ваше Имя</string>
+    <string name="profile_setup_display_username_label">Никнейм:</string>
+    <string name="profile_setup_display_username_example">Введите ваш никнейм</string>
+    <string name="profile_setup_display_email_label">Email (Этот email будет привязан к вашему профилю)</string>
+    <string name="profile_setup_save_profile_button">Создать профиль</string>
+    <string name="profile_setup_error_enter_username">Поле с именем не может быть - пустым!</string>
+
+
+    <!--AUTH TRANSITION -->
+    <string name="auth_transition_welcome">Добро пожаловать!</string>
+    <string name="auth_transition_subtitle">Профиль готов. Переходим в приложение…</string>
+    <string name="auth_transition_logining">Входим…</string>
+    <string name="auth_transition_logining_error">Ошибка входа!</string>
+    <string name="auth_transition_logining_with_google">Входим через Google…</string>
+    <string name="auth_transition_logining_with_google_error">Не удалось войти в аккаунт через Google…</string>
+    <string name="auth_transition_reset_password_error">Ошибка при попытке сбросить пароль!</string>
+    <string name="auth_transition_enter_password">Для начала введите пароль!</string>
+    <string name="auth_transition_enter_fields_error">Заполните все поля</string>
+    <string name="auth_transition_password_mismatch">Пароли не совпадают!</string>
+    <string name="auth_transition_creating_account">Создаем аккаунт…</string>
+    <string name="auth_transition_registration_error">Ошибка регистрации!</string>
+
+    <!--PROFILE VIEW MODEL  -->
+    <string name="profile_view_model_saving_profile">Сохраняем профиль…</string>
+    <string name="profile_view_model_error_empty_field">Поля не могут быть пустыми!</string>
+    <string name="profile_view_model_error_change_name">Впишите новое имя!</string>
+    <string name="profile_view_model_error_change_user_name">Впишите новый никнейм!</string>
+
+
+    <!--PROFILE SETTINGS -->
+    <string name="profile_setting_label">Профиль</string>
+    <string name="profile_setting_personal_data_title">О пользователе</string>
+    <string name="profile_setting_personal_data_subtitle">Имя, фото, о себе</string>
+    <string name="profile_setting_title">Настройки приложения</string>
+    <string name="profile_setting_subtitle">Настройте ваше приложение</string>
+    <string name="profile_setting_help_title">Помощь</string>
+    <string name="profile_setting_help_subtitle">FAQ, контакты, отзывы</string>
+    <string name="profile_setting_change_password_title">Изменить пароль</string>
+    <string name="profile_setting_change_password_subtitle">Измените пароль вашего аккаунта</string>
+    <string name="profile_setting_delete_account">Удалить аккаунт</string>
+    <string name="profile_setting_delete_account_alert">Эта операция необратима. Все ваши данные будут безвозвратно удалены. Вы абсолютно уверены?</string>
+    <string name="profile_setting_delete_account_confirm">Удалить</string>
+    <string name="profile_setting_sign_out">Выйти из аккаунта</string>
+    <string name="profile_setting_sign_out_alert">Вы уверены, что хотите выйти из аккаунта?</string>
+    <string name="profile_setting_sign_out_confirm">Выйти</string>
+    <string name="profile_setting_cancel">Отмена</string>
+
+    <!--PROFILE SETTINGS -->
+    <string name="profile_edit_label">Изменение профиля</string>
+    <string name="profile_edit_name_field">Имя: </string>
+    <string name="profile_edit_previous_name_field">ваше старое имя: %s</string>
+    <string name="profile_edit_user_name_field">Никнейм:</string>
+    <string name="profile_edit_previous_user_name_field">ваш старый никнейм: %s</string>
+    <string name="profile_edit_email_field">Email:</string>
+    <string name="profile_edit_previous_email_field">ваш старый email: %s:</string>
+    <string name="profile_edit_button_edit">Сохранить изменения!</string>
+    <string name="profile_edit_button_edit_loading">Сохраняем…</string>
+    <string name="profile_edit_change_photo">Изменить фото</string>
 
     <!-- SELECTION -->
     <string name="selection_title">Привет, %1$s! Выберите, что хотите посмотреть.</string>

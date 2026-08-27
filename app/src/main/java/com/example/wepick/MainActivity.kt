@@ -18,6 +18,7 @@ import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context?) {
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
         val playerVM: PlayerViewModel by viewModels()
         val contentVM: ContentViewModel by viewModels()
         val authViewModel: AuthViewModel by viewModels()
+        val profileViewModel: ProfileSetupViewModel by viewModels()
         viewModel.initLanguage(this)
 
         enableEdgeToEdge()
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
             WePickTheme {
                 val navController = rememberNavController()
                 MainScaffold(viewModel, playerVM, contentVM, navController) {
-                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel)
+                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel, profileViewModel)
                 }
             }
         }
@@ -55,14 +57,16 @@ fun StartProgram(
     playerVM: PlayerViewModel,
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
+    profileViewModel: ProfileSetupViewModel
 
-    ) {
+) {
     NavGraph(
         navController = navController,
         viewModel = viewModel,
         playerVM = playerVM,
         contentVM = contentVM,
         authViewModel = authViewModel,
+        profileViewModel = profileViewModel,
     )
 }
 
