@@ -31,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -86,12 +87,14 @@ fun ProfileEditScreen(
     var textStateName by remember() { mutableStateOf("") }
     var textStateUserName by remember() { mutableStateOf("") }
     var textStateEmail by remember() { mutableStateOf("") }
+    var textStateBio by remember() { mutableStateOf("") }
+    var textStateBirthday by remember() { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         profileViewModel.fetchUserProfile()
     }
 
-    LaunchedEffect(uiState.name, uiState.userName, uiState.email) {
+    LaunchedEffect(uiState.name, uiState.userName, uiState.email, uiState.bio) {
         if (textStateName.isEmpty() && uiState.name.isNotEmpty()) {
             textStateName = uiState.name
         }
@@ -101,6 +104,9 @@ fun ProfileEditScreen(
         if (textStateEmail.isEmpty() && uiState.email.isNotEmpty()) {
             textStateEmail = uiState.email
         }
+        if (textStateBio.isEmpty() && uiState.bio.isNotEmpty()) {
+            textStateBio = uiState.bio
+        }
     }
 
     var isLoading by remember { mutableStateOf(false) }
@@ -108,10 +114,10 @@ fun ProfileEditScreen(
 
     val isUserNameTaken = uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
     val isEmailTaken = uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
+    val isBioBig = uiState.bio.length >= 200
 
     //TODO: good idea add this value when user gonna create account
     //val birthDate by profileViewModel.birthDate.collectAsState()
-
 
 
     Column(
@@ -197,6 +203,7 @@ fun ProfileEditScreen(
 
                 Spacer(Modifier.height(16.dp))
 
+                //NAME OF THE USER FIELD
                 FormTextFields(
                     modifier = Modifier.fillMaxWidth(),
                     value = textStateName,
@@ -213,6 +220,7 @@ fun ProfileEditScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+                //USERNAME FIELD
                 FormTextFields(
                     modifier = Modifier.fillMaxWidth(),
                     value = textStateUserName,
@@ -237,7 +245,35 @@ fun ProfileEditScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+                //BIO FIELD
+                FormTextFields(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    value = textStateBio,
+                    onValueChanged = { newValue ->
+                        textStateBio = newValue
+                        errorMsg = null
+                    },
+                    text = "Bio",
+                    textField = "Enter your bio",
+                    isError = isBioBig,
+                    errorText = if (isBioBig) "the bio already contains 200 char" else null
+                )
+                Spacer(Modifier.height(12.dp))
 
+                //BIRTHDAY FIELD (optional field for fill)
+                FormTextFields(
+                    modifier = modifier.fillMaxWidth(),
+                    value = textStateBirthday,
+                    onValueChanged = { newValue ->
+                        textStateBirthday = newValue
+                        errorMsg = null
+                    },
+                    text = "Birthday",
+                    textField = "enter your birthday",
+                )
+                Spacer(Modifier.height(12.dp))
+                //EMAIL FIELD
                 if (!profileViewModel.isGoogleSignup) {
                     FormTextFields(
                         modifier = Modifier.fillMaxWidth(),
@@ -265,6 +301,7 @@ fun ProfileEditScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+
                 if (errorMsg != null) {
                     Text(
                         text = errorMsg!!,
@@ -278,12 +315,17 @@ fun ProfileEditScreen(
 
                 val trimmedName = textStateName.trim()
                 val trimmedUserName = textStateUserName.trim()
+                val trimmedBio = textStateBio.trim()
+                val trimmedBirthday = textStateBirthday.trim()
                 val trimmedEmail = textStateEmail.trim()
 
                 val isNameChanged = textStateName.trim() != uiState.name.trim()
                 val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
+                val isBioChanged = textStateBio.trim() != uiState.bio.trim()
+                val isBirthdayChanged = textStateBirthday.trim() != uiState.birthday.trim()
                 val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
-                val hasChanges = isNameChanged || isUserNameChanged || isEmailChanged
+                val hasChanges =
+                    isNameChanged || isUserNameChanged || isEmailChanged
 
                 val isUserNameValid =
                     !isUserNameChanged || uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE
@@ -294,11 +336,15 @@ fun ProfileEditScreen(
 
                     modifier = Modifier.fillMaxWidth(),
                     loading = isLoading,
-                    enabled = !isLoading && hasChanges && isEmailValid && isUserNameValid && textStateName.isNotBlank() && textStateUserName.isNotBlank(),
+                    enabled = !isLoading &&
+                            hasChanges &&
+                            isEmailValid &&
+                            isUserNameValid &&
+                            textStateName.isNotBlank()
+                            && textStateUserName.isNotBlank(),
                     text = stringResource(R.string.profile_edit_button_edit),
                     loadingText = stringResource(R.string.profile_edit_button_edit_loading),
                     onClick = {
-
 
                         val updates = mutableMapOf<ProfileSetupViewModel.ProfileField, String>()
 
@@ -311,7 +357,12 @@ fun ProfileEditScreen(
                         if (isEmailChanged) {
                             updates[ProfileSetupViewModel.ProfileField.EMAIL] = trimmedEmail
                         }
-
+                        if (isBioChanged) {
+                            updates[ProfileSetupViewModel.ProfileField.USER_BIO] = trimmedBio
+                        }
+                        if (isBirthdayChanged) {
+                            updates[ProfileSetupViewModel.ProfileField.BIRTHDAY] = trimmedBirthday
+                        }
 
                         isLoading = true
 

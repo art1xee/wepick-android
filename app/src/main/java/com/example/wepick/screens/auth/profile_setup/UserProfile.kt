@@ -5,6 +5,7 @@ data class UserProfile(
     val name: String = "",
     val userName: String = "",
     val bio: String = "",
+    val birthday: String = "",
     val email: String = "",
     val photoUrl: String? = null,
     val profileCompleted: Boolean = false,

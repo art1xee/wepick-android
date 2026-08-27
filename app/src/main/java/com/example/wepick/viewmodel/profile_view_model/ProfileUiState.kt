@@ -5,7 +5,7 @@ data class ProfileUiState(
     val userName: String = "",
     val email: String = "",
     val bio: String = "",
-    //val birthday: Int = 0,
+    val birthday: String = "",
     val photoUrl: String? = null,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,

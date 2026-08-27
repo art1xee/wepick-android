@@ -63,8 +63,8 @@ class ProfileSetupViewModel() : ViewModel() {
         NAME,
         USERNAME,
         EMAIL,
-        //USER_BIO
-        // BIRTHDAY
+        USER_BIO,
+        BIRTHDAY
     }
 
     enum class ValidationStatus {
@@ -94,7 +94,10 @@ class ProfileSetupViewModel() : ViewModel() {
             when (field) {
                 ProfileField.NAME -> firestoreUpdates["name"] = cleanValue
                 ProfileField.USERNAME -> firestoreUpdates["userName"] = cleanValue.removePrefix("@")
+                ProfileField.USER_BIO -> firestoreUpdates["bio"] = cleanValue
                 ProfileField.EMAIL -> firestoreUpdates["email"] = cleanValue
+                ProfileField.BIRTHDAY -> firestoreUpdates["birthday"] = cleanValue
+
             }
         }
 
@@ -116,7 +119,9 @@ class ProfileSetupViewModel() : ViewModel() {
                         // 3. if key missed, working ?: it.value and in the field stayed value which already was in text-field
                         name = (firestoreUpdates["name"] as? String) ?: it.name,
                         userName = (firestoreUpdates["userName"] as? String) ?: it.userName,
+                        bio = (firestoreUpdates["bio"] as? String) ?: it.bio,
                         email = (firestoreUpdates["email"] as? String) ?: it.email,
+                        birthday = (firestoreUpdates["birthday"] as? String) ?: it.birthday,
                     )
                 }
 
@@ -140,12 +145,6 @@ class ProfileSetupViewModel() : ViewModel() {
     fun updateUsername(newUserName: String) {
         _uiState.update {
             it.copy(userName = newUserName)
-        }
-    }
-
-    fun updateUserBio(newBio: String) {
-        _uiState.update {
-            it.copy(bio = newBio)
         }
     }
 
@@ -284,6 +283,7 @@ class ProfileSetupViewModel() : ViewModel() {
                                 email = userFromDB.email,
                                 bio = userFromDB.bio,
                                 photoUrl = userFromDB.photoUrl,
+                                birthday = userFromDB.birthday
                             )
                         }
                     }
@@ -312,6 +312,8 @@ class ProfileSetupViewModel() : ViewModel() {
         val cleanName = currentUiState.name.trim()
         val cleanUserName = currentUiState.userName.trim().removePrefix("@")
 
+
+
         if (cleanName.isEmpty() || cleanUserName.isEmpty()) return
 
         viewModelScope.launch {
@@ -331,6 +333,7 @@ class ProfileSetupViewModel() : ViewModel() {
                     photoUrl = currentUiState.photoUrl,
                     bio = currentUiState.bio,
                     profileCompleted = true,
+                    birthday = currentUiState.birthday
                 )
 
                 db.collection("users").document(currentUser.uid).set(userProfile).await()
