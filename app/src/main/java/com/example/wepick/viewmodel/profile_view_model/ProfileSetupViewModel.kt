@@ -86,7 +86,7 @@ class ProfileSetupViewModel() : ViewModel() {
         for ((field, value) in updates) {
             val cleanValue = value.trim()
 
-            if (cleanValue.isEmpty()) {
+            if ((field == ProfileField.NAME || field == ProfileField.USERNAME) && cleanValue.isEmpty()) {
                 onError(UiText.DynamicString("Поля не могут быть пустыми"))
                 return
             }

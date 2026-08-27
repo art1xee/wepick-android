@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,10 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -62,7 +60,6 @@ import com.example.wepick.ui.theme.DarkButtonPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
-import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 @Composable
@@ -94,7 +91,7 @@ fun ProfileEditScreen(
         profileViewModel.fetchUserProfile()
     }
 
-    LaunchedEffect(uiState.name, uiState.userName, uiState.email, uiState.bio) {
+    LaunchedEffect(uiState.name, uiState.userName, uiState.email, uiState.bio, uiState.birthday) {
         if (textStateName.isEmpty() && uiState.name.isNotEmpty()) {
             textStateName = uiState.name
         }
@@ -107,6 +104,9 @@ fun ProfileEditScreen(
         if (textStateBio.isEmpty() && uiState.bio.isNotEmpty()) {
             textStateBio = uiState.bio
         }
+        if (textStateBirthday.isEmpty() && !uiState.birthday.isNullOrEmpty()) {
+            textStateBirthday = uiState.birthday ?: ""
+        }
     }
 
     var isLoading by remember { mutableStateOf(false) }
@@ -114,7 +114,7 @@ fun ProfileEditScreen(
 
     val isUserNameTaken = uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
     val isEmailTaken = uiState.emailStatus == ProfileSetupViewModel.ValidationStatus.TAKEN
-    val isBioBig = uiState.bio.length >= 200
+    val isBioOverLimit = textStateBio.length > 150
 
     //TODO: good idea add this value when user gonna create account
     //val birthDate by profileViewModel.birthDate.collectAsState()
@@ -248,17 +248,29 @@ fun ProfileEditScreen(
                 //BIO FIELD
                 FormTextFields(
                     modifier = modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .heightIn(100.dp),
                     value = textStateBio,
                     onValueChanged = { newValue ->
                         textStateBio = newValue
                         errorMsg = null
                     },
+                    singleLine = false,
+                    supportingText = {
+                        Text(
+                            text = "${textStateBio.length} / 150",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                            fontFamily = Nunito,
+                            fontSize = 12.sp
+                        )
+                    },
+                    minLines = 3,
+                    maxLines = 5,
                     text = "Bio",
                     textField = "Enter your bio",
-                    isError = isBioBig,
-                    errorText = if (isBioBig) "the bio already contains 200 char" else null
-                )
+                    isError = isBioOverLimit,
+                    )
                 Spacer(Modifier.height(12.dp))
 
                 //BIRTHDAY FIELD (optional field for fill)
@@ -322,10 +334,10 @@ fun ProfileEditScreen(
                 val isNameChanged = textStateName.trim() != uiState.name.trim()
                 val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
                 val isBioChanged = textStateBio.trim() != uiState.bio.trim()
-                val isBirthdayChanged = textStateBirthday.trim() != uiState.birthday.trim()
+                val isBirthdayChanged = textStateBirthday.trim() != (uiState.birthday ?: "").trim()
                 val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
                 val hasChanges =
-                    isNameChanged || isUserNameChanged || isEmailChanged
+                    isNameChanged || isUserNameChanged || isEmailChanged || isBioChanged || isBirthdayChanged
 
                 val isUserNameValid =
                     !isUserNameChanged || uiState.userNameStatus == ProfileSetupViewModel.ValidationStatus.AVAILABLE
@@ -340,6 +352,7 @@ fun ProfileEditScreen(
                             hasChanges &&
                             isEmailValid &&
                             isUserNameValid &&
+                            !isBioOverLimit &&
                             textStateName.isNotBlank()
                             && textStateUserName.isNotBlank(),
                     text = stringResource(R.string.profile_edit_button_edit),

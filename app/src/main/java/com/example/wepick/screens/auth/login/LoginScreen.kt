@@ -1,6 +1,8 @@
 package com.example.wepick.screens.auth.login
 
 
+import android.R.attr.maxLines
+import android.R.attr.minLines
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -340,12 +342,15 @@ fun FormTextFields(
     value: String,
     onValueChanged: (String) -> Unit,
     trailingIcon: (@Composable () -> Unit)? = null,
-
     text: String,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textField: String,
     isError: Boolean = false,
     errorText: String? = null,
+    singleLine: Boolean = false,
+    supportingText: @Composable (() -> Unit)? = null,
+    minLines: Int = 1,
+    maxLines: Int = 1,
 ) {
     Column(modifier = modifier) {
         Text(
@@ -354,15 +359,17 @@ fun FormTextFields(
             fontWeight = FontWeight.Bold,
             color = if (isError) AccentRed else InkSoft,
             fontFamily = Nunito,
-            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp)
+            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp),
         )
         OutlinedTextField(
             value = value,
             onValueChange = onValueChanged,
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
+            singleLine = singleLine,
             shape = RoundedCornerShape(14.dp),
             isError = isError,
+            minLines = minLines,
+            maxLines = maxLines,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = FieldBeige,
                 unfocusedContainerColor = FieldBeige,
@@ -372,6 +379,7 @@ fun FormTextFields(
                 errorTrailingIconColor = AccentRed,
                 errorContainerColor = FieldBeige,
             ),
+            supportingText = supportingText,
             textStyle = TextStyle(
                 fontFamily = Nunito,
                 fontWeight = FontWeight.SemiBold,
@@ -389,7 +397,8 @@ fun FormTextFields(
                     fontFamily = Nunito
                 )
             },
-        )
+
+            )
         if (isError && errorText != null) {
             Text(
                 text = errorText,
