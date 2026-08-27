@@ -275,9 +275,7 @@ class ProfileSetupViewModel() : ViewModel() {
 
                 if (document.exists()) {
                     val profile = document.toObject(UserProfile::class.java)
-
                     Log.d("ProfileSetup", "Date from db is get: $profile")
-
                     profile?.let { userFromDB ->
                         _uiState.update { currentState ->
                             currentState.copy(
@@ -295,8 +293,9 @@ class ProfileSetupViewModel() : ViewModel() {
                     _uiState.update {
                         it.copy(
                             email = currentUser.email ?: "",
-                            name = it.name.ifEmpty { currentUser.displayName ?: "" },
-                            photoUrl = it.photoUrl ?: currentUser.photoUrl?.toString()
+                            name = if (isGoogleSignup) currentUser.displayName ?: "" else "",
+                            photoUrl = it.photoUrl ?: currentUser.photoUrl?.toString(),
+                            userName = "",
                         )
                     }
                 }

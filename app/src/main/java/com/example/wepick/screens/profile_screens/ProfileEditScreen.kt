@@ -87,6 +87,10 @@ fun ProfileEditScreen(
     var textStateUserName by remember() { mutableStateOf("") }
     var textStateEmail by remember() { mutableStateOf("") }
 
+    LaunchedEffect(Unit) {
+        profileViewModel.fetchUserProfile()
+    }
+
     LaunchedEffect(uiState.name, uiState.userName, uiState.email) {
         if (textStateName.isEmpty() && uiState.name.isNotEmpty()) {
             textStateName = uiState.name
@@ -108,9 +112,7 @@ fun ProfileEditScreen(
     //TODO: good idea add this value when user gonna create account
     //val birthDate by profileViewModel.birthDate.collectAsState()
 
-    LaunchedEffect(Unit) {
-        profileViewModel.fetchUserProfile()
-    }
+
 
     Column(
         Modifier

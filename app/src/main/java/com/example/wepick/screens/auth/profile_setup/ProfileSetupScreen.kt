@@ -90,6 +90,7 @@ fun ProfileSetup(
 
     LaunchedEffect(uiState.isSaved) {
         if (uiState.isSaved) {
+            profileViewModel.clearProfileData()
             navController.navigate(ScreenNav.Home.route) {
                 popUpTo(ScreenNav.ProfileSetup.route) { inclusive = true }
             }
