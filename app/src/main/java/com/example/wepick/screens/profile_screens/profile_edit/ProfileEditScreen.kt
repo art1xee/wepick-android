@@ -287,7 +287,7 @@ fun ProfileEditScreen(
                     value = textStateBirthday,
                     onValueChanged = { newValue ->
                         val digitsOnly = newValue.filter { it.isDigit() }
-                        if (digitsOnly.length <= 9)
+                        if (digitsOnly.length <= 8)
                             textStateBirthday = digitsOnly
                     },
                     visualTransformation = DateVisualTransformation(),
@@ -348,7 +348,8 @@ fun ProfileEditScreen(
                 val isNameChanged = textStateName.trim() != uiState.name.trim()
                 val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
                 val isBioChanged = textStateBio.trim() != uiState.bio.trim()
-                val isBirthdayChanged = textStateBirthday.trim() != (uiState.birthday ?: "").trim()
+                val isBirthdayChanged =
+                    textStateBirthday.trim() != (uiState.birthday).filter { it.isDigit() }
                 val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
                 val hasChanges =
                     isNameChanged || isUserNameChanged || isEmailChanged || isBioChanged || isBirthdayChanged
