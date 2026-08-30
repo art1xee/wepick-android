@@ -28,11 +28,6 @@
   <component name="ChangeListManager">
     <list default="true" id="27ae8a24-1d35-47a5-9092-64b89ea2c13c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/profile_edit/ProfileEditScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/profile_edit/ProfileEditScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-en/string.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-en/string.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-ru/string.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-ru/string.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/string.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/string.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,9 +104,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
-        <option value="Kotlin File" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -173,11 +168,11 @@
       <recent name="N:\wepick-android\app\src\main\res\drawable" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
-      <recent name="com.example.wepick.screens.profile_screens.profile_edit" />
-      <recent name="com.example.wepick.viewmodel.profile_view_model" />
-      <recent name="com.example.wepick.screens.profile_screens.settings" />
-      <recent name="com.example.wepick.screens.profile_screens" />
-      <recent name="com.example.wepick.screens.auth.profile_setup" />
+      <recent name="com.example.wepick.domain.repository" />
+      <recent name="com.example.wepick.data.repository" />
+      <recent name="com.example.wepick.domain" />
+      <recent name="com.example.wepick" />
+      <recent name="com.example.wepick.domain.repository.repository" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
