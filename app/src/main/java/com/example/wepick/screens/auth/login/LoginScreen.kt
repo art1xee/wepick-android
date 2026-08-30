@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
@@ -356,6 +357,7 @@ fun FormTextFields(
     maxLines: Int = 1,
     readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     Column(modifier = modifier) {
         Text(
@@ -386,6 +388,7 @@ fun FormTextFields(
                 errorContainerColor = FieldBeige,
             ),
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             supportingText = supportingText,
             textStyle = TextStyle(
                 fontFamily = Nunito,
