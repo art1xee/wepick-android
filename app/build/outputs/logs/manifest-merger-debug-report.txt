@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-28:12
-INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-28:12
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:2:1-29:12
 MERGED from [com.google.firebase:firebase-auth:24.1.0] C:\Users\makcz\.gradle\caches\8.13\transforms\2f5e3864940b4d6e0107416871e7af16\transformed\firebase-auth-24.1.0\AndroidManifest.xml:17:1-75:12
 MERGED from [androidx.credentials:credentials-play-services-auth:1.6.0] C:\Users\makcz\.gradle\caches\8.13\transforms\7cd284c960f808a7e9422c572b409128\transformed\credentials-play-services-auth-1.6.0\AndroidManifest.xml:17:1-52:12
 MERGED from [com.google.android.libraries.identity.googleid:googleid:1.2.0] C:\Users\makcz\.gradle\caches\8.13\transforms\33042e4945c61d119d3476ead55990e3\transformed\googleid-1.2.0\AndroidManifest.xml:2:1-7:12
@@ -171,8 +171,8 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:23.2.0] C:
 	android:name
 		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:6:5-26:19
-INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:6:5-26:19
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:6:5-27:19
+INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml:6:5-27:19
 MERGED from [com.google.firebase:firebase-auth:24.1.0] C:\Users\makcz\.gradle\caches\8.13\transforms\2f5e3864940b4d6e0107416871e7af16\transformed\firebase-auth-24.1.0\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-auth:24.1.0] C:\Users\makcz\.gradle\caches\8.13\transforms\2f5e3864940b4d6e0107416871e7af16\transformed\firebase-auth-24.1.0\AndroidManifest.xml:28:5-73:19
 MERGED from [androidx.credentials:credentials-play-services-auth:1.6.0] C:\Users\makcz\.gradle\caches\8.13\transforms\7cd284c960f808a7e9422c572b409128\transformed\credentials-play-services-auth-1.6.0\AndroidManifest.xml:23:5-50:19
@@ -266,25 +266,27 @@ MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\makcz\.gradle\c
 	android:dataExtractionRules
 		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:8:9-65
 activity#com.example.wepick.MainActivity
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:15:9-25:20
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:15:9-26:20
 	android:label
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:18:13-45
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:19:13-45
+	android:windowSoftInputMode
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:16:13-55
 	android:exported
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:17:13-36
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:18:13-36
 	android:theme
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:19:13-48
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:20:13-48
 	android:name
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:16:13-41
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:17:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:20:13-24:29
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:21:13-25:29
 action#android.intent.action.MAIN
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:21:17-69
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:21:25-66
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:23:17-77
+ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:24:17-77
 	android:name
-		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:23:27-74
+		ADDED from N:\wepick-android\app\src\main\AndroidManifest.xml:24:27-74
 uses-sdk
 INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from N:\wepick-android\app\src\main\AndroidManifest.xml

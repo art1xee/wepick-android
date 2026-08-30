@@ -95,17 +95,24 @@
     <string name="profile_setting_sign_out_confirm">Вийти</string>
     <string name="profile_setting_cancel">Відмінити</string>
 
-    <!--PROFILE SETTINGS -->
+    <!--PROFILE EDIT SCREEN -->
     <string name="profile_edit_label">Редагування профілю</string>
     <string name="profile_edit_name_field">Ім\'я: </string>
-    <string name="profile_edit_previous_name_field">ваше старе ім\'я: %s</string>
+    <string name="profile_edit_previous_name_hint">ваше старе ім\'я: %s</string>
     <string name="profile_edit_user_name_field">Нікнейм:</string>
-    <string name="profile_edit_previous_user_name_field">ваш старий нікнейм: %s</string>
+    <string name="profile_edit_previous_user_name_hint">ваш старий нікнейм: %s</string>
     <string name="profile_edit_email_field">Email:</string>
-    <string name="profile_edit_previous_email_field">ваш старий email: %s:</string>
+    <string name="profile_edit_previous_email_hint">ваш старий email: %s</string>
     <string name="profile_edit_button_edit">Змінити!</string>
     <string name="profile_edit_button_edit_loading">Зберігаємо…</string>
     <string name="profile_edit_change_photo">Змінити фото</string>
+    <string name="profile_edit_about_me_label">Про себе (необов\'язково)</string>
+    <string name="profile_edit_about_me_hint">напишіть щось про себе:</string>
+    <string name="profile_edit_username_taken">Цей нікнейм вже зайнятий!</string>
+    <string name="profile_edit_birthday_label">День народження (необов\'язково)</string>
+    <string name="profile_edit_birthday_valid_date">Впишіть правильну дату!</string>
+    <string name="profile_edit_birthday_format">ДД.ММ.РРРР</string>
+    <string name="profile_edit_email_taken">Цей емейл вже має інший акаунт!</string>
 
     <!-- SELECTION -->
     <string name="selection_title">Привіт, %1$s! Оберіть, що хочете подивитися.</string>

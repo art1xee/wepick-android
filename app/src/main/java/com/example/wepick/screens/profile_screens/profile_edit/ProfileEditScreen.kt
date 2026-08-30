@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,12 +15,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Card
@@ -37,14 +42,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,7 +74,6 @@ import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 @Composable
 fun ProfileEditScreen(
@@ -113,7 +121,7 @@ fun ProfileEditScreen(
             textStateBirthday = uiState.birthday.filter { it.isDigit() }
         }
     }
-
+    val focusManager = LocalFocusManager.current
     var isLoading by remember { mutableStateOf(false) }
     var errorMsg by remember { mutableStateOf<String?>(null) }
 
@@ -123,13 +131,20 @@ fun ProfileEditScreen(
     val isBirthdayValid = isValidDate(textStateBirthday)
 
     //TODO: good idea add this value when user gonna create account
-    //val birthDate by profileViewModel.birthDate.collectAsState()
-
 
     Column(
         Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
+            .pointerInput(
+                Unit
+            ) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
+            .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -209,17 +224,28 @@ fun ProfileEditScreen(
 
                 Spacer(Modifier.height(16.dp))
 
+
                 //NAME OF THE USER FIELD
                 FormTextFields(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     value = textStateName,
                     onValueChanged = { newValue ->
                         textStateName = newValue
                         errorMsg = null
                     },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     text = stringResource(R.string.profile_edit_name_field),
                     textField = stringResource(
-                        R.string.profile_edit_previous_name_field,
+                        R.string.profile_edit_previous_name_hint,
                         uiState.name
                     )
                 )
@@ -240,11 +266,19 @@ fun ProfileEditScreen(
                         errorMsg = null
                     },
                     isError = isUserNameTaken,
-                    errorText = if (isUserNameTaken) "This username already taken" else null, // TODO: add in the R.string
+                    errorText = if (isUserNameTaken) stringResource(R.string.profile_edit_username_taken) else null,
                     text = stringResource(R.string.profile_edit_user_name_field),
                     textField = stringResource(
-                        R.string.profile_edit_previous_user_name_field,
+                        R.string.profile_edit_previous_user_name_hint,
                         uiState.userName
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
                     ),
                     trailingIcon = { ValidationTrailingIcon(status = uiState.userNameStatus) }
                 )
@@ -273,15 +307,22 @@ fun ProfileEditScreen(
                     },
                     minLines = 3,
                     maxLines = 5,
-                    text = "Bio (optional)",// TODO: add in the R.string
-                    textField = "Enter your bio",// TODO: add in the R.string
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
+                    text = stringResource(R.string.profile_edit_about_me_label),
+                    textField = stringResource(R.string.profile_edit_about_me_hint),
                     isError = isBioOverLimit,
                 )
                 Spacer(Modifier.height(12.dp))
 
 
                 //BIRTHDAY FIELD (optional field for fill)
-
                 FormTextFields(
                     modifier = modifier.fillMaxWidth(),
                     value = textStateBirthday,
@@ -291,11 +332,22 @@ fun ProfileEditScreen(
                             textStateBirthday = digitsOnly
                     },
                     visualTransformation = DateVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    text = "Birthday (optional)", // TODO: Change the language
-                    textField = "DD.MM.YYYY", // TODO: Change the language,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    text = stringResource(R.string.profile_edit_birthday_label),
+                    textField = stringResource(R.string.profile_edit_birthday_format),
                     isError = !isBirthdayValid && textStateBirthday.isNotEmpty(),
-                    errorText = if (!isBirthdayValid && textStateBirthday.isNotEmpty()) "Enter valid date: DD.MM.YYYY" else null
+                    errorText = if (!isBirthdayValid && textStateBirthday.isNotEmpty()) stringResource(
+                        R.string.profile_edit_birthday_valid_date
+                    ) else null,
+
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -315,11 +367,19 @@ fun ProfileEditScreen(
 
                             errorMsg = null
                         },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                            }
+                        ),
                         isError = isEmailTaken,
-                        errorText = if (isEmailTaken) "Another account has this email" else null, // TODO: add in the R.string
+                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null, // TODO: add in the R.string
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
-                            R.string.profile_edit_previous_email_field,
+                            R.string.profile_edit_previous_email_hint,
                             uiState.email
                         ),
                         trailingIcon = { ValidationTrailingIcon(status = uiState.emailStatus) }
@@ -349,7 +409,7 @@ fun ProfileEditScreen(
                 val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
                 val isBioChanged = textStateBio.trim() != uiState.bio.trim()
                 val isBirthdayChanged =
-                    textStateBirthday.trim() != (uiState.birthday).filter { it.isDigit() }
+                    textStateBirthday.trim() != (uiState.birthday ?: "").filter { it.isDigit() }
                 val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
                 val hasChanges =
                     isNameChanged || isUserNameChanged || isEmailChanged || isBioChanged || isBirthdayChanged

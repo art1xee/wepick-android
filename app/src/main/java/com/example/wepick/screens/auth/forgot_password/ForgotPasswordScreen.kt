@@ -258,7 +258,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(22.dp))
 
                     Text(
-                        text = "Ready!",
+                        text = "Ready!", //TODO: add this string in the R.string
                         fontFamily = PressStart2P,
                         color = White,
                         fontSize = 18.sp,
