@@ -1,10 +1,8 @@
 package com.example.wepick.screens.profile_screens.profile_edit
 
-import android.view.ViewTreeObserver
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,9 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,8 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -57,7 +50,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,13 +58,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.request.Disposable
 import com.example.wepick.R
 import com.example.wepick.screens.auth.login.FormTextFields
 import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
@@ -86,7 +74,6 @@ import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 @Composable
 fun ProfileEditScreen(
@@ -258,7 +245,7 @@ fun ProfileEditScreen(
                     ),
                     text = stringResource(R.string.profile_edit_name_field),
                     textField = stringResource(
-                        R.string.profile_edit_previous_name_field,
+                        R.string.profile_edit_previous_name_hint,
                         uiState.name
                     )
                 )
@@ -279,10 +266,10 @@ fun ProfileEditScreen(
                         errorMsg = null
                     },
                     isError = isUserNameTaken,
-                    errorText = if (isUserNameTaken) "This username already taken" else null, // TODO: add in the R.string
+                    errorText = if (isUserNameTaken) stringResource(R.string.profile_edit_username_taken) else null,
                     text = stringResource(R.string.profile_edit_user_name_field),
                     textField = stringResource(
-                        R.string.profile_edit_previous_user_name_field,
+                        R.string.profile_edit_previous_user_name_hint,
                         uiState.userName
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -328,15 +315,14 @@ fun ProfileEditScreen(
                             focusManager.moveFocus(FocusDirection.Down)
                         }
                     ),
-                    text = "Bio (optional)",// TODO: add in the R.string
-                    textField = "Enter your bio",// TODO: add in the R.string
+                    text = stringResource(R.string.profile_edit_about_me_label),
+                    textField = stringResource(R.string.profile_edit_about_me_hint),
                     isError = isBioOverLimit,
                 )
                 Spacer(Modifier.height(12.dp))
 
 
                 //BIRTHDAY FIELD (optional field for fill)
-
                 FormTextFields(
                     modifier = modifier.fillMaxWidth(),
                     value = textStateBirthday,
@@ -350,10 +336,12 @@ fun ProfileEditScreen(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Next
                     ),
-                    text = "Birthday (optional)", // TODO: Change the language
-                    textField = "DD.MM.YYYY", // TODO: Change the language,
+                    text = stringResource(R.string.profile_edit_birthday_label),
+                    textField = stringResource(R.string.profile_edit_birthday_format),
                     isError = !isBirthdayValid && textStateBirthday.isNotEmpty(),
-                    errorText = if (!isBirthdayValid && textStateBirthday.isNotEmpty()) "Enter valid date: DD.MM.YYYY" else null,
+                    errorText = if (!isBirthdayValid && textStateBirthday.isNotEmpty()) stringResource(
+                        R.string.profile_edit_birthday_valid_date
+                    ) else null,
 
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -388,10 +376,10 @@ fun ProfileEditScreen(
                             }
                         ),
                         isError = isEmailTaken,
-                        errorText = if (isEmailTaken) "Another account has this email" else null, // TODO: add in the R.string
+                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null, // TODO: add in the R.string
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
-                            R.string.profile_edit_previous_email_field,
+                            R.string.profile_edit_previous_email_hint,
                             uiState.email
                         ),
                         trailingIcon = { ValidationTrailingIcon(status = uiState.emailStatus) }
