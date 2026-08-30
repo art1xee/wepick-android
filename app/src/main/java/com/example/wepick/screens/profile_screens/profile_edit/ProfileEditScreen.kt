@@ -1,5 +1,6 @@
 package com.example.wepick.screens.profile_screens.profile_edit
 
+import android.view.ViewTreeObserver
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,10 +13,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,7 +37,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +57,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -60,9 +66,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.request.Disposable
 import com.example.wepick.R
 import com.example.wepick.screens.auth.login.FormTextFields
 import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
@@ -85,9 +95,7 @@ fun ProfileEditScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
-    val focusRequester = remember {
-        FocusRequester()
-    }
+
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
@@ -136,8 +144,6 @@ fun ProfileEditScreen(
     val isBirthdayValid = isValidDate(textStateBirthday)
 
     //TODO: good idea add this value when user gonna create account
-    //val birthDate by profileViewModel.birthDate.collectAsState()
-
 
     Column(
         Modifier
@@ -150,7 +156,8 @@ fun ProfileEditScreen(
                 detectTapGestures(onTap = {
                     focusManager.clearFocus()
                 })
-            },
+            }
+            .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -234,8 +241,7 @@ fun ProfileEditScreen(
                 //NAME OF THE USER FIELD
                 FormTextFields(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
+                        .fillMaxWidth(),
                     value = textStateName,
                     onValueChanged = { newValue ->
                         textStateName = newValue
@@ -415,7 +421,7 @@ fun ProfileEditScreen(
                 val isUserNameChanged = textStateUserName.trim() != uiState.userName.trim()
                 val isBioChanged = textStateBio.trim() != uiState.bio.trim()
                 val isBirthdayChanged =
-                    textStateBirthday.trim() != (uiState.birthday).filter { it.isDigit() }
+                    textStateBirthday.trim() != (uiState.birthday ?: "").filter { it.isDigit() }
                 val isEmailChanged = textStateEmail.trim() != uiState.email.trim()
                 val hasChanges =
                     isNameChanged || isUserNameChanged || isEmailChanged || isBioChanged || isBirthdayChanged
