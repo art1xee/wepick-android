@@ -21,6 +21,7 @@ class FirebaseUserRepository(
     private val storage: FirebaseStorage = FirebaseStorage.getInstance(),
 ) : UserRepository {
 
+
     override val currentUserId: String?
         get() = auth.currentUser?.uid
 
@@ -34,6 +35,7 @@ class FirebaseUserRepository(
         auth.addAuthStateListener(listener)
         awaitClose { auth.removeAuthStateListener(listener) }
     }
+
     override suspend fun getUserProfile(): Result<UserProfile?> = runCatching {
         val uid = currentUserId ?: return@runCatching null
         val snapshot = db.collection("users").document(uid).get().await()

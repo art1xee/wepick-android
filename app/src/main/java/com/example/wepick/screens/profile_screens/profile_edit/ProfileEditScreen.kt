@@ -62,7 +62,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.wepick.R
-import com.example.wepick.screens.auth.login.FormTextFields
+import com.example.wepick.screens.auth.components.FormTextFields
 import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
 import com.example.wepick.ui.components.RetroEditProfileButton
 import com.example.wepick.ui.theme.AccentRed
@@ -376,7 +376,7 @@ fun ProfileEditScreen(
                             }
                         ),
                         isError = isEmailTaken,
-                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null, // TODO: add in the R.string
+                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null,
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
                             R.string.profile_edit_previous_email_hint,

@@ -46,9 +46,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
-import com.example.wepick.screens.auth.login.EmailTextField
-import com.example.wepick.screens.auth.login.LoginDivider
-import com.example.wepick.screens.auth.login.PasswordTextField
+import com.example.wepick.screens.auth.components.EmailTextField
+import com.example.wepick.screens.auth.components.LoginDivider
+import com.example.wepick.screens.auth.components.PasswordTextField
 import com.example.wepick.ui.components.CreateAccountButton
 import com.example.wepick.ui.components.GoogleLoginButton
 import com.example.wepick.ui.theme.AccentRed
