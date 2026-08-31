@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
-import com.example.wepick.screens.auth.login.EmailTextField
+import com.example.wepick.screens.auth.components.EmailTextField
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -70,8 +70,6 @@ import com.example.wepick.viewmodel.PlayerViewModel
 @Composable
 fun ForgotPasswordScreen(
     navController: NavController,
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier,
     playerVM: PlayerViewModel,
     authViewModel: AuthViewModel
 ) {
@@ -324,7 +322,5 @@ fun ForgotPasswordScreen(
 
             }
         }
-
-
     }
 }

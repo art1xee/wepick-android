@@ -120,8 +120,6 @@ fun NavGraph(
         composable(ScreenNav.ForgotPassword.route) {
             ForgotPasswordScreen(
                 navController,
-                viewModel,
-                modifier = Modifier,
                 playerVM,
                 authViewModel
             )
