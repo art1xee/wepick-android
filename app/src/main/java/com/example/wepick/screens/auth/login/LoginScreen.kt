@@ -228,7 +228,7 @@ fun LoginScreen(
                     isError = passwordError,
                     errorText = if (passwordError) stringResource(R.string.login_error_invalid_credentials) else null,
                     keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Done
                     ),
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -303,24 +303,6 @@ fun LoginScreen(
 
 
 // =============================== COMPOSABLE FUNCTIONS ==================================
-@Composable
-fun LoginCardText(
-    text: String,
-    color: Color,
-    textAlign: TextAlign,
-    style: TextStyle,
-    fontFamily: FontFamily,
-) {
-    Text(
-        text = text,
-        color = color,
-        textAlign = textAlign,
-        style = style,
-        fontFamily = fontFamily,
-        fontSize = 18.sp
-    )
-}
-
 @Composable
 fun ForgotPassword(
     navController: NavController

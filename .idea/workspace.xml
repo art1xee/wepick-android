@@ -28,7 +28,11 @@
   <component name="ChangeListManager">
     <list default="true" id="27ae8a24-1d35-47a5-9092-64b89ea2c13c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/NavHost.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/NavHost.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/forgot_password/ForgotPasswordScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/forgot_password/ForgotPasswordScreen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/login/LoginScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/login/LoginScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/signup/SignupScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/auth/signup/SignupScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/string.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/string.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +299,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="test" />
                       </list>
                     </value>
                   </entry>

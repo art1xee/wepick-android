@@ -115,7 +115,7 @@ fun NavGraph(
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.Login.route) {
-            LoginScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
+            LoginScreen(navController, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.ForgotPassword.route) {
             ForgotPasswordScreen(
