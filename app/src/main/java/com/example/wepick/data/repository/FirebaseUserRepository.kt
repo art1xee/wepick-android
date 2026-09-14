@@ -21,7 +21,6 @@ class FirebaseUserRepository(
     private val storage: FirebaseStorage = FirebaseStorage.getInstance(),
 ) : UserRepository {
 
-
     override val currentUserId: String?
         get() = auth.currentUser?.uid
 
@@ -96,5 +95,21 @@ class FirebaseUserRepository(
         val snapshot = db.collection("users").whereEqualTo("email", email).get().await()
         val uid = currentUserId
         snapshot.documents.none { it.id != uid }
+    }
+
+    override suspend fun signOut(): Result<Unit>  = runCatching{
+        auth.signOut()
+    }
+
+    override suspend fun deleteAccount(): Result<Unit> = runCatching {
+        val user = auth.currentUser ?: throw IllegalStateException("User not logged in ")
+        val uid = user.uid
+
+        db.collection("users").document(uid).delete().await()
+
+        runCatching {
+            storage.reference.child("profile_images/$uid.jpg").delete().await()
+        }
+        user.delete().await()
     }
 }

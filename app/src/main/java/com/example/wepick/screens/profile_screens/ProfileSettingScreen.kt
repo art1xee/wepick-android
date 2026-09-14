@@ -1,6 +1,5 @@
 package com.example.wepick.screens.profile_screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,37 +48,24 @@ import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
-import com.example.wepick.viewmodel.AuthState
-import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 
 @Composable
 fun ProfileSettingScreen(
     navController: NavController,
-    authViewModel: AuthViewModel,
-    profileViewModel: ProfileSetupViewModel
+    viewModel: ProfileSettingViewModel
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val authState = authViewModel.authState.observeAsState()
-
-    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        profileViewModel.fetchUserProfile()
-    }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
-    LaunchedEffect(authState.value) {
-        when (authState.value) {
-            is AuthState.Unauthenticated -> {
-                navController.navigate(ScreenNav.Login.route) {
-                    popUpTo(0) { inclusive = true }
-                    launchSingleTop = true
-                }
+    LaunchedEffect(uiState.isDeletedAccount) {
+        if (uiState.isDeletedAccount) {
+            navController.navigate(ScreenNav.Login.route) {
+                popUpTo(0) { inclusive = true }
             }
-            else -> Unit
         }
     }
 
@@ -123,9 +108,9 @@ fun ProfileSettingScreen(
 
                 //Profile info block with: avatar, name, username, email
                 ProfileInfoBlock(
-                    photoUrl = uiState.photoUrl,
-                    name = uiState.name,
-                    userName = uiState.userName,
+                    photoUrl = uiState.userProfile?.photoUrl,
+                    name = uiState.userProfile?.name ?: "",
+                    userName = uiState.userProfile?.userName ?: "",
                     onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }
                 )
 
@@ -225,14 +210,7 @@ fun ProfileSettingScreen(
                         isDestructive = true,
                         onConfirm = {
                             showDeleteDialog = false
-                            authViewModel.deleteAccount(
-                                onSuccess = {
-                                    profileViewModel.clearProfileData()
-                                },
-                                onError = {
-                                    Log.e("DeletingAccountError", "Deleting error: ${it.message}")
-                                }
-                            )
+                            viewModel.deleteAccount()
                         },
                         onDismiss = { showDeleteDialog = false }
                     )
@@ -253,8 +231,12 @@ fun ProfileSettingScreen(
                         confirmText = stringResource(R.string.profile_setting_sign_out_confirm),
                         onConfirm = {
                             showSignOutDialog = false
-                            authViewModel.signout()
-                            profileViewModel.clearProfileData()
+                            viewModel.signOut(
+                                onSuccess = { navController.navigate(ScreenNav.Login.route) {
+                                    popUpTo(0) { inclusive = true }
+                                } }
+
+                            )
                         },
                         onDismiss = { showSignOutDialog = false }
                     )

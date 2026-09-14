@@ -6,31 +6,32 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wepick.screens.AuthTransitionScreen
-import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
-import com.example.wepick.screens.profile_screens.FavoriteContentScreen
-import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
 import com.example.wepick.screens.HomeScreen
-import com.example.wepick.screens.auth.login.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
-import com.example.wepick.screens.auth.profile_setup.ProfileSetup
 import com.example.wepick.screens.SelectionScreen
-import com.example.wepick.screens.profile_screens.ProfileSettingScreen
-import com.example.wepick.screens.auth.signup.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
+import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
+import com.example.wepick.screens.auth.login.LoginScreen
+import com.example.wepick.screens.auth.profile_setup.ProfileSetup
+import com.example.wepick.screens.auth.signup.SignUpScreen
 import com.example.wepick.screens.profile_screens.ChangePasswordScreen
 import com.example.wepick.screens.profile_screens.DeleteAccountScreen
-import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
+import com.example.wepick.screens.profile_screens.FavoriteContentScreen
 import com.example.wepick.screens.profile_screens.HelpScreen
 import com.example.wepick.screens.profile_screens.PersonalDataScreen
+import com.example.wepick.screens.profile_screens.ProfileSettingScreen
 import com.example.wepick.screens.profile_screens.profile_edit.ProfileEditScreen
+import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
@@ -41,7 +42,8 @@ fun NavGraph(
     playerVM: PlayerViewModel,
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
-    profileViewModel: ProfileSetupViewModel
+    profileViewModel: ProfileSetupViewModel,
+    profileSettingViewModel: ProfileSettingViewModel,
 ) {
     NavHost(
         navController = navController,
@@ -102,9 +104,8 @@ fun NavGraph(
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
             ProfileSettingScreen(
-                authViewModel = authViewModel,
-                profileViewModel = profileViewModel,
-                navController = navController,
+                navController,
+                profileSettingViewModel,
             )
         }
 
