@@ -2,35 +2,38 @@ package com.example.wepick.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wepick.screens.AuthTransitionScreen
-import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.screens.CharacterPickerScreen
-import com.example.wepick.screens.profile_screens.FavoriteContentScreen
-import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
+import com.example.wepick.screens.SplashScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
 import com.example.wepick.screens.HomeScreen
-import com.example.wepick.screens.auth.login.LoginScreen
 import com.example.wepick.screens.MainScreen
 import com.example.wepick.screens.MatchScreen
 import com.example.wepick.screens.PartnerScreen
-import com.example.wepick.screens.auth.profile_setup.ProfileSetup
 import com.example.wepick.screens.SelectionScreen
-import com.example.wepick.screens.profile_screens.ProfileSettingScreen
-import com.example.wepick.screens.auth.signup.SignUpScreen
 import com.example.wepick.screens.SummaryScreen
+import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
+import com.example.wepick.screens.auth.login.LoginScreen
+import com.example.wepick.screens.auth.profile_setup.ProfileSetup
+import com.example.wepick.screens.auth.signup.SignUpScreen
 import com.example.wepick.screens.profile_screens.ChangePasswordScreen
 import com.example.wepick.screens.profile_screens.DeleteAccountScreen
-import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
+import com.example.wepick.screens.profile_screens.FavoriteContentScreen
 import com.example.wepick.screens.profile_screens.HelpScreen
 import com.example.wepick.screens.profile_screens.PersonalDataScreen
+import com.example.wepick.screens.profile_screens.ProfileSettingScreen
 import com.example.wepick.screens.profile_screens.profile_edit.ProfileEditScreen
+import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
+import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
@@ -41,12 +44,15 @@ fun NavGraph(
     playerVM: PlayerViewModel,
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
-    profileViewModel: ProfileSetupViewModel
+    profileViewModel: ProfileSetupViewModel,
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenNav.Login.route
+        startDestination = ScreenNav.Splash.route
     ) {
+        composable(ScreenNav.Splash.route) {
+            SplashScreen(navController, authViewModel)
+        }
         composable(ScreenNav.PersonalData.route) {
             PersonalDataScreen(
                 navController,
@@ -101,10 +107,10 @@ fun NavGraph(
             HomeScreen(navController, authViewModel, profileViewModel)
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
+            val settingViewModel: ProfileSettingViewModel = viewModel()
             ProfileSettingScreen(
-                authViewModel = authViewModel,
-                profileViewModel = profileViewModel,
-                navController = navController,
+                navController,
+                viewModel = settingViewModel,
             )
         }
 
@@ -115,13 +121,11 @@ fun NavGraph(
             SignUpScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.Login.route) {
-            LoginScreen(navController, viewModel, modifier = Modifier, playerVM, authViewModel)
+            LoginScreen(navController, modifier = Modifier, playerVM, authViewModel)
         }
         composable(ScreenNav.ForgotPassword.route) {
             ForgotPasswordScreen(
                 navController,
-                viewModel,
-                modifier = Modifier,
                 playerVM,
                 authViewModel
             )

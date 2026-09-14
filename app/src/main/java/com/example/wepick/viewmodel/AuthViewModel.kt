@@ -41,15 +41,13 @@ class AuthViewModel : ViewModel() {
     }
 
     init {
-        checkAuthStatus()
-    }
-
-    fun checkAuthStatus() {
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            _authState.value = AuthState.Unauthenticated
-        } else {
-            verifyUserProfile(currentUser.uid)
+        auth.addAuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user == null) {
+                _authState.value = AuthState.Unauthenticated
+            } else {
+                verifyUserProfile(user.uid)
+            }
         }
     }
 
@@ -86,7 +84,6 @@ class AuthViewModel : ViewModel() {
                 auth.signInWithEmailAndPassword(email, password).await()
                 delay(2000)
                 transitionState = null
-                verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = e.localizedMessage?.let {
@@ -117,7 +114,6 @@ class AuthViewModel : ViewModel() {
                 auth.createUserWithEmailAndPassword(email, password).await()
                 delay(2500)
                 transitionState = null
-                verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = e.localizedMessage?.let {
@@ -131,25 +127,6 @@ class AuthViewModel : ViewModel() {
 
     fun signout() {
         auth.signOut()
-        _authState.value = AuthState.Unauthenticated
-    }
-
-    fun deleteAccount(onSuccess: () -> Unit, onError: (Exception) -> Unit) {
-        val user = auth.currentUser ?: return
-        val uid = user.uid
-
-        viewModelScope.launch {
-            try {
-                db.collection("users").document(uid).delete().await()
-
-                user.delete()?.await()
-
-                _authState.value = AuthState.Unauthenticated
-                onSuccess()
-            } catch (e: Exception) {
-                onError(e)
-            }
-        }
     }
 
     fun resetPassword(email: String, onSuccess: () -> Unit, onError: (UiText) -> Unit) {
@@ -196,7 +173,6 @@ class AuthViewModel : ViewModel() {
                 auth.signInWithCredential(authCredential).await()
                 delay(2000)
                 transitionState = null
-                verifyUserProfile(auth.currentUser!!.uid)
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = e.message?.let {

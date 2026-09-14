@@ -31,7 +31,7 @@
     <string name="forgot_password_description">Введіть email, який використовували під час реєстрації — ми надішлемо посилання для відновлення пароля.</string>
     <string name="forgot_password_success">Інструкції для відновлення пароля надіслано на ваш email. Перевірте поштову скриньку.</string>
     <string name="forgot_password_step">Крок 1 із 2</string>
-    <string name="forgot_password_complete">Готово</string>
+    <string name="forgot_password_complete">Готово!</string>
 
     <!-- SIGNUP -->
     <string name="signup_title">Реєстрація</string>

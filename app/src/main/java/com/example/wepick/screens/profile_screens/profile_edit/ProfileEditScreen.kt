@@ -6,7 +6,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +45,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -62,7 +60,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.wepick.R
-import com.example.wepick.screens.auth.login.FormTextFields
+import com.example.wepick.screens.auth.components.FormTextFields
 import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
 import com.example.wepick.ui.components.RetroEditProfileButton
 import com.example.wepick.ui.theme.AccentRed
@@ -137,13 +135,6 @@ fun ProfileEditScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
-            .pointerInput(
-                Unit
-            ) {
-                detectTapGestures(onTap = {
-                    focusManager.clearFocus()
-                })
-            }
             .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -376,7 +367,7 @@ fun ProfileEditScreen(
                             }
                         ),
                         isError = isEmailTaken,
-                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null, // TODO: add in the R.string
+                        errorText = if (isEmailTaken) stringResource(R.string.profile_edit_email_taken) else null,
                         text = stringResource(R.string.profile_edit_email_field),
                         textField = stringResource(
                             R.string.profile_edit_previous_email_hint,

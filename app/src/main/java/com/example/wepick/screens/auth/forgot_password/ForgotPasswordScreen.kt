@@ -9,10 +9,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
@@ -30,19 +35,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
-import com.example.wepick.screens.auth.login.EmailTextField
+import com.example.wepick.screens.auth.components.EmailTextField
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -60,8 +68,6 @@ import com.example.wepick.viewmodel.PlayerViewModel
 @Composable
 fun ForgotPasswordScreen(
     navController: NavController,
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier,
     playerVM: PlayerViewModel,
     authViewModel: AuthViewModel
 ) {
@@ -76,11 +82,14 @@ fun ForgotPasswordScreen(
     val isEmailValid = remember(email) {
         email.matches(emailRegex)
     }
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     )
     // TOP BAR
@@ -210,7 +219,15 @@ fun ForgotPasswordScreen(
                         text = stringResource(R.string.login_email_label),
                         textField = "email@example.com",
                         isError = emailError,
-                        errorText = stringResource(R.string.forgot_password_email_error)
+                        errorText = stringResource(R.string.forgot_password_email_error),
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                            }
+                        ),
                     )
                     Spacer(Modifier.height(26.dp))
 
@@ -258,7 +275,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(22.dp))
 
                     Text(
-                        text = "Ready!", //TODO: add this string in the R.string
+                        text = stringResource(R.string.forgot_password_complete), //TODO: add this string in the R.string
                         fontFamily = PressStart2P,
                         color = White,
                         fontSize = 18.sp,
@@ -298,7 +315,5 @@ fun ForgotPasswordScreen(
 
             }
         }
-
-
     }
 }

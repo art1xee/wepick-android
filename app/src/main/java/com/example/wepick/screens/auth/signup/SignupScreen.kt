@@ -9,8 +9,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -23,22 +28,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
-import com.example.wepick.screens.auth.login.EmailTextField
-import com.example.wepick.screens.auth.login.LoginDivider
-import com.example.wepick.screens.auth.login.PasswordTextField
+import com.example.wepick.screens.auth.components.EmailTextField
+import com.example.wepick.screens.auth.components.LoginDivider
+import com.example.wepick.screens.auth.components.PasswordTextField
 import com.example.wepick.ui.components.CreateAccountButton
 import com.example.wepick.ui.components.GoogleLoginButton
 import com.example.wepick.ui.theme.AccentRed
@@ -87,10 +95,8 @@ fun SignUpScreen(
         else -> null
     }
 
-    val isFormValid = isEmailValid && isPasswordValid
-
     val isLoading = authState is AuthState.Loading
-
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(authState) {
         when (authState) {
@@ -120,7 +126,9 @@ fun SignUpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -177,6 +185,14 @@ fun SignUpScreen(
                     text = stringResource(R.string.login_email_label),
                     textField = "email@example.com",
                     isError = emailError,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
                 )
 
                 Spacer(modifier.height(12.dp))
@@ -192,6 +208,14 @@ fun SignUpScreen(
                     text = stringResource(R.string.login_password_label),
                     textField = "password",
                     isError = passwordError,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
                 )
                 Spacer(modifier.height(12.dp))
 
@@ -206,6 +230,14 @@ fun SignUpScreen(
                     text = stringResource(R.string.signup_confirm_password_label),
                     textField = stringResource(R.string.signup_confirm_password_text_field),
                     isError = confirmPasswordError,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    )
                 )
 
                 if (formErrorMessage != null) {

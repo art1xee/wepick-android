@@ -42,7 +42,7 @@
     <string name="decade_title">%1$s Оберіть десятиліття:</string>
     <string name="default_web_client_id" translatable="false">871652837283-djgdmj57j7mg1kkqdun3tktb2d8aas0j.apps.googleusercontent.com</string>
     <string name="forgot_password_back_to_login">Увійти</string>
-    <string name="forgot_password_complete">Готово</string>
+    <string name="forgot_password_complete">Готово!</string>
     <string name="forgot_password_description">Введіть email, який використовували під час реєстрації — ми надішлемо посилання для відновлення пароля.</string>
     <string name="forgot_password_email_error">Перевірте правильність email.</string>
     <string name="forgot_password_send_button">Надіслати посилання</string>

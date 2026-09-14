@@ -1,6 +1,7 @@
 package com.example.wepick.navigation
 
 sealed class ScreenNav(val route: String) {
+    object Splash : ScreenNav("splash") // Стартовый экран, определяющий Home/ProfileSetup/Login
     object Login : ScreenNav("login") // Экран для входа/регестрации в аккаунт
 
     object ProfileSetup : ScreenNav("profile_setup")

@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.wepick.navigation.NavGraph
-import com.example.wepick.util.LocaleSettings
 import com.example.wepick.screens.MainScaffold
 import com.example.wepick.ui.theme.WePickTheme
 import com.example.wepick.util.LocalHelper
+import com.example.wepick.util.LocaleSettings
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
             WePickTheme {
                 val navController = rememberNavController()
                 MainScaffold(viewModel, playerVM, contentVM, navController) {
-                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel, profileViewModel)
+                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel, profileViewModel,)
                 }
             }
         }
@@ -57,7 +57,7 @@ fun StartProgram(
     playerVM: PlayerViewModel,
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
-    profileViewModel: ProfileSetupViewModel
+    profileViewModel: ProfileSetupViewModel,
 
 ) {
     NavGraph(

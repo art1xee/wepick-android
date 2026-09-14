@@ -3,6 +3,7 @@ package com.example.wepick.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
@@ -69,6 +72,7 @@ fun MainScaffold(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
     val shouldShowLogo = currentRoute != ScreenNav.Login.route &&
             currentRoute != ScreenNav.ForgotPassword.route &&
@@ -181,7 +185,15 @@ fun MainScaffold(
                 )
         ) {
             // Apply padding only to the main content
-            Box(modifier = Modifier.padding(paddingValues)) {
+            Box(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .pointerInput(Unit) {
+                        detectTapGestures(onTap = {
+                            focusManager.clearFocus()
+                        })
+                    }
+            ) {
                 content(Modifier.fillMaxSize())
             }
 

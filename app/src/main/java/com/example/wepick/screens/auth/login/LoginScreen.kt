@@ -1,8 +1,7 @@
 package com.example.wepick.screens.auth.login
 
 
-import android.R.attr.maxLines
-import android.R.attr.minLines
+
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,23 +11,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,46 +30,43 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.screens.auth.components.EmailTextField
+import com.example.wepick.screens.auth.components.ForgotPassword
+import com.example.wepick.screens.auth.components.LoginDivider
+import com.example.wepick.screens.auth.components.PasswordTextField
 import com.example.wepick.ui.components.GoogleLoginButton
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.FieldBeige
-import com.example.wepick.ui.theme.FieldBorder
 import com.example.wepick.ui.theme.InkSoft
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.TextTeal
 import com.example.wepick.ui.theme.White
 import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: MainViewModel,
     modifier: Modifier,
     playerVM: PlayerViewModel,
     authViewModel: AuthViewModel
@@ -124,6 +113,7 @@ fun LoginScreen(
     val isEmailValid = email.matches(emailRegex)
     val isPasswordValid = password.isNotEmpty()
 
+    val focusManager = LocalFocusManager.current
 
     val isLoading = authState is AuthState.Loading
 
@@ -131,7 +121,9 @@ fun LoginScreen(
     Column(
         modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -187,6 +179,14 @@ fun LoginScreen(
                     text = stringResource(R.string.login_email_label),
                     textField = "email@example.com",
                     isError = emailError,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                 )
 
                 Spacer(modifier.height(16.dp))
@@ -203,6 +203,14 @@ fun LoginScreen(
                     textField = "password",
                     isError = passwordError,
                     errorText = if (passwordError) stringResource(R.string.login_error_invalid_credentials) else null,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    ),
                 )
 
                 ForgotPassword(
@@ -267,228 +275,4 @@ fun LoginScreen(
             }
         }
     }
-}
-
-
-// =============================== COMPOSABLE FUNCTIONS ==================================
-@Composable
-fun LoginCardText(
-    text: String,
-    color: Color,
-    textAlign: TextAlign,
-    style: TextStyle,
-    fontFamily: FontFamily,
-) {
-    Text(
-        text = text,
-        color = color,
-        textAlign = textAlign,
-        style = style,
-        fontFamily = fontFamily,
-        fontSize = 18.sp
-    )
-}
-
-@Composable
-fun ForgotPassword(
-    navController: NavController
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.End
-    ) {
-        Text(
-            text = stringResource(id = R.string.login_forgot_password),
-            fontSize = 12.5.sp,
-            fontWeight = FontWeight.Bold,
-            color = InkSoft,
-            fontFamily = Nunito,
-            textDecoration = TextDecoration.Underline,
-            modifier = Modifier.clickable {
-                navController.navigate(ScreenNav.ForgotPassword.route)
-            }
-        )
-    }
-}
-
-@Composable
-fun LoginDivider() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 22.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        HorizontalDivider(
-            modifier = Modifier.weight(1f),
-            thickness = 2.dp,
-            color = Black.copy(alpha = 0.15f)
-        )
-        Text(
-            text = stringResource(id = R.string.login_or),
-            fontFamily = Nunito,
-            fontWeight = FontWeight.ExtraBold,
-            fontSize = 12.sp,
-            color = InkSoft
-        )
-        HorizontalDivider(
-            modifier = Modifier.weight(1f),
-            thickness = 2.dp,
-            color = Black.copy(alpha = 0.15f)
-        )
-    }
-}
-
-@Composable
-fun FormTextFields(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChanged: (String) -> Unit,
-    trailingIcon: (@Composable () -> Unit)? = null,
-    text: String,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    textField: String,
-    isError: Boolean = false,
-    errorText: String? = null,
-    singleLine: Boolean = false,
-    supportingText: @Composable (() -> Unit)? = null,
-    minLines: Int = 1,
-    maxLines: Int = 1,
-    readOnly: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
-) {
-    Column(modifier = modifier) {
-        Text(
-            text = text,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold,
-            color = if (isError) AccentRed else InkSoft,
-            fontFamily = Nunito,
-            modifier = Modifier.padding(bottom = 6.dp, start = 2.dp),
-        )
-        OutlinedTextField(
-            value = value,
-            readOnly = readOnly,
-            onValueChange = onValueChanged,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = singleLine,
-            shape = RoundedCornerShape(14.dp),
-            isError = isError,
-            minLines = minLines,
-            maxLines = maxLines,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = FieldBeige,
-                unfocusedContainerColor = FieldBeige,
-                focusedBorderColor = TextTeal,
-                unfocusedBorderColor = FieldBorder,
-                errorBorderColor = AccentRed,
-                errorTrailingIconColor = AccentRed,
-                errorContainerColor = FieldBeige,
-            ),
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
-            supportingText = supportingText,
-            textStyle = TextStyle(
-                fontFamily = Nunito,
-                fontWeight = FontWeight.SemiBold,
-                color = Black,
-                fontSize = 15.sp
-            ),
-            trailingIcon = trailingIcon,
-            visualTransformation = visualTransformation,
-            placeholder = {
-                Text(
-                    text = textField.lowercase(),
-                    color = Color(0xFFB7A574),
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
-                    fontFamily = Nunito
-                )
-            },
-
-            )
-        if (isError && errorText != null) {
-            Text(
-                text = errorText,
-                color = AccentRed,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = Nunito,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp)
-            )
-        }
-    }
-}
-
-
-@Composable
-fun EmailTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChanged: (String) -> Unit,
-    text: String,
-    textField: String,
-    isError: Boolean = false,
-    errorText: String? = null
-) {
-    FormTextFields(
-        modifier = modifier,
-        value = value,
-        onValueChanged = onValueChanged,
-        text = text,
-        textField = textField,
-        isError = isError,
-        errorText = errorText,
-        trailingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Mail,
-                contentDescription = "Email Icon",
-                tint = if (isError) AccentRed else InkSoft
-            )
-        }
-    )
-}
-
-@Composable
-fun PasswordTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChanged: (String) -> Unit,
-    text: String,
-    textField: String,
-    isError: Boolean = false,
-    errorText: String? = null
-) {
-
-    var visiblePassword by remember { mutableStateOf(false) }
-    FormTextFields(
-        modifier = modifier,
-        value = value,
-        onValueChanged = onValueChanged,
-        text = text,
-        visualTransformation = if (visiblePassword) VisualTransformation.None else PasswordVisualTransformation(),
-        textField = textField,
-        isError = isError,
-        errorText = errorText,
-        trailingIcon = {
-            val image = if (visiblePassword)
-                Icons.Filled.Visibility
-            else Icons.Filled.VisibilityOff
-            IconButton(
-                onClick = {
-                    visiblePassword = !visiblePassword
-                }) {
-                Icon(
-                    imageVector = image,
-                    contentDescription = if (visiblePassword) "Hide password" else "Show Password",
-                    tint = InkSoft
-                )
-            }
-        }
-    )
 }
