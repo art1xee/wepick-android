@@ -2,11 +2,13 @@ package com.example.wepick.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wepick.screens.AuthTransitionScreen
 import com.example.wepick.screens.CharacterPickerScreen
+import com.example.wepick.screens.SplashScreen
 import com.example.wepick.screens.FriendNameScreen
 import com.example.wepick.screens.GenresScreen
 import com.example.wepick.screens.HomeScreen
@@ -43,12 +45,14 @@ fun NavGraph(
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
     profileViewModel: ProfileSetupViewModel,
-    profileSettingViewModel: ProfileSettingViewModel,
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreenNav.Login.route
+        startDestination = ScreenNav.Splash.route
     ) {
+        composable(ScreenNav.Splash.route) {
+            SplashScreen(navController, authViewModel)
+        }
         composable(ScreenNav.PersonalData.route) {
             PersonalDataScreen(
                 navController,
@@ -103,9 +107,10 @@ fun NavGraph(
             HomeScreen(navController, authViewModel, profileViewModel)
         }
         composable(ScreenNav.ProfileSettingScreen.route) {
+            val settingViewModel: ProfileSettingViewModel = viewModel()
             ProfileSettingScreen(
                 navController,
-                profileSettingViewModel,
+                viewModel = settingViewModel,
             )
         }
 
