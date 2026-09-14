@@ -1,5 +1,6 @@
 package com.example.wepick.screens.profile_screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -55,11 +57,24 @@ fun ProfileSettingScreen(
     navController: NavController,
     viewModel: ProfileSettingViewModel
 ) {
+    val context = LocalContext.current
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadUserProfile()
+    }
+
+    LaunchedEffect(uiState.isSignedOut) {
+        if (uiState.isSignedOut) {
+            navController.navigate(ScreenNav.Login.route) {
+                popUpTo(0) { inclusive = true }
+                launchSingleTop = true
+            }
+        }
+    }
 
     LaunchedEffect(uiState.isDeletedAccount) {
         if (uiState.isDeletedAccount) {
@@ -68,6 +83,7 @@ fun ProfileSettingScreen(
             }
         }
     }
+
 
     Column(
         modifier = Modifier
@@ -231,12 +247,8 @@ fun ProfileSettingScreen(
                         confirmText = stringResource(R.string.profile_setting_sign_out_confirm),
                         onConfirm = {
                             showSignOutDialog = false
-                            viewModel.signOut(
-                                onSuccess = { navController.navigate(ScreenNav.Login.route) {
-                                    popUpTo(0) { inclusive = true }
-                                } }
-
-                            )
+                            viewModel.signOut()
+                            Log.d("SignOutDebug", "confirm clicked")
                         },
                         onDismiss = { showSignOutDialog = false }
                     )

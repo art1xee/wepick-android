@@ -97,19 +97,15 @@ class FirebaseUserRepository(
         snapshot.documents.none { it.id != uid }
     }
 
-    override suspend fun signOut(): Result<Unit>  = runCatching{
-        auth.signOut()
+    override suspend fun signOut(): Result<Unit> {
+        return runCatching {
+            auth.signOut()
+        }
     }
 
     override suspend fun deleteAccount(): Result<Unit> = runCatching {
-        val user = auth.currentUser ?: throw IllegalStateException("User not logged in ")
-        val uid = user.uid
-
-        db.collection("users").document(uid).delete().await()
-
-        runCatching {
-            storage.reference.child("profile_images/$uid.jpg").delete().await()
-        }
+        val user = auth.currentUser ?: throw IllegalStateException("user don`t found")
+        db.collection("users").document(user.uid).delete().await()
         user.delete().await()
     }
 }
