@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Card
@@ -107,21 +106,6 @@ fun ProfileSettingScreen(
                     name = uiState.userProfile?.name ?: "",
                     userName = uiState.userProfile?.userName ?: "",
                     onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }
-                )
-
-                Spacer(Modifier.height(10.dp))
-
-                // Profile box button with personal data of user: name, username, date of birth, email, bio etc. (user can change the values in this screen)
-                ProfileBoxButton(
-                    onClick = { navController.navigate(ScreenNav.PersonalData.route) },
-                    contentDescription = stringResource(R.string.profile_setting_personal_data_title),
-                    icon = Icons.Default.Person,
-                    text = stringResource(R.string.profile_setting_personal_data_title), // Про користувача / Про пользователя
-                    subtext = stringResource(R.string.profile_setting_personal_data_subtitle),
-                    firstStartColor = Color(0xFF613477),
-                    secondStartColor = Color(0xFF2A1044),
-                    firstEndColor = Color(0xFF9B4DB3),
-                    secondEndColor = Color(0xFF800E9C),
                 )
 
                 Spacer(Modifier.height(4.dp))

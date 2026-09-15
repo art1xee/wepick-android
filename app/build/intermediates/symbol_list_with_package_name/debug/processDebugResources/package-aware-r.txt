@@ -1173,6 +1173,7 @@ string dropdown_menu
 string fallback_menu_item_copy_link
 string fallback_menu_item_open_in_browser
 string fallback_menu_item_share_link
+string fcm_fallback_notification_channel_label
 string fingerprint_dialog_touch_sensor
 string fingerprint_error_hw_not_available
 string fingerprint_error_hw_not_present
@@ -1365,7 +1366,6 @@ string settings_email
 string settings_language
 string settings_privacy
 string settings_push
-string settings_sound
 string signup_button
 string signup_confirm_password_label
 string signup_confirm_password_text_field

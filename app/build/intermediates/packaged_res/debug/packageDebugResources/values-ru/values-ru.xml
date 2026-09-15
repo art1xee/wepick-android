@@ -118,7 +118,6 @@
     <string name="settings_language">Выберите язык:</string>
     <string name="settings_privacy">Приватный профиль</string>
     <string name="settings_push">Push-уведомления</string>
-    <string name="settings_sound">Звук уведомлений</string>
     <string name="signup_button">Создать профиль</string>
     <string name="signup_confirm_password_label">Повторите пароль</string>
     <string name="signup_confirm_password_text_field">повторите пароль</string>

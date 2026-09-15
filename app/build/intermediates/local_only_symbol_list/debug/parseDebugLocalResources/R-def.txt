@@ -162,7 +162,6 @@ string settings_email
 string settings_language
 string settings_privacy
 string settings_push
-string settings_sound
 string signup_button
 string signup_confirm_password_label
 string signup_confirm_password_text_field
