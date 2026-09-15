@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
+import com.example.wepick.screens.profile_screens.components.BackButton
 import com.example.wepick.screens.profile_screens.components.LabelText
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
@@ -69,6 +70,9 @@ fun AppSettingScreen(
                     .padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                BackButton(
+                    navController
+                )
 
                 LabelText(stringResource(R.string.profile_setting_title))
 
