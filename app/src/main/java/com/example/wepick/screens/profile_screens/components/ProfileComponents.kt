@@ -24,7 +24,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -43,8 +42,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -59,10 +60,9 @@ import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
-import com.example.wepick.ui.theme.DeepPurple
-import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
@@ -424,4 +424,23 @@ fun ValidationTrailingIcon(
             // when status is IDLE showing nothing
         }
     }
+}
+
+
+@Composable
+fun LabelText(text: String){
+    Text(
+        text = text,
+        fontFamily = PressStart2P,
+        fontSize = 18.sp,
+        color = White,
+        textAlign = TextAlign.Center,
+        style = TextStyle(
+            shadow = Shadow(
+                color = Color(0xFFC58A1E),
+                offset = Offset(x = 8f, y = 8f),
+                blurRadius = 0f
+            )
+        )
+    )
 }
