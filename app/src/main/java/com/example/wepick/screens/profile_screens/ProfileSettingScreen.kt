@@ -51,7 +51,6 @@ fun ProfileSettingScreen(
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-
     val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
@@ -74,8 +73,7 @@ fun ProfileSettingScreen(
             }
         }
     }
-
-
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,7 +134,7 @@ fun ProfileSettingScreen(
 //                    text = "Favorite content"
 //                )
 
-                Spacer(Modifier.height(4.dp))
+//                Spacer(Modifier.height(4.dp))
 
                 // Profile box button with: FAQ, feedback, contacts
                 ProfileBoxButton(

@@ -17,7 +17,6 @@ interface UserRepository {
     suspend fun isEmailAvailable(email: String): Result<Boolean>
     suspend fun signOut(): Result<Unit>
     suspend fun deleteAccount(): Result<Unit>
-
     suspend fun setPrivacy(isPrivacy: Boolean): Result<Unit>
     suspend fun setPushEnabled(pushEnabled: Boolean):Result<Unit>
     suspend fun setEmailEnabled(emailEnabled: Boolean):Result<Unit>

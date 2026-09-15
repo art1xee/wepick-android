@@ -28,15 +28,14 @@
   <component name="ChangeListManager">
     <list default="true" id="27ae8a24-1d35-47a5-9092-64b89ea2c13c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/MainActivity.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/MainActivity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/MainActivityKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/MainActivityKt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/navigation/NavHostKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/navigation/NavHostKt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/screens/MainScaffoldKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/screens/MainScaffoldKt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/screens/OverlayMenuKt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/ui/components/RetroButtonsKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/com/example/wepick/ui/components/RetroButtonsKt.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/MainScaffold.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/MainScaffold.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/OverlayMenu.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/domain/repository/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/domain/repository/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/NavHost.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/NavHost.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/ScreenNav.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/navigation/ScreenNav.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/ProfileSettingScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/ProfileSettingScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/profile_edit/ProfileEditScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/profile_edit/ProfileEditScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/settings/AppSettingsScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/screens/profile_screens/settings/AppSettingsScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/viewmodel/profile_view_model/ProfileSettingViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/wepick/viewmodel/profile_view_model/ProfileSettingViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[PhysicalDevice::serial=d38855a8]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=C:\Users\makcz\.android\avd\Pixel_6_Pro.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -114,8 +113,8 @@
       <list>
         <option value="resourceFile" />
         <option value="Kotlin Data Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -180,11 +179,11 @@
       <recent name="N:\wepick-android\app\src\main\res\drawable" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.example.wepick.screens.profile_screens.settings.language" />
       <recent name="com.example.wepick.domain.repository" />
       <recent name="com.example.wepick.data.repository" />
       <recent name="com.example.wepick.domain" />
       <recent name="com.example.wepick" />
-      <recent name="com.example.wepick.domain.repository.repository" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -339,12 +338,12 @@
       <map>
         <entry key="com.example.wepick">
           <value>
-            <CheckInfo lastCheckTimestamp="1789389723554" />
+            <CheckInfo lastCheckTimestamp="1789497470300" />
           </value>
         </entry>
         <entry key="com.example.wepick.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1789389723574" />
+            <CheckInfo lastCheckTimestamp="1789497470301" />
           </value>
         </entry>
       </map>

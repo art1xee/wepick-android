@@ -73,8 +73,8 @@ fun ProfileEditScreen(
     profileViewModel: ProfileSetupViewModel,
     modifier: Modifier = Modifier
 ) {
-    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
 
+    val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
@@ -161,7 +161,6 @@ fun ProfileEditScreen(
                 )
 
                 Spacer(Modifier.height(16.dp))
-
 
                 //NAME OF THE USER FIELD
                 FormTextFields(
@@ -416,8 +415,6 @@ fun ProfileEditScreen(
                                 errorMsg = errorUiText.asString(context)
                             }
                         )
-
-
                     }
                 )
             }
@@ -488,7 +485,6 @@ fun EditAvatar(
                         vertical = 4.dp
                     )
             )
-
         }
     }
 }

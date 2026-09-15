@@ -28,6 +28,9 @@ import com.example.wepick.screens.profile_screens.PersonalDataScreen
 import com.example.wepick.screens.profile_screens.ProfileSettingScreen
 import com.example.wepick.screens.profile_screens.profile_edit.ProfileEditScreen
 import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
+import com.example.wepick.screens.profile_screens.settings.language.LanguageScreen
+import com.example.wepick.screens.profile_screens.settings.notification.NotificationScreen
+import com.example.wepick.screens.profile_screens.settings.privacy.PrivacyScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
@@ -62,6 +65,30 @@ fun NavGraph(
                 profileViewModel
             )
         }
+        composable(ScreenNav.LanguagePicker.route) {
+            LanguageScreen(
+                navController,
+                viewModel,
+            )
+        }
+        composable(ScreenNav.Notification.route) {
+            NotificationScreen(
+                navController,
+                profileSettingViewModel
+            )
+        }
+        composable(ScreenNav.Privacy.route) {
+            PrivacyScreen(
+                navController,
+                profileSettingViewModel
+            )
+        }
+        composable(ScreenNav.AppSetting.route) {
+            AppSettingScreen(
+                navController,
+                modifier = Modifier,
+            )
+        }
         composable(ScreenNav.Help.route) {
             HelpScreen(
                 navController,
@@ -88,14 +115,7 @@ fun NavGraph(
                 profileViewModel,
             )
         }
-        composable(ScreenNav.AppSetting.route) {
-            AppSettingScreen(
-                navController,
-                viewModel,
-                profileSettingViewModel,
-                modifier = Modifier,
-            )
-        }
+
         composable(ScreenNav.Favorite.route) {
             FavoriteContentScreen(navController, viewModel, modifier = Modifier, playerVM)
         }

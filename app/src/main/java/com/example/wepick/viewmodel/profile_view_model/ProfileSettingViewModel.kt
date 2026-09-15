@@ -21,7 +21,6 @@ data class ProfileSettingUiState(
     val isDeletedAccount: Boolean = false
 
 )
-
 class ProfileSettingViewModel(
     private val userRepository: UserRepository = FirebaseUserRepository()
 
@@ -60,7 +59,6 @@ class ProfileSettingViewModel(
                 }
         }
     }
-
     fun signOut() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
@@ -85,7 +83,6 @@ class ProfileSettingViewModel(
                 }
         }
     }
-
     fun deleteAccount() {
         viewModelScope.launch {
             _uiState.update {
@@ -112,12 +109,6 @@ class ProfileSettingViewModel(
                 }
         }
     }
-
-    fun clearError() {
-        _uiState.update { it.copy(error = null) }
-    }
-
-
     fun onPrivacyChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -145,7 +136,6 @@ class ProfileSettingViewModel(
                 }
         }
     }
-
     fun onPushEnabledChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -174,7 +164,6 @@ class ProfileSettingViewModel(
         }
 
     }
-
     fun onEmailEnabledChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
