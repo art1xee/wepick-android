@@ -127,4 +127,7 @@ class FirebaseUserRepository(
         )
     }
 
+    override suspend fun updateFcmToken(token: String): Result<Unit> {
+        return updateProfileFields(fields = mapOf("fcmToken" to token))
+    }
 }

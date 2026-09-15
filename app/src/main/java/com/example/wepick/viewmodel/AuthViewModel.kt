@@ -12,17 +12,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wepick.R
-import com.example.wepick.util.UiText // Обязательный импорт твоего нового класса!
+import com.example.wepick.data.repository.FirebaseUserRepository
+import com.example.wepick.domain.repository.UserRepository
+import com.example.wepick.util.UiText
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel (
+    private val userRepository: UserRepository = FirebaseUserRepository()
+): ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
@@ -52,6 +57,12 @@ class AuthViewModel : ViewModel() {
     }
 
     fun verifyUserProfile(uid: String) {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            viewModelScope.launch {
+                userRepository.updateFcmToken(token)
+            }
+        }
+
         Log.d("AuthDebug", "Starting check profile for UID: $uid")
 
         db.collection("users").document(uid).get()

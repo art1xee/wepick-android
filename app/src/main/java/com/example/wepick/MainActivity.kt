@@ -1,12 +1,17 @@
 package com.example.wepick
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.wepick.navigation.NavGraph
@@ -22,6 +27,15 @@ import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 class MainActivity : ComponentActivity() {
+    val launcher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+            callback = { isGranted ->
+                Log.d("PERMISSION", "granted: $isGranted")
+            }
+        )
+
+
     override fun attachBaseContext(newBase: Context?) {
         val lang = LocaleSettings.getLanguage(newBase)
         LocalHelper.updateResources(newBase, lang)
@@ -37,6 +51,13 @@ class MainActivity : ComponentActivity() {
         val profileViewModel: ProfileSetupViewModel by viewModels()
         val profileSettingViewModel: ProfileSettingViewModel by viewModels()
         viewModel.initLanguage(this)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
         enableEdgeToEdge()
         setContent {
             WePickTheme {
