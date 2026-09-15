@@ -28,10 +28,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.screens.profile_screens.components.BackButton
 import com.example.wepick.screens.profile_screens.components.LabelText
+import com.example.wepick.screens.profile_screens.components.Switcher
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -51,6 +53,9 @@ fun AppSettingScreen(
 ) {
     val context = LocalContext.current
     val currentLang by viewModel.currentLanguage
+
+    val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
+
     Column(
         modifier
             .fillMaxSize()
@@ -116,6 +121,14 @@ fun AppSettingScreen(
                         }
                     }
                 }
+                Spacer(Modifier.height(12.dp))
+                Switcher(
+                    text = "Set Privacy account",
+                    onChecked = uiState.userProfile?.isPrivate ?: false,
+                    onCheckedChanged = { onChecked ->
+                        profileSettingViewModel.onPrivacyChanged(onChecked)
+                    }
+                )
             }
         }
     }
