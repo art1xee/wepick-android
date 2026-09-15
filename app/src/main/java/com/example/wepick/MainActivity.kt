@@ -18,6 +18,7 @@ import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
 import com.example.wepick.viewmodel.PlayerViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 class MainActivity : ComponentActivity() {
@@ -34,14 +35,22 @@ class MainActivity : ComponentActivity() {
         val contentVM: ContentViewModel by viewModels()
         val authViewModel: AuthViewModel by viewModels()
         val profileViewModel: ProfileSetupViewModel by viewModels()
+        val profileSettingViewModel: ProfileSettingViewModel by viewModels()
         viewModel.initLanguage(this)
-
         enableEdgeToEdge()
         setContent {
             WePickTheme {
                 val navController = rememberNavController()
                 MainScaffold(viewModel, playerVM, contentVM, navController) {
-                    StartProgram(navController, viewModel, playerVM, contentVM, authViewModel, profileViewModel,)
+                    StartProgram(
+                        navController,
+                        viewModel,
+                        playerVM,
+                        contentVM,
+                        authViewModel,
+                        profileViewModel,
+                        profileSettingViewModel
+                    )
                 }
             }
         }
@@ -58,7 +67,7 @@ fun StartProgram(
     contentVM: ContentViewModel,
     authViewModel: AuthViewModel,
     profileViewModel: ProfileSetupViewModel,
-
+    profileSettingViewModel: ProfileSettingViewModel
 ) {
     NavGraph(
         navController = navController,
@@ -67,6 +76,7 @@ fun StartProgram(
         contentVM = contentVM,
         authViewModel = authViewModel,
         profileViewModel = profileViewModel,
+        profileSettingViewModel = profileSettingViewModel
     )
 }
 

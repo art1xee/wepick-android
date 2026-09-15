@@ -48,15 +48,15 @@ import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 @Composable
 fun ProfileSettingScreen(
     navController: NavController,
-    viewModel: ProfileSettingViewModel
+    profileSettingViewModel: ProfileSettingViewModel
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.loadUserProfile()
+        profileSettingViewModel.loadUserProfile()
     }
 
     LaunchedEffect(uiState.isSignedOut) {
@@ -205,7 +205,7 @@ fun ProfileSettingScreen(
                         isDestructive = true,
                         onConfirm = {
                             showDeleteDialog = false
-                            viewModel.deleteAccount()
+                            profileSettingViewModel.deleteAccount()
                         },
                         onDismiss = { showDeleteDialog = false }
                     )
@@ -226,7 +226,7 @@ fun ProfileSettingScreen(
                         confirmText = stringResource(R.string.profile_setting_sign_out_confirm),
                         onConfirm = {
                             showSignOutDialog = false
-                            viewModel.signOut()
+                            profileSettingViewModel.signOut()
                             Log.d("SignOutDebug", "confirm clicked")
                         },
                         onDismiss = { showSignOutDialog = false }

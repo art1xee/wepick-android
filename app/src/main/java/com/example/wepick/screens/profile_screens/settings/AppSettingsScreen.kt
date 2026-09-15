@@ -40,11 +40,13 @@ import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.util.Language
 import com.example.wepick.viewmodel.MainViewModel
+import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 
 @Composable
 fun AppSettingScreen(
     navController: NavController,
     viewModel: MainViewModel,
+    profileSettingViewModel: ProfileSettingViewModel,
     modifier: Modifier
 ) {
     val context = LocalContext.current
