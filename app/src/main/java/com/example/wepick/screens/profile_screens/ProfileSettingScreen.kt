@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,42 +28,35 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.screens.profile_screens.components.ActionConfirmDialog
 import com.example.wepick.screens.profile_screens.components.DangerZoneButton
+import com.example.wepick.screens.profile_screens.components.LabelText
 import com.example.wepick.screens.profile_screens.components.ProfileBoxButton
 import com.example.wepick.screens.profile_screens.components.ProfileInfoBlock
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.PressStart2P
 import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 
 @Composable
 fun ProfileSettingScreen(
     navController: NavController,
-    viewModel: ProfileSettingViewModel
+    profileSettingViewModel: ProfileSettingViewModel
 ) {
-    val context = LocalContext.current
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.loadUserProfile()
+        profileSettingViewModel.loadUserProfile()
     }
 
     LaunchedEffect(uiState.isSignedOut) {
@@ -105,21 +97,8 @@ fun ProfileSettingScreen(
                     .padding(horizontal = 22.dp, vertical = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //TODO: add this text block on the components app level
-                Text(
-                    text = stringResource(R.string.profile_setting_label),
-                    fontFamily = PressStart2P,
-                    fontSize = 18.sp,
-                    color = White,
-                    textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        shadow = Shadow(
-                            color = Color(0xFFC58A1E),
-                            offset = Offset(x = 8f, y = 8f),
-                            blurRadius = 0f
-                        )
-                    )
-                )
+                LabelText(stringResource(R.string.profile_setting_label))
+
                 Spacer(Modifier.height(8.dp))
 
                 //Profile info block with: avatar, name, username, email
@@ -226,7 +205,7 @@ fun ProfileSettingScreen(
                         isDestructive = true,
                         onConfirm = {
                             showDeleteDialog = false
-                            viewModel.deleteAccount()
+                            profileSettingViewModel.deleteAccount()
                         },
                         onDismiss = { showDeleteDialog = false }
                     )
@@ -247,7 +226,7 @@ fun ProfileSettingScreen(
                         confirmText = stringResource(R.string.profile_setting_sign_out_confirm),
                         onConfirm = {
                             showSignOutDialog = false
-                            viewModel.signOut()
+                            profileSettingViewModel.signOut()
                             Log.d("SignOutDebug", "confirm clicked")
                         },
                         onDismiss = { showSignOutDialog = false }

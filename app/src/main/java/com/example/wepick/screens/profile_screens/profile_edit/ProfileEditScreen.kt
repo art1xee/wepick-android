@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -24,13 +23,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,9 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -61,6 +53,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.screens.auth.components.FormTextFields
+import com.example.wepick.screens.profile_screens.components.BackButton
+import com.example.wepick.screens.profile_screens.components.LabelText
 import com.example.wepick.screens.profile_screens.components.ValidationTrailingIcon
 import com.example.wepick.ui.components.RetroEditProfileButton
 import com.example.wepick.ui.theme.AccentRed
@@ -128,8 +122,6 @@ fun ProfileEditScreen(
     val isBioOverLimit = textStateBio.length > 150
     val isBirthdayValid = isValidDate(textStateBirthday)
 
-    //TODO: good idea add this value when user gonna create account
-
     Column(
         Modifier
             .fillMaxSize()
@@ -151,55 +143,10 @@ fun ProfileEditScreen(
                     .padding(vertical = 22.dp, horizontal = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 3.dp, vertical = 3.dp)
-                ) {
-                    IconButton(
-                        onClick = { navController.popBackStack() },
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .size(32.dp)
-                            .background(
-                                color = Color.White.copy(alpha = 0.3f),
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                            .border(
-                                1.dp,
-                                Color.White.copy(alpha = 0.5f), RoundedCornerShape(10.dp)
-                            ),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBackIosNew,
-                            contentDescription = "Back",
-                            tint = DarkButtonPurple,
-                            modifier = Modifier
-                                .size(18.dp)
-                                .offset(x = 2.dp)
-                        )
-                    }
-                    //TODO: add this text block on the components app level
-                    Text(
-                        text = stringResource(R.string.profile_edit_label),
-                        fontFamily = PressStart2P,
-                        fontSize = 18.sp,
-                        color = White,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(horizontal = 48.dp),
-                        style = TextStyle(
-                            shadow = Shadow(
-                                color = Color(0xFFC58A1E),
-                                offset = Offset(x = 8f, y = 8f),
-                                blurRadius = 0f
-                            )
-                        )
-                    )
-                }
+                BackButton(
+                    navController
+                )
+                LabelText(stringResource(R.string.profile_edit_label))
 
                 Spacer(Modifier.height(8.dp))
 
@@ -477,6 +424,7 @@ fun ProfileEditScreen(
         }
     }
 }
+
 
 @Composable
 fun EditAvatar(

@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.retrofit)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
     implementation(libs.converter.gson)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 

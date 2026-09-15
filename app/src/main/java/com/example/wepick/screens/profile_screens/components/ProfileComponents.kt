@@ -24,7 +24,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -35,6 +35,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,8 +45,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -53,16 +57,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
 import com.example.wepick.ui.theme.DarkButtonPurple
-import com.example.wepick.ui.theme.DeepPurple
-import com.example.wepick.ui.theme.MidPurple
 import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.PressStart2P
+import com.example.wepick.ui.theme.White
 import com.example.wepick.viewmodel.profile_view_model.ProfileSetupViewModel
 
 
@@ -296,6 +300,26 @@ fun ProfileBoxButton(
     }
 }
 
+@Composable
+fun ToggleSwitcher(text: String, checked: Boolean, onCheckedChanged: (Boolean) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = text,
+        )
+        Switch(
+            checked = checked,
+            onCheckedChange = ( onCheckedChanged ),
+            enabled = true,
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = AccentRed,
+                uncheckedTrackColor = White
+            )
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DangerZoneButton(
@@ -422,6 +446,58 @@ fun ValidationTrailingIcon(
 
         ProfileSetupViewModel.ValidationStatus.IDLE -> {
             // when status is IDLE showing nothing
+        }
+    }
+}
+
+
+@Composable
+fun LabelText(text: String) {
+    Text(
+        text = text,
+        fontFamily = PressStart2P,
+        fontSize = 18.sp,
+        color = White,
+        textAlign = TextAlign.Center,
+        style = TextStyle(
+            shadow = Shadow(
+                color = Color(0xFFC58A1E),
+                offset = Offset(x = 8f, y = 8f),
+                blurRadius = 0f
+            )
+        )
+    )
+}
+
+@Composable
+fun BackButton(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 3.dp, vertical = 3.dp)
+    ) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .size(32.dp)
+                .background(
+                    color = Color.White.copy(alpha = 0.3f),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .border(
+                    1.dp,
+                    Color.White.copy(alpha = 0.5f), RoundedCornerShape(10.dp)
+                ),
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBackIosNew,
+                contentDescription = "Back",
+                tint = DarkButtonPurple,
+                modifier = Modifier
+                    .size(18.dp)
+                    .offset(x = 2.dp)
+            )
         }
     }
 }
