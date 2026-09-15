@@ -116,5 +116,29 @@ class ProfileSettingViewModel(
     fun clearError() {
         _uiState.update { it.copy(error = null) }
     }
+
+    fun onPrivacyChanged(value: Boolean) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            userRepository.setPrivacy(value)
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(userProfile = it.userProfile?.copy(isPrivate = value), isLoading = false)
+                    }
+                }.onFailure {e ->
+                    Log.e("SET_PRIVACY_ERROR", "Setting privacy error: ${e.message}", e)
+                    _uiState.update {
+                        it.copy(
+                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
+                                ?: UiText.DynamicString("Set Privacy status error"), isLoading = false
+                        )
+                    }
+                }
+        }
+    }
 }
 
