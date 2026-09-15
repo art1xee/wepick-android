@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WePickTheme {
                 val navController = rememberNavController()
-                MainScaffold(viewModel, playerVM, contentVM, navController) {
+                MainScaffold(viewModel, navController, ) {
                     StartProgram(
                         navController,
                         viewModel,
