@@ -117,6 +117,7 @@ class ProfileSettingViewModel(
         _uiState.update { it.copy(error = null) }
     }
 
+
     fun onPrivacyChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -127,14 +128,103 @@ class ProfileSettingViewModel(
             userRepository.setPrivacy(value)
                 .onSuccess {
                     _uiState.update {
-                        it.copy(userProfile = it.userProfile?.copy(isPrivate = value), isLoading = false)
+                        it.copy(
+                            userProfile = it.userProfile?.copy(isPrivate = value),
+                            isLoading = false
+                        )
                     }
-                }.onFailure {e ->
+                }.onFailure { e ->
                     Log.e("SET_PRIVACY_ERROR", "Setting privacy error: ${e.message}", e)
                     _uiState.update {
                         it.copy(
                             error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
-                                ?: UiText.DynamicString("Set Privacy status error"), isLoading = false
+                                ?: UiText.DynamicString("Set Privacy status error"),
+                            isLoading = false
+                        )
+                    }
+                }
+        }
+    }
+
+    fun onPushEnabledChanged(value: Boolean) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            userRepository.setPushEnabled(value)
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(
+                            userProfile = it.userProfile?.copy(pushEnabled = value),
+                            isLoading = false
+                        )
+                    }
+                }.onFailure { e ->
+                    Log.e("SET_PUSH-MSG_ERROR", "Set push messages error: ${e.message}", e)
+                    _uiState.update {
+                        it.copy(
+                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
+                                ?: UiText.DynamicString("Set Push-messages error"),
+                            isLoading = false
+                        )
+                    }
+                }
+        }
+
+    }
+
+    fun onEmailEnabledChanged(value: Boolean) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            userRepository.setEmailEnabled(value)
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(
+                            userProfile = it.userProfile?.copy(emailEnabled = value),
+                            isLoading = false
+                        )
+                    }
+                }.onFailure { e ->
+                    Log.e("SET_EMAIL-MSG_ERROR", "Set email msg error: ${e.message}", e)
+                    _uiState.update {
+                        it.copy(
+                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
+                                ?: UiText.DynamicString("Set email msg error"),
+                            isLoading = false
+                        )
+                    }
+                }
+        }
+    }
+
+    fun onSoundEnabledChanged(value: Boolean) {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+            userRepository.setSoundEnabled(value)
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(
+                            userProfile = it.userProfile?.copy(soundEnabled = value),
+                            isLoading = false
+                        )
+                    }
+                }.onFailure { e ->
+                    Log.e("SET_SOUND_ERROR", "Set sound error: ${e.message}", e)
+                    _uiState.update {
+                        it.copy(
+                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
+                                ?: UiText.DynamicString("Set sound error"),
+                            isLoading = false
                         )
                     }
                 }
