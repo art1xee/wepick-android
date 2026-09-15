@@ -128,8 +128,6 @@ fun ProfileEditScreen(
     val isBioOverLimit = textStateBio.length > 150
     val isBirthdayValid = isValidDate(textStateBirthday)
 
-    //TODO: good idea add this value when user gonna create account
-
     Column(
         Modifier
             .fillMaxSize()
@@ -151,8 +149,6 @@ fun ProfileEditScreen(
                     .padding(vertical = 22.dp, horizontal = 28.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

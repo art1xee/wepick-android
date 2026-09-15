@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -54,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.wepick.R
 import com.example.wepick.ui.theme.AccentRed
@@ -428,7 +430,7 @@ fun ValidationTrailingIcon(
 
 
 @Composable
-fun LabelText(text: String){
+fun LabelText(text: String) {
     Text(
         text = text,
         fontFamily = PressStart2P,
@@ -443,4 +445,37 @@ fun LabelText(text: String){
             )
         )
     )
+}
+
+@Composable
+fun BackButton(navController: NavController) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 3.dp, vertical = 3.dp)
+    ) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .size(32.dp)
+                .background(
+                    color = Color.White.copy(alpha = 0.3f),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .border(
+                    1.dp,
+                    Color.White.copy(alpha = 0.5f), RoundedCornerShape(10.dp)
+                ),
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBackIosNew,
+                contentDescription = "Back",
+                tint = DarkButtonPurple,
+                modifier = Modifier
+                    .size(18.dp)
+                    .offset(x = 2.dp)
+            )
+        }
+    }
 }
