@@ -9,5 +9,9 @@ data class UserProfile(
     val email: String = "",
     val photoUrl: String? = null,
     val profileCompleted: Boolean = false,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val isPrivate: Boolean = false,
+    val pushEnabled: Boolean = false,
+    val emailEnabled: Boolean = false,
+    val soundEnabled: Boolean = false,
 )

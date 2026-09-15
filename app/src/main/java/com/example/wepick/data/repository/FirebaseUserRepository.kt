@@ -104,8 +104,32 @@ class FirebaseUserRepository(
     }
 
     override suspend fun deleteAccount(): Result<Unit> = runCatching {
-        val user = auth.currentUser ?: throw IllegalStateException("user don`t found")
+        val user = auth.currentUser ?: throw IllegalStateException("User don`t exist")
         db.collection("users").document(user.uid).delete().await()
         user.delete().await()
+    }
+
+    override suspend fun setPrivacy(isPrivacy: Boolean): Result<Unit> {
+        return updateProfileFields(
+            fields = mapOf("isPrivate" to isPrivacy)
+        )
+    }
+
+    override suspend fun setEmailEnabled(emailEnabled: Boolean): Result<Unit> {
+        return updateProfileFields(
+            fields = mapOf("emailEnabled" to emailEnabled)
+        )
+    }
+
+    override suspend fun setPushEnabled(pushEnabled: Boolean): Result<Unit> {
+        return updateProfileFields(
+            fields = mapOf("pushEnabled" to pushEnabled)
+        )
+    }
+
+    override suspend fun setSoundEnabled(soundEnabled: Boolean): Result<Unit> {
+        return updateProfileFields(
+            fields = mapOf("soundEnabled" to soundEnabled)
+        )
     }
 }
