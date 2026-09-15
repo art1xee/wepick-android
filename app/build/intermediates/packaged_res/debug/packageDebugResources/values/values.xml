@@ -144,7 +144,11 @@
     <string name="selection_next">Далі!</string>
     <string name="selection_series">Серіали</string>
     <string name="selection_title">Привіт, %1$s! Оберіть, що хочете подивитися.</string>
+    <string name="settings_email">Email-сповіщення</string>
     <string name="settings_language">Оберіть мову:</string>
+    <string name="settings_privacy">Приватний профіль</string>
+    <string name="settings_push">Push-сповіщення</string>
+    <string name="settings_sound">Звук сповіщень</string>
     <string name="signup_button">Створити акаунт</string>
     <string name="signup_confirm_password_label">Повторіть пароль</string>
     <string name="signup_confirm_password_text_field">повторіть пароль</string>

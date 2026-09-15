@@ -301,7 +301,7 @@ fun ProfileBoxButton(
 }
 
 @Composable
-fun Switcher(text: String, onChecked: Boolean, onCheckedChanged: (Boolean) -> Unit) {
+fun ToggleSwitcher(text: String, checked: Boolean, onCheckedChanged: (Boolean) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -309,7 +309,7 @@ fun Switcher(text: String, onChecked: Boolean, onCheckedChanged: (Boolean) -> Un
             text = text,
         )
         Switch(
-            checked = onChecked,
+            checked = checked,
             onCheckedChange = ( onCheckedChanged ),
             enabled = true,
             colors = SwitchDefaults.colors(

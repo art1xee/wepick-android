@@ -173,5 +173,9 @@
 
     <!-- SETTINGS -->
     <string name="settings_language">Оберіть мову:</string>
+    <string name="settings_privacy">Приватний профіль</string>
+    <string name="settings_push">Push-сповіщення</string>
+    <string name="settings_email">Email-сповіщення</string>
+    <string name="settings_sound">Звук сповіщень</string>
 
 </resources>

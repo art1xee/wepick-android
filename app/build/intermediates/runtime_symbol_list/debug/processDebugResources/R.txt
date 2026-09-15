@@ -1360,7 +1360,11 @@ int string selection_movie 0x7f10010f
 int string selection_next 0x7f100110
 int string selection_series 0x7f100111
 int string selection_title 0x7f100112
+int string settings_email 0x7f100131
 int string settings_language 0x7f100113
+int string settings_privacy 0x7f100132
+int string settings_push 0x7f100133
+int string settings_sound 0x7f100134
 int string signup_button 0x7f100114
 int string signup_confirm_password_label 0x7f100115
 int string signup_confirm_password_text_field 0x7f100116

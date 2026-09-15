@@ -172,5 +172,9 @@
 
     <!-- SETTINGS -->
     <string name="settings_language">Select language: </string>
+    <string name="settings_privacy">Private profile</string>
+    <string name="settings_push">Push notifications</string>
+    <string name="settings_email">Email notifications</string>
+    <string name="settings_sound">Notification sound</string>
 
 </resources>

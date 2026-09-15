@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.screens.profile_screens.components.BackButton
 import com.example.wepick.screens.profile_screens.components.LabelText
-import com.example.wepick.screens.profile_screens.components.Switcher
+import com.example.wepick.screens.profile_screens.components.ToggleSwitcher
 import com.example.wepick.ui.theme.AccentRed
 import com.example.wepick.ui.theme.Black
 import com.example.wepick.ui.theme.CardYellow
@@ -122,11 +122,35 @@ fun AppSettingScreen(
                     }
                 }
                 Spacer(Modifier.height(12.dp))
-                Switcher(
-                    text = "Set Privacy account",
-                    onChecked = uiState.userProfile?.isPrivate ?: false,
+                ToggleSwitcher(
+                    text = stringResource(R.string.settings_privacy),
+                    checked = uiState.userProfile?.isPrivate ?: false,
                     onCheckedChanged = { onChecked ->
                         profileSettingViewModel.onPrivacyChanged(onChecked)
+                    }
+                )
+                Spacer(Modifier.height(8.dp))
+                ToggleSwitcher(
+                    text = stringResource(R.string.settings_push),
+                    checked = uiState.userProfile?.pushEnabled ?: false,
+                    onCheckedChanged = { onChecked ->
+                        profileSettingViewModel.onPushEnabledChanged(onChecked)
+                    }
+                )
+                Spacer(Modifier.height(8.dp))
+                ToggleSwitcher(
+                    text = stringResource(R.string.settings_email),
+                    checked = uiState.userProfile?.emailEnabled ?: false,
+                    onCheckedChanged = { onChecked ->
+                        profileSettingViewModel.onEmailEnabledChanged(onChecked)
+                    }
+                )
+                Spacer(Modifier.height(8.dp))
+                ToggleSwitcher(
+                    text = stringResource(R.string.settings_sound),
+                    checked = uiState.userProfile?.soundEnabled ?: false,
+                    onCheckedChanged = { onChecked ->
+                        profileSettingViewModel.onSoundEnabledChanged(onChecked)
                     }
                 )
             }
