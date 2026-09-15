@@ -93,8 +93,6 @@ fun NavGraph(
                 navController,
                 viewModel,
                 modifier = Modifier,
-                playerVM,
-                profileViewModel,
             )
         }
         composable(ScreenNav.Favorite.route) {
