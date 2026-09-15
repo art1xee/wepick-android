@@ -16,5 +16,4 @@ data class UserProfile(
     val isPrivate: Boolean = false,
     val pushEnabled: Boolean = false,
     val emailEnabled: Boolean = false,
-    val soundEnabled: Boolean = false,
 )

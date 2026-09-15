@@ -203,32 +203,5 @@ class ProfileSettingViewModel(
         }
     }
 
-    fun onSoundEnabledChanged(value: Boolean) {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
-            userRepository.setSoundEnabled(value)
-                .onSuccess {
-                    _uiState.update {
-                        it.copy(
-                            userProfile = it.userProfile?.copy(soundEnabled = value),
-                            isLoading = false
-                        )
-                    }
-                }.onFailure { e ->
-                    Log.e("SET_SOUND_ERROR", "Set sound error: ${e.message}", e)
-                    _uiState.update {
-                        it.copy(
-                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
-                                ?: UiText.DynamicString("Set sound error"),
-                            isLoading = false
-                        )
-                    }
-                }
-        }
-    }
 }
 

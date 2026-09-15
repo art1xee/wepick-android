@@ -21,5 +21,4 @@ interface UserRepository {
     suspend fun setPrivacy(isPrivacy: Boolean): Result<Unit>
     suspend fun setPushEnabled(pushEnabled: Boolean):Result<Unit>
     suspend fun setEmailEnabled(emailEnabled: Boolean):Result<Unit>
-    suspend fun setSoundEnabled(soundEnabled: Boolean):Result<Unit>
 }

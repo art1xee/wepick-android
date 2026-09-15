@@ -145,14 +145,6 @@ fun AppSettingScreen(
                         profileSettingViewModel.onEmailEnabledChanged(onChecked)
                     }
                 )
-                Spacer(Modifier.height(8.dp))
-                ToggleSwitcher(
-                    text = stringResource(R.string.settings_sound),
-                    checked = uiState.userProfile?.soundEnabled ?: false,
-                    onCheckedChanged = { onChecked ->
-                        profileSettingViewModel.onSoundEnabledChanged(onChecked)
-                    }
-                )
             }
         }
     }

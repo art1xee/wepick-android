@@ -127,9 +127,4 @@ class FirebaseUserRepository(
         )
     }
 
-    override suspend fun setSoundEnabled(soundEnabled: Boolean): Result<Unit> {
-        return updateProfileFields(
-            fields = mapOf("soundEnabled" to soundEnabled)
-        )
-    }
 }
