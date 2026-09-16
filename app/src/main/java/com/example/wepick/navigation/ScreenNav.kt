@@ -9,7 +9,7 @@ sealed class ScreenNav(val route: String) {
     object SignUp : ScreenNav("sign_up")
     object Help : ScreenNav("help")
 
-    object ChangePassword : ScreenNav("change_password")
+    object Security : ScreenNav("security")
 
     object DeleteAccount : ScreenNav("delete_account")
     object PersonalData : ScreenNav("personal_data")

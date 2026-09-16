@@ -86,6 +86,10 @@
     <string name="profile_setting_help_subtitle">FAQ, contacts, feedback</string>
     <string name="profile_setting_change_password_title">Change Password</string>
     <string name="profile_setting_change_password_subtitle">Change the password of your account</string>
+    <string name="profile_setting_security_title">Security</string>
+    <string name="profile_setting_security_subtitle">Password and account protection</string>
+    <string name="security_google_auth_note">You signed in with Google, no password is set for this account</string>
+    <string name="security_reset_email_sent">A password reset email has been sent to your inbox</string>
     <string name="profile_setting_delete_account">Delete account</string>
     <string name="profile_setting_delete_account_alert">This action is irreversible. All your data will be permanently deleted. Are you absolutely sure?</string>
     <string name="profile_setting_delete_account_confirm">Delete</string>

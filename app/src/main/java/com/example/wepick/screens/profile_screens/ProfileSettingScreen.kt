@@ -153,13 +153,13 @@ fun ProfileSettingScreen(
 
                 Spacer(Modifier.height(4.dp))
 
-                // Profile box button with: Changing the password of the user account
+                // Profile box button with: password reset, and other security-related items
                 ProfileBoxButton(
-                    onClick = { navController.navigate(ScreenNav.ChangePassword.route) },
-                    contentDescription = stringResource(R.string.profile_setting_change_password_title),
+                    onClick = { navController.navigate(ScreenNav.Security.route) },
+                    contentDescription = stringResource(R.string.profile_setting_security_title),
                     icon = Icons.Default.Shield,
-                    text = stringResource(R.string.profile_setting_change_password_title),// change language
-                    subtext = stringResource(R.string.profile_setting_change_password_subtitle),
+                    text = stringResource(R.string.profile_setting_security_title),
+                    subtext = stringResource(R.string.profile_setting_security_subtitle),
                     //start color of the block
                     firstStartColor = Color(0xFFB45309),
                     secondStartColor = Color(0xFF78350F),

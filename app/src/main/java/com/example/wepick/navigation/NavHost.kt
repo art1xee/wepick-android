@@ -20,10 +20,10 @@ import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
 import com.example.wepick.screens.auth.login.LoginScreen
 import com.example.wepick.screens.auth.profile_setup.ProfileSetup
 import com.example.wepick.screens.auth.signup.SignUpScreen
-import com.example.wepick.screens.profile_screens.ChangePasswordScreen
 import com.example.wepick.screens.profile_screens.DeleteAccountScreen
 import com.example.wepick.screens.profile_screens.FavoriteContentScreen
 import com.example.wepick.screens.profile_screens.HelpScreen
+import com.example.wepick.screens.profile_screens.SecurityScreen
 import com.example.wepick.screens.profile_screens.PersonalDataScreen
 import com.example.wepick.screens.profile_screens.ProfileSettingScreen
 import com.example.wepick.screens.profile_screens.profile_edit.ProfileEditScreen
@@ -95,6 +95,12 @@ fun NavGraph(
             )
 
         }
+        composable(ScreenNav.Security.route) {
+            SecurityScreen(
+                navController,
+                profileSettingViewModel,
+            )
+        }
 
         composable(ScreenNav.DeleteAccount.route) {
             DeleteAccountScreen(
@@ -104,15 +110,6 @@ fun NavGraph(
                 profileViewModel,
             )
         }
-        composable(ScreenNav.ChangePassword.route) {
-            ChangePasswordScreen(
-                navController,
-                viewModel,
-                playerVM,
-                profileViewModel,
-            )
-        }
-
         composable(ScreenNav.Favorite.route) {
             FavoriteContentScreen(navController, viewModel, modifier = Modifier, playerVM)
         }

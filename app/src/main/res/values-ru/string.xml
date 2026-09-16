@@ -86,6 +86,10 @@
     <string name="profile_setting_help_subtitle">FAQ, контакты, отзывы</string>
     <string name="profile_setting_change_password_title">Изменить пароль</string>
     <string name="profile_setting_change_password_subtitle">Измените пароль вашего аккаунта</string>
+    <string name="profile_setting_security_title">Безопасность</string>
+    <string name="profile_setting_security_subtitle">Пароль и защита аккаунта</string>
+    <string name="security_google_auth_note">Вы вошли через Google, пароль для аккаунта не задан</string>
+    <string name="security_reset_email_sent">Письмо для смены пароля отправлено на вашу почту</string>
     <string name="profile_setting_delete_account">Удалить аккаунт</string>
     <string name="profile_setting_delete_account_alert">Эта операция необратима. Все ваши данные будут безвозвратно удалены. Вы абсолютно уверены?</string>
     <string name="profile_setting_delete_account_confirm">Удалить</string>
