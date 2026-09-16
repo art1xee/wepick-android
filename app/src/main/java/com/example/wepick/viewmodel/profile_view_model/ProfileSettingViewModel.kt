@@ -18,9 +18,11 @@ data class ProfileSettingUiState(
     val isLoading: Boolean = false,
     val error: UiText? = null,
     val isSignedOut: Boolean = false,
-    val isDeletedAccount: Boolean = false
-
+    val isDeletedAccount: Boolean = false,
+    val isGoogleAuth: Boolean = false,
+    val isPasswordResetSent: Boolean = false,
 )
+
 class ProfileSettingViewModel(
     private val userRepository: UserRepository = FirebaseUserRepository()
 
@@ -46,7 +48,8 @@ class ProfileSettingViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            userProfile = profile
+                            userProfile = profile,
+                            isGoogleAuth = userRepository.isGoogleAuth
                         )
                     }
                 }.onFailure { e ->
@@ -59,6 +62,7 @@ class ProfileSettingViewModel(
                 }
         }
     }
+
     fun signOut() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
@@ -83,6 +87,7 @@ class ProfileSettingViewModel(
                 }
         }
     }
+
     fun deleteAccount() {
         viewModelScope.launch {
             _uiState.update {
@@ -109,6 +114,7 @@ class ProfileSettingViewModel(
                 }
         }
     }
+
     fun onPrivacyChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -136,6 +142,7 @@ class ProfileSettingViewModel(
                 }
         }
     }
+
     fun onPushEnabledChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -164,6 +171,7 @@ class ProfileSettingViewModel(
         }
 
     }
+
     fun onEmailEnabledChanged(value: Boolean) {
         viewModelScope.launch {
             _uiState.update {
@@ -185,6 +193,34 @@ class ProfileSettingViewModel(
                         it.copy(
                             error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
                                 ?: UiText.DynamicString("Set email msg error"),
+                            isLoading = false
+                        )
+                    }
+                }
+        }
+    }
+
+    fun sendPasswordResetEmail() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                )
+            }
+            userRepository.sendPasswordResetEmail()
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            isPasswordResetSent = true
+                        )
+                    }
+                }
+                .onFailure { e ->
+                    _uiState.update {
+                        it.copy(
+                            error = e.localizedMessage?.let { msg -> UiText.DynamicString(msg) }
+                                ?: UiText.DynamicString("Something went wrong with sending reset password email"),
                             isLoading = false
                         )
                     }
