@@ -15,9 +15,11 @@ import com.example.wepick.R
 import com.example.wepick.data.repository.FirebaseUserRepository
 import com.example.wepick.domain.repository.UserRepository
 import com.example.wepick.util.UiText
+import androidx.annotation.StringRes
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
@@ -87,6 +89,23 @@ class AuthViewModel (
             }
     }
 
+    // Maps Firebase Auth error codes onto localized strings instead of showing
+    // Firebase's own (always-English) exception messages to the user.
+    private fun mapAuthError(e: Exception, @StringRes fallback: Int): UiText {
+        val errorCode = (e as? FirebaseAuthException)?.errorCode
+        val resId = when (errorCode) {
+            "ERROR_INVALID_EMAIL", "ERROR_WRONG_PASSWORD", "ERROR_USER_NOT_FOUND", "ERROR_INVALID_CREDENTIAL" ->
+                R.string.login_error_invalid_credentials
+            "ERROR_USER_DISABLED" -> R.string.auth_error_user_disabled
+            "ERROR_EMAIL_ALREADY_IN_USE" -> R.string.auth_error_email_already_in_use
+            "ERROR_WEAK_PASSWORD" -> R.string.auth_error_weak_password
+            "ERROR_TOO_MANY_REQUESTS" -> R.string.auth_error_too_many_requests
+            "ERROR_NETWORK_REQUEST_FAILED" -> R.string.auth_error_network
+            else -> fallback
+        }
+        return UiText.StringResource(resId)
+    }
+
     fun login(email: String, password: String) {
         viewModelScope.launch {
             transitionState =
@@ -97,9 +116,7 @@ class AuthViewModel (
                 transitionState = null
             } catch (e: Exception) {
                 transitionState = null
-                val errorMessage = e.localizedMessage?.let {
-                    UiText.DynamicString(it)
-                } ?: UiText.StringResource(R.string.auth_transition_logining_error)
+                val errorMessage = mapAuthError(e, R.string.auth_transition_logining_error)
 
                 _authState.value = AuthState.Error(errorMessage)
             }
@@ -127,9 +144,7 @@ class AuthViewModel (
                 transitionState = null
             } catch (e: Exception) {
                 transitionState = null
-                val errorMessage = e.localizedMessage?.let {
-                    UiText.DynamicString(it)
-                } ?: UiText.StringResource(R.string.auth_transition_registration_error)
+                val errorMessage = mapAuthError(e, R.string.auth_transition_registration_error)
 
                 _authState.value = AuthState.Error(errorMessage)
             }
@@ -138,6 +153,15 @@ class AuthViewModel (
 
     fun signout() {
         auth.signOut()
+    }
+
+    // authState is Activity-scoped and outlives a single screen, so an unconsumed
+    // Error would still be sitting there and re-fire on the next screen that
+    // observes it (e.g. navigating from Login to Signup after a failed login).
+    fun consumeError() {
+        if (_authState.value is AuthState.Error) {
+            _authState.value = AuthState.Unauthenticated
+        }
     }
 
     fun resetPassword(email: String, onSuccess: () -> Unit, onError: (UiText) -> Unit) {
@@ -150,8 +174,8 @@ class AuthViewModel (
                 if (task.isSuccessful) {
                     onSuccess()
                 } else {
-                    val errorMsg = task.exception?.message?.let {
-                        UiText.DynamicString(it)
+                    val errorMsg = task.exception?.let {
+                        mapAuthError(it, R.string.auth_transition_reset_password_error)
                     } ?: UiText.StringResource(R.string.auth_transition_reset_password_error)
 
                     onError(errorMsg)
@@ -186,9 +210,7 @@ class AuthViewModel (
                 transitionState = null
             } catch (e: Exception) {
                 transitionState = null
-                val errorMessage = e.message?.let {
-                    UiText.DynamicString(it)
-                } ?: UiText.StringResource(R.string.auth_transition_logining_with_google_error)
+                val errorMessage = mapAuthError(e, R.string.auth_transition_logining_with_google_error)
 
                 _authState.value = AuthState.Error(errorMessage)
             }

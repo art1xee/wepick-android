@@ -190,7 +190,7 @@ fun ProfileSetup(
                     text = stringResource(R.string.profile_setup_display_username_label),
                     textField = stringResource(R.string.profile_setup_display_username_example),
                     isError = isUserNameTaken,
-                    errorText = if (isUserNameTaken) "This username already taken" else null,// TODO: add in the R.string
+                    errorText = if (isUserNameTaken) stringResource(R.string.profile_setup_error_username_taken) else null,
                     trailingIcon = { ValidationTrailingIcon(status = uiState.userNameStatus) },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done

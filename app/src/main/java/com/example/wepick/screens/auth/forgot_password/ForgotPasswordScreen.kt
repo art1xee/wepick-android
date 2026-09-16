@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
+import com.example.wepick.screens.auth.components.AuthErrorBanner
 import com.example.wepick.screens.auth.components.EmailTextField
 import com.example.wepick.ui.components.LoginButton
 import com.example.wepick.ui.theme.Black
@@ -229,6 +230,11 @@ fun ForgotPasswordScreen(
                             }
                         ),
                     )
+                    if (playerVM.errorMessage != null) {
+                        Spacer(Modifier.height(12.dp))
+                        AuthErrorBanner(playerVM.errorMessage ?: "")
+                    }
+
                     Spacer(Modifier.height(26.dp))
 
                     LoginButton(
@@ -275,7 +281,7 @@ fun ForgotPasswordScreen(
                     Spacer(Modifier.height(22.dp))
 
                     Text(
-                        text = stringResource(R.string.forgot_password_complete), //TODO: add this string in the R.string
+                        text = stringResource(R.string.forgot_password_complete),
                         fontFamily = PressStart2P,
                         color = White,
                         fontSize = 18.sp,

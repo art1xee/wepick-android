@@ -20,6 +20,7 @@
     <string name="login_no_account">У меня нет аккаунта, </string>
     <string name="login_create_account">создать.</string>
     <string name="login_error_invalid_credentials">Неверный email или пароль. Попробуйте ещё раз.</string>
+    <string name="login_error_password_empty">Введите пароль</string>
 
     <!-- FORGOT PASSWORD -->
     <string name="forgot_password_email_error">Проверьте правильность email.</string>
@@ -41,6 +42,9 @@
     <string name="signup_confirm_password_text_field">повторите пароль</string>
     <string name="signup_button">Создать профиль</string>
     <string name="signup_error_password_mismatch">Пароли не совпадают. Попробуйте ещё раз.</string>
+    <string name="signup_error_password_too_short">Пароль должен содержать не менее 6 символов</string>
+    <string name="signup_have_account">Уже есть аккаунт, </string>
+    <string name="signup_login_link">войти.</string>
 
     <!-- PROFILE SETUP -->
     <string name="profile_setup_title">НАСТРОЙКА ПРОФИЛЯ</string>
@@ -53,6 +57,7 @@
     <string name="profile_setup_display_email_label">Email (Этот email будет привязан к вашему профилю)</string>
     <string name="profile_setup_save_profile_button">Создать профиль</string>
     <string name="profile_setup_error_enter_username">Поле с именем не может быть - пустым!</string>
+    <string name="profile_setup_error_username_taken">Этот никнейм уже занят!</string>
 
 
     <!--AUTH TRANSITION -->
@@ -68,6 +73,13 @@
     <string name="auth_transition_password_mismatch">Пароли не совпадают!</string>
     <string name="auth_transition_creating_account">Создаем аккаунт…</string>
     <string name="auth_transition_registration_error">Ошибка регистрации!</string>
+
+    <!-- AUTH ERRORS (mapped from FirebaseAuthException error codes) -->
+    <string name="auth_error_user_disabled">Этот аккаунт заблокирован.</string>
+    <string name="auth_error_email_already_in_use">Этот email уже используется другим аккаунтом.</string>
+    <string name="auth_error_weak_password">Пароль слишком слабый. Минимум 6 символов.</string>
+    <string name="auth_error_too_many_requests">Слишком много попыток. Попробуйте позже.</string>
+    <string name="auth_error_network">Нет подключения к интернету. Проверьте сеть.</string>
 
     <!--PROFILE VIEW MODEL  -->
     <string name="profile_view_model_saving_profile">Сохраняем профиль…</string>
@@ -90,6 +102,8 @@
     <string name="profile_setting_security_subtitle">Пароль и защита аккаунта</string>
     <string name="security_google_auth_note">Вы вошли через Google, пароль для аккаунта не задан</string>
     <string name="security_reset_email_sent">Письмо для смены пароля отправлено на вашу почту</string>
+    <string name="security_send_reset_button">Отправить письмо</string>
+    <string name="security_resend_button">Отправить ещё раз</string>
     <string name="profile_setting_delete_account">Удалить аккаунт</string>
     <string name="profile_setting_delete_account_alert">Эта операция необратима. Все ваши данные будут безвозвратно удалены. Вы абсолютно уверены?</string>
     <string name="profile_setting_delete_account_confirm">Удалить</string>
@@ -179,8 +193,12 @@
     <string name="settings_privacy">Приватный профиль</string>
     <string name="settings_push">Push-уведомления</string>
     <string name="settings_email">Email-уведомления</string>
+    <string name="language_screen_label">Язык</string>
+    <string name="privacy_screen_label">Приватность</string>
+    <string name="notification_screen_label">Уведомления</string>
 
     <!-- HELP SCREEN -->
+    <string name="help_center_label">Помощь</string>
     <string name="help_faq_title">Часто задаваемые вопросы</string>
     <string name="help_faq_q1">Как работает совместный подбор контента?</string>
     <string name="help_faq_a1">Выберите тип контента, партнёра (друга или популярного персонажа), укажите жанры, которые нравятся и не нравятся — и WePick подберёт то, что понравится вам обоим.</string>

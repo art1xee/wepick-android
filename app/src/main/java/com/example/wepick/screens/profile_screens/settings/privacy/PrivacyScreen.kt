@@ -60,7 +60,7 @@ fun PrivacyScreen(
                     navController
                 )
 
-                LabelText("Privacy") // TODO: ADD IN R.STRING
+                LabelText(stringResource(R.string.privacy_screen_label))
 
                 Spacer(Modifier.height(8.dp))
                 ToggleSwitcher(

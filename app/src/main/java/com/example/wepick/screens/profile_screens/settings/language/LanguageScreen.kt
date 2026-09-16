@@ -74,7 +74,7 @@ fun LanguageScreen(
                     navController
                 )
 
-                LabelText("Language") //TODO: ADD IN R.STRING
+                LabelText(stringResource(R.string.language_screen_label))
 
                 Spacer(Modifier.height(8.dp))
 

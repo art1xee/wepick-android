@@ -94,7 +94,7 @@ fun HelpScreen(
                     navController
                 )
 
-                LabelText("HELP CENTER") // TODO: ADD IN R.STRING
+                LabelText(stringResource(R.string.help_center_label))
 
                 Spacer(Modifier.height(16.dp))
 

@@ -48,6 +48,23 @@ import com.example.wepick.ui.theme.Nunito
 import com.example.wepick.ui.theme.TextTeal
 
 
+// Shared style for a screen-level auth error (e.g. Firebase sign-in/sign-up failures),
+// as opposed to a single field's inline validation error.
+@Composable
+fun AuthErrorBanner(text: String) {
+    Text(
+        text = text,
+        color = AccentRed,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = Nunito,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp)
+    )
+}
+
 @Composable
 fun ForgotPassword(
     navController: NavController

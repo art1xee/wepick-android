@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.screens.auth.components.AuthErrorBanner
 import com.example.wepick.screens.auth.components.EmailTextField
 import com.example.wepick.screens.auth.components.LoginDivider
 import com.example.wepick.screens.auth.components.PasswordTextField
@@ -88,9 +89,9 @@ fun SignUpScreen(
 
 
     val formErrorMessage = when {
-        confirmPasswordError -> stringResource(R.string.signup_error_password_mismatch)
         emailError -> stringResource(R.string.forgot_password_email_error)
-        passwordError -> "The password cannot be empty"
+        passwordError -> stringResource(R.string.signup_error_password_too_short)
+        confirmPasswordError -> stringResource(R.string.signup_error_password_mismatch)
 
         else -> null
     }
@@ -117,6 +118,7 @@ fun SignUpScreen(
                     context, (authState as AuthState.Error).message.asString(context),
                     Toast.LENGTH_SHORT
                 ).show()
+                authViewModel.consumeError()
             }
 
             else -> Unit
@@ -241,13 +243,7 @@ fun SignUpScreen(
                 )
 
                 if (formErrorMessage != null) {
-                    Text(
-                        text = formErrorMessage,
-                        color = AccentRed,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                        fontFamily = Nunito
-                    )
+                    AuthErrorBanner(formErrorMessage)
                 }
 
                 Spacer(modifier.height(20.dp))
@@ -256,7 +252,7 @@ fun SignUpScreen(
                     authViewModel = authViewModel,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isLoading,
-                    text = stringResource(R.string.signup_button), // TODO: change the lang
+                    text = stringResource(R.string.signup_button),
                     loadingText = stringResource(R.string.loading),
                     loading = isLoading,
                     formValid = true,
@@ -268,8 +264,8 @@ fun SignUpScreen(
                             authViewModel.signup(email, password, confirmPassword)
                         } else {
                             emailError = !isEmailValid
-                            passwordError = !isPasswordValid
-                            confirmPasswordError = !isPasswordValid
+                            passwordError = password.isEmpty() || password.length < 6
+                            confirmPasswordError = password != confirmPassword
                         }
                     }
                 )
@@ -290,13 +286,13 @@ fun SignUpScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Already have an account, ", // TODO: change the lang
+                        text = stringResource(R.string.signup_have_account),
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         color = InkSoft
                     )
                     Text(
-                        text = "Login", // TODO: change the lang
+                        text = stringResource(R.string.signup_login_link),
                         fontSize = 13.sp,
                         fontFamily = Nunito,
                         fontWeight = FontWeight.ExtraBold,

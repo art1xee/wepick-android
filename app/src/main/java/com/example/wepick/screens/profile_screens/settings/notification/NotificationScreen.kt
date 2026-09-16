@@ -59,7 +59,7 @@ fun NotificationScreen(
                 BackButton(
                     navController
                 )
-                LabelText("Notification`s ") //TODO: ADD IN R.STRING
+                LabelText(stringResource(R.string.notification_screen_label))
                 Spacer(Modifier.height(8.dp))
                 ToggleSwitcher(
                     text = stringResource(R.string.settings_push),
