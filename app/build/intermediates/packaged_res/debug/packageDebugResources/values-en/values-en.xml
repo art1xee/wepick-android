@@ -29,6 +29,22 @@
     <string name="genres_error_duplicate">This genre is already chosen!</string>
     <string name="genres_like_title">%1$s Select 3 genres that you LIKE.</string>
     <string name="genres_save_button">Save!</string>
+    <string name="help_contact_button">Email support</string>
+    <string name="help_contact_email" translatable="false">support@wepick.app</string>
+    <string name="help_contact_title">Contact us</string>
+    <string name="help_faq_a1">Choose a content type, pick a partner (a friend or a popular character), select the genres you like and dislike, and WePick finds something you\'ll both enjoy.</string>
+    <string name="help_faq_a2">With Friend, you pass the device to a real person and pick together. With Popular character, your taste is compared against a preset character profile instead.</string>
+    <string name="help_faq_a3">Try widening your genre choices or restarting the search — narrower preferences leave fewer overlapping results.</string>
+    <string name="help_faq_a4">Go to App Settings → Language and pick English, Russian, or Ukrainian.</string>
+    <string name="help_faq_a5">Your profile and all associated data are permanently removed from our database — this cannot be undone.</string>
+    <string name="help_faq_a6">Email us at the address below — we read every message.</string>
+    <string name="help_faq_q1">How does picking content together work?</string>
+    <string name="help_faq_q2">What\'s the difference between \"Friend\" and \"Popular character\"?</string>
+    <string name="help_faq_q3">What if no match is found?</string>
+    <string name="help_faq_q4">How do I change the app language?</string>
+    <string name="help_faq_q5">What happens when I delete my account?</string>
+    <string name="help_faq_q6">How can I report a bug or suggest a feature?</string>
+    <string name="help_faq_title">Frequently Asked Questions</string>
     <string name="loading">Loading…</string>
     <string name="loading_button">Loading…</string>
     <string name="login_button">Login</string>
@@ -118,7 +134,6 @@
     <string name="settings_language">Select language: </string>
     <string name="settings_privacy">Private profile</string>
     <string name="settings_push">Push notifications</string>
-    <string name="settings_sound">Notification sound</string>
     <string name="signup_button">Create Profile</string>
     <string name="signup_confirm_password_label">Repeat password</string>
     <string name="signup_confirm_password_text_field">repeat password</string>

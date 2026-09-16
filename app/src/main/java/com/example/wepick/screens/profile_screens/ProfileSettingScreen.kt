@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SettingsApplications
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Card
@@ -52,7 +51,6 @@ fun ProfileSettingScreen(
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-
     val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
@@ -75,8 +73,7 @@ fun ProfileSettingScreen(
             }
         }
     }
-
-
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,21 +106,6 @@ fun ProfileSettingScreen(
                     onClick = { navController.navigate(ScreenNav.ProfileEdit.route) }
                 )
 
-                Spacer(Modifier.height(10.dp))
-
-                // Profile box button with personal data of user: name, username, date of birth, email, bio etc. (user can change the values in this screen)
-                ProfileBoxButton(
-                    onClick = { navController.navigate(ScreenNav.PersonalData.route) },
-                    contentDescription = stringResource(R.string.profile_setting_personal_data_title),
-                    icon = Icons.Default.Person,
-                    text = stringResource(R.string.profile_setting_personal_data_title), // Про користувача / Про пользователя
-                    subtext = stringResource(R.string.profile_setting_personal_data_subtitle),
-                    firstStartColor = Color(0xFF613477),
-                    secondStartColor = Color(0xFF2A1044),
-                    firstEndColor = Color(0xFF9B4DB3),
-                    secondEndColor = Color(0xFF800E9C),
-                )
-
                 Spacer(Modifier.height(4.dp))
 
                 // Profile box button with app settings: Get email msg, Change app language, make user profile private/non-private, push-msg from app in user phone
@@ -152,7 +134,7 @@ fun ProfileSettingScreen(
 //                    text = "Favorite content"
 //                )
 
-                Spacer(Modifier.height(4.dp))
+//                Spacer(Modifier.height(4.dp))
 
                 // Profile box button with: FAQ, feedback, contacts
                 ProfileBoxButton(
@@ -171,13 +153,13 @@ fun ProfileSettingScreen(
 
                 Spacer(Modifier.height(4.dp))
 
-                // Profile box button with: Changing the password of the user account
+                // Profile box button with: password reset, and other security-related items
                 ProfileBoxButton(
-                    onClick = { navController.navigate(ScreenNav.ChangePassword.route) },
-                    contentDescription = stringResource(R.string.profile_setting_change_password_title),
+                    onClick = { navController.navigate(ScreenNav.Security.route) },
+                    contentDescription = stringResource(R.string.profile_setting_security_title),
                     icon = Icons.Default.Shield,
-                    text = stringResource(R.string.profile_setting_change_password_title),// change language
-                    subtext = stringResource(R.string.profile_setting_change_password_subtitle),
+                    text = stringResource(R.string.profile_setting_security_title),
+                    subtext = stringResource(R.string.profile_setting_security_subtitle),
                     //start color of the block
                     firstStartColor = Color(0xFFB45309),
                     secondStartColor = Color(0xFF78350F),

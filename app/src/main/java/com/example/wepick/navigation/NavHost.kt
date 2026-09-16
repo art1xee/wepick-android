@@ -20,14 +20,17 @@ import com.example.wepick.screens.auth.forgot_password.ForgotPasswordScreen
 import com.example.wepick.screens.auth.login.LoginScreen
 import com.example.wepick.screens.auth.profile_setup.ProfileSetup
 import com.example.wepick.screens.auth.signup.SignUpScreen
-import com.example.wepick.screens.profile_screens.ChangePasswordScreen
 import com.example.wepick.screens.profile_screens.DeleteAccountScreen
 import com.example.wepick.screens.profile_screens.FavoriteContentScreen
 import com.example.wepick.screens.profile_screens.HelpScreen
+import com.example.wepick.screens.profile_screens.SecurityScreen
 import com.example.wepick.screens.profile_screens.PersonalDataScreen
 import com.example.wepick.screens.profile_screens.ProfileSettingScreen
 import com.example.wepick.screens.profile_screens.profile_edit.ProfileEditScreen
 import com.example.wepick.screens.profile_screens.settings.AppSettingScreen
+import com.example.wepick.screens.profile_screens.settings.language.LanguageScreen
+import com.example.wepick.screens.profile_screens.settings.notification.NotificationScreen
+import com.example.wepick.screens.profile_screens.settings.privacy.PrivacyScreen
 import com.example.wepick.viewmodel.AuthViewModel
 import com.example.wepick.viewmodel.ContentViewModel
 import com.example.wepick.viewmodel.MainViewModel
@@ -62,14 +65,41 @@ fun NavGraph(
                 profileViewModel
             )
         }
+        composable(ScreenNav.LanguagePicker.route) {
+            LanguageScreen(
+                navController,
+                viewModel,
+            )
+        }
+        composable(ScreenNav.Notification.route) {
+            NotificationScreen(
+                navController,
+                profileSettingViewModel
+            )
+        }
+        composable(ScreenNav.Privacy.route) {
+            PrivacyScreen(
+                navController,
+                profileSettingViewModel
+            )
+        }
+        composable(ScreenNav.AppSetting.route) {
+            AppSettingScreen(
+                navController,
+                modifier = Modifier,
+            )
+        }
         composable(ScreenNav.Help.route) {
             HelpScreen(
                 navController,
-                viewModel,
-                playerVM,
-                profileViewModel,
             )
 
+        }
+        composable(ScreenNav.Security.route) {
+            SecurityScreen(
+                navController,
+                profileSettingViewModel,
+            )
         }
 
         composable(ScreenNav.DeleteAccount.route) {
@@ -78,22 +108,6 @@ fun NavGraph(
                 viewModel,
                 playerVM,
                 profileViewModel,
-            )
-        }
-        composable(ScreenNav.ChangePassword.route) {
-            ChangePasswordScreen(
-                navController,
-                viewModel,
-                playerVM,
-                profileViewModel,
-            )
-        }
-        composable(ScreenNav.AppSetting.route) {
-            AppSettingScreen(
-                navController,
-                viewModel,
-                profileSettingViewModel,
-                modifier = Modifier,
             )
         }
         composable(ScreenNav.Favorite.route) {

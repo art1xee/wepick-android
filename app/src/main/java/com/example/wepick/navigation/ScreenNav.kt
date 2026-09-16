@@ -7,15 +7,17 @@ sealed class ScreenNav(val route: String) {
     object ProfileSetup : ScreenNav("profile_setup")
     object Favorite : ScreenNav("favourite")
     object SignUp : ScreenNav("sign_up")
-    object Help: ScreenNav("help")
+    object Help : ScreenNav("help")
 
-    object ChangePassword: ScreenNav("change_password")
+    object Security : ScreenNav("security")
 
-    object DeleteAccount: ScreenNav("delete_account")
+    object DeleteAccount : ScreenNav("delete_account")
     object PersonalData : ScreenNav("personal_data")
-    object  AppSetting: ScreenNav("app_setting")
-
-    object ProfileEdit: ScreenNav("profile_edit")
+    object AppSetting : ScreenNav("app_setting")
+    object LanguagePicker : ScreenNav("language_picker")
+    object Notification : ScreenNav("notification")
+    object Privacy : ScreenNav("privacy")
+    object ProfileEdit : ScreenNav("profile_edit")
     object ForgotPassword : ScreenNav("forgot_password") // Screen when user forgot his password 
 
     object ProfileSettingScreen : ScreenNav("profile_setting_screen") // screen for settings

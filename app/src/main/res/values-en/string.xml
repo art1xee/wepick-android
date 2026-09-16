@@ -22,6 +22,7 @@
     <string name="login_no_account">I don`t have account, </string>
     <string name="login_create_account"> create.</string>
     <string name="login_error_invalid_credentials">Incorrect email or password - try again.</string>
+    <string name="login_error_password_empty">Enter your password</string>
 
     <!-- FORGOT PASSWORD -->
     <string name="forgot_password_email_error">Check the format of the email — something is going wrong.</string>
@@ -43,6 +44,9 @@
     <string name="signup_confirm_password_text_field">repeat password</string>
     <string name="signup_button">Create Profile</string>
     <string name="signup_error_password_mismatch">Passwords do not match — please enter again.</string>
+    <string name="signup_error_password_too_short">Password must be at least 6 characters</string>
+    <string name="signup_have_account">Already have an account, </string>
+    <string name="signup_login_link">login.</string>
 
     <!-- PROFILE SETUP -->
     <string name="profile_setup_title">PROFILE SETUP</string>
@@ -55,6 +59,7 @@
     <string name="profile_setup_display_email_label">Email (This email will be linked to your profile)</string>
     <string name="profile_setup_save_profile_button">Create Profile</string>
     <string name="profile_setup_error_enter_username">Name field cannot be empty!</string>
+    <string name="profile_setup_error_username_taken">This username is already taken!</string>
 
     <!--AUTH TRANSITION -->
     <string name="auth_transition_welcome">Welcome!</string>
@@ -69,6 +74,13 @@
     <string name="auth_transition_password_mismatch">Passwords do not match!</string>
     <string name="auth_transition_creating_account">Creating account…</string>
     <string name="auth_transition_registration_error">Registration error!</string>
+
+    <!-- AUTH ERRORS (mapped from FirebaseAuthException error codes) -->
+    <string name="auth_error_user_disabled">This account has been disabled.</string>
+    <string name="auth_error_email_already_in_use">This email is already linked to another account.</string>
+    <string name="auth_error_weak_password">Password is too weak. Minimum 6 characters.</string>
+    <string name="auth_error_too_many_requests">Too many attempts. Please try again later.</string>
+    <string name="auth_error_network">No internet connection. Please check your network.</string>
 
     <!--PROFILE VIEW MODEL  -->
     <string name="profile_view_model_saving_profile">Saving profile…</string>
@@ -86,6 +98,12 @@
     <string name="profile_setting_help_subtitle">FAQ, contacts, feedback</string>
     <string name="profile_setting_change_password_title">Change Password</string>
     <string name="profile_setting_change_password_subtitle">Change the password of your account</string>
+    <string name="profile_setting_security_title">Security</string>
+    <string name="profile_setting_security_subtitle">Password and account protection</string>
+    <string name="security_google_auth_note">You signed in with Google, no password is set for this account</string>
+    <string name="security_reset_email_sent">A password reset email has been sent to your inbox</string>
+    <string name="security_send_reset_button">Send Email</string>
+    <string name="security_resend_button">Resend Email</string>
     <string name="profile_setting_delete_account">Delete account</string>
     <string name="profile_setting_delete_account_alert">This action is irreversible. All your data will be permanently deleted. Are you absolutely sure?</string>
     <string name="profile_setting_delete_account_confirm">Delete</string>
@@ -175,5 +193,27 @@
     <string name="settings_privacy">Private profile</string>
     <string name="settings_push">Push notifications</string>
     <string name="settings_email">Email notifications</string>
+    <string name="language_screen_label">Language</string>
+    <string name="privacy_screen_label">Privacy</string>
+    <string name="notification_screen_label">Notifications</string>
+
+    <!-- HELP SCREEN -->
+    <string name="help_center_label">Help Center</string>
+    <string name="help_faq_title">Frequently Asked Questions</string>
+    <string name="help_faq_q1">How does picking content together work?</string>
+    <string name="help_faq_a1">Choose a content type, pick a partner (a friend or a popular character), select the genres you like and dislike, and WePick finds something you\'ll both enjoy.</string>
+    <string name="help_faq_q2">What\'s the difference between \"Friend\" and \"Popular character\"?</string>
+    <string name="help_faq_a2">With Friend, you pass the device to a real person and pick together. With Popular character, your taste is compared against a preset character profile instead.</string>
+    <string name="help_faq_q3">What if no match is found?</string>
+    <string name="help_faq_a3">Try widening your genre choices or restarting the search — narrower preferences leave fewer overlapping results.</string>
+    <string name="help_faq_q4">How do I change the app language?</string>
+    <string name="help_faq_a4">Go to App Settings → Language and pick English, Russian, or Ukrainian.</string>
+    <string name="help_faq_q5">What happens when I delete my account?</string>
+    <string name="help_faq_a5">Your profile and all associated data are permanently removed from our database — this cannot be undone.</string>
+    <string name="help_faq_q6">How can I report a bug or suggest a feature?</string>
+    <string name="help_faq_a6">Email us at the address below — we read every message.</string>
+    <string name="help_contact_title">Contact us</string>
+    <string name="help_contact_button">Email support</string>
+    <string name="help_contact_email" translatable="false">support@wepick.app</string>
 
 </resources>

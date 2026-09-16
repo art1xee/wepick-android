@@ -1,60 +1,41 @@
 package com.example.wepick.screens.profile_screens.settings
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.wepick.R
+import com.example.wepick.navigation.ScreenNav
 import com.example.wepick.screens.profile_screens.components.BackButton
 import com.example.wepick.screens.profile_screens.components.LabelText
-import com.example.wepick.screens.profile_screens.components.ToggleSwitcher
-import com.example.wepick.ui.theme.AccentRed
-import com.example.wepick.ui.theme.Black
+import com.example.wepick.screens.profile_screens.components.ProfileBoxButton
 import com.example.wepick.ui.theme.CardYellow
-import com.example.wepick.ui.theme.Muted
-import com.example.wepick.ui.theme.PressStart2P
-import com.example.wepick.ui.theme.White
-import com.example.wepick.util.Language
-import com.example.wepick.viewmodel.MainViewModel
-import com.example.wepick.viewmodel.profile_view_model.ProfileSettingViewModel
 
 @Composable
 fun AppSettingScreen(
     navController: NavController,
-    viewModel: MainViewModel,
-    profileSettingViewModel: ProfileSettingViewModel,
     modifier: Modifier
 ) {
-    val context = LocalContext.current
-    val currentLang by viewModel.currentLanguage
-
-    val uiState by profileSettingViewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier
@@ -85,66 +66,48 @@ fun AppSettingScreen(
 
                 Spacer(Modifier.height(8.dp))
 
-                //LANGUAGE BLOCK
-                Text(
-                    text = stringResource(R.string.settings_language),
-                    fontFamily = PressStart2P,
-                    fontSize = 9.sp,
-                    color = Muted
+                ProfileBoxButton(
+                    onClick = { navController.navigate(ScreenNav.Notification.route) },
+                    contentDescription = "Notification block",
+                    //start color of the block
+                    firstStartColor = Color(0xFF60A5FA),
+                    firstEndColor = Color(0xFF1D4ED8),
+                    //end color of the block (when user pressed the button)
+                    secondStartColor = Color(0xFF3B82F6),
+                    secondEndColor = Color(0xFF1E40AF),
+                    icon = Icons.Default.Notifications,
+                    text = "Notification",
+                    subtext = "Setting your notifications"
                 )
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    val supportedLanguages =
-                        listOf("EN" to Language.EN, "UA" to Language.UK, "RU" to Language.RU)
-                    supportedLanguages.forEach { (label, code) ->
-                        val isSelected = currentLang == code
-                        Box(
-                            modifier = Modifier
-                                .size(width = 50.dp, height = 30.dp)
-                                .background(
-                                    if (isSelected) AccentRed else White,
-                                    RoundedCornerShape(8.dp)
-                                )
-                                .border(2.dp, Black, RoundedCornerShape(8.dp))
-                                .clickable {
-                                    if (!isSelected) viewModel.setLanguage(
-                                        code, context
-                                    )
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = label,
-                                fontFamily = PressStart2P,
-                                fontSize = 10.sp,
-                                color = if (isSelected) White else Black
-                            )
-                        }
-                    }
-                }
-                Spacer(Modifier.height(12.dp))
-                ToggleSwitcher(
-                    text = stringResource(R.string.settings_privacy),
-                    checked = uiState.userProfile?.isPrivate ?: false,
-                    onCheckedChanged = { onChecked ->
-                        profileSettingViewModel.onPrivacyChanged(onChecked)
-                    }
+                Spacer(Modifier.height(4.dp))
+                ProfileBoxButton(
+                    onClick = { navController.navigate(ScreenNav.Privacy.route) },
+                    contentDescription = "Privacy block",
+                    //start color of the block
+                    firstStartColor = Color(0xFFA78BFA),
+                    firstEndColor = Color(0xFF6D28D9),
+                    //end color of the block (when user pressed the button)
+                    secondStartColor = Color(0xFF8B5CF6),
+                    secondEndColor = Color(0xFF5B21B6),
+                    icon = Icons.Default.Shield,
+                    text = "Privacy",
+                    subtext = "Setting your privacy"
                 )
-                Spacer(Modifier.height(8.dp))
-                ToggleSwitcher(
-                    text = stringResource(R.string.settings_push),
-                    checked = uiState.userProfile?.pushEnabled ?: false,
-                    onCheckedChanged = { onChecked ->
-                        profileSettingViewModel.onPushEnabledChanged(onChecked)
-                    }
+                Spacer(Modifier.height(4.dp))
+                ProfileBoxButton(
+                    onClick = { navController.navigate(ScreenNav.LanguagePicker.route) },
+                    contentDescription = "Language block",
+                    //start color of the block
+                    firstStartColor = Color(0xFF2DD4BF),
+                    firstEndColor = Color(0xFF0F766E),
+                    //end color of the block (when user pressed the button)
+                    secondStartColor = Color(0xFF14B8A6),
+                    secondEndColor = Color(0xFF115E59),
+                    icon = Icons.Default.Language,
+                    text = "Language",
+                    subtext = "Setting your language"
                 )
-                Spacer(Modifier.height(8.dp))
-                ToggleSwitcher(
-                    text = stringResource(R.string.settings_email),
-                    checked = uiState.userProfile?.emailEnabled ?: false,
-                    onCheckedChanged = { onChecked ->
-                        profileSettingViewModel.onEmailEnabledChanged(onChecked)
-                    }
-                )
+
             }
         }
     }

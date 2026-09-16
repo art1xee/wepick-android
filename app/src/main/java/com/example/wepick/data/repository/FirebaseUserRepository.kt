@@ -130,4 +130,9 @@ class FirebaseUserRepository(
     override suspend fun updateFcmToken(token: String): Result<Unit> {
         return updateProfileFields(fields = mapOf("fcmToken" to token))
     }
+
+    override suspend fun sendPasswordResetEmail(): Result<Unit> = runCatching {
+        val email = auth.currentUser?.email ?: throw IllegalStateException("User don`t logged in")
+        auth.sendPasswordResetEmail(email).await()
+    }
 }

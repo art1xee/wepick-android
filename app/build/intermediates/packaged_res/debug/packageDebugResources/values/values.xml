@@ -58,6 +58,22 @@
     <string name="google_app_id" translatable="false">1:871652837283:android:912c185f44afb28601bc16</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCL76Yx9OMQNGmp-IfEHrr72R0UCX1Z2EI</string>
     <string name="google_storage_bucket" translatable="false">wepick--android-version.firebasestorage.app</string>
+    <string name="help_contact_button">Написати в підтримку</string>
+    <string name="help_contact_email" translatable="false">support@wepick.app</string>
+    <string name="help_contact_title">Зв\'язатися з нами</string>
+    <string name="help_faq_a1">Оберіть тип контенту, партнера (друга або популярного персонажа), вкажіть жанри, які подобаються і не подобаються — і WePick підбере те, що сподобається вам обом.</string>
+    <string name="help_faq_a2">У режимі «Друг» ви передаєте пристрій реальній людині і обираєте разом. У режимі «Популярний персонаж» ваші вподобання порівнюються із заздалегідь заданим профілем персонажа.</string>
+    <string name="help_faq_a3">Спробуйте розширити вибір жанрів або почати підбір заново — надто вузькі вподобання залишають менше перетинів.</string>
+    <string name="help_faq_a4">Перейдіть у Налаштування застосунку → Мова і оберіть англійську, російську або українську.</string>
+    <string name="help_faq_a5">Профіль і всі пов\'язані дані будуть безповоротно видалені з бази даних — цю дію не можна скасувати.</string>
+    <string name="help_faq_a6">Напишіть нам на пошту нижче — ми читаємо кожне повідомлення.</string>
+    <string name="help_faq_q1">Як працює спільний підбір контенту?</string>
+    <string name="help_faq_q2">Яка різниця між «Другом» і «Популярним персонажем»?</string>
+    <string name="help_faq_q3">Що робити, якщо збігів не знайдено?</string>
+    <string name="help_faq_q4">Як змінити мову застосунку?</string>
+    <string name="help_faq_q5">Що станеться після видалення акаунта?</string>
+    <string name="help_faq_q6">Як повідомити про помилку або запропонувати покращення?</string>
+    <string name="help_faq_title">Часті запитання</string>
     <string name="loading">Завантаження…</string>
     <string name="loading_button">Завантаження…</string>
     <string name="login_button">Увійти</string>
@@ -148,7 +164,6 @@
     <string name="settings_language">Оберіть мову:</string>
     <string name="settings_privacy">Приватний профіль</string>
     <string name="settings_push">Push-сповіщення</string>
-    <string name="settings_sound">Звук сповіщень</string>
     <string name="signup_button">Створити акаунт</string>
     <string name="signup_confirm_password_label">Повторіть пароль</string>
     <string name="signup_confirm_password_text_field">повторіть пароль</string>

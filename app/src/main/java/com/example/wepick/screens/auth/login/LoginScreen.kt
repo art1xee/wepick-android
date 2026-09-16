@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.wepick.R
 import com.example.wepick.navigation.ScreenNav
+import com.example.wepick.screens.auth.components.AuthErrorBanner
 import com.example.wepick.screens.auth.components.EmailTextField
 import com.example.wepick.screens.auth.components.ForgotPassword
 import com.example.wepick.screens.auth.components.LoginDivider
@@ -96,6 +97,7 @@ fun LoginScreen(
             is AuthState.Error -> {
                 Log.e("AuthDebug", "ОШИБКА АВТОРИЗАЦИИ: ${state.message}")
                 playerVM.showLockedError(state.message.asString(context))
+                authViewModel.consumeError()
             }
 
             else -> Unit
@@ -202,7 +204,7 @@ fun LoginScreen(
                     text = stringResource(R.string.login_password_label),
                     textField = "password",
                     isError = passwordError,
-                    errorText = if (passwordError) stringResource(R.string.login_error_invalid_credentials) else null,
+                    errorText = if (passwordError) stringResource(R.string.login_error_password_empty) else null,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
                     ),
@@ -216,6 +218,11 @@ fun LoginScreen(
                 ForgotPassword(
                     navController = navController
                 )
+
+                if (playerVM.errorMessage != null) {
+                    AuthErrorBanner(playerVM.errorMessage ?: "")
+                    Spacer(modifier.height(8.dp))
+                }
 
                 Spacer(modifier.height(24.dp))
 
