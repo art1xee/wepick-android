@@ -40,6 +40,7 @@ class ProfileSettingViewModel(
                 it.copy(
                     isLoading = true,
                     isDeletedAccount = false,
+                    isSignedOut = false,
                     error = null
                 )
             }
