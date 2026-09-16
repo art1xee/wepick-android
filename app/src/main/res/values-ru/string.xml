@@ -176,4 +176,22 @@
     <string name="settings_push">Push-уведомления</string>
     <string name="settings_email">Email-уведомления</string>
 
+    <!-- HELP SCREEN -->
+    <string name="help_faq_title">Часто задаваемые вопросы</string>
+    <string name="help_faq_q1">Как работает совместный подбор контента?</string>
+    <string name="help_faq_a1">Выберите тип контента, партнёра (друга или популярного персонажа), укажите жанры, которые нравятся и не нравятся — и WePick подберёт то, что понравится вам обоим.</string>
+    <string name="help_faq_q2">В чём разница между «Другом» и «Популярным персонажем»?</string>
+    <string name="help_faq_a2">В режиме «Друг» вы передаёте устройство реальному человеку и выбираете вместе. В режиме «Популярный персонаж» ваши предпочтения сравниваются с заранее заданным профилем персонажа.</string>
+    <string name="help_faq_q3">Что делать, если совпадений не найдено?</string>
+    <string name="help_faq_a3">Попробуйте расширить выбор жанров или начать подбор заново — слишком узкие предпочтения оставляют меньше пересечений.</string>
+    <string name="help_faq_q4">Как изменить язык приложения?</string>
+    <string name="help_faq_a4">Перейдите в Настройки приложения → Язык и выберите английский, русский или украинский.</string>
+    <string name="help_faq_q5">Что произойдёт при удалении аккаунта?</string>
+    <string name="help_faq_a5">Профиль и все связанные данные будут безвозвратно удалены из базы данных — это действие нельзя отменить.</string>
+    <string name="help_faq_q6">Как сообщить об ошибке или предложить улучшение?</string>
+    <string name="help_faq_a6">Напишите нам на почту ниже — мы читаем каждое сообщение.</string>
+    <string name="help_contact_title">Связаться с нами</string>
+    <string name="help_contact_button">Написать в поддержку</string>
+    <string name="help_contact_email" translatable="false">support@wepick.app</string>
+
 </resources>

@@ -92,9 +92,6 @@ fun NavGraph(
         composable(ScreenNav.Help.route) {
             HelpScreen(
                 navController,
-                viewModel,
-                playerVM,
-                profileViewModel,
             )
 
         }
