@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.example.wepick.domain.repository.UserRepository
 import com.example.wepick.screens.auth.profile_setup.UserProfile
+import com.example.wepick.screens.friend.Friend
+import com.example.wepick.screens.friend.FriendRequest
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -134,5 +136,51 @@ class FirebaseUserRepository(
     override suspend fun sendPasswordResetEmail(): Result<Unit> = runCatching {
         val email = auth.currentUser?.email ?: throw IllegalStateException("User don`t logged in")
         auth.sendPasswordResetEmail(email).await()
+    }
+
+    override suspend fun searchUserByUsername(query: String): Result<List<UserProfile>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendFriendRequest(toUid: String): Result<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override val incomingFriendRequests: Flow<List<FriendRequest>> = callbackFlow {
+        val uid = currentUserId
+        val registration =
+            db.collection("users/$uid/friendRequests").addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    close(error)
+                } else {
+                    val friendList = snapshots?.toObjects(FriendRequest::class.java)
+                    trySend(friendList ?: emptyList())
+                }
+
+            }
+        awaitClose { registration.remove() }
+    }
+
+    override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> {
+        TODO("No yet implement")
+    }
+
+    override suspend fun declineFriendRequest(fromUid: String): Result<Unit> = runCatching {
+
+        val friendRequest = auth.?: throw IllegalStateException("Something went wrong")
+        db.collection("friendRequest").document(friendRequest.uid).delete().await()
+
+    }
+
+
+    override val friends: Flow<List<Friend>>
+        get() = TODO("Not yet implemented")
+
+    override suspend fun removeFriend(friendUid: String): Result<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserProfile(uid: String): Result<UserProfile?> {
+        TODO("Not yet implemented")
     }
 }
