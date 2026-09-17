@@ -142,8 +142,19 @@ class FirebaseUserRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun sendFriendRequest(toUid: String): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun sendFriendRequest(toUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("User don`t logged in")
+        val profile = getUserProfile().getOrThrow() ?: throw IllegalStateException("Error")
+        val friendRequest =
+            FriendRequest(
+                fromUid = uid,
+                fromName = profile.name,
+                fromUserName = profile.userName,
+                fromPhotoUrl = profile.photoUrl
+            )
+
+        db.collection("users").document(toUid).collection("friendRequests").document(uid)
+            .set(friendRequest).await()
     }
 
     override val incomingFriendRequests: Flow<List<FriendRequest>> = callbackFlow {
@@ -181,9 +192,9 @@ class FirebaseUserRepository(
 
     override suspend fun declineFriendRequest(fromUid: String): Result<Unit> = runCatching {
         val uid = currentUserId ?: throw IllegalStateException("Error")
-        db.collection("users").document(uid).collection("friendRequests").document(fromUid).delete().await()
+        db.collection("users").document(uid).collection("friendRequests").document(fromUid).delete()
+            .await()
     }
-
 
 
     override suspend fun removeFriend(friendUid: String): Result<Unit> {
