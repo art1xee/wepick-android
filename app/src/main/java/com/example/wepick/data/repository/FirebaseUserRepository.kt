@@ -138,9 +138,13 @@ class FirebaseUserRepository(
         auth.sendPasswordResetEmail(email).await()
     }
 
-    override suspend fun searchUserByUsername(query: String): Result<List<UserProfile>> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun searchUserByUsername(query: String): Result<List<UserProfile>> =
+        runCatching {
+            val snapshot = db.collection("users").whereGreaterThanOrEqualTo("userName", query)
+                .whereLessThanOrEqualTo("userName", query + "\uf8ff").get().await()
+
+            snapshot.toObjects(UserProfile::class.java)
+        }
 
     override suspend fun sendFriendRequest(toUid: String): Result<Unit> = runCatching {
         val uid = currentUserId ?: throw IllegalStateException("User don`t logged in")
