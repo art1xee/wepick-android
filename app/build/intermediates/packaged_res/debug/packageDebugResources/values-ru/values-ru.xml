@@ -3,6 +3,11 @@
     <string name="about_description">WePick! — это удобный сервис для выбора фильмов, сериалов и другого контента. Вы задаёте общие предпочтения, а мы подбираем лучший вариант.</string>
     <string name="about_github">Исходный код приложения доступен на GitHub:</string>
     <string name="about_title">О WePick!</string>
+    <string name="auth_error_email_already_in_use">Этот email уже используется другим аккаунтом.</string>
+    <string name="auth_error_network">Нет подключения к интернету. Проверьте сеть.</string>
+    <string name="auth_error_too_many_requests">Слишком много попыток. Попробуйте позже.</string>
+    <string name="auth_error_user_disabled">Этот аккаунт заблокирован.</string>
+    <string name="auth_error_weak_password">Пароль слишком слабый. Минимум 6 символов.</string>
     <string name="auth_transition_creating_account">Создаем аккаунт…</string>
     <string name="auth_transition_enter_fields_error">Заполните все поля</string>
     <string name="auth_transition_enter_password">Для начала введите пароль!</string>
@@ -29,6 +34,7 @@
     <string name="genres_error_duplicate">Этот жанр уже выбран!</string>
     <string name="genres_like_title">%1$s Выберите 3 жанра, которые вам нравятся.</string>
     <string name="genres_save_button">Сохранить!</string>
+    <string name="help_center_label">Помощь</string>
     <string name="help_contact_button">Написать в поддержку</string>
     <string name="help_contact_email" translatable="false">support@wepick.app</string>
     <string name="help_contact_title">Связаться с нами</string>
@@ -45,6 +51,7 @@
     <string name="help_faq_q5">Что произойдёт при удалении аккаунта?</string>
     <string name="help_faq_q6">Как сообщить об ошибке или предложить улучшение?</string>
     <string name="help_faq_title">Часто задаваемые вопросы</string>
+    <string name="language_screen_label">Язык</string>
     <string name="loading">Загрузка…</string>
     <string name="loading_button">Загрузка…</string>
     <string name="login_button">Войти</string>
@@ -53,6 +60,7 @@
     <string name="login_email_hint">Введите email</string>
     <string name="login_email_label">Email</string>
     <string name="login_error_invalid_credentials">Неверный email или пароль. Попробуйте ещё раз.</string>
+    <string name="login_error_password_empty">Введите пароль</string>
     <string name="login_forgot_password">Забыли пароль?</string>
     <string name="login_google_button" translatable="false">Продолжить через Google</string>
     <string name="login_no_account">У меня нет аккаунта, </string>
@@ -62,12 +70,14 @@
     <string name="login_remember_me">Запомнить меня</string>
     <string name="login_subtitle">Рады видеть вас снова!</string>
     <string name="login_title">Войти</string>
+    <string name="notification_screen_label">Уведомления</string>
     <string name="partner_character">Популярный персонаж</string>
     <string name="partner_choose_character">С кем вы хотите сыграть в WePick?</string>
     <string name="partner_friend">Друг</string>
     <string name="partner_friend_name">Передайте устройство другу, чтобы он ввёл своё имя.</string>
     <string name="partner_friend_name_hint">Имя друга</string>
     <string name="partner_title">Теперь выберите, с кем будете смотреть: %1$s.</string>
+    <string name="privacy_screen_label">Приватность</string>
     <string name="profile_edit_about_me_hint">напишите что-то о себе:</string>
     <string name="profile_edit_about_me_label">О себе (необязательно)</string>
     <string name="profile_edit_birthday_format">ДД.ММ.ГГГГ</string>
@@ -96,6 +106,8 @@
     <string name="profile_setting_label">Профиль</string>
     <string name="profile_setting_personal_data_subtitle">Имя, фото, о себе</string>
     <string name="profile_setting_personal_data_title">О пользователе</string>
+    <string name="profile_setting_security_subtitle">Пароль и защита аккаунта</string>
+    <string name="profile_setting_security_title">Безопасность</string>
     <string name="profile_setting_sign_out">Выйти из аккаунта</string>
     <string name="profile_setting_sign_out_alert">Вы уверены, что хотите выйти из аккаунта?</string>
     <string name="profile_setting_sign_out_confirm">Выйти</string>
@@ -107,6 +119,7 @@
     <string name="profile_setup_display_username_example">Введите ваш никнейм</string>
     <string name="profile_setup_display_username_label">Никнейм:</string>
     <string name="profile_setup_error_enter_username">Поле с именем не может быть - пустым!</string>
+    <string name="profile_setup_error_username_taken">Этот никнейм уже занят!</string>
     <string name="profile_setup_load_photo">Загрузите вашу аватарку (необязательно)</string>
     <string name="profile_setup_save_profile_button">Создать профиль</string>
     <string name="profile_setup_subtitle">Почти готово! Давайте настроим ваш профиль.</string>
@@ -125,6 +138,10 @@
     <string name="result_reload">Обновить поиск</string>
     <string name="result_restart">Начать сначала</string>
     <string name="result_title">Найдите, что посмотреть!</string>
+    <string name="security_google_auth_note">Вы вошли через Google, пароль для аккаунта не задан</string>
+    <string name="security_resend_button">Отправить ещё раз</string>
+    <string name="security_reset_email_sent">Письмо для смены пароля отправлено на вашу почту</string>
+    <string name="security_send_reset_button">Отправить письмо</string>
     <string name="selection_anime">Аниме</string>
     <string name="selection_movie">Фильмы</string>
     <string name="selection_next">Далее!</string>
@@ -139,6 +156,9 @@
     <string name="signup_confirm_password_text_field">повторите пароль</string>
     <string name="signup_email_label">Email</string>
     <string name="signup_error_password_mismatch">Пароли не совпадают. Попробуйте ещё раз.</string>
+    <string name="signup_error_password_too_short">Пароль должен содержать не менее 6 символов</string>
+    <string name="signup_have_account">Уже есть аккаунт, </string>
+    <string name="signup_login_link">войти.</string>
     <string name="signup_password_label">Пароль</string>
     <string name="signup_subtitle">Создайте аккаунт всего за минуту!</string>
     <string name="signup_title">Регистрация</string>
