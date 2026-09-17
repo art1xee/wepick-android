@@ -160,6 +160,21 @@ class FirebaseUserRepository(
         awaitClose { registration.remove() }
     }
 
+    override val friends: Flow<List<Friend>> = callbackFlow {
+        val uid: String? = currentUserId
+        val registration =
+            db.collection("users/$uid/friends").addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    close(error)
+                } else {
+                    val friendList = snapshots?.toObjects(Friend::class.java)
+                    trySend(friendList ?: emptyList())
+                }
+            }
+        awaitClose { registration.remove() }
+    }
+
+
     override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> {
         TODO("No yet implement")
     }
@@ -169,8 +184,7 @@ class FirebaseUserRepository(
         db.collection("users").document(uid).collection("friendRequests").document(fromUid).delete().await()
     }
 
-    override val friends: Flow<List<Friend>>
-        get() = TODO("Not yet implemented")
+
 
     override suspend fun removeFriend(friendUid: String): Result<Unit> {
         TODO("Not yet implemented")
