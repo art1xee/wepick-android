@@ -162,49 +162,62 @@ class FirebaseUserRepository(
     }
 
     override val incomingFriendRequests: Flow<List<FriendRequest>> = callbackFlow {
-        val uid: String? = currentUserId
+        val uid = currentUserId
+        if (uid == null) {
+            trySend(emptyList())
+            close()
+            return@callbackFlow
+        }
         val registration =
-            db.collection("users/$uid/friendRequests").addSnapshotListener { snapshots, error ->
-                if (error != null) {
-                    close(error)
-                } else {
-                    val friendList = snapshots?.toObjects(FriendRequest::class.java)
-                    trySend(friendList ?: emptyList())
+            db.collection("users").document(uid).collection("friendRequests")
+                .addSnapshotListener { snapshots, error ->
+                    if (error != null) {
+                        close(error)
+                    } else {
+                        val friendList = snapshots?.toObjects(FriendRequest::class.java)
+                        trySend(friendList ?: emptyList())
+                    }
                 }
-            }
         awaitClose { registration.remove() }
     }
 
     override val friends: Flow<List<Friend>> = callbackFlow {
-        val uid: String? = currentUserId
+        val uid = currentUserId
+        if (uid == null) {
+            trySend(emptyList())
+            close()
+            return@callbackFlow
+        }
         val registration =
-            db.collection("users/$uid/friends").addSnapshotListener { snapshots, error ->
-                if (error != null) {
-                    close(error)
-                } else {
-                    val friendList = snapshots?.toObjects(Friend::class.java)
-                    trySend(friendList ?: emptyList())
+            db.collection("users").document(uid).collection("friends")
+                .addSnapshotListener { snapshots, error ->
+                    if (error != null) {
+                        close(error)
+                    } else {
+                        val friendList = snapshots?.toObjects(Friend::class.java)
+                        trySend(friendList ?: emptyList())
+                    }
                 }
-            }
         awaitClose { registration.remove() }
     }
 
 
     override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> = runCatching {
-        val uid = currentUserId ?: throw IllegalStateException("Error")
+        val uid = currentUserId ?: throw IllegalStateException()
         val snapshot =
             db.collection("users").document(uid).collection("friendRequests").document(fromUid)
                 .get().await()
 
         val friendProfile = snapshot.toObject(FriendRequest::class.java)
+            ?: throw IllegalStateException("Friend request not found")
         val profile = getUserProfile().getOrThrow() ?: throw IllegalStateException("Error")
         val batch = db.batch()
 
         val userRequest = Friend(
             friendUid = fromUid,
-            fromName = friendProfile?.fromName ?: "",
-            fromUserName = friendProfile?.fromUserName ?: "",
-            fromPhotoUrl = friendProfile?.fromPhotoUrl ?: "",
+            fromName = friendProfile.fromName,
+            fromUserName = friendProfile.fromUserName,
+            fromPhotoUrl = friendProfile.fromPhotoUrl,
         )
         val friendRequest = Friend(
             friendUid = uid,
