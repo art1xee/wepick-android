@@ -147,7 +147,7 @@ class FirebaseUserRepository(
     }
 
     override val incomingFriendRequests: Flow<List<FriendRequest>> = callbackFlow {
-        val uid = currentUserId
+        val uid: String? = currentUserId
         val registration =
             db.collection("users/$uid/friendRequests").addSnapshotListener { snapshots, error ->
                 if (error != null) {
@@ -156,7 +156,6 @@ class FirebaseUserRepository(
                     val friendList = snapshots?.toObjects(FriendRequest::class.java)
                     trySend(friendList ?: emptyList())
                 }
-
             }
         awaitClose { registration.remove() }
     }
@@ -166,12 +165,9 @@ class FirebaseUserRepository(
     }
 
     override suspend fun declineFriendRequest(fromUid: String): Result<Unit> = runCatching {
-
-        val friendRequest = auth.?: throw IllegalStateException("Something went wrong")
-        db.collection("friendRequest").document(friendRequest.uid).delete().await()
-
+        val uid = currentUserId ?: throw IllegalStateException("Error")
+        db.collection("users").document(uid).collection("friendRequests").document(fromUid).delete().await()
     }
-
 
     override val friends: Flow<List<Friend>>
         get() = TODO("Not yet implemented")
