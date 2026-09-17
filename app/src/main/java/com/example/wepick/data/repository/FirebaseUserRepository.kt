@@ -190,8 +190,37 @@ class FirebaseUserRepository(
     }
 
 
-    override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> {
-        TODO("No yet implement")
+    override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("Error")
+        val snapshot =
+            db.collection("users").document(uid).collection("friendRequests").document(fromUid)
+                .get().await()
+
+        val friendProfile = snapshot.toObject(FriendRequest::class.java)
+        val profile = getUserProfile().getOrThrow() ?: throw IllegalStateException("Error")
+        val batch = db.batch()
+
+        val userRequest = Friend(
+            friendUid = fromUid,
+            fromName = friendProfile?.fromName ?: "",
+            fromUserName = friendProfile?.fromUserName ?: "",
+            fromPhotoUrl = friendProfile?.fromPhotoUrl ?: "",
+        )
+        val friendRequest = Friend(
+            friendUid = uid,
+            fromName = profile.name,
+            fromUserName = profile.userName,
+            fromPhotoUrl = profile.photoUrl
+        )
+
+        val myFriendRef = db.collection("users").document(uid).collection("friends").document(fromUid)
+        val theirFriendRef = db.collection("users").document(fromUid).collection("friends").document(uid)
+        val requestRef = db.collection("users").document(uid).collection("friendRequests").document(fromUid)
+
+        batch.set(myFriendRef, userRequest)
+        batch.set(theirFriendRef, friendRequest)
+        batch.delete(requestRef)
+        batch.commit().await()
     }
 
     override suspend fun declineFriendRequest(fromUid: String): Result<Unit> = runCatching {
