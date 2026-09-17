@@ -1122,6 +1122,11 @@ string androidx_compose_foundation_autofill
 string androidx_compose_ui_autofill
 string androidx_startup
 string app_name
+string auth_error_email_already_in_use
+string auth_error_network
+string auth_error_too_many_requests
+string auth_error_user_disabled
+string auth_error_weak_password
 string auth_transition_creating_account
 string auth_transition_enter_fields_error
 string auth_transition_enter_password
@@ -1201,6 +1206,7 @@ string google_api_key
 string google_app_id
 string google_crash_reporting_api_key
 string google_storage_bucket
+string help_center_label
 string help_contact_button
 string help_contact_email
 string help_contact_title
@@ -1219,6 +1225,7 @@ string help_faq_q6
 string help_faq_title
 string in_progress
 string indeterminate
+string language_screen_label
 string loading
 string loading_button
 string login_button
@@ -1227,6 +1234,7 @@ string login_credentials_description
 string login_email_hint
 string login_email_label
 string login_error_invalid_credentials
+string login_error_password_empty
 string login_forgot_password
 string login_google_button
 string login_no_account
@@ -1305,12 +1313,14 @@ string m3c_wide_navigation_rail_pane_title
 string mc2_snackbar_pane_title
 string navigation_menu
 string not_selected
+string notification_screen_label
 string partner_character
 string partner_choose_character
 string partner_friend
 string partner_friend_name
 string partner_friend_name_hint
 string partner_title
+string privacy_screen_label
 string profile_edit_about_me_hint
 string profile_edit_about_me_label
 string profile_edit_birthday_format
@@ -1339,6 +1349,8 @@ string profile_setting_help_title
 string profile_setting_label
 string profile_setting_personal_data_subtitle
 string profile_setting_personal_data_title
+string profile_setting_security_subtitle
+string profile_setting_security_title
 string profile_setting_sign_out
 string profile_setting_sign_out_alert
 string profile_setting_sign_out_confirm
@@ -1350,6 +1362,7 @@ string profile_setup_display_name_label
 string profile_setup_display_username_example
 string profile_setup_display_username_label
 string profile_setup_error_enter_username
+string profile_setup_error_username_taken
 string profile_setup_load_photo
 string profile_setup_save_profile_button
 string profile_setup_subtitle
@@ -1372,6 +1385,10 @@ string result_reload
 string result_restart
 string result_title
 string search_menu_title
+string security_google_auth_note
+string security_resend_button
+string security_reset_email_sent
+string security_send_reset_button
 string selected
 string selection_anime
 string selection_movie
@@ -1387,6 +1404,9 @@ string signup_confirm_password_label
 string signup_confirm_password_text_field
 string signup_email_label
 string signup_error_password_mismatch
+string signup_error_password_too_short
+string signup_have_account
+string signup_login_link
 string signup_password_label
 string signup_subtitle
 string signup_title

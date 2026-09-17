@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.example.wepick.domain.repository.UserRepository
 import com.example.wepick.screens.auth.profile_setup.UserProfile
+import com.example.wepick.screens.friend.Friend
+import com.example.wepick.screens.friend.FriendRequest
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -135,4 +137,131 @@ class FirebaseUserRepository(
         val email = auth.currentUser?.email ?: throw IllegalStateException("User don`t logged in")
         auth.sendPasswordResetEmail(email).await()
     }
+
+    override suspend fun searchUserByUsername(query: String): Result<List<UserProfile>> =
+        runCatching {
+            val snapshot = db.collection("users").whereGreaterThanOrEqualTo("userName", query)
+                .whereLessThanOrEqualTo("userName", query + "\uf8ff").get().await()
+
+            snapshot.toObjects(UserProfile::class.java)
+        }
+
+    override suspend fun sendFriendRequest(toUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("User don`t logged in")
+        val profile = getUserProfile().getOrThrow() ?: throw IllegalStateException("Error")
+        val friendRequest =
+            FriendRequest(
+                fromUid = uid,
+                fromName = profile.name,
+                fromUserName = profile.userName,
+                fromPhotoUrl = profile.photoUrl
+            )
+
+        db.collection("users").document(toUid).collection("friendRequests").document(uid)
+            .set(friendRequest).await()
+    }
+
+    override val incomingFriendRequests: Flow<List<FriendRequest>> = callbackFlow {
+        val uid = currentUserId
+        if (uid == null) {
+            trySend(emptyList())
+            close()
+            return@callbackFlow
+        }
+        val registration =
+            db.collection("users").document(uid).collection("friendRequests")
+                .addSnapshotListener { snapshots, error ->
+                    if (error != null) {
+                        close(error)
+                    } else {
+                        val friendList = snapshots?.toObjects(FriendRequest::class.java)
+                        trySend(friendList ?: emptyList())
+                    }
+                }
+        awaitClose { registration.remove() }
+    }
+
+    override val friends: Flow<List<Friend>> = callbackFlow {
+        val uid = currentUserId
+        if (uid == null) {
+            trySend(emptyList())
+            close()
+            return@callbackFlow
+        }
+        val registration =
+            db.collection("users").document(uid).collection("friends")
+                .addSnapshotListener { snapshots, error ->
+                    if (error != null) {
+                        close(error)
+                    } else {
+                        val friendList = snapshots?.toObjects(Friend::class.java)
+                        trySend(friendList ?: emptyList())
+                    }
+                }
+        awaitClose { registration.remove() }
+    }
+
+
+    override suspend fun acceptFriendRequest(fromUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException()
+        val snapshot =
+            db.collection("users").document(uid).collection("friendRequests").document(fromUid)
+                .get().await()
+
+        val friendProfile = snapshot.toObject(FriendRequest::class.java)
+            ?: throw IllegalStateException("Friend request not found")
+        val profile = getUserProfile().getOrThrow() ?: throw IllegalStateException("Error")
+        val batch = db.batch()
+
+        val userRequest = Friend(
+            friendUid = fromUid,
+            fromName = friendProfile.fromName,
+            fromUserName = friendProfile.fromUserName,
+            fromPhotoUrl = friendProfile.fromPhotoUrl,
+        )
+        val friendRequest = Friend(
+            friendUid = uid,
+            fromName = profile.name,
+            fromUserName = profile.userName,
+            fromPhotoUrl = profile.photoUrl
+        )
+
+        val myFriendRef = db.collection("users").document(uid).collection("friends").document(fromUid)
+        val theirFriendRef = db.collection("users").document(fromUid).collection("friends").document(uid)
+        val requestRef = db.collection("users").document(uid).collection("friendRequests").document(fromUid)
+
+        batch.set(myFriendRef, userRequest)
+        batch.set(theirFriendRef, friendRequest)
+        batch.delete(requestRef)
+        batch.commit().await()
+    }
+
+    override suspend fun declineFriendRequest(fromUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("Error")
+        db.collection("users").document(uid).collection("friendRequests").document(fromUid).delete()
+            .await()
+    }
+
+
+    override suspend fun removeFriend(friendUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("Error")
+        val batch = db.batch()
+        val userDelete =
+            db.collection("users").document(uid).collection("friends").document(friendUid)
+        batch.delete(userDelete)
+        val friendDelete =
+            db.collection("users").document(friendUid).collection("friends").document(uid)
+        batch.delete(friendDelete)
+        batch.commit().await()
+    }
+
+    override suspend fun getUserProfile(uid: String): Result<UserProfile?> = runCatching {
+        val snapshot = db.collection("users").document(uid).get().await()
+        if (snapshot.exists()) {
+            snapshot.toObject(UserProfile::class.java)
+        } else {
+            null
+        }
+    }
+
 }

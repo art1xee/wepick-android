@@ -60,15 +60,11 @@ import com.example.wepick.ui.theme.White
 import com.example.wepick.util.REGEX_LIST
 import com.example.wepick.viewmodel.AuthState
 import com.example.wepick.viewmodel.AuthViewModel
-import com.example.wepick.viewmodel.MainViewModel
-import com.example.wepick.viewmodel.PlayerViewModel
 
 @Composable
 fun SignUpScreen(
     navController: NavController,
-    viewModel: MainViewModel,
     modifier: Modifier,
-    playerVM: PlayerViewModel,
     authViewModel: AuthViewModel,
 ) {
 
