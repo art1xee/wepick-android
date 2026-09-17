@@ -197,11 +197,25 @@ class FirebaseUserRepository(
     }
 
 
-    override suspend fun removeFriend(friendUid: String): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun removeFriend(friendUid: String): Result<Unit> = runCatching {
+        val uid = currentUserId ?: throw IllegalStateException("Error")
+        val batch = db.batch()
+        val userDelete =
+            db.collection("users").document(uid).collection("friends").document(friendUid)
+        batch.delete(userDelete)
+        val friendDelete =
+            db.collection("users").document(friendUid).collection("friends").document(uid)
+        batch.delete(friendDelete)
+        batch.commit().await()
     }
 
-    override suspend fun getUserProfile(uid: String): Result<UserProfile?> {
-        TODO("Not yet implemented")
+    override suspend fun getUserProfile(uid: String): Result<UserProfile?> = runCatching {
+        val snapshot = db.collection("users").document(uid).get().await()
+        if (snapshot.exists()) {
+            snapshot.toObject(UserProfile::class.java)
+        } else {
+            null
+        }
     }
+
 }
