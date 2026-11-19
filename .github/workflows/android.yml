@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Make gradlew executable
         run: chmod +x gradlew
@@ -30,4 +30,6 @@ jobs:
       - name: Build and run unit tests
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-        run: ./gradlew assembleDebug testDebugUnitTest
+        # gradle.properties указывает на JDK из Android Studio (путь Windows),
+        # на сервере его нет, поэтому явно подставляем JDK, установленный выше
+        run: ./gradlew -Dorg.gradle.java.home="$JAVA_HOME" assembleDebug testDebugUnitTest
