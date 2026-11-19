@@ -4,11 +4,13 @@ Android app that helps two people agree on what to watch. Pick a content type (m
 
 Built with Kotlin and Jetpack Compose.
 
-<!-- Screenshots: put PNG files into docs/screenshots/ and uncomment the table below.
-| Login | Genres | Match |
-|---|---|---|
-| ![Login](docs/screenshots/login.png) | ![Genres](docs/screenshots/genres.png) | ![Match](docs/screenshots/match.png) |
--->
+## Screenshots
+
+| Login (RU) | Profile (EN) |
+|---|---|
+| <img src="docs/screenshots/login.png" width="250" alt="Login screen"> | <img src="docs/screenshots/profile.png" width="250" alt="Profile screen"> |
+
+<!-- TODO: add genres.png and match.png when these screens are finished -->
 
 ## Features
 
