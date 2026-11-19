@@ -2,11 +2,13 @@ package com.example.wepick.viewmodel
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +17,6 @@ import com.example.wepick.R
 import com.example.wepick.data.repository.FirebaseUserRepository
 import com.example.wepick.domain.repository.UserRepository
 import com.example.wepick.util.UiText
-import androidx.annotation.StringRes
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -114,6 +116,8 @@ class AuthViewModel (
                 auth.signInWithEmailAndPassword(email, password).await()
                 delay(2000)
                 transitionState = null
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = mapAuthError(e, R.string.auth_transition_logining_error)
@@ -142,6 +146,8 @@ class AuthViewModel (
                 auth.createUserWithEmailAndPassword(email, password).await()
                 delay(2500)
                 transitionState = null
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = mapAuthError(e, R.string.auth_transition_registration_error)
@@ -208,6 +214,11 @@ class AuthViewModel (
                 auth.signInWithCredential(authCredential).await()
                 delay(2000)
                 transitionState = null
+            } catch (e: GetCredentialCancellationException) {
+                transitionState = null
+            } catch (e: CancellationException) {
+
+                throw e
             } catch (e: Exception) {
                 transitionState = null
                 val errorMessage = mapAuthError(e, R.string.auth_transition_logining_with_google_error)
