@@ -19,8 +19,8 @@
     <string name="login_email_hint">Enter your email</string>
     <string name="login_password_hint">Enter your password</string>
     <string name="login_credentials_description">Enter your credentials (email and password) in the fields below.</string>
-    <string name="login_no_account">I don`t have account, </string>
-    <string name="login_create_account"> create.</string>
+    <string name="login_no_account">"Don't have an account? "</string>
+    <string name="login_create_account">Create one</string>
     <string name="login_error_invalid_credentials">Incorrect email or password - try again.</string>
     <string name="login_error_password_empty">Enter your password</string>
 
@@ -31,7 +31,7 @@
     <string name="forgot_password_back_to_login">Login to Account</string>
     <string name="forgot_password_description">Enter the email address you used when you registered — we’ll send you a recovery link.</string>
     <string name="forgot_password_success">We\'ve sent instructions to your email. Please check your inbox and click the link to change your password!</string>
-    <string name="forgot_password_step">Step 1 to 2</string>
+    <string name="forgot_password_step">Step 1 of 2</string>
     <string name="forgot_password_complete">Ready</string>
 
     <!-- SIGNUP -->
@@ -45,8 +45,8 @@
     <string name="signup_button">Create Profile</string>
     <string name="signup_error_password_mismatch">Passwords do not match — please enter again.</string>
     <string name="signup_error_password_too_short">Password must be at least 6 characters</string>
-    <string name="signup_have_account">Already have an account, </string>
-    <string name="signup_login_link">login.</string>
+    <string name="signup_have_account">"Already have an account? "</string>
+    <string name="signup_login_link">Log in</string>
 
     <!-- PROFILE SETUP -->
     <string name="profile_setup_title">PROFILE SETUP</string>

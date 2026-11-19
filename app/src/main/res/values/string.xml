@@ -19,7 +19,7 @@
     <string name="login_email_hint">Введіть email</string>
     <string name="login_password_hint">Введіть пароль</string>
     <string name="login_credentials_description">Введіть свій email і пароль у поля нижче.</string>
-    <string name="login_no_account">У мене немає облікового запису, </string>
+    <string name="login_no_account">"У мене немає облікового запису, "</string>
     <string name="login_create_account">створити.</string>
     <string name="login_error_invalid_credentials">Неправильний email або пароль. Спробуйте ще раз.</string>
     <string name="login_error_password_empty">Введіть пароль</string>
@@ -45,7 +45,7 @@
     <string name="signup_button">Створити акаунт</string>
     <string name="signup_error_password_mismatch">Паролі не збігаються. Спробуйте ще раз.</string>
     <string name="signup_error_password_too_short">Пароль повинен містити щонайменше 6 символів</string>
-    <string name="signup_have_account">Вже є акаунт, </string>
+    <string name="signup_have_account">"Вже є акаунт, "</string>
     <string name="signup_login_link">увійти.</string>
 
     <!-- PROFILE SETUP -->
