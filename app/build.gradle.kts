@@ -33,7 +33,9 @@ android {
         val tmdbUrl =
             localProperties.getProperty("TMDB_BASE_URL") ?: "https://api.themoviedb.org/3/"
         val tmdbKey =
-            localProperties.getProperty("TMDB_API_KEY") ?: "f0d0bc12560c00cff720536f062f5463"
+            localProperties.getProperty("TMDB_API_KEY")
+                ?: System.getenv("TMDB_API_KEY")
+                ?: "" // ключ не хранится в репозитории: задать в local.properties или в переменной окружения
 
         buildConfigField("String", "JIKAN_BASE_URL", "\"$jikanUrl\"")
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbKey\"")
@@ -100,9 +102,7 @@ dependencies {
     // Use the renamed core library
     implementation(libs.androidx.compose.ui.core)
 
-    implementation(libs.androidx.runtime.livedata)
-
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil)
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -110,18 +110,12 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.benchmark.traceprocessor)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.foundation)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.compose.runtime.livedata)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
 
     implementation("com.google.firebase:firebase-storage")
-
-    implementation("io.coil-kt:coil-compose:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

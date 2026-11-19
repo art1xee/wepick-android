@@ -1,0 +1,35 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ master, test ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      # Ключ TMDB берётся из секрета репозитория (Settings > Secrets > Actions > TMDB_API_KEY).
+      # Без секрета сборка тоже проходит, просто приложение не сможет загрузить фильмы.
+      - name: Build and run unit tests
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        # gradle.properties указывает на JDK из Android Studio (путь Windows),
+        # на сервере его нет, поэтому явно подставляем JDK, установленный выше
+        run: ./gradlew -Dorg.gradle.java.home="$JAVA_HOME" assembleDebug testDebugUnitTest
