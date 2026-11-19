@@ -6,9 +6,13 @@ Built with Kotlin and Jetpack Compose.
 
 ## Screenshots
 
-| Login (RU) | Profile (EN) |
-|---|---|
-| <img src="docs/screenshots/login.png" width="250" alt="Login screen"> | <img src="docs/screenshots/profile.png" width="250" alt="Profile screen"> |
+| Login | Sign up | Forgot password | Profile |
+|---|---|---|---|
+| <img src="docs/screenshots/login.png" width="200" alt="Login screen"> | <img src="docs/screenshots/signup.png" width="200" alt="Sign up screen"> | <img src="docs/screenshots/forgot_password.png" width="200" alt="Forgot password screen"> | <img src="docs/screenshots/profile.png" width="200" alt="Profile screen"> |
+
+Password reset page (web), opened from the link in the reset email:
+
+<img src="docs/screenshots/reset_password_web.png" width="600" alt="Password reset web page">
 
 <!-- TODO: add genres.png and match.png when these screens are finished -->
 
